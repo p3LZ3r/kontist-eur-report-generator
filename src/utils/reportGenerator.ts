@@ -1,15 +1,15 @@
 import type { Transaction, CompanyInfo, EuerCalculation, KontenrahmenType } from '../types';
 import { skr04Categories } from './categoryMappings';
 
-export const generateReportContent = (
-    currentYear: number,
-    selectedKontenrahmen: KontenrahmenType,
-    companyInfo: CompanyInfo,
-    isKleinunternehmer: boolean,
-    bankType: string | null,
+export const generateReport = (
     euerCalculation: EuerCalculation,
+    companyInfo: CompanyInfo,
+    selectedKontenrahmen: KontenrahmenType,
+    bankType: string | null,
+    isKleinunternehmer: boolean,
     transactions: Transaction[]
 ): string => {
+    const currentYear = new Date().getFullYear();
     return `EINNAHMEN-ÜBERSCHUSS-RECHNUNG ${currentYear} (${selectedKontenrahmen})
 ====================================================
 
@@ -25,16 +25,16 @@ Berechnungsmethode: ${isKleinunternehmer ? 'Bruttobeträge (keine USt-Trennung)'
 BETRIEBSEINNAHMEN:
 ================
 ${Object.entries(euerCalculation.income).map(([key, amount]) =>
-    `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
-).join('\n')}
+        `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
+    ).join('\n')}
 
 Gesamtbetriebseinnahmen: ${euerCalculation.totalIncome.toFixed(2)}€
 
 BETRIEBSAUSGABEN:
 ===============
 ${Object.entries(euerCalculation.expenses).map(([key, amount]) =>
-    `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
-).join('\n')}
+        `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
+    ).join('\n')}
 
 Gesamtbetriebsausgaben: ${euerCalculation.totalExpenses.toFixed(2)}€
 
@@ -67,8 +67,8 @@ PRIVATBEREICH:
 =============
 (nicht steuerrelevant, bereits aus versteuertem Gewinn)
 ${Object.entries(euerCalculation.privateTransactions).map(([key, amount]) =>
-    `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
-).join('\n')}
+        `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
+    ).join('\n')}
 
 ZUSAMMENFASSUNG:
 ===============
@@ -92,7 +92,7 @@ export const openReportInNewWindow = (
     euerCalculation: EuerCalculation,
     transactions: Transaction[]
 ) => {
-    const reportContent = generateReportContent(currentYear, selectedKontenrahmen, companyInfo, isKleinunternehmer, bankType, euerCalculation, transactions);
+    const reportContent = generateReport(euerCalculation, companyInfo, selectedKontenrahmen, bankType, isKleinunternehmer, transactions);
     const htmlContent = `
         <!DOCTYPE html>
         <html lang="de">

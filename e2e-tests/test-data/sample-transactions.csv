@@ -1,0 +1,26 @@
+Datum,Betrag,Verwendungszweck,Gegenpartei
+01.01.2024,-119.00,Büromaterial,Einkauf
+15.01.2024,2380.00,Umsatz,Verkauf
+28.01.2024,-59.50,Versicherung,Allianz
+10.02.2024,1190.00,Dienstleistung,Projekt A
+25.02.2024,-238.00,Miete,Büro
+05.03.2024,595.00,Beratung,Consulting
+20.03.2024,-29.75,Telefon,Telekom
+15.04.2024,1785.00,Softwarelizenz,Verkauf
+30.04.2024,-89.25,Marketing,Agentur
+10.05.2024,1190.00,Support,Dienstleistung
+25.05.2024,-178.50,Steuerberater,Honorar
+05.06.2024,2380.00,Entwicklung,Projekt B
+20.06.2024,-59.50,Bankgebühren,Sparkasse
+10.07.2024,715.00,Schulung,Training
+25.07.2024,-119.00,Bücher,Fachliteratur
+05.08.2024,1785.00,Implementierung,Projekt C
+20.08.2024,-29.75,Internet,Provider
+10.09.2024,1190.00,Wartung,Service
+25.09.2024,-238.00,Miete,Büro
+05.10.2024,2380.00,Customizing,Projekt D
+20.10.2024,-59.50,Versicherung,Allianz
+10.11.2024,715.00,Dokumentation,Projekt E
+25.11.2024,-89.25,Marketing,Agentur
+05.12.2024,1785.00,Support,Dienstleistung
+20.12.2024,-119.00,Weihnachtsfeier,Event

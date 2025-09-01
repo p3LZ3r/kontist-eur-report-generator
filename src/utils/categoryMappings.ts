@@ -7,16 +7,19 @@ export type CategoryInfo = {
     vat: number;
 };
 
-// Elster EÜR-Feldmapping (remains the same for both Kontenrahmen)
+// Elster EÜR-Feldmapping (extended for all fields 1-60+)
 export const elsterMapping: ElsterMapping = {
-    // EINNAHMEN
+    // PERSONAL DATA FIELDS (1-16) - Populated from user tax data, not transactions
+    // These fields are handled separately in automatic population functions
+
+    // INCOME FIELDS (17-24)
     'income_services_19': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
     'income_services_7': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
     'income_services_0': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
     'income_goods_19': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
     'income_goods_7': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_eu': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_export': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
+    'income_eu': { elsterField: '19', label: 'Erlöse aus EU-Lieferungen' },
+    'income_export': { elsterField: '19', label: 'Erlöse aus EU-Lieferungen' },
     'income_prepayments': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
     'income_other': { elsterField: '18', label: 'Sonstige Leistungen' },
     'income_refunds': { elsterField: '18', label: 'Sonstige Leistungen' },
@@ -109,7 +112,31 @@ export const elsterMapping: ElsterMapping = {
 
     // Andere
     'expense_other': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_non_deductible': { elsterField: '36', label: 'Beschränkt abziehbare Betriebsausgaben' }
+    'expense_non_deductible': { elsterField: '36', label: 'Beschränkt abziehbare Betriebsausgaben' },
+
+    // EXTENDED EXPENSE FIELDS (37-60+)
+    // Depreciation and amortization
+    'expense_depreciation_movable': { elsterField: '37', label: 'AfA bewegliche Wirtschaftsgüter' },
+    'expense_depreciation_building': { elsterField: '38', label: 'AfA Gebäude' },
+    'expense_special_depreciation': { elsterField: '39', label: 'Sonderabschreibungen' },
+
+    // Tax-related expenses
+    'expense_trade_tax_prepayments': { elsterField: '47', label: 'Gewerbesteuer-Vorauszahlungen' },
+    'expense_corporate_tax_prepayments': { elsterField: '48', label: 'Körperschaftsteuer-Vorauszahlungen' },
+    'expense_income_tax_prepayments': { elsterField: '49', label: 'Einkommensteuer-Vorauszahlungen' },
+    'expense_solidarity_surcharge': { elsterField: '50', label: 'Solidaritätszuschlag' },
+    'expense_church_tax': { elsterField: '51', label: 'Kirchensteuer' },
+
+    // Loss carryforward and other tax items
+    'expense_loss_carryforward': { elsterField: '40', label: 'Verlustvortrag' },
+    'expense_tax_free_income': { elsterField: '42', label: 'Steuerfreie Einnahmen' },
+    'expense_non_deductible_tax': { elsterField: '43', label: 'Nicht abzugsfähige Ausgaben' },
+
+    // Additional business expenses
+    'expense_low_value_assets': { elsterField: '37', label: 'AfA bewegliche Wirtschaftsgüter' },
+    'expense_home_office': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    'expense_continuing_education': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    'expense_memberships': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' }
 };
 
 // Fallback hardcoded data for SKR04
@@ -223,5 +250,29 @@ export const skr04Categories: Record<string, CategoryInfo> = {
 
     // SONSTIGE AUSGABEN
     'expense_other': { name: 'Sonstige betriebliche Aufwendungen', type: 'expense', code: '7990', vat: 19 },
-    'expense_non_deductible': { name: 'Nicht abzugsfähige Ausgaben', type: 'expense', code: '7995', vat: 0 }
+    'expense_non_deductible': { name: 'Nicht abzugsfähige Ausgaben', type: 'expense', code: '7995', vat: 0 },
+
+    // EXTENDED EXPENSE CATEGORIES (37-60+)
+    // Depreciation and amortization
+    'expense_depreciation_movable': { name: 'AfA bewegliche Wirtschaftsgüter', type: 'expense', code: '4800', vat: 0 },
+    'expense_depreciation_building': { name: 'AfA Gebäude', type: 'expense', code: '4810', vat: 0 },
+    'expense_special_depreciation': { name: 'Sonderabschreibungen', type: 'expense', code: '4820', vat: 0 },
+
+    // Tax-related expenses
+    'expense_trade_tax_prepayments': { name: 'Gewerbesteuer-Vorauszahlungen', type: 'expense', code: '3210', vat: 0 },
+    'expense_corporate_tax_prepayments': { name: 'Körperschaftsteuer-Vorauszahlungen', type: 'expense', code: '3220', vat: 0 },
+    'expense_income_tax_prepayments': { name: 'Einkommensteuer-Vorauszahlungen', type: 'expense', code: '3230', vat: 0 },
+    'expense_solidarity_surcharge': { name: 'Solidaritätszuschlag', type: 'expense', code: '3240', vat: 0 },
+    'expense_church_tax': { name: 'Kirchensteuer', type: 'expense', code: '3250', vat: 0 },
+
+    // Loss carryforward and other tax items
+    'expense_loss_carryforward': { name: 'Verlustvortrag', type: 'expense', code: '3260', vat: 0 },
+    'expense_tax_free_income': { name: 'Steuerfreie Einnahmen', type: 'income', code: '3270', vat: 0 },
+    'expense_non_deductible_tax': { name: 'Nicht abzugsfähige Ausgaben', type: 'expense', code: '3280', vat: 0 },
+
+    // Additional business expenses
+    'expense_low_value_assets': { name: 'Geringwertige Wirtschaftsgüter', type: 'expense', code: '4830', vat: 19 },
+    'expense_home_office': { name: 'Homeoffice-Pauschale', type: 'expense', code: '4840', vat: 0 },
+    'expense_continuing_education': { name: 'Fortbildungskosten', type: 'expense', code: '4850', vat: 19 },
+    'expense_memberships': { name: 'Mitgliedsbeiträge', type: 'expense', code: '4860', vat: 19 }
 };

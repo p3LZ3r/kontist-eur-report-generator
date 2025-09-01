@@ -1,5 +1,6 @@
-import type { EuerCalculation, CompanyInfo, KontenrahmenType } from '../types';
-import { skr04Categories } from './categoryMappings';
+import type { EuerCalculation, CompanyInfo, KontenrahmenType, Transaction, UserTaxData, ElsterFieldValue } from '../types';
+import { generateReport as generateReportFromGenerator } from './reportGenerator';
+import { populateAllElsterFields } from './euerCalculations';
 
 export const generateReport = (
     euerCalculation: EuerCalculation,
@@ -9,80 +10,7 @@ export const generateReport = (
     isKleinunternehmer: boolean,
     transactions: any[]
 ): string => {
-    const currentYear = new Date().getFullYear();
-    const reportContent = `EINNAHMEN-ÜBERSCHUSS-RECHNUNG ${currentYear} (${selectedKontenrahmen})
-=====================================================
-
-UNTERNEHMENSDATEN:
-${companyInfo.name || 'Ihr Unternehmen'}
-${companyInfo.address || 'Ihre Adresse'}
-Steuernummer: ${companyInfo.taxNumber || 'Ihre Steuernummer'}
-${!isKleinunternehmer ? `USt-IdNr.: ${companyInfo.vatNumber || 'Ihre USt-IdNr.'}` : 'Kleinunternehmerregelung § 19 UStG'}
-Bank: ${bankType === 'kontist' ? 'Kontist' : bankType === 'holvi' ? 'Holvi' : 'Unbekannt'}
-Kontenrahmen: ${selectedKontenrahmen} (Prozessgliederungsprinzip)
-Berechnungsmethode: ${isKleinunternehmer ? 'Bruttobeträge (keine USt-Trennung)' : 'Nettobeträge (USt separat)'}
-
-BETRIEBSEINNAHMEN:
-================
-${Object.entries(euerCalculation.income).map(([key, amount]) =>
-    `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
-).join('\n')}
-
-Gesamtbetriebseinnahmen: ${euerCalculation.totalIncome.toFixed(2)}€
-
-BETRIEBSAUSGABEN:
-===============
-${Object.entries(euerCalculation.expenses).map(([key, amount]) =>
-    `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
-).join('\n')}
-
-Gesamtbetriebsausgaben: ${euerCalculation.totalExpenses.toFixed(2)}€
-
-ERGEBNIS:
-=========
-Gewinn/Verlust (steuerpflichtig): ${euerCalculation.profit.toFixed(2)}€
-
-${!isKleinunternehmer ? `UMSATZSTEUER-BERECHNUNG:
-========================
-Umsatzsteuer (schuldig): ${euerCalculation.vatOwed.toFixed(2)}€
-Vorsteuer (bezahlt): ${euerCalculation.vatPaid.toFixed(2)}€
-USt-Saldo: ${euerCalculation.vatBalance.toFixed(2)}€ ${euerCalculation.vatBalance > 0 ? '(nachzahlen)' : '(Erstattung)'}
-
-BERECHNUNGSHINWEIS:
-===================
-Die EÜR-Beträge sind NETTOBETRÄGE (ohne USt).
-Die Umsatzsteuer wird separat ausgewiesen.
-Beispiel: 119€ Rechnung = 100€ EÜR-Einnahme + 19€ USt
-` : `KLEINUNTERNEHMERREGELUNG:
-=========================
-Keine Umsatzsteuer-Berechnung nach § 19 UStG
-
-BERECHNUNGSHINWEIS:
-===================
-Die EÜR-Beträge sind BRUTTOBETRÄGE (inkl. USt).
-Keine USt-Trennung bei Kleinunternehmern.
-Beispiel: 119€ Rechnung = 119€ EÜR-Einnahme (komplett)
-`}
-PRIVATBEREICH:
-==============
-(nicht steuerrelevant, bereits aus versteuertem Gewinn)
-${Object.entries(euerCalculation.privateTransactions).map(([key, amount]) =>
-    `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
-).join('\n')}
-
-ZUSAMMENFASSUNG:
-================
-Steuerpflichtiger Gewinn: ${euerCalculation.profit.toFixed(2)}€
-Private Entnahmen: ${euerCalculation.privateWithdrawals.toFixed(2)}€
-Private Einlagen: ${euerCalculation.privateDeposits.toFixed(2)}€
-Verbleibt im Betrieb: ${(euerCalculation.profit - euerCalculation.privateWithdrawals + euerCalculation.privateDeposits).toFixed(2)}€
-
-Erstellt am: ${new Date().toLocaleDateString('de-DE')}
-Anzahl Transaktionen gesamt: ${transactions.length}
-Kleinunternehmerregelung: ${isKleinunternehmer ? 'Ja' : 'Nein'}
-`;
-
-    return reportContent;
+    return generateReportFromGenerator(euerCalculation, companyInfo, selectedKontenrahmen, bankType, isKleinunternehmer, transactions);
 };
 
 export const downloadReport = (reportContent: string, currentYear: number, selectedKontenrahmen: KontenrahmenType, isKleinunternehmer: boolean): void => {
@@ -93,4 +21,127 @@ export const downloadReport = (reportContent: string, currentYear: number, selec
     link.download = `EÜR_${currentYear}_${selectedKontenrahmen}_${isKleinunternehmer ? 'KU_Brutto' : 'USt_Netto'}.txt`;
     link.click();
     URL.revokeObjectURL(url);
+};
+
+// Generate ELSTER CSV export
+export const generateElsterCSV = (
+    transactions: Transaction[],
+    categories: { [key: number]: string },
+    userTaxData: UserTaxData,
+    isKleinunternehmer: boolean
+): string => {
+    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, userTaxData, isKleinunternehmer);
+
+    if (!validation.isValid) {
+        throw new Error(`ELSTER Export fehlgeschlagen: Fehlende Pflichtfelder: ${validation.missingFields.join(', ')}`);
+    }
+
+    // CSV Header
+    const headers = ['Feldnummer', 'Bezeichnung', 'Wert', 'Typ', 'Pflichtfeld', 'Quelle'];
+    let csvContent = headers.join(';') + '\n';
+
+    // Add field data
+    fieldValues.forEach(field => {
+        const row = [
+            field.field,
+            `"${field.label}"`,
+            typeof field.value === 'number' ? field.value.toString().replace('.', ',') : `"${field.value}"`,
+            field.type,
+            field.required ? 'Ja' : 'Nein',
+            field.source
+        ];
+        csvContent += row.join(';') + '\n';
+    });
+
+    return csvContent;
+};
+
+// Generate ELSTER JSON export
+export const generateElsterJSON = (
+    transactions: Transaction[],
+    categories: { [key: number]: string },
+    userTaxData: UserTaxData,
+    isKleinunternehmer: boolean
+): string => {
+    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, userTaxData, isKleinunternehmer);
+
+    if (!validation.isValid) {
+        throw new Error(`ELSTER Export fehlgeschlagen: Fehlende Pflichtfelder: ${validation.missingFields.join(', ')}`);
+    }
+
+    const exportData = {
+        metadata: {
+            exportDate: new Date().toISOString(),
+            version: '1.0',
+            isKleinunternehmer,
+            validation: validation
+        },
+        personalData: fieldValues.filter(f => f.type === 'personal'),
+        incomeData: fieldValues.filter(f => f.type === 'income'),
+        expenseData: fieldValues.filter(f => f.type === 'expense'),
+        taxData: fieldValues.filter(f => f.type === 'tax'),
+        totalData: fieldValues.filter(f => f.type === 'total'),
+        allFields: fieldValues
+    };
+
+    return JSON.stringify(exportData, null, 2);
+};
+
+// Download ELSTER CSV
+export const downloadElsterCSV = (
+    transactions: Transaction[],
+    categories: { [key: number]: string },
+    userTaxData: UserTaxData,
+    isKleinunternehmer: boolean,
+    currentYear: number
+): void => {
+    try {
+        const csvContent = generateElsterCSV(transactions, categories, userTaxData, isKleinunternehmer);
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `ELSTER_${currentYear}_${isKleinunternehmer ? 'KU' : 'USt'}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        alert(error instanceof Error ? error.message : 'Fehler beim ELSTER CSV Export');
+    }
+};
+
+// Download ELSTER JSON
+export const downloadElsterJSON = (
+    transactions: Transaction[],
+    categories: { [key: number]: string },
+    userTaxData: UserTaxData,
+    isKleinunternehmer: boolean,
+    currentYear: number
+): void => {
+    try {
+        const jsonContent = generateElsterJSON(transactions, categories, userTaxData, isKleinunternehmer);
+        const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `ELSTER_${currentYear}_${isKleinunternehmer ? 'KU' : 'USt'}.json`;
+        link.click();
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        alert(error instanceof Error ? error.message : 'Fehler beim ELSTER JSON Export');
+    }
+};
+
+// Validate ELSTER data before export
+export const validateElsterData = (
+    transactions: Transaction[],
+    categories: { [key: number]: string },
+    userTaxData: UserTaxData,
+    isKleinunternehmer: boolean
+): { isValid: boolean; missingFields: string[]; fieldValues: ElsterFieldValue[] } => {
+    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, userTaxData, isKleinunternehmer);
+    return {
+        isValid: validation.isValid,
+        missingFields: validation.missingFields,
+        fieldValues
+    };
 };

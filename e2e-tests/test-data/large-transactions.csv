@@ -1,0 +1,366 @@
+Datum,Betrag,Verwendungszweck,Gegenpartei
+01.01.2024,-119.00,Büromaterial,Einkauf 1
+02.01.2024,2380.00,Umsatz,Verkauf 1
+03.01.2024,-59.50,Versicherung,Allianz
+04.01.2024,1190.00,Dienstleistung,Projekt A1
+05.01.2024,-238.00,Miete,Büro
+06.01.2024,595.00,Beratung,Consulting 1
+07.01.2024,-29.75,Telefon,Telekom
+08.01.2024,1785.00,Softwarelizenz,Verkauf 2
+09.01.2024,-89.25,Marketing,Agentur 1
+10.01.2024,1190.00,Support,Dienstleistung 1
+11.01.2024,-178.50,Steuerberater,Honorar
+12.01.2024,2380.00,Entwicklung,Projekt B1
+13.01.2024,-59.50,Bankgebühren,Sparkasse
+14.01.2024,715.00,Schulung,Training 1
+15.01.2024,-119.00,Bücher,Fachliteratur 1
+16.01.2024,1785.00,Implementierung,Projekt C1
+17.01.2024,-29.75,Internet,Provider
+18.01.2024,1190.00,Wartung,Service 1
+19.01.2024,-238.00,Miete,Büro
+20.01.2024,2380.00,Customizing,Projekt D1
+21.01.2024,-59.50,Versicherung,Allianz
+22.01.2024,715.00,Dokumentation,Projekt E1
+23.01.2024,-89.25,Marketing,Agentur 2
+24.01.2024,1785.00,Support,Dienstleistung 2
+25.01.2024,-119.00,Weihnachtsfeier,Event 1
+26.01.2024,1190.00,Umsatz,Verkauf 3
+27.01.2024,-59.50,Büromaterial,Einkauf 2
+28.01.2024,2380.00,Dienstleistung,Projekt A2
+29.01.2024,-238.00,Miete,Büro
+30.01.2024,595.00,Beratung,Consulting 2
+31.01.2024,-29.75,Telefon,Telekom
+01.02.2024,1785.00,Softwarelizenz,Verkauf 4
+02.02.2024,-89.25,Marketing,Agentur 3
+03.02.2024,1190.00,Support,Dienstleistung 3
+04.02.2024,-178.50,Steuerberater,Honorar
+05.02.2024,2380.00,Entwicklung,Projekt B2
+06.02.2024,-59.50,Bankgebühren,Sparkasse
+07.02.2024,715.00,Schulung,Training 2
+08.02.2024,-119.00,Bücher,Fachliteratur 2
+09.02.2024,1785.00,Implementierung,Projekt C2
+10.02.2024,-29.75,Internet,Provider
+11.02.2024,1190.00,Wartung,Service 2
+12.02.2024,-238.00,Miete,Büro
+13.02.2024,2380.00,Customizing,Projekt D2
+14.02.2024,-59.50,Versicherung,Allianz
+15.02.2024,715.00,Dokumentation,Projekt E2
+16.02.2024,-89.25,Marketing,Agentur 4
+17.02.2024,1785.00,Support,Dienstleistung 4
+18.02.2024,-119.00,Weihnachtsfeier,Event 2
+19.02.2024,1190.00,Umsatz,Verkauf 5
+20.02.2024,-59.50,Büromaterial,Einkauf 3
+21.02.2024,2380.00,Dienstleistung,Projekt A3
+22.02.2024,-238.00,Miete,Büro
+23.02.2024,595.00,Beratung,Consulting 3
+24.02.2024,-29.75,Telefon,Telekom
+25.02.2024,1785.00,Softwarelizenz,Verkauf 6
+26.02.2024,-89.25,Marketing,Agentur 5
+27.02.2024,1190.00,Support,Dienstleistung 5
+28.02.2024,-178.50,Steuerberater,Honorar
+01.03.2024,2380.00,Entwicklung,Projekt B3
+02.03.2024,-59.50,Bankgebühren,Sparkasse
+03.03.2024,715.00,Schulung,Training 3
+04.03.2024,-119.00,Bücher,Fachliteratur 3
+05.03.2024,1785.00,Implementierung,Projekt C3
+06.03.2024,-29.75,Internet,Provider
+07.03.2024,1190.00,Wartung,Service 3
+08.03.2024,-238.00,Miete,Büro
+09.03.2024,2380.00,Customizing,Projekt D3
+10.03.2024,-59.50,Versicherung,Allianz
+11.03.2024,715.00,Dokumentation,Projekt E3
+12.03.2024,-89.25,Marketing,Agentur 6
+13.03.2024,1785.00,Support,Dienstleistung 6
+14.03.2024,-119.00,Weihnachtsfeier,Event 3
+15.03.2024,1190.00,Umsatz,Verkauf 7
+16.03.2024,-59.50,Büromaterial,Einkauf 4
+17.03.2024,2380.00,Dienstleistung,Projekt A4
+18.03.2024,-238.00,Miete,Büro
+19.03.2024,595.00,Beratung,Consulting 4
+20.03.2024,-29.75,Telefon,Telekom
+21.03.2024,1785.00,Softwarelizenz,Verkauf 8
+22.03.2024,-89.25,Marketing,Agentur 7
+23.03.2024,1190.00,Support,Dienstleistung 7
+24.03.2024,-178.50,Steuerberater,Honorar
+25.03.2024,2380.00,Entwicklung,Projekt B4
+26.03.2024,-59.50,Bankgebühren,Sparkasse
+27.03.2024,715.00,Schulung,Training 4
+28.03.2024,-119.00,Bücher,Fachliteratur 4
+29.03.2024,1785.00,Implementierung,Projekt C4
+30.03.2024,-29.75,Internet,Provider
+31.03.2024,1190.00,Wartung,Service 4
+01.04.2024,-238.00,Miete,Büro
+02.04.2024,2380.00,Customizing,Projekt D4
+03.04.2024,-59.50,Versicherung,Allianz
+04.04.2024,715.00,Dokumentation,Projekt E4
+05.04.2024,-89.25,Marketing,Agentur 8
+06.04.2024,1785.00,Support,Dienstleistung 8
+07.04.2024,-119.00,Weihnachtsfeier,Event 4
+08.04.2024,1190.00,Umsatz,Verkauf 9
+09.04.2024,-59.50,Büromaterial,Einkauf 5
+10.04.2024,2380.00,Dienstleistung,Projekt A5
+11.04.2024,-238.00,Miete,Büro
+12.04.2024,595.00,Beratung,Consulting 5
+13.04.2024,-29.75,Telefon,Telekom
+14.04.2024,1785.00,Softwarelizenz,Verkauf 10
+15.04.2024,-89.25,Marketing,Agentur 9
+16.04.2024,1190.00,Support,Dienstleistung 9
+17.04.2024,-178.50,Steuerberater,Honorar
+18.04.2024,2380.00,Entwicklung,Projekt B5
+19.04.2024,-59.50,Bankgebühren,Sparkasse
+20.04.2024,715.00,Schulung,Training 5
+21.04.2024,-119.00,Bücher,Fachliteratur 5
+22.04.2024,1785.00,Implementierung,Projekt C5
+23.04.2024,-29.75,Internet,Provider
+24.04.2024,1190.00,Wartung,Service 5
+25.04.2024,-238.00,Miete,Büro
+26.04.2024,2380.00,Customizing,Projekt D5
+27.04.2024,-59.50,Versicherung,Allianz
+28.04.2024,715.00,Dokumentation,Projekt E5
+29.04.2024,-89.25,Marketing,Agentur 10
+30.04.2024,1785.00,Support,Dienstleistung 10
+01.05.2024,-119.00,Weihnachtsfeier,Event 5
+02.05.2024,1190.00,Umsatz,Verkauf 11
+03.05.2024,-59.50,Büromaterial,Einkauf 6
+04.05.2024,2380.00,Dienstleistung,Projekt A6
+05.05.2024,-238.00,Miete,Büro
+06.05.2024,595.00,Beratung,Consulting 6
+07.05.2024,-29.75,Telefon,Telekom
+08.05.2024,1785.00,Softwarelizenz,Verkauf 12
+09.05.2024,-89.25,Marketing,Agentur 11
+10.05.2024,1190.00,Support,Dienstleistung 11
+11.05.2024,-178.50,Steuerberater,Honorar
+12.05.2024,2380.00,Entwicklung,Projekt B6
+13.05.2024,-59.50,Bankgebühren,Sparkasse
+14.05.2024,715.00,Schulung,Training 6
+15.05.2024,-119.00,Bücher,Fachliteratur 6
+16.05.2024,1785.00,Implementierung,Projekt C6
+17.05.2024,-29.75,Internet,Provider
+18.05.2024,1190.00,Wartung,Service 6
+19.05.2024,-238.00,Miete,Büro
+20.05.2024,2380.00,Customizing,Projekt D6
+21.05.2024,-59.50,Versicherung,Allianz
+22.05.2024,715.00,Dokumentation,Projekt E6
+23.05.2024,-89.25,Marketing,Agentur 12
+24.05.2024,1785.00,Support,Dienstleistung 12
+25.05.2024,-119.00,Weihnachtsfeier,Event 6
+26.05.2024,1190.00,Umsatz,Verkauf 13
+27.05.2024,-59.50,Büromaterial,Einkauf 7
+28.05.2024,2380.00,Dienstleistung,Projekt A7
+29.05.2024,-238.00,Miete,Büro
+30.05.2024,595.00,Beratung,Consulting 7
+31.05.2024,-29.75,Telefon,Telekom
+01.06.2024,1785.00,Softwarelizenz,Verkauf 14
+02.06.2024,-89.25,Marketing,Agentur 13
+03.06.2024,1190.00,Support,Dienstleistung 13
+04.06.2024,-178.50,Steuerberater,Honorar
+05.06.2024,2380.00,Entwicklung,Projekt B7
+06.06.2024,-59.50,Bankgebühren,Sparkasse
+07.06.2024,715.00,Schulung,Training 7
+08.06.2024,-119.00,Bücher,Fachliteratur 7
+09.06.2024,1785.00,Implementierung,Projekt C7
+10.06.2024,-29.75,Internet,Provider
+11.06.2024,1190.00,Wartung,Service 7
+12.06.2024,-238.00,Miete,Büro
+13.06.2024,2380.00,Customizing,Projekt D7
+14.06.2024,-59.50,Versicherung,Allianz
+15.06.2024,715.00,Dokumentation,Projekt E7
+16.06.2024,-89.25,Marketing,Agentur 14
+17.06.2024,1785.00,Support,Dienstleistung 14
+18.06.2024,-119.00,Weihnachtsfeier,Event 7
+19.06.2024,1190.00,Umsatz,Verkauf 15
+20.06.2024,-59.50,Büromaterial,Einkauf 8
+21.06.2024,2380.00,Dienstleistung,Projekt A8
+22.06.2024,-238.00,Miete,Büro
+23.06.2024,595.00,Beratung,Consulting 8
+24.06.2024,-29.75,Telefon,Telekom
+25.06.2024,1785.00,Softwarelizenz,Verkauf 16
+26.06.2024,-89.25,Marketing,Agentur 15
+27.06.2024,1190.00,Support,Dienstleistung 15
+28.06.2024,-178.50,Steuerberater,Honorar
+29.06.2024,2380.00,Entwicklung,Projekt B8
+30.06.2024,-59.50,Bankgebühren,Sparkasse
+01.07.2024,715.00,Schulung,Training 8
+02.07.2024,-119.00,Bücher,Fachliteratur 8
+03.07.2024,1785.00,Implementierung,Projekt C8
+04.07.2024,-29.75,Internet,Provider
+05.07.2024,1190.00,Wartung,Service 8
+06.07.2024,-238.00,Miete,Büro
+07.07.2024,2380.00,Customizing,Projekt D8
+08.07.2024,-59.50,Versicherung,Allianz
+09.07.2024,715.00,Dokumentation,Projekt E8
+10.07.2024,-89.25,Marketing,Agentur 16
+11.07.2024,1785.00,Support,Dienstleistung 16
+12.07.2024,-119.00,Weihnachtsfeier,Event 8
+13.07.2024,1190.00,Umsatz,Verkauf 17
+14.07.2024,-59.50,Büromaterial,Einkauf 9
+15.07.2024,2380.00,Dienstleistung,Projekt A9
+16.07.2024,-238.00,Miete,Büro
+17.07.2024,595.00,Beratung,Consulting 9
+18.07.2024,-29.75,Telefon,Telekom
+19.07.2024,1785.00,Softwarelizenz,Verkauf 18
+20.07.2024,-89.25,Marketing,Agentur 17
+21.07.2024,1190.00,Support,Dienstleistung 17
+22.07.2024,-178.50,Steuerberater,Honorar
+23.07.2024,2380.00,Entwicklung,Projekt B9
+24.07.2024,-59.50,Bankgebühren,Sparkasse
+25.07.2024,715.00,Schulung,Training 9
+26.07.2024,-119.00,Bücher,Fachliteratur 9
+27.07.2024,1785.00,Implementierung,Projekt C9
+28.07.2024,-29.75,Internet,Provider
+29.07.2024,1190.00,Wartung,Service 9
+30.07.2024,-238.00,Miete,Büro
+31.07.2024,2380.00,Customizing,Projekt D9
+01.08.2024,-59.50,Versicherung,Allianz
+02.08.2024,715.00,Dokumentation,Projekt E9
+03.08.2024,-89.25,Marketing,Agentur 18
+04.08.2024,1785.00,Support,Dienstleistung 18
+05.08.2024,-119.00,Weihnachtsfeier,Event 9
+06.08.2024,1190.00,Umsatz,Verkauf 19
+07.08.2024,-59.50,Büromaterial,Einkauf 10
+08.08.2024,2380.00,Dienstleistung,Projekt A10
+09.08.2024,-238.00,Miete,Büro
+10.08.2024,595.00,Beratung,Consulting 10
+11.08.2024,-29.75,Telefon,Telekom
+12.08.2024,1785.00,Softwarelizenz,Verkauf 20
+13.08.2024,-89.25,Marketing,Agentur 19
+14.08.2024,1190.00,Support,Dienstleistung 19
+15.08.2024,-178.50,Steuerberater,Honorar
+16.08.2024,2380.00,Entwicklung,Projekt B10
+17.08.2024,-59.50,Bankgebühren,Sparkasse
+18.08.2024,715.00,Schulung,Training 10
+19.08.2024,-119.00,Bücher,Fachliteratur 10
+20.08.2024,1785.00,Implementierung,Projekt C10
+21.08.2024,-29.75,Internet,Provider
+22.08.2024,1190.00,Wartung,Service 10
+23.08.2024,-238.00,Miete,Büro
+24.08.2024,2380.00,Customizing,Projekt D10
+25.08.2024,-59.50,Versicherung,Allianz
+26.08.2024,715.00,Dokumentation,Projekt E10
+27.08.2024,-89.25,Marketing,Agentur 20
+28.08.2024,1785.00,Support,Dienstleistung 20
+29.08.2024,-119.00,Weihnachtsfeier,Event 10
+30.08.2024,1190.00,Umsatz,Verkauf 21
+31.08.2024,-59.50,Büromaterial,Einkauf 11
+01.09.2024,2380.00,Dienstleistung,Projekt A11
+02.09.2024,-238.00,Miete,Büro
+03.09.2024,595.00,Beratung,Consulting 11
+04.09.2024,-29.75,Telefon,Telekom
+05.09.2024,1785.00,Softwarelizenz,Verkauf 22
+06.09.2024,-89.25,Marketing,Agentur 21
+07.09.2024,1190.00,Support,Dienstleistung 21
+08.09.2024,-178.50,Steuerberater,Honorar
+09.09.2024,2380.00,Entwicklung,Projekt B11
+10.09.2024,-59.50,Bankgebühren,Sparkasse
+11.09.2024,715.00,Schulung,Training 11
+12.09.2024,-119.00,Bücher,Fachliteratur 11
+13.09.2024,1785.00,Implementierung,Projekt C11
+14.09.2024,-29.75,Internet,Provider
+15.09.2024,1190.00,Wartung,Service 11
+16.09.2024,-238.00,Miete,Büro
+17.09.2024,2380.00,Customizing,Projekt D11
+18.09.2024,-59.50,Versicherung,Allianz
+19.09.2024,715.00,Dokumentation,Projekt E11
+20.09.2024,-89.25,Marketing,Agentur 22
+21.09.2024,1785.00,Support,Dienstleistung 22
+22.09.2024,-119.00,Weihnachtsfeier,Event 11
+23.09.2024,1190.00,Umsatz,Verkauf 23
+24.09.2024,-59.50,Büromaterial,Einkauf 12
+25.09.2024,2380.00,Dienstleistung,Projekt A12
+26.09.2024,-238.00,Miete,Büro
+27.09.2024,595.00,Beratung,Consulting 12
+28.09.2024,-29.75,Telefon,Telekom
+29.09.2024,1785.00,Softwarelizenz,Verkauf 24
+30.09.2024,-89.25,Marketing,Agentur 23
+01.10.2024,1190.00,Support,Dienstleistung 23
+02.10.2024,-178.50,Steuerberater,Honorar
+03.10.2024,2380.00,Entwicklung,Projekt B12
+04.10.2024,-59.50,Bankgebühren,Sparkasse
+05.10.2024,715.00,Schulung,Training 12
+06.10.2024,-119.00,Bücher,Fachliteratur 12
+07.10.2024,1785.00,Implementierung,Projekt C12
+08.10.2024,-29.75,Internet,Provider
+09.10.2024,1190.00,Wartung,Service 12
+10.10.2024,-238.00,Miete,Büro
+11.10.2024,2380.00,Customizing,Projekt D12
+12.10.2024,-59.50,Versicherung,Allianz
+13.10.2024,715.00,Dokumentation,Projekt E12
+14.10.2024,-89.25,Marketing,Agentur 24
+15.10.2024,1785.00,Support,Dienstleistung 24
+16.10.2024,-119.00,Weihnachtsfeier,Event 12
+17.10.2024,1190.00,Umsatz,Verkauf 25
+18.10.2024,-59.50,Büromaterial,Einkauf 13
+19.10.2024,2380.00,Dienstleistung,Projekt A13
+20.10.2024,-238.00,Miete,Büro
+21.10.2024,595.00,Beratung,Consulting 13
+22.10.2024,-29.75,Telefon,Telekom
+23.10.2024,1785.00,Softwarelizenz,Verkauf 26
+24.10.2024,-89.25,Marketing,Agentur 25
+25.10.2024,1190.00,Support,Dienstleistung 25
+26.10.2024,-178.50,Steuerberater,Honorar
+27.10.2024,2380.00,Entwicklung,Projekt B13
+28.10.2024,-59.50,Bankgebühren,Sparkasse
+29.10.2024,715.00,Schulung,Training 13
+30.10.2024,-119.00,Bücher,Fachliteratur 13
+31.10.2024,1785.00,Implementierung,Projekt C13
+01.11.2024,-29.75,Internet,Provider
+02.11.2024,1190.00,Wartung,Service 13
+03.11.2024,-238.00,Miete,Büro
+04.11.2024,2380.00,Customizing,Projekt D13
+05.11.2024,-59.50,Versicherung,Allianz
+06.11.2024,715.00,Dokumentation,Projekt E13
+07.11.2024,-89.25,Marketing,Agentur 26
+08.11.2024,1785.00,Support,Dienstleistung 26
+09.11.2024,-119.00,Weihnachtsfeier,Event 13
+10.11.2024,1190.00,Umsatz,Verkauf 27
+11.11.2024,-59.50,Büromaterial,Einkauf 14
+12.11.2024,2380.00,Dienstleistung,Projekt A14
+13.11.2024,-238.00,Miete,Büro
+14.11.2024,595.00,Beratung,Consulting 14
+15.11.2024,-29.75,Telefon,Telekom
+16.11.2024,1785.00,Softwarelizenz,Verkauf 28
+17.11.2024,-89.25,Marketing,Agentur 27
+18.11.2024,1190.00,Support,Dienstleistung 27
+19.11.2024,-178.50,Steuerberater,Honorar
+20.11.2024,2380.00,Entwicklung,Projekt B14
+21.11.2024,-59.50,Bankgebühren,Sparkasse
+22.11.2024,715.00,Schulung,Training 14
+23.11.2024,-119.00,Bücher,Fachliteratur 14
+24.11.2024,1785.00,Implementierung,Projekt C14
+25.11.2024,-29.75,Internet,Provider
+26.11.2024,1190.00,Wartung,Service 14
+27.11.2024,-238.00,Miete,Büro
+28.11.2024,2380.00,Customizing,Projekt D14
+29.11.2024,-59.50,Versicherung,Allianz
+30.11.2024,715.00,Dokumentation,Projekt E14
+01.12.2024,-89.25,Marketing,Agentur 28
+02.12.2024,1785.00,Support,Dienstleistung 28
+03.12.2024,-119.00,Weihnachtsfeier,Event 14
+04.12.2024,1190.00,Umsatz,Verkauf 29
+05.12.2024,-59.50,Büromaterial,Einkauf 15
+06.12.2024,2380.00,Dienstleistung,Projekt A15
+07.12.2024,-238.00,Miete,Büro
+08.12.2024,595.00,Beratung,Consulting 15
+09.12.2024,-29.75,Telefon,Telekom
+10.12.2024,1785.00,Softwarelizenz,Verkauf 30
+11.12.2024,-89.25,Marketing,Agentur 29
+12.12.2024,1190.00,Support,Dienstleistung 29
+13.12.2024,-178.50,Steuerberater,Honorar
+14.12.2024,2380.00,Entwicklung,Projekt B15
+15.12.2024,-59.50,Bankgebühren,Sparkasse
+16.12.2024,715.00,Schulung,Training 15
+17.12.2024,-119.00,Bücher,Fachliteratur 15
+18.12.2024,1785.00,Implementierung,Projekt C15
+19.12.2024,-29.75,Internet,Provider
+20.12.2024,1190.00,Wartung,Service 15
+21.12.2024,-238.00,Miete,Büro
+22.12.2024,2380.00,Customizing,Projekt D15
+23.12.2024,-59.50,Versicherung,Allianz
+24.12.2024,715.00,Dokumentation,Projekt E15
+25.12.2024,-89.25,Marketing,Agentur 30
+26.12.2024,1785.00,Support,Dienstleistung 30
+27.12.2024,-119.00,Weihnachtsfeier,Event 15
+28.12.2024,1190.00,Umsatz,Verkauf 31
+29.12.2024,-59.50,Büromaterial,Einkauf 16
+30.12.2024,2380.00,Dienstleistung,Projekt A16
+31.12.2024,-238.00,Miete,Büro

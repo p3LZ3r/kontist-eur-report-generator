@@ -90,104 +90,74 @@ export const parseHolviCSV = (csvContent: string): Transaction[] => {
     return result;
 };
 
+// Categorization rules for automatic transaction classification
+const CATEGORIZATION_RULES = [
+    // Income rules
+    { type: 'income', patterns: ['erstattung', 'rückerstattung', 'refund', 'rückvergütung'], category: 'income_refunds' },
+    { type: 'income', patterns: ['rg ', 'rechnung', 'invoice'], category: 'income_services_19' },
+    { type: 'income', patterns: ['anzahlung', 'prepayment'], category: 'income_prepayments' },
+    { type: 'income', patterns: ['waren', 'verkauf'], category: 'income_goods_19' },
+
+    // Private withdrawal rules
+    { type: 'private', patterns: ['nike', 'intersport', 'vivobarefoot', 'amazon', 'privat', 'privatentnahme'], category: 'private_withdrawal' },
+
+    // Banking fees
+    { type: 'expense', patterns: ['kontist', 'holvi', 'payment services'], category: 'expense_banking', field: 'counterparty' },
+    { type: 'expense', patterns: ['bank'], category: 'expense_banking' },
+
+    // Tax rules
+    { type: 'private', patterns: ['finanzamt', 'einkommensteuer', 'est', 'vorauszahlung', 'steuernummer'], category: 'private_withdrawal_taxes' },
+    { type: 'expense', patterns: ['gewerbesteuer', 'gst'], category: 'expense_taxes_trade' },
+    { type: 'expense', patterns: ['steuer'], category: 'expense_taxes_other' },
+
+    // Software & IT
+    { type: 'expense', patterns: ['software', 'lizenz', 'adobe', 'microsoft'], category: 'expense_software' },
+
+    // Vehicle costs
+    { type: 'expense', patterns: ['tank', 'sprit', 'kfz'], category: 'expense_vehicle_fuel' },
+    { type: 'expense', patterns: ['shell', 'esso', 'aral'], category: 'expense_vehicle_fuel', field: 'counterparty' },
+
+    // Communication
+    { type: 'expense', patterns: ['telekom', 'vodafone', '1&1'], category: 'expense_phone', field: 'counterparty' },
+    { type: 'expense', patterns: ['telefon'], category: 'expense_phone' },
+    { type: 'expense', patterns: ['internet'], category: 'expense_internet' },
+
+    // Website & Marketing
+    { type: 'expense', patterns: ['website', 'wartung'], category: 'expense_maintenance_website' },
+    { type: 'expense', patterns: ['google', 'facebook', 'meta', 'instagram'], category: 'expense_advertising_online', field: 'counterparty' },
+    { type: 'expense', patterns: ['werbung', 'marketing'], category: 'expense_advertising_print' },
+
+    // Office supplies
+    { type: 'expense', patterns: ['büro', 'office'], category: 'expense_office_supplies', field: 'both', condition: (betrag: number) => betrag < 50 },
+    { type: 'expense', patterns: [], category: 'expense_office_equipment', condition: (betrag: number) => betrag >= 50 && betrag <= 800 }
+];
+
 // Erweiterte automatische Kategorisierung für SKR04
 export const categorizeTransaction = (transaction: Transaction): string => {
     const verwendungszweck = (transaction.purposeField || '').toLowerCase();
     const empfänger = (transaction.counterpartyField || '').toLowerCase();
     const betrag = Math.abs(transaction.BetragNumeric);
+    const isIncome = transaction.BetragNumeric > 0;
 
-    if (transaction.BetragNumeric > 0) {
-        // Einnahmen kategorisieren
-        if (verwendungszweck.includes('erstattung') || verwendungszweck.includes('rückerstattung') ||
-            verwendungszweck.includes('refund') || verwendungszweck.includes('rückvergütung')) {
-            return 'income_refunds';
-        }
-        if (verwendungszweck.includes('rg ') || verwendungszweck.includes('rechnung') ||
-            verwendungszweck.includes('invoice')) {
-            return 'income_services_19';
-        }
-        if (verwendungszweck.includes('anzahlung') || verwendungszweck.includes('prepayment')) {
-            return 'income_prepayments';
-        }
-        if (verwendungszweck.includes('waren') || verwendungszweck.includes('verkauf')) {
-            return 'income_goods_19';
-        }
+    // Check income default first
+    if (isIncome) {
         return 'income_services_19';
     }
 
-    // Ausgaben kategorisieren
+    // Apply categorization rules
+    for (const rule of CATEGORIZATION_RULES) {
+        if (rule.type === 'income' && !isIncome) continue;
+        if (rule.type !== 'income' && isIncome) continue;
 
-    // Privatentnahmen vorschlagen aber zuordbar lassen
-    if (empfänger.includes('nike') || empfänger.includes('intersport') ||
-        empfänger.includes('vivobarefoot') || empfänger.includes('amazon') ||
-        verwendungszweck.includes('privat') || verwendungszweck.includes('privatentnahme')) {
-        return 'private_withdrawal';
-    }
+        const searchText = rule.field === 'counterparty' ? empfänger :
+            rule.field === 'both' ? `${verwendungszweck} ${empfänger}` :
+                verwendungszweck;
 
-    // Bankgebühren
-    if (empfänger.includes('kontist') || empfänger.includes('holvi') ||
-        empfänger.includes('payment services') || verwendungszweck.includes('bank')) {
-        return 'expense_banking';
-    }
+        const matches = rule.patterns.some(pattern => searchText.includes(pattern));
 
-    // Steuern differenzieren
-    if (empfänger.includes('finanzamt') || verwendungszweck.includes('steuer')) {
-        if (verwendungszweck.includes('einkommensteuer') || verwendungszweck.includes('est') ||
-            verwendungszweck.includes('vorauszahlung') || verwendungszweck.includes('steuernummer')) {
-            return 'private_withdrawal_taxes'; // Einkommensteuer = Privatentnahme
+        if (matches && (!rule.condition || rule.condition(betrag))) {
+            return rule.category;
         }
-        if (verwendungszweck.includes('gewerbesteuer') || verwendungszweck.includes('gst')) {
-            return 'expense_taxes_trade';
-        }
-        return 'expense_taxes_other';
-    }
-
-    // Software & IT
-    if (verwendungszweck.includes('software') || verwendungszweck.includes('lizenz') ||
-        verwendungszweck.includes('adobe') || verwendungszweck.includes('microsoft')) {
-        return 'expense_software';
-    }
-
-    // Fahrzeugkosten
-    if (verwendungszweck.includes('tank') || verwendungszweck.includes('sprit') ||
-        verwendungszweck.includes('kfz') || empfänger.includes('shell') ||
-        empfänger.includes('esso') || empfänger.includes('aral')) {
-        return 'expense_vehicle_fuel';
-    }
-
-    // Telefon/Internet
-    if (empfänger.includes('telekom') || empfänger.includes('vodafone') ||
-        empfänger.includes('1&1') || verwendungszweck.includes('telefon')) {
-        return 'expense_phone';
-    }
-    if (verwendungszweck.includes('internet')) {
-        return 'expense_internet';
-    }
-
-    // Website-Wartung
-    if (verwendungszweck.includes('website') || verwendungszweck.includes('wartung')) {
-        return 'expense_maintenance_website';
-    }
-
-    // Online-Marketing
-    if (empfänger.includes('google') || empfänger.includes('facebook') ||
-        empfänger.includes('meta') || empfänger.includes('instagram')) {
-        return 'expense_advertising_online';
-    }
-
-    // Werbung allgemein
-    if (verwendungszweck.includes('werbung') || verwendungszweck.includes('marketing')) {
-        return 'expense_advertising_print';
-    }
-
-    // Büromaterial (kleine Beträge)
-    if (betrag < 50 && (verwendungszweck.includes('büro') || empfänger.includes('office'))) {
-        return 'expense_office_supplies';
-    }
-
-    // Geringwertige Wirtschaftsgüter
-    if (betrag >= 50 && betrag <= 800) {
-        return 'expense_office_equipment';
     }
 
     return 'expense_other';
