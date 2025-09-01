@@ -104,7 +104,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                         <Button
                             key={section.id}
                             variant={currentSection === section.id ? 'default' : 'ghost'}
-                            className={`w-full justify-start p-4 h-auto ${currentSection === section.id
+                            className={`w-full justify-start p-3 h-auto ${currentSection === section.id
                                 ? 'bg-primary text-primary-foreground'
                                 : 'hover:bg-muted'
                                 }`}

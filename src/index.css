@@ -307,10 +307,10 @@
     display: block;
     width: 100%;
     overflow-x: auto;
-    margin-left: -1rem;
-    margin-right: -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
   .mobile-table table {
     min-width: 100%;

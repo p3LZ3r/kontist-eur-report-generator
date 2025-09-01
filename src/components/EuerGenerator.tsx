@@ -224,7 +224,7 @@ const EuerGenerator = () => {
     }, []);
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-6">
             {/* Error Display */}
             {errorMessage && (
                 <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 animate-fade-in">
@@ -244,8 +244,8 @@ const EuerGenerator = () => {
                 </div>
             )}
             <Card className="animate-fade-in">
-                <CardContent className="p-8">
-                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-6">
+                <CardContent className="p-6">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
                         <div className="flex-1">
                             <h1 className="text-4xl font-bold text-foreground mb-3 flex items-center gap-3">
                                 <Calculator className="text-primary" size={32} aria-hidden="true" />
@@ -321,12 +321,12 @@ const EuerGenerator = () => {
 
             {/* Unternehmensdaten */}
             <Card className="animate-fade-in">
-                <CardContent className="p-8">
+                <CardContent className="p-6">
                     <h2 className="text-2xl font-semibold mb-6 text-foreground flex items-center gap-2">
                         <Building className="text-primary" size={24} aria-hidden="true" />
                         Unternehmensdaten
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
                             <label htmlFor="companyName" className="block text-sm font-medium text-foreground">
                                 Unternehmensname
@@ -387,7 +387,7 @@ const EuerGenerator = () => {
 
             {/* Persönliche Steuerdaten */}
             <Card className="animate-fade-in">
-                <CardContent className="p-8">
+                <CardContent className="p-6">
                     <h2 className="text-2xl font-semibold mb-6 text-foreground flex items-center gap-2">
                         <User className="text-primary" size={24} aria-hidden="true" />
                         Persönliche Steuerdaten
@@ -395,7 +395,7 @@ const EuerGenerator = () => {
                     <p className="text-muted-foreground mb-6">
                         Diese Informationen werden für die automatische Ausfüllung der ELSTER-Felder verwendet.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
                             <label htmlFor="taxName" className="block text-sm font-medium text-foreground">
                                 Name *
@@ -535,7 +535,7 @@ const EuerGenerator = () => {
 
             {/* File Upload */}
             <Card className="animate-fade-in">
-                <CardContent className="p-8">
+                <CardContent className="p-6">
                     <h2 className="text-2xl font-semibold mb-6 text-foreground flex items-center gap-2">
                         <Upload className="text-primary" size={24} aria-hidden="true" />
                         CSV-Datei hochladen
@@ -587,7 +587,7 @@ const EuerGenerator = () => {
             {/* Transaktionsübersicht mit Pagination */}
             {transactions.length > 0 && (
                 <Card className="animate-fade-in">
-                    <CardContent className="p-8">
+                    <CardContent className="p-6">
                         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-6">
                             <h2 className="text-2xl font-semibold text-foreground flex items-center gap-2">
                                 <FileText className="text-primary" size={24} aria-hidden="true" />
@@ -815,7 +815,7 @@ const EuerGenerator = () => {
 
             {/* ELSTER Guidance System */}
             {showGuidance && guidanceData && (
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                     {/* Navigation Sidebar */}
                     <div className="lg:col-span-1">
                         <NavigationSidebar
@@ -911,367 +911,370 @@ const EuerGenerator = () => {
 
             {/* Legacy Elster Overview (when not in guidance mode) */}
             {!showGuidance && transactions.length > 0 && (
-                <div className="bg-white rounded-lg shadow p-6 mb-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold flex items-center gap-2">
-                            <FileText className="text-blue-600" aria-hidden="true" />
-                            Elster EÜR-Übertragung
-                        </h2>
-                        <Button
-                            onClick={() => setShowGuidance(true)}
-                            variant="outline"
-                            size="sm"
-                            className="flex items-center gap-2"
-                        >
-                            <Target size={16} />
-                            Interaktive Navigation
-                        </Button>
-                    </div>
+                <Card className="mb-6">
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-xl font-semibold flex items-center gap-2">
+                                <FileText className="text-blue-600" aria-hidden="true" />
+                                Elster EÜR-Übertragung
+                            </h2>
+                            <Button
+                                onClick={() => setShowGuidance(true)}
+                                variant="outline"
+                                size="sm"
+                                className="flex items-center gap-2"
+                            >
+                                <Target size={16} />
+                                Interaktive Navigation
+                            </Button>
+                        </div>
 
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                        <div className="flex items-start gap-2">
-                            <Info className="text-blue-600 mt-1" size={20} aria-hidden="true" />
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                            <div className="flex items-start gap-2">
+                                <Info className="text-blue-600 mt-1" size={20} aria-hidden="true" />
+                                <div>
+                                    <h3 className="font-medium text-blue-800">Direkte Übertragung in Elster</h3>
+                                    <p className="text-blue-700 text-sm mt-1">
+                                        Die Beträge sind nach Elster-Zeilennummern gruppiert. Übertragen Sie die Werte direkt in Ihr Elster-Formular.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            {/* Einnahmen */}
                             <div>
-                                <h3 className="font-medium text-blue-800">Direkte Übertragung in Elster</h3>
-                                <p className="text-blue-700 text-sm mt-1">
-                                    Die Beträge sind nach Elster-Zeilennummern gruppiert. Übertragen Sie die Werte direkt in Ihr Elster-Formular.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {/* Einnahmen */}
-                        <div>
-                            <h3 className="text-lg font-medium text-green-600 mb-4">📋 Elster-Einnahmen</h3>
-                            <div className="space-y-3">
-                                {Object.entries(elsterSummary)
-                                    .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.INCOME_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.INCOME_END)
-                                    .sort(([a], [b]) => parseInt(a) - parseInt(b))
-                                    .map(([fieldNumber, fieldData]) => (
-                                        <div key={fieldNumber} className="bg-green-50 border border-green-200 rounded p-3">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <div className="font-medium text-green-800">
-                                                    📝 Zeile {fieldNumber}
+                                <h3 className="text-lg font-medium text-green-600 mb-4">📋 Elster-Einnahmen</h3>
+                                <div className="space-y-3">
+                                    {Object.entries(elsterSummary)
+                                        .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.INCOME_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.INCOME_END)
+                                        .sort(([a], [b]) => parseInt(a) - parseInt(b))
+                                        .map(([fieldNumber, fieldData]) => (
+                                            <div key={fieldNumber} className="bg-green-50 border border-green-200 rounded p-3">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <div className="font-medium text-green-800">
+                                                        📝 Zeile {fieldNumber}
+                                                    </div>
+                                                    <div className="text-green-700 font-bold text-lg">
+                                                        {fieldData.amount.toFixed(2)} €
+                                                    </div>
                                                 </div>
-                                                <div className="text-green-700 font-bold text-lg">
-                                                    {fieldData.amount.toFixed(2)} €
+                                                <div className="text-sm text-green-700 font-medium mb-2">
+                                                    {fieldData.label}
                                                 </div>
-                                            </div>
-                                            <div className="text-sm text-green-700 font-medium mb-2">
-                                                {fieldData.label}
-                                            </div>
-                                            <div className="text-xs text-green-600">
-                                                {fieldData.categories.map((cat, idx) => (
-                                                    <div key={`${fieldNumber}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    ))}
-                            </div>
-                        </div>
-
-                        {/* Ausgaben */}
-                        <div>
-                            <h3 className="text-lg font-medium text-red-600 mb-4">📋 Elster-Ausgaben</h3>
-                            <div className="space-y-3 max-h-96 overflow-y-auto">
-                                {Object.entries(elsterSummary)
-                                    .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.EXPENSE_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.EXPENSE_END)
-                                    .sort(([a], [b]) => parseInt(a) - parseInt(b))
-                                    .map(([fieldNumber, fieldData]) => (
-                                        <div key={fieldNumber} className="bg-red-50 border border-red-200 rounded p-3">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <div className="font-medium text-red-800">
-                                                    📝 Zeile {fieldNumber}
+                                                <div className="text-xs text-green-600">
+                                                    {fieldData.categories.map((cat, idx) => (
+                                                        <div key={`${fieldNumber}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
+                                                    ))}
                                                 </div>
-                                                <div className="text-red-700 font-bold text-lg">
-                                                    {fieldData.amount.toFixed(2)} € {(fieldData as any).note || ''}
-                                                </div>
-                                            </div>
-                                            <div className="text-sm text-red-700 font-medium mb-2">
-                                                {fieldData.label}
-                                            </div>
-                                            <div className="text-xs text-red-600">
-                                                {fieldData.categories.map((cat, idx) => (
-                                                    <div key={`${fieldNumber}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Elster Download */}
-                    <div className="mt-6 text-center space-y-3">
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <h4 className="font-medium text-gray-800 mb-2">✅ Bereit für Elster-Übertragung</h4>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                                <div>
-                                    <div className="text-gray-600">Einnahmen gesamt:</div>
-                                    <div className="font-bold text-green-600">
-                                        {Object.entries(elsterSummary)
-                                            .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.INCOME_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.INCOME_END)
-                                            .reduce((sum, [, fieldData]) => sum + fieldData.amount, 0)
-                                            .toFixed(2)} €
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="text-gray-600">Ausgaben gesamt:</div>
-                                    <div className="font-bold text-red-600">
-                                        {Object.entries(elsterSummary)
-                                            .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.EXPENSE_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.EXPENSE_END)
-                                            .reduce((sum, [, fieldData]) => sum + fieldData.amount, 0)
-                                            .toFixed(2)} €
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="text-gray-600">Gewinn/Verlust:</div>
-                                    <div className={`font-bold ${euerCalculation.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                        {euerCalculation.profit.toFixed(2)} €
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="text-gray-600">Status:</div>
-                                    <div className="font-bold text-blue-600">
-                                        {isKleinunternehmer ? 'KU §19' : 'USt-pflichtig'}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <Button
-                                onClick={() => {
-                                    if (validateElsterExport()) {
-                                        handleElsterCSVExport();
-                                    }
-                                }}
-                                variant="default"
-                                className="flex items-center gap-2"
-                            >
-                                <Download size={20} aria-hidden="true" />
-                                ELSTER CSV Export
-                            </Button>
-
-                            <Button
-                                onClick={() => {
-                                    if (validateElsterExport()) {
-                                        handleElsterJSONExport();
-                                    }
-                                }}
-                                variant="outline"
-                                className="flex items-center gap-2"
-                            >
-                                <Download size={20} aria-hidden="true" />
-                                ELSTER JSON Export
-                            </Button>
-
-                            <Button
-                                onClick={downloadElsterOverview}
-                                variant="outline"
-                                className="flex items-center gap-2"
-                            >
-                                <Download size={20} aria-hidden="true" />
-                                Legacy Text Export
-                            </Button>
-
-                            <Button
-                                onClick={generateReportHandler}
-                                variant="default"
-                                className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
-                            >
-                                <Download size={20} aria-hidden="true" />
-                                Detaillierte EÜR exportieren
-                            </Button>
-                        </div>
-                    </div>
-
-                    <div className="mt-4 text-xs text-gray-500 bg-gray-50 p-3 rounded">
-                        <strong>💡 Anleitung:</strong> Öffnen Sie Elster → EÜR-Formular → Übertragen Sie die Beträge in die entsprechenden Zeilen.
-                        Die Zeilennummern entsprechen exakt den Elster-Formularfeldern.
-                    </div>
-                </div>
-            )}
-
-            {/* EÜR-Ergebnis */}
-            {transactions.length > 0 && (
-                <div className="bg-white rounded-lg shadow p-6 mb-6">
-                    <h2 className="text-xl font-semibold mb-4">Einnahmen-Überschuss-Rechnung (SKR04)</h2>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Einnahmen */}
-                        <div>
-                            <h3 className="text-lg font-medium text-green-600 mb-3">Betriebseinnahmen</h3>
-                            <div className="space-y-1 max-h-64 overflow-y-auto">
-                                {Object.entries(euerCalculation.income).map(([key, amount]) => (
-                                    <div key={key} className="flex justify-between text-sm">
-                                        <span className="truncate">{skr04Categories[key]?.code} {skr04Categories[key]?.name}</span>
-                                        <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="border-t mt-3 pt-2 flex justify-between font-bold text-green-600">
-                                <span>Gesamteinnahmen:</span>
-                                <span>{euerCalculation.totalIncome.toFixed(2)}€</span>
-                            </div>
-                        </div>
-
-                        {/* Ausgaben */}
-                        <div>
-                            <h3 className="text-lg font-medium text-red-600 mb-3">Betriebsausgaben</h3>
-                            <div className="space-y-1 max-h-64 overflow-y-auto">
-                                {Object.entries(euerCalculation.expenses).map(([key, amount]) => (
-                                    <div key={key} className="flex justify-between text-sm">
-                                        <span className="truncate">{skr04Categories[key]?.code} {skr04Categories[key]?.name}</span>
-                                        <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="border-t mt-3 pt-2 flex justify-between font-bold text-red-600">
-                                <span>Gesamtausgaben:</span>
-                                <span>{euerCalculation.totalExpenses.toFixed(2)}€</span>
-                            </div>
-                        </div>
-
-                        {/* Zusammenfassung */}
-                        <div className="bg-gray-50 p-4 rounded">
-                            <h3 className="text-lg font-medium mb-1">Zusammenfassung</h3>
-                            <div className="text-xs text-blue-600 mb-3">
-                                {isKleinunternehmer ? '§ 19 UStG - Bruttobeträge' : 'USt-pflichtig - Nettobeträge + USt separat'}
-                            </div>
-
-                            <div className="space-y-2 text-sm">
-                                <div className="text-xs text-gray-500 mb-2">
-                                    {isKleinunternehmer
-                                        ? '📊 Beträge: Brutto (inkl. USt)'
-                                        : '📊 Beträge: Netto (ohne USt)'
-                                    }
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Betriebseinnahmen:</span>
-                                    <span className="text-green-600 font-medium">{euerCalculation.totalIncome.toFixed(2)}€</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Betriebsausgaben:</span>
-                                    <span className="text-red-600 font-medium">-{euerCalculation.totalExpenses.toFixed(2)}€</span>
-                                </div>
-                                <div className="border-t pt-2 flex justify-between font-bold">
-                                    <span>Steuerpflichtiger Gewinn:</span>
-                                    <span className={euerCalculation.profit >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                        {euerCalculation.profit.toFixed(2)}€
-                                    </span>
-                                </div>
-
-                                {/* Privatbereich */}
-                                {Object.keys(euerCalculation.privateTransactions).length > 0 && (
-                                    <div className="border-t pt-2 mt-2">
-                                        <h4 className="font-medium text-orange-600 mb-1">Privatbereich</h4>
-                                        {Object.entries(euerCalculation.privateTransactions).map(([key, amount]) => (
-                                            <div key={key} className="flex justify-between text-orange-600 text-xs">
-                                                <span>{skr04Categories[key]?.name}:</span>
-                                                <span>{amount.toFixed(2)}€</span>
                                             </div>
                                         ))}
-                                        <div className="flex justify-between font-medium mt-1">
-                                            <span>Verbleibt im Betrieb:</span>
-                                            <span>{(euerCalculation.profit - euerCalculation.privateWithdrawals + euerCalculation.privateDeposits).toFixed(2)}€</span>
-                                        </div>
-                                    </div>
-                                )}
+                                </div>
                             </div>
 
-                            {/* USt-Berechnung */}
-                            {!isKleinunternehmer && (
-                                <div className="mt-4 pt-3 border-t">
-                                    <h4 className="font-medium text-blue-600 mb-2">Umsatzsteuer-Voranmeldung</h4>
-                                    <div className="space-y-1 text-sm">
-                                        <div className="flex justify-between">
-                                            <span>Umsatzsteuer (schuldig):</span>
-                                            <span>{euerCalculation.vatOwed.toFixed(2)}€</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>Vorsteuer (bezahlt):</span>
-                                            <span>-{euerCalculation.vatPaid.toFixed(2)}€</span>
-                                        </div>
-                                        <div className="flex justify-between font-medium">
-                                            <span>USt-Saldo:</span>
-                                            <span className={euerCalculation.vatBalance >= 0 ? 'text-red-600' : 'text-green-600'}>
-                                                {euerCalculation.vatBalance.toFixed(2)}€
-                                                {euerCalculation.vatBalance >= 0 ? ' (nachzahlen)' : ' (Erstattung)'}
-                                            </span>
-                                        </div>
-                                    </div>
+                            {/* Ausgaben */}
+                            <div>
+                                <h3 className="text-lg font-medium text-red-600 mb-4">📋 Elster-Ausgaben</h3>
+                                <div className="space-y-3 max-h-96 overflow-y-auto">
+                                    {Object.entries(elsterSummary)
+                                        .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.EXPENSE_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.EXPENSE_END)
+                                        .sort(([a], [b]) => parseInt(a) - parseInt(b))
+                                        .map(([fieldNumber, fieldData]) => (
+                                            <div key={fieldNumber} className="bg-red-50 border border-red-200 rounded p-3">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <div className="font-medium text-red-800">
+                                                        📝 Zeile {fieldNumber}
+                                                    </div>
+                                                    <div className="text-red-700 font-bold text-lg">
+                                                        {fieldData.amount.toFixed(2)} € {(fieldData as any).note || ''}
+                                                    </div>
+                                                </div>
+                                                <div className="text-sm text-red-700 font-medium mb-2">
+                                                    {fieldData.label}
+                                                </div>
+                                                <div className="text-xs text-red-600">
+                                                    {fieldData.categories.map((cat, idx) => (
+                                                        <div key={`${fieldNumber}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
                                 </div>
-                            )}
-
-                            {isKleinunternehmer && (
-                                <div className="mt-4 pt-3 border-t">
-                                    <div className="text-xs text-gray-600 bg-gray-100 p-2 rounded">
-                                        <strong>Kleinunternehmerregelung § 19 UStG</strong><br />
-                                        Keine Umsatzsteuer-Berechnung
-                                    </div>
-                                </div>
-                            )}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Export Button */}
-                    <div className="mt-6 text-center">
-                        <Button
-                            onClick={generateReportHandler}
-                            variant="default"
-                            className="bg-green-600 hover:bg-green-700 flex items-center gap-2 mx-auto"
-                        >
-                            <Download size={20} aria-hidden="true" />
-                            SKR04 EÜR exportieren
-                        </Button>
-                    </div>
-                </div>
-            )}
+                        {/* Elster Download */}
+                        <div className="mt-6 text-center space-y-3">
+                            <div className="bg-gray-100 p-4 rounded-lg">
+                                <h4 className="font-medium text-gray-800 mb-2">✅ Bereit für Elster-Übertragung</h4>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                    <div>
+                                        <div className="text-gray-600">Einnahmen gesamt:</div>
+                                        <div className="font-bold text-green-600">
+                                            {Object.entries(elsterSummary)
+                                                .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.INCOME_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.INCOME_END)
+                                                .reduce((sum, [, fieldData]) => sum + fieldData.amount, 0)
+                                                .toFixed(2)} €
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="text-gray-600">Ausgaben gesamt:</div>
+                                        <div className="font-bold text-red-600">
+                                            {Object.entries(elsterSummary)
+                                                .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.EXPENSE_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.EXPENSE_END)
+                                                .reduce((sum, [, fieldData]) => sum + fieldData.amount, 0)
+                                                .toFixed(2)} €
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="text-gray-600">Gewinn/Verlust:</div>
+                                        <div className={`font-bold ${euerCalculation.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                            {euerCalculation.profit.toFixed(2)} €
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="text-gray-600">Status:</div>
+                                        <div className="font-bold text-blue-600">
+                                            {isKleinunternehmer ? 'KU §19' : 'USt-pflichtig'}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-            {transactions.length === 0 && (
-                <Card className="animate-scale-in">
-                    <CardContent className="p-12 text-center">
-                        <FileText className="mx-auto text-muted-foreground mb-6" size={80} aria-hidden="true" />
-                        <h3 className="text-2xl font-semibold text-foreground mb-4">
-                            Bereit für Ihre EÜR-Erstellung
-                        </h3>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                            Laden Sie Ihre Bank-Transaktionen als CSV-Datei hoch, um automatisch kategorisiert zu werden und Ihre Einnahmen-Überschuss-Rechnung zu erstellen.
-                        </p>
-                        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <div className="w-2 h-2 bg-success rounded-full"></div>
-                                Kontist CSV unterstützt
+                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                                <Button
+                                    onClick={() => {
+                                        if (validateElsterExport()) {
+                                            handleElsterCSVExport();
+                                        }
+                                    }}
+                                    variant="default"
+                                    className="flex items-center gap-2"
+                                >
+                                    <Download size={20} aria-hidden="true" />
+                                    ELSTER CSV Export
+                                </Button>
+
+                                <Button
+                                    onClick={() => {
+                                        if (validateElsterExport()) {
+                                            handleElsterJSONExport();
+                                        }
+                                    }}
+                                    variant="outline"
+                                    className="flex items-center gap-2"
+                                >
+                                    <Download size={20} aria-hidden="true" />
+                                    ELSTER JSON Export
+                                </Button>
+
+                                <Button
+                                    onClick={downloadElsterOverview}
+                                    variant="outline"
+                                    className="flex items-center gap-2"
+                                >
+                                    <Download size={20} aria-hidden="true" />
+                                    Legacy Text Export
+                                </Button>
+
+                                <Button
+                                    onClick={generateReportHandler}
+                                    variant="default"
+                                    className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+                                >
+                                    <Download size={20} aria-hidden="true" />
+                                    Detaillierte EÜR exportieren
+                                </Button>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <div className="w-2 h-2 bg-info rounded-full"></div>
-                                Holvi CSV unterstützt
-                            </div>
+                        </div>
+
+                        <div className="mt-4 text-xs text-gray-500 bg-gray-50 p-3 rounded">
+                            <strong>💡 Anleitung:</strong> Öffnen Sie Elster → EÜR-Formular → Übertragen Sie die Beträge in die entsprechenden Zeilen.
+                            Die Zeilennummern entsprechen exakt den Elster-Formularfeldern.
                         </div>
                     </CardContent>
                 </Card>
             )}
 
-            {/* Modals */}
-            {fieldDetailModal.field && (
-                <FieldDetailModal
-                    field={fieldDetailModal.field}
-                    drillDownData={fieldDetailModal.drillDownData}
-                    transactions={getFieldTransactions(fieldDetailModal.field, transactions, categories)}
-                    isOpen={fieldDetailModal.isOpen}
-                    onClose={closeFieldDetailModal}
-                />
+            {/* EÜR-Ergebnis */}
+            {transactions.length > 0 && (
+                <Card className="mb-6">
+                    <CardContent className="p-6">
+                        <h2 className="text-xl font-semibold mb-4">Einnahmen-Überschuss-Rechnung (SKR04)</h2>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                            {/* Einnahmen */}
+                            <div>
+                                <h3 className="text-lg font-medium text-green-600 mb-3">Betriebseinnahmen</h3>
+                                <div className="space-y-1 max-h-64 overflow-y-auto">
+                                    {Object.entries(euerCalculation.income).map(([key, amount]) => (
+                                        <div key={key} className="flex justify-between text-sm">
+                                            <span className="truncate">{skr04Categories[key]?.code} {skr04Categories[key]?.name}</span>
+                                            <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="border-t mt-3 pt-2 flex justify-between font-bold text-green-600">
+                                    <span>Gesamteinnahmen:</span>
+                                    <span>{euerCalculation.totalIncome.toFixed(2)}€</span>
+                                </div>
+                            </div>
+
+                            {/* Ausgaben */}
+                            <div>
+                                <h3 className="text-lg font-medium text-red-600 mb-3">Betriebsausgaben</h3>
+                                <div className="space-y-1 max-h-64 overflow-y-auto">
+                                    {Object.entries(euerCalculation.expenses).map(([key, amount]) => (
+                                        <div key={key} className="flex justify-between text-sm">
+                                            <span className="truncate">{skr04Categories[key]?.code} {skr04Categories[key]?.name}</span>
+                                            <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="border-t mt-3 pt-2 flex justify-between font-bold text-red-600">
+                                    <span>Gesamtausgaben:</span>
+                                    <span>{euerCalculation.totalExpenses.toFixed(2)}€</span>
+                                </div>
+                            </div>
+
+                            {/* Zusammenfassung */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="text-lg font-medium mb-1">Zusammenfassung</h3>
+                                <div className="text-xs text-blue-600 mb-3">
+                                    {isKleinunternehmer ? '§ 19 UStG - Bruttobeträge' : 'USt-pflichtig - Nettobeträge + USt separat'}
+                                </div>
+
+                                <div className="space-y-2 text-sm">
+                                    <div className="text-xs text-gray-500 mb-2">
+                                        {isKleinunternehmer
+                                            ? '📊 Beträge: Brutto (inkl. USt)'
+                                            : '📊 Beträge: Netto (ohne USt)'
+                                        }
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Betriebseinnahmen:</span>
+                                        <span className="text-green-600 font-medium">{euerCalculation.totalIncome.toFixed(2)}€</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Betriebsausgaben:</span>
+                                        <span className="text-red-600 font-medium">-{euerCalculation.totalExpenses.toFixed(2)}€</span>
+                                    </div>
+                                    <div className="border-t pt-2 flex justify-between font-bold">
+                                        <span>Steuerpflichtiger Gewinn:</span>
+                                        <span className={euerCalculation.profit >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                            {euerCalculation.profit.toFixed(2)}€
+                                        </span>
+                                    </div>
+
+                                    {/* Privatbereich */}
+                                    {Object.keys(euerCalculation.privateTransactions).length > 0 && (
+                                        <div className="border-t pt-2 mt-2">
+                                            <h4 className="font-medium text-orange-600 mb-1">Privatbereich</h4>
+                                            {Object.entries(euerCalculation.privateTransactions).map(([key, amount]) => (
+                                                <div key={key} className="flex justify-between text-orange-600 text-xs">
+                                                    <span>{skr04Categories[key]?.name}:</span>
+                                                    <span>{amount.toFixed(2)}€</span>
+                                                </div>
+                                            ))}
+                                            <div className="flex justify-between font-medium mt-1">
+                                                <span>Verbleibt im Betrieb:</span>
+                                                <span>{(euerCalculation.profit - euerCalculation.privateWithdrawals + euerCalculation.privateDeposits).toFixed(2)}€</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* USt-Berechnung */}
+                                {!isKleinunternehmer && (
+                                    <div className="mt-4 pt-3 border-t">
+                                        <h4 className="font-medium text-blue-600 mb-2">Umsatzsteuer-Voranmeldung</h4>
+                                        <div className="space-y-1 text-sm">
+                                            <div className="flex justify-between">
+                                                <span>Umsatzsteuer (schuldig):</span>
+                                                <span>{euerCalculation.vatOwed.toFixed(2)}€</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span>Vorsteuer (bezahlt):</span>
+                                                <span>-{euerCalculation.vatPaid.toFixed(2)}€</span>
+                                            </div>
+                                            <div className="flex justify-between font-medium">
+                                                <span>USt-Saldo:</span>
+                                                <span className={euerCalculation.vatBalance >= 0 ? 'text-red-600' : 'text-green-600'}>
+                                                    {euerCalculation.vatBalance.toFixed(2)}€
+                                                    {euerCalculation.vatBalance >= 0 ? ' (nachzahlen)' : ' (Erstattung)'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {isKleinunternehmer && (
+                                    <div className="mt-4 pt-3 border-t">
+                                        <div className="text-xs text-gray-600 bg-gray-100 p-2 rounded">
+                                            <strong>Kleinunternehmerregelung § 19 UStG</strong><br />
+                                            Keine Umsatzsteuer-Berechnung
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Export Button */}
+                        <div className="mt-6 text-center">
+                            <Button
+                                onClick={generateReportHandler}
+                                variant="default"
+                                className="bg-green-600 hover:bg-green-700 flex items-center gap-2 mx-auto"
+                            >
+                                <Download size={20} aria-hidden="true" />
+                                SKR04 EÜR exportieren
+                            </Button>
+                        </div>
+                    </div>
             )}
 
-            <HelpModal
-                isOpen={helpModal.isOpen}
-                onClose={closeHelpModal}
-                section={helpModal.section}
-            />
-        </div>
-    );
+                    {transactions.length === 0 && (
+                        <Card className="animate-scale-in">
+                            <CardContent className="p-6 text-center">
+                                <FileText className="mx-auto text-muted-foreground mb-6" size={80} aria-hidden="true" />
+                                <h3 className="text-2xl font-semibold text-foreground mb-4">
+                                    Bereit für Ihre EÜR-Erstellung
+                                </h3>
+                                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+                                    Laden Sie Ihre Bank-Transaktionen als CSV-Datei hoch, um automatisch kategorisiert zu werden und Ihre Einnahmen-Überschuss-Rechnung zu erstellen.
+                                </p>
+                                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <div className="w-2 h-2 bg-success rounded-full"></div>
+                                        Kontist CSV unterstützt
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <div className="w-2 h-2 bg-info rounded-full"></div>
+                                        Holvi CSV unterstützt
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {/* Modals */}
+                    {fieldDetailModal.field && (
+                        <FieldDetailModal
+                            field={fieldDetailModal.field}
+                            drillDownData={fieldDetailModal.drillDownData}
+                            transactions={getFieldTransactions(fieldDetailModal.field, transactions, categories)}
+                            isOpen={fieldDetailModal.isOpen}
+                            onClose={closeFieldDetailModal}
+                        />
+                    )}
+
+                    <HelpModal
+                        isOpen={helpModal.isOpen}
+                        onClose={closeHelpModal}
+                        section={helpModal.section}
+                    />
+                </div>
+            );
 };
 
-export default EuerGenerator;
+            export default EuerGenerator;

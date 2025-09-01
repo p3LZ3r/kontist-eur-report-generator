@@ -168,9 +168,9 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose, section }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden">
-                <div className="flex items-center justify-between p-6 border-b">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-hidden p-6">
+                <div className="flex items-center justify-between border-b">
                     <div className="flex items-center gap-3">
                         {helpData.icon}
                         <h2 className="text-2xl font-semibold">{helpData.title}</h2>
@@ -180,7 +180,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose, section }) => {
                     </Button>
                 </div>
 
-                <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+                <div className="overflow-y-auto max-h-[calc(90vh-140px)]">
                     <div className="space-y-6">
                         {helpData.content.map((item, index) => (
                             <Card key={index} className={`border ${getContentStyle(item.type)}`}>
