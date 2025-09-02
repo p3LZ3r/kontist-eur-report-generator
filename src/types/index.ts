@@ -35,13 +35,7 @@ export interface Transaction {
   [key: string]: any;
 }
 
-export interface CompanyInfo {
-  name: string;
-  address: string;
-  taxNumber: string;
-  vatNumber: string;
-  taxRate: string;
-}
+
 
 export interface EuerCalculation {
   income: { [key: string]: number };
@@ -72,24 +66,7 @@ export interface ElsterField {
   required: boolean;
 }
 
-export interface UserTaxData {
-  name: string;
-  firstName?: string;
-  street: string;
-  houseNumber: string;
-  postalCode: string;
-  city: string;
-  taxNumber: string;
-  vatId?: string;
-  fiscalYearStart: string;
-  fiscalYearEnd: string;
-  profession: string;
-  profitDeterminationMethod: string;
-  isKleinunternehmer: boolean;
-  isVatLiable: boolean;
-  isBookkeepingRequired: boolean;
-  isBalanceSheetRequired: boolean;
-}
+
 
 export interface ElsterFieldValue {
   field: string;
@@ -153,4 +130,11 @@ export interface NavigationState {
   helpVisible: boolean;
   modalOpen: boolean;
   selectedField?: string;
+}
+
+export interface CompanyInfo {
+  name?: string;
+  address?: string;
+  taxNumber?: string;
+  vatNumber?: string;
 }

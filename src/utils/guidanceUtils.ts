@@ -4,8 +4,7 @@ import type {
     NavigationSection,
     FieldGroup,
     ProgressState,
-    DrillDownData,
-    UserTaxData
+    DrillDownData
 } from '../types';
 import {
     populateAllElsterFields
@@ -185,14 +184,12 @@ export const generateDrillDownData = (
 export const prepareGuidanceData = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    userTaxData: UserTaxData,
     isKleinunternehmer: boolean
 ) => {
     // Get populated fields
     const { fieldValues } = populateAllElsterFields(
         transactions,
         categories,
-        userTaxData,
         isKleinunternehmer
     );
 

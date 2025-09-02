@@ -28,13 +28,7 @@ export const ELSTER_FIELD_RANGES = {
     EXTENDED_END: 60
 } as const;
 
-export const DEFAULT_COMPANY_INFO = {
-    name: '',
-    address: '',
-    taxNumber: '',
-    vatNumber: '',
-    taxRate: '19'
-};
+
 
 // Complete ELSTER EÜR field definitions
 export const ELSTER_FIELDS = {

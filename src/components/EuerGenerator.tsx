@@ -1,13 +1,13 @@
-import { useState, useCallback, useMemo } from 'react';
-import { Upload, Download, Calculator, FileText, Building, Info, ChevronLeft, ChevronRight, Settings, User, Target } from 'lucide-react';
-import { skr04Categories } from '../utils/categoryMappings';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { Upload, Download, Calculator, FileText, Building, Info, ChevronLeft, ChevronRight, Settings, Target } from 'lucide-react';
+import { getCategoriesForSkr, skr04Categories } from '../utils/categoryMappings';
 import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction } from '../utils/transactionUtils';
 import { calculateEuer, generateElsterOverview } from '../utils/euerCalculations';
 import { generateReport, downloadReport, downloadElsterCSV, downloadElsterJSON, validateElsterData } from '../utils/exportUtils';
-import { PAGINATION, DEFAULT_COMPANY_INFO, ELSTER_FIELD_RANGES } from '../utils/constants';
-import { prepareGuidanceData, generateDrillDownData, getFieldTransactions } from '../utils/guidanceUtils';
+import { PAGINATION, ELSTER_FIELD_RANGES } from '../utils/constants';
+import { prepareGuidanceData, generateDrillDownData } from '../utils/guidanceUtils';
 import { Button } from './ui/button';
-import { Input } from './ui/input';
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Checkbox } from './ui/checkbox';
 import { Card, CardContent } from './ui/card';
@@ -18,7 +18,6 @@ import HelpModal from './HelpModal';
 
 import type {
     Transaction,
-    UserTaxData,
     ElsterFieldValue,
     DrillDownData
 } from '../types';
@@ -30,30 +29,13 @@ const EuerGenerator = () => {
     const [bankType, setBankType] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isKleinunternehmer, setIsKleinunternehmer] = useState(false);
-    const [showSettings, setShowSettings] = useState(false);
+    const [currentSkr, setCurrentSkr] = useState<'SKR03' | 'SKR04' | 'SKR49'>('SKR04');
+    const [skrCategories, setSkrCategories] = useState<Record<string, any>>(skr04Categories);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [companyInfo, setCompanyInfo] = useState(DEFAULT_COMPANY_INFO);
+
     const [isProcessingFile, setIsProcessingFile] = useState(false);
 
-    // Guidance system state
-    const [userTaxData, setUserTaxData] = useState<UserTaxData>({
-        name: '',
-        firstName: '',
-        street: '',
-        houseNumber: '',
-        postalCode: '',
-        city: '',
-        taxNumber: '',
-        vatId: '',
-        fiscalYearStart: new Date().getFullYear().toString(),
-        fiscalYearEnd: new Date().getFullYear().toString(),
-        profession: '',
-        profitDeterminationMethod: 'Einnahmen-Überschuss-Rechnung',
-        isKleinunternehmer: false,
-        isVatLiable: true,
-        isBookkeepingRequired: false,
-        isBalanceSheetRequired: false
-    });
+
     const [currentSection, setCurrentSection] = useState('personal');
     const [showGuidance, setShowGuidance] = useState(false);
     const [fieldDetailModal, setFieldDetailModal] = useState<{
@@ -65,6 +47,21 @@ const EuerGenerator = () => {
         isOpen: boolean;
         section?: string;
     }>({ isOpen: false });
+
+    // Load SKR categories dynamically
+    useEffect(() => {
+        const loadCategories = async () => {
+            try {
+                const loadedCategories = await getCategoriesForSkr(currentSkr);
+                setSkrCategories(loadedCategories);
+            } catch (error) {
+                console.warn(`Failed to load ${currentSkr} categories, using fallback:`, error);
+                setSkrCategories(skr04Categories);
+            }
+        };
+
+        loadCategories();
+    }, [currentSkr]);
 
     // CSV-Datei einlesen
     const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,32 +124,31 @@ const EuerGenerator = () => {
 
     // EÜR berechnen mit/ohne USt
     const euerCalculation = useMemo(() => {
-        return calculateEuer(transactions, categories, isKleinunternehmer);
-    }, [transactions, categories, isKleinunternehmer]);
+        return calculateEuer(transactions, categories, isKleinunternehmer, skrCategories);
+    }, [transactions, categories, isKleinunternehmer, skrCategories]);
 
     // Elster Übersicht generieren - enhanced with complete field set
     const elsterSummary = useMemo(() => {
-        return generateElsterOverview(euerCalculation, userTaxData, isKleinunternehmer);
-    }, [euerCalculation, userTaxData, isKleinunternehmer]);
+        return generateElsterOverview(euerCalculation, isKleinunternehmer);
+    }, [euerCalculation, isKleinunternehmer]);
 
     // Guidance system data
     const guidanceData = useMemo(() => {
         if (transactions.length === 0) return null;
-        return prepareGuidanceData(transactions, categories, userTaxData, isKleinunternehmer);
-    }, [transactions, categories, userTaxData, isKleinunternehmer]);
+        return prepareGuidanceData(transactions, categories, isKleinunternehmer);
+    }, [transactions, categories, isKleinunternehmer]);
 
     // Report generieren
     const generateReportHandler = () => {
         const currentYear = new Date().getFullYear();
         const reportContent = generateReport(
             euerCalculation,
-            companyInfo,
-            'SKR04',
+            currentSkr,
             bankType,
             isKleinunternehmer,
             transactions
         );
-        downloadReport(reportContent, currentYear, 'SKR04', isKleinunternehmer);
+        downloadReport(reportContent, currentYear, currentSkr, isKleinunternehmer);
     };
 
     // Elster Übersicht herunterladen (legacy text format)
@@ -160,30 +156,29 @@ const EuerGenerator = () => {
         const currentYear = new Date().getFullYear();
         const reportContent = generateReport(
             euerCalculation,
-            companyInfo,
-            'SKR04',
+            currentSkr,
             bankType,
             isKleinunternehmer,
             transactions
         );
-        downloadReport(reportContent, currentYear, 'SKR04', isKleinunternehmer);
+        downloadReport(reportContent, currentYear, currentSkr, isKleinunternehmer);
     };
 
     // New ELSTER CSV export
     const handleElsterCSVExport = () => {
         const currentYear = new Date().getFullYear();
-        downloadElsterCSV(transactions, categories, userTaxData, isKleinunternehmer, currentYear);
+        downloadElsterCSV(transactions, categories, isKleinunternehmer, currentYear);
     };
 
     // New ELSTER JSON export
     const handleElsterJSONExport = () => {
         const currentYear = new Date().getFullYear();
-        downloadElsterJSON(transactions, categories, userTaxData, isKleinunternehmer, currentYear);
+        downloadElsterJSON(transactions, categories, isKleinunternehmer, currentYear);
     };
 
     // Validate ELSTER data
     const validateElsterExport = () => {
-        const validation = validateElsterData(transactions, categories, userTaxData, isKleinunternehmer);
+        const validation = validateElsterData(transactions, categories, isKleinunternehmer);
         if (!validation.isValid) {
             alert(`ELSTER Export nicht möglich:\n\nFehlende Pflichtfelder:\n${validation.missingFields.join('\n')}`);
             return false;
@@ -249,7 +244,7 @@ const EuerGenerator = () => {
                         <div className="flex-1">
                             <h1 className="text-4xl font-bold text-foreground mb-3 flex items-center gap-3">
                                 <Calculator className="text-primary" size={32} aria-hidden="true" />
-                                SKR04 EÜR Generator
+                                {currentSkr} EÜR Generator
                             </h1>
                             <p className="text-muted-foreground text-lg leading-relaxed">
                                 Prozessorientierter Kontenrahmen mit Kleinunternehmerregelung
@@ -262,29 +257,8 @@ const EuerGenerator = () => {
                                     </span>
                                 </div>
                             )}
-                        </div>
-                        <Button
-                            onClick={() => setShowSettings(!showSettings)}
-                            variant="outline"
-                            size="lg"
-                            className="flex items-center gap-2 focus-ring shrink-0"
-                            aria-expanded={showSettings}
-                            aria-controls="settings-panel"
-                        >
-                            <Settings size={18} aria-hidden="true" />
-                            Einstellungen
-                        </Button>
-                    </div>
-                </CardContent>
-            </Card>
-
-            {/* Einstellungen */}
-            {showSettings && (
-                <Card id="settings-panel" className="animate-slide-up">
-                    <CardContent className="p-6">
-                        <h2 className="text-2xl font-semibold mb-6 text-foreground">Einstellungen</h2>
-                        <div className="space-y-6">
-                            <div className="flex items-start gap-4">
+                            {/* Kleinunternehmer-Checkbox */}
+                            <div className="mt-4 flex items-start gap-4 p-3 bg-muted/20 rounded-lg border">
                                 <Checkbox
                                     id="kleinunternehmer"
                                     checked={isKleinunternehmer}
@@ -314,224 +288,35 @@ const EuerGenerator = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </CardContent>
-                </Card>
-            )}
 
-            {/* Unternehmensdaten */}
-            <Card className="animate-fade-in">
-                <CardContent className="p-6">
-                    <h2 className="text-2xl font-semibold mb-6 text-foreground flex items-center gap-2">
-                        <Building className="text-primary" size={24} aria-hidden="true" />
-                        Unternehmensdaten
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div className="space-y-2">
-                            <label htmlFor="companyName" className="block text-sm font-medium text-foreground">
-                                Unternehmensname
-                            </label>
-                            <Input
-                                id="companyName"
-                                type="text"
-                                placeholder="Unternehmensname eingeben"
-                                value={companyInfo.name}
-                                onChange={(e) => setCompanyInfo(prev => ({ ...prev, name: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="companyAddress" className="block text-sm font-medium text-foreground">
-                                Adresse
-                            </label>
-                            <Input
-                                id="companyAddress"
-                                type="text"
-                                placeholder="Adresse eingeben"
-                                value={companyInfo.address}
-                                onChange={(e) => setCompanyInfo(prev => ({ ...prev, address: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxNumber" className="block text-sm font-medium text-foreground">
-                                Steuernummer
-                            </label>
-                            <Input
-                                id="taxNumber"
-                                type="text"
-                                placeholder="Steuernummer eingeben"
-                                value={companyInfo.taxNumber}
-                                onChange={(e) => setCompanyInfo(prev => ({ ...prev, taxNumber: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        {!isKleinunternehmer && (
-                            <div className="space-y-2">
-                                <label htmlFor="vatNumber" className="block text-sm font-medium text-foreground">
-                                    USt-IdNr.
+                            {/* Kontenrahmen-Auswahl */}
+                            <div className="mt-4 flex items-center gap-4 p-3 bg-muted/20 rounded-lg border">
+                                <label htmlFor="skr-select" className="font-medium text-foreground text-base">
+                                    Kontenrahmen:
                                 </label>
-                                <Input
-                                    id="vatNumber"
-                                    type="text"
-                                    placeholder="USt-IdNr. eingeben"
-                                    value={companyInfo.vatNumber}
-                                    onChange={(e) => setCompanyInfo(prev => ({ ...prev, vatNumber: e.target.value }))}
-                                    className="focus-ring"
-                                />
+                                <Select value={currentSkr} onValueChange={(value: 'SKR03' | 'SKR04' | 'SKR49') => setCurrentSkr(value)}>
+                                    <SelectTrigger id="skr-select" className="w-32 focus-ring">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="SKR03">SKR03</SelectItem>
+                                        <SelectItem value="SKR04">SKR04</SelectItem>
+                                        <SelectItem value="SKR49">SKR49</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <span className="text-sm text-muted-foreground">
+                                    {currentSkr === 'SKR03' && 'Datev SKR03 - Industrie und Handel'}
+                                    {currentSkr === 'SKR04' && 'Datev SKR04 - Dienstleistungen'}
+                                    {currentSkr === 'SKR49' && 'Datev SKR49 - Freiberufler'}
+                                </span>
                             </div>
-                        )}
+                        </div>
+
                     </div>
                 </CardContent>
             </Card>
 
-            {/* Persönliche Steuerdaten */}
-            <Card className="animate-fade-in">
-                <CardContent className="p-6">
-                    <h2 className="text-2xl font-semibold mb-6 text-foreground flex items-center gap-2">
-                        <User className="text-primary" size={24} aria-hidden="true" />
-                        Persönliche Steuerdaten
-                    </h2>
-                    <p className="text-muted-foreground mb-6">
-                        Diese Informationen werden für die automatische Ausfüllung der ELSTER-Felder verwendet.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div className="space-y-2">
-                            <label htmlFor="taxName" className="block text-sm font-medium text-foreground">
-                                Name *
-                            </label>
-                            <Input
-                                id="taxName"
-                                type="text"
-                                placeholder="Nachname eingeben"
-                                value={userTaxData.name}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, name: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxFirstName" className="block text-sm font-medium text-foreground">
-                                Vorname
-                            </label>
-                            <Input
-                                id="taxFirstName"
-                                type="text"
-                                placeholder="Vorname eingeben"
-                                value={userTaxData.firstName || ''}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, firstName: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxStreet" className="block text-sm font-medium text-foreground">
-                                Straße *
-                            </label>
-                            <Input
-                                id="taxStreet"
-                                type="text"
-                                placeholder="Straße eingeben"
-                                value={userTaxData.street}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, street: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxHouseNumber" className="block text-sm font-medium text-foreground">
-                                Hausnummer *
-                            </label>
-                            <Input
-                                id="taxHouseNumber"
-                                type="text"
-                                placeholder="Hausnummer eingeben"
-                                value={userTaxData.houseNumber}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, houseNumber: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxPostalCode" className="block text-sm font-medium text-foreground">
-                                PLZ *
-                            </label>
-                            <Input
-                                id="taxPostalCode"
-                                type="text"
-                                placeholder="Postleitzahl eingeben"
-                                value={userTaxData.postalCode}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, postalCode: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxCity" className="block text-sm font-medium text-foreground">
-                                Ort *
-                            </label>
-                            <Input
-                                id="taxCity"
-                                type="text"
-                                placeholder="Ort eingeben"
-                                value={userTaxData.city}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, city: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxTaxNumber" className="block text-sm font-medium text-foreground">
-                                Steuernummer *
-                            </label>
-                            <Input
-                                id="taxTaxNumber"
-                                type="text"
-                                placeholder="Steuernummer eingeben"
-                                value={userTaxData.taxNumber}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, taxNumber: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxVatId" className="block text-sm font-medium text-foreground">
-                                USt-ID
-                            </label>
-                            <Input
-                                id="taxVatId"
-                                type="text"
-                                placeholder="USt-ID eingeben (optional)"
-                                value={userTaxData.vatId || ''}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, vatId: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="taxProfession" className="block text-sm font-medium text-foreground">
-                                Beruf *
-                            </label>
-                            <Input
-                                id="taxProfession"
-                                type="text"
-                                placeholder="Beruf eingeben"
-                                value={userTaxData.profession}
-                                onChange={(e) => setUserTaxData(prev => ({ ...prev, profession: e.target.value }))}
-                                className="focus-ring"
-                            />
-                        </div>
-                    </div>
 
-                    <div className="mt-6 flex items-center gap-4">
-                        <Button
-                            onClick={() => setShowGuidance(true)}
-                            disabled={transactions.length === 0}
-                            className="flex items-center gap-2"
-                        >
-                            <Target size={18} />
-                            ELSTER Navigation starten
-                        </Button>
-                        {transactions.length === 0 && (
-                            <p className="text-sm text-muted-foreground">
-                                Laden Sie zuerst Ihre Transaktionen hoch
-                            </p>
-                        )}
-                    </div>
-                </CardContent>
-            </Card>
 
             {/* File Upload */}
             <Card className="animate-fade-in">
@@ -639,13 +424,13 @@ const EuerGenerator = () => {
                                         <th className="text-left p-4 font-semibold text-foreground">Gegenpartei</th>
                                         <th className="text-left p-4 font-semibold text-foreground">Betrag</th>
                                         <th className="text-left p-4 font-semibold text-foreground">Verwendungszweck</th>
-                                        <th className="text-left p-4 font-semibold text-foreground">SKR04-Konto</th>
+                                        <th className="text-left p-4 font-semibold text-foreground">{currentSkr}-Konto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {currentTransactions.map((transaction) => {
                                         const categoryKey = categories[transaction.id] || transaction.euerCategory || '';
-                                        const category = skr04Categories[categoryKey];
+                                        const category = skrCategories[categoryKey];
                                         const isPrivate = category?.type === 'private';
 
                                         return (
@@ -660,7 +445,7 @@ const EuerGenerator = () => {
                                                 <td className="p-4 text-muted-foreground max-w-xs truncate" title={transaction.purposeField}>{transaction.purposeField}</td>
                                                 <td className="p-4">
                                                     <Select
-                                                        aria-label={`SKR04-Konto für Transaktion ${transaction.id} auswählen`}
+                                                        aria-label={`${currentSkr}-Konto für Transaktion ${transaction.id} auswählen`}
                                                         value={categoryKey}
                                                         onValueChange={(value) => updateCategory(transaction.id, value)}
                                                     >
@@ -668,17 +453,17 @@ const EuerGenerator = () => {
                                                             <SelectValue />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            {Object.entries(skr04Categories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
+                                                            {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
                                                                 <SelectItem key={key} value={key}>
                                                                     {category.code} - {category.name}
                                                                 </SelectItem>
                                                             ))}
-                                                            {Object.entries(skr04Categories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
+                                                            {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
                                                                 <SelectItem key={key} value={key}>
                                                                     {category.code} - {category.name}
                                                                 </SelectItem>
                                                             ))}
-                                                            {Object.entries(skr04Categories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
+                                                            {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
                                                                 <SelectItem key={key} value={key}>
                                                                     {category.code} - {category.name}
                                                                 </SelectItem>
@@ -697,7 +482,7 @@ const EuerGenerator = () => {
                         <div className="sm:hidden space-y-4">
                             {currentTransactions.map((transaction) => {
                                 const categoryKey = categories[transaction.id] || transaction.euerCategory || '';
-                                const category = skr04Categories[categoryKey];
+                                const category = skrCategories[categoryKey];
                                 const isPrivate = category?.type === 'private';
 
                                 return (
@@ -722,27 +507,27 @@ const EuerGenerator = () => {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <label className="text-sm font-medium text-foreground">SKR04-Konto:</label>
+                                                <label className="text-sm font-medium text-foreground" htmlFor={`category-${transaction.id}`}>{currentSkr}-Konto:</label>
                                                 <Select
-                                                    aria-label={`SKR04-Konto für Transaktion ${transaction.id} auswählen`}
+                                                    aria-label={`${currentSkr}-Konto für Transaktion ${transaction.id} auswählen`}
                                                     value={categoryKey}
                                                     onValueChange={(value) => updateCategory(transaction.id, value)}
                                                 >
-                                                    <SelectTrigger className={`w-full focus-ring ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
+                                                    <SelectTrigger id={`category-${transaction.id}`} className={`w-full focus-ring ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {Object.entries(skr04Categories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
+                                                        {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
                                                             <SelectItem key={key} value={key}>
                                                                 {category.code} - {category.name}
                                                             </SelectItem>
                                                         ))}
-                                                        {Object.entries(skr04Categories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
+                                                        {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
                                                             <SelectItem key={key} value={key}>
                                                                 {category.code} - {category.name}
                                                             </SelectItem>
                                                         ))}
-                                                        {Object.entries(skr04Categories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
+                                                        {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
                                                             <SelectItem key={key} value={key}>
                                                                 {category.code} - {category.name}
                                                             </SelectItem>
@@ -964,7 +749,7 @@ const EuerGenerator = () => {
                                                 </div>
                                                 <div className="text-xs text-green-600">
                                                     {fieldData.categories.map((cat, idx) => (
-                                                        <div key={`${fieldNumber}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
+                                                        <div key={`${fieldNumber}-${cat.name}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
                                                     ))}
                                                 </div>
                                             </div>
@@ -994,7 +779,7 @@ const EuerGenerator = () => {
                                                 </div>
                                                 <div className="text-xs text-red-600">
                                                     {fieldData.categories.map((cat, idx) => (
-                                                        <div key={`${fieldNumber}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
+                                                        <div key={`${fieldNumber}-${cat.name}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
                                                     ))}
                                                 </div>
                                             </div>
@@ -1100,7 +885,7 @@ const EuerGenerator = () => {
             {transactions.length > 0 && (
                 <Card className="mb-6">
                     <CardContent className="p-6">
-                        <h2 className="text-xl font-semibold mb-4">Einnahmen-Überschuss-Rechnung (SKR04)</h2>
+                        <h2 className="text-xl font-semibold mb-4">Einnahmen-Überschuss-Rechnung ({currentSkr})</h2>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                             {/* Einnahmen */}
@@ -1109,7 +894,7 @@ const EuerGenerator = () => {
                                 <div className="space-y-1 max-h-64 overflow-y-auto">
                                     {Object.entries(euerCalculation.income).map(([key, amount]) => (
                                         <div key={key} className="flex justify-between text-sm">
-                                            <span className="truncate">{skr04Categories[key]?.code} {skr04Categories[key]?.name}</span>
+                                            <span className="truncate">{skrCategories[key]?.code} {skrCategories[key]?.name}</span>
                                             <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
                                         </div>
                                     ))}
@@ -1126,7 +911,7 @@ const EuerGenerator = () => {
                                 <div className="space-y-1 max-h-64 overflow-y-auto">
                                     {Object.entries(euerCalculation.expenses).map(([key, amount]) => (
                                         <div key={key} className="flex justify-between text-sm">
-                                            <span className="truncate">{skr04Categories[key]?.code} {skr04Categories[key]?.name}</span>
+                                            <span className="truncate">{skrCategories[key]?.code} {skrCategories[key]?.name}</span>
                                             <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
                                         </div>
                                     ))}
@@ -1172,7 +957,7 @@ const EuerGenerator = () => {
                                             <h4 className="font-medium text-orange-600 mb-1">Privatbereich</h4>
                                             {Object.entries(euerCalculation.privateTransactions).map(([key, amount]) => (
                                                 <div key={key} className="flex justify-between text-orange-600 text-xs">
-                                                    <span>{skr04Categories[key]?.name}:</span>
+                                                    <span>{skrCategories[key]?.name}:</span>
                                                     <span>{amount.toFixed(2)}€</span>
                                                 </div>
                                             ))}
@@ -1227,7 +1012,7 @@ const EuerGenerator = () => {
                                 className="bg-green-600 hover:bg-green-700 flex items-center gap-2 mx-auto"
                             >
                                 <Download size={20} aria-hidden="true" />
-                                SKR04 EÜR exportieren
+                                {currentSkr} EÜR exportieren
                             </Button>
                         </div>
                     </CardContent>
@@ -1238,41 +1023,45 @@ const EuerGenerator = () => {
                 <Card className="animate-scale-in">
                     <CardContent className="p-6 text-center">
                         <FileText className="mx-auto text-muted-foreground mb-6" size={80} aria-hidden="true" />
-                        <h3 className="text-2xl font-semibold text-foreground mb-4">
-                            Bereit für Ihre EÜR-Erstellung
+                        <h3 className="text-2xl font-medium text-foreground mb-4">
+                            Bereit für Ihre EÜR-Berechnung
                         </h3>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                            Laden Sie Ihre Bank-Transaktionen als CSV-Datei hoch, um automatisch kategorisiert zu werden und Ihre Einnahmen-Überschuss-Rechnung zu erstellen.
+                        <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
+                            Laden Sie Ihre Kontist oder Holvi CSV-Datei hoch, um automatisch kategorisierte Transaktionen zu erhalten und Ihre Einnahmen-Überschuss-Rechnung zu generieren.
                         </p>
-                        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <div className="w-2 h-2 bg-success rounded-full"></div>
-                                Kontist CSV unterstützt
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <div className="w-2 h-2 bg-info rounded-full"></div>
-                                Holvi CSV unterstützt
+                        <div className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                <div className="bg-muted/30 p-4 rounded-lg">
+                                    <div className="font-medium text-foreground mb-2">1. CSV hochladen</div>
+                                    <div className="text-muted-foreground">Kontist oder Holvi Export</div>
+                                </div>
+                                <div className="bg-muted/30 p-4 rounded-lg">
+                                    <div className="font-medium text-foreground mb-2">2. Kategorien prüfen</div>
+                                    <div className="text-muted-foreground">Automatische {currentSkr}-Zuordnung</div>
+                                </div>
+                                <div className="bg-muted/30 p-4 rounded-lg">
+                                    <div className="font-medium text-foreground mb-2">3. EÜR exportieren</div>
+                                    <div className="text-muted-foreground">ELSTER-kompatible Ausgabe</div>
+                                </div>
                             </div>
                         </div>
                     </CardContent>
                 </Card>
             )}
 
-            {/* Modals */}
-            {fieldDetailModal.field && (
-                <FieldDetailModal
-                    field={fieldDetailModal.field}
-                    drillDownData={fieldDetailModal.drillDownData}
-                    transactions={getFieldTransactions(fieldDetailModal.field, transactions, categories)}
-                    isOpen={fieldDetailModal.isOpen}
-                    onClose={closeFieldDetailModal}
-                />
-            )}
+            {/* Field Detail Modal */}
+            <FieldDetailModal
+                isOpen={fieldDetailModal.isOpen}
+                field={fieldDetailModal.field}
+                drillDownData={fieldDetailModal.drillDownData}
+                onClose={closeFieldDetailModal}
+            />
 
+            {/* Help Modal */}
             <HelpModal
                 isOpen={helpModal.isOpen}
-                onClose={closeHelpModal}
                 section={helpModal.section}
+                onClose={closeHelpModal}
             />
         </div>
     );

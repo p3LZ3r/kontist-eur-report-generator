@@ -1,6 +1,6 @@
-import type { Transaction, EuerCalculation, UserTaxData, ElsterFieldValue } from '../types';
+import type { Transaction, EuerCalculation, ElsterFieldValue } from '../types';
 import { skr04Categories, elsterMapping } from './categoryMappings';
-import { ELSTER_FIELDS, ELSTER_FIELD_RANGES } from './constants';
+import { ELSTER_FIELDS } from './constants';
 
 // EÜR berechnen mit/ohne USt
 /**
@@ -16,12 +16,14 @@ import { ELSTER_FIELDS, ELSTER_FIELD_RANGES } from './constants';
  * @param transactions - Array of bank transactions
  * @param categories - Transaction category mappings
  * @param isKleinunternehmer - Whether business is Kleinunternehmer
+ * @param skrCategories - SKR categories to use for calculation
  * @returns Complete EÜR calculation results
  */
 export const calculateEuer = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    isKleinunternehmer: boolean
+    isKleinunternehmer: boolean,
+    skrCategories: Record<string, any> = skr04Categories
 ): EuerCalculation => {
     const result: EuerCalculation = {
         income: {},
@@ -40,7 +42,7 @@ export const calculateEuer = (
     transactions.forEach(transaction => {
         const categoryKey = categories[transaction.id] || transaction.euerCategory;
         if (!categoryKey) return; // Skip if no category key
-        const category = skr04Categories[categoryKey];
+        const category = skrCategories[categoryKey];
         if (!category) return; // Skip if category not found
 
         const grossAmount = Math.abs(transaction.BetragNumeric);
@@ -82,10 +84,9 @@ export const calculateEuer = (
     return result;
 };
 
-// Generate Elster summary - enhanced to support complete field set (1-60+)
+// Generate Elster summary - enhanced with complete field set
 export const generateElsterOverview = (
     euerCalculation: EuerCalculation,
-    userTaxData?: UserTaxData,
     isKleinunternehmer?: boolean
 ) => {
     const elsterSummary: { [key: string]: { amount: number; label: string; categories: { name: string; amount: number }[] } } = {};
@@ -127,8 +128,8 @@ export const generateElsterOverview = (
         }
     });
 
-    // Add calculated fields if userTaxData and isKleinunternehmer are provided
-    if (userTaxData && isKleinunternehmer !== undefined) {
+    // Add calculated fields if isKleinunternehmer is provided
+    if (isKleinunternehmer !== undefined) {
         // Add VAT fields if not Kleinunternehmer
         if (!isKleinunternehmer) {
             // Umsatzsteuer (field 23)
@@ -198,189 +199,6 @@ export const generateElsterOverview = (
     }
 
     return elsterSummary;
-};
-
-// Automatic population of personal data fields from user tax data
-/**
- * Populates ELSTER fields 1-16 with personal data from user tax information.
- *
- * Automatic Population Rules:
- * - Fields 1-7, 9-16: Always populated from user data (required for tax declaration)
- * - Field 8 (VAT ID): Only populated if user has VAT ID (optional)
- * - Field 2 (First Name): Only populated if provided (optional)
- * - Boolean fields (13-16): Converted to "Ja"/"Nein" format for ELSTER
- *
- * @param userTaxData - User's tax data containing personal information
- * @returns Array of populated personal data field values
- */
-export const populatePersonalDataFields = (userTaxData: UserTaxData): ElsterFieldValue[] => {
-    const personalFields: ElsterFieldValue[] = [];
-
-    // Field 1: Name
-    personalFields.push({
-        field: '1',
-        value: userTaxData.name,
-        label: ELSTER_FIELDS['1'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['1'].required,
-        source: 'user_data'
-    });
-
-    // Field 2: First Name (optional)
-    if (userTaxData.firstName) {
-        personalFields.push({
-            field: '2',
-            value: userTaxData.firstName,
-            label: ELSTER_FIELDS['2'].label,
-            type: 'personal',
-            required: ELSTER_FIELDS['2'].required,
-            source: 'user_data'
-        });
-    }
-
-    // Field 3: Street
-    personalFields.push({
-        field: '3',
-        value: userTaxData.street,
-        label: ELSTER_FIELDS['3'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['3'].required,
-        source: 'user_data'
-    });
-
-    // Field 4: House Number
-    personalFields.push({
-        field: '4',
-        value: userTaxData.houseNumber,
-        label: ELSTER_FIELDS['4'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['4'].required,
-        source: 'user_data'
-    });
-
-    // Field 5: Postal Code
-    personalFields.push({
-        field: '5',
-        value: userTaxData.postalCode,
-        label: ELSTER_FIELDS['5'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['5'].required,
-        source: 'user_data'
-    });
-
-    // Field 6: City
-    personalFields.push({
-        field: '6',
-        value: userTaxData.city,
-        label: ELSTER_FIELDS['6'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['6'].required,
-        source: 'user_data'
-    });
-
-    // Field 7: Tax Number
-    personalFields.push({
-        field: '7',
-        value: userTaxData.taxNumber,
-        label: ELSTER_FIELDS['7'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['7'].required,
-        source: 'user_data'
-    });
-
-    // Field 8: VAT ID (optional)
-    if (userTaxData.vatId) {
-        personalFields.push({
-            field: '8',
-            value: userTaxData.vatId,
-            label: ELSTER_FIELDS['8'].label,
-            type: 'personal',
-            required: ELSTER_FIELDS['8'].required,
-            source: 'user_data'
-        });
-    }
-
-    // Field 9: Fiscal Year Start
-    personalFields.push({
-        field: '9',
-        value: userTaxData.fiscalYearStart,
-        label: ELSTER_FIELDS['9'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['9'].required,
-        source: 'user_data'
-    });
-
-    // Field 10: Fiscal Year End
-    personalFields.push({
-        field: '10',
-        value: userTaxData.fiscalYearEnd,
-        label: ELSTER_FIELDS['10'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['10'].required,
-        source: 'user_data'
-    });
-
-    // Field 11: Profession
-    personalFields.push({
-        field: '11',
-        value: userTaxData.profession,
-        label: ELSTER_FIELDS['11'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['11'].required,
-        source: 'user_data'
-    });
-
-    // Field 12: Profit Determination Method
-    personalFields.push({
-        field: '12',
-        value: userTaxData.profitDeterminationMethod,
-        label: ELSTER_FIELDS['12'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['12'].required,
-        source: 'user_data'
-    });
-
-    // Field 13: Kleinunternehmer (Yes/No)
-    personalFields.push({
-        field: '13',
-        value: userTaxData.isKleinunternehmer ? 'Ja' : 'Nein',
-        label: ELSTER_FIELDS['13'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['13'].required,
-        source: 'user_data'
-    });
-
-    // Field 14: VAT Liable (Yes/No)
-    personalFields.push({
-        field: '14',
-        value: userTaxData.isVatLiable ? 'Ja' : 'Nein',
-        label: ELSTER_FIELDS['14'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['14'].required,
-        source: 'user_data'
-    });
-
-    // Field 15: Bookkeeping Required (Yes/No)
-    personalFields.push({
-        field: '15',
-        value: userTaxData.isBookkeepingRequired ? 'Ja' : 'Nein',
-        label: ELSTER_FIELDS['15'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['15'].required,
-        source: 'user_data'
-    });
-
-    // Field 16: Balance Sheet Required (Yes/No)
-    personalFields.push({
-        field: '16',
-        value: userTaxData.isBalanceSheetRequired ? 'Ja' : 'Nein',
-        label: ELSTER_FIELDS['16'].label,
-        type: 'personal',
-        required: ELSTER_FIELDS['16'].required,
-        source: 'user_data'
-    });
-
-    return personalFields;
 };
 
 // Calculate VAT-related fields based on Kleinunternehmer status
@@ -504,18 +322,6 @@ export const calculateTotalFields = (euerCalculation: EuerCalculation): ElsterFi
 export const validateMandatoryFields = (fieldValues: ElsterFieldValue[]): { isValid: boolean; missingFields: string[] } => {
     const missingFields: string[] = [];
 
-    // Check personal data fields (1-16)
-    for (let i = ELSTER_FIELD_RANGES.PERSONAL_DATA_START; i <= ELSTER_FIELD_RANGES.PERSONAL_DATA_END; i++) {
-        const fieldStr = i.toString() as keyof typeof ELSTER_FIELDS;
-        const fieldDef = ELSTER_FIELDS[fieldStr];
-        if (fieldDef && fieldDef.required) {
-            const fieldValue = fieldValues.find(fv => fv.field === fieldStr);
-            if (!fieldValue || !fieldValue.value) {
-                missingFields.push(fieldDef.label);
-            }
-        }
-    }
-
     // Check income fields (17-24) - at least field 17 is required
     const incomeField17 = fieldValues.find(fv => fv.field === '17');
     if (!incomeField17 || !incomeField17.value) {
@@ -555,14 +361,12 @@ export const validateMandatoryFields = (fieldValues: ElsterFieldValue[]): { isVa
  *
  * @param transactions - Array of bank transactions
  * @param categories - Transaction category mappings
- * @param userTaxData - User's tax information
  * @param isKleinunternehmer - Kleinunternehmer status
  * @returns Complete field population with validation results
  */
 export const populateAllElsterFields = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    userTaxData: UserTaxData,
     isKleinunternehmer: boolean
 ): { fieldValues: ElsterFieldValue[]; validation: { isValid: boolean; missingFields: string[] } } => {
     const fieldValues: ElsterFieldValue[] = [];
@@ -570,14 +374,10 @@ export const populateAllElsterFields = (
     // 1. Calculate EÜR from transactions
     const euerCalculation = calculateEuer(transactions, categories, isKleinunternehmer);
 
-    // 2. Populate personal data fields
-    const personalFields = populatePersonalDataFields(userTaxData);
-    fieldValues.push(...personalFields);
+    // 2. Generate Elster overview from transactions
+    const elsterOverview = generateElsterOverview(euerCalculation, isKleinunternehmer);
 
-    // 3. Generate Elster overview from transactions
-    const elsterOverview = generateElsterOverview(euerCalculation);
-
-    // 4. Convert overview to field values
+    // 3. Convert overview to field values
     Object.entries(elsterOverview).forEach(([field, data]) => {
         const fieldDef = ELSTER_FIELDS[field as keyof typeof ELSTER_FIELDS];
         fieldValues.push({
@@ -590,15 +390,15 @@ export const populateAllElsterFields = (
         });
     });
 
-    // 5. Calculate VAT fields
+    // 4. Calculate VAT fields
     const vatFields = calculateVatFields(euerCalculation, isKleinunternehmer);
     fieldValues.push(...vatFields);
 
-    // 6. Calculate total fields
+    // 5. Calculate total fields
     const totalFields = calculateTotalFields(euerCalculation);
     fieldValues.push(...totalFields);
 
-    // 7. Validate mandatory fields
+    // 6. Validate mandatory fields (skip personal data validation)
     const validation = validateMandatoryFields(fieldValues);
 
     return {

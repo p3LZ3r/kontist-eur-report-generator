@@ -3,21 +3,24 @@ import { skr04Categories } from './categoryMappings';
 
 export const generateReport = (
     euerCalculation: EuerCalculation,
-    companyInfo: CompanyInfo,
+    companyInfo: CompanyInfo | undefined,
     selectedKontenrahmen: KontenrahmenType,
     bankType: string | null,
     isKleinunternehmer: boolean,
     transactions: Transaction[]
 ): string => {
-    const currentYear = new Date().getFullYear();
-    return `EINNAHMEN-ÜBERSCHUSS-RECHNUNG ${currentYear} (${selectedKontenrahmen})
+        const currentYear = new Date().getFullYear();
+    const defaultCompanyInfo = { name: 'Ihr Unternehmen', address: 'Ihre Adresse', taxNumber: 'Ihre Steuernummer', vatNumber: 'Ihre USt-IdNr.' };
+    const info = companyInfo || defaultCompanyInfo;
+    return `EINNAHMEN-ÜBERSCHUSS-RECHNUNG ${currentYear} (${selectedKontenrahmen})</search>
+</search_and_replace>
 ====================================================
 
 UNTERNEHMENSDATEN:
-${companyInfo.name || 'Ihr Unternehmen'}
-${companyInfo.address || 'Ihre Adresse'}
-Steuernummer: ${companyInfo.taxNumber || 'Ihre Steuernummer'}
-${!isKleinunternehmer ? `USt-IdNr.: ${companyInfo.vatNumber || 'Ihre USt-IdNr.'}` : 'Kleinunternehmerregelung § 19 UStG'}
+${info.name}
+${info.address}
+Steuernummer: ${info.taxNumber}
+${!isKleinunternehmer ? `USt-IdNr.: ${info.vatNumber}` : 'Kleinunternehmerregelung § 19 UStG'}
 Bank: ${bankType === 'kontist' ? 'Kontist' : bankType === 'holvi' ? 'Holvi' : 'Unbekannt'}
 Kontenrahmen: ${selectedKontenrahmen} (Prozessgliederungsprinzip)
 Berechnungsmethode: ${isKleinunternehmer ? 'Bruttobeträge (keine USt-Trennung)' : 'Nettobeträge (USt separat)'}
@@ -86,7 +89,7 @@ Kleinunternehmerregelung: ${isKleinunternehmer ? 'Ja' : 'Nein'}
 export const openReportInNewWindow = (
     currentYear: number,
     selectedKontenrahmen: KontenrahmenType,
-    companyInfo: CompanyInfo,
+    companyInfo: CompanyInfo | undefined,
     isKleinunternehmer: boolean,
     bankType: string | null,
     euerCalculation: EuerCalculation,

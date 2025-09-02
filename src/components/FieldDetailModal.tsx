@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import type { ElsterFieldValue, DrillDownData, Transaction } from '../types';
 
 interface FieldDetailModalProps {
-    field: ElsterFieldValue;
+    field?: ElsterFieldValue;
     drillDownData?: DrillDownData;
     transactions?: Transaction[];
     isOpen: boolean;
@@ -21,7 +21,7 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
     isOpen,
     onClose
 }) => {
-    if (!isOpen) return null;
+    if (!isOpen || !field) return null;
 
     const formatValue = (value: number | string) => {
         if (typeof value === 'number') {

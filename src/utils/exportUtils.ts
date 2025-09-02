@@ -1,16 +1,23 @@
-import type { EuerCalculation, CompanyInfo, KontenrahmenType, Transaction, UserTaxData, ElsterFieldValue } from '../types';
+import type { EuerCalculation, KontenrahmenType, Transaction, ElsterFieldValue } from '../types';
 import { generateReport as generateReportFromGenerator } from './reportGenerator';
 import { populateAllElsterFields } from './euerCalculations';
 
 export const generateReport = (
     euerCalculation: EuerCalculation,
-    companyInfo: CompanyInfo,
     selectedKontenrahmen: KontenrahmenType,
     bankType: string | null,
     isKleinunternehmer: boolean,
     transactions: any[]
 ): string => {
-    return generateReportFromGenerator(euerCalculation, companyInfo, selectedKontenrahmen, bankType, isKleinunternehmer, transactions);
+    // Use default company info for report generation
+    const defaultCompanyInfo = {
+        name: '',
+        address: '',
+        taxNumber: '',
+        vatNumber: '',
+        taxRate: '19'
+    };
+    return generateReportFromGenerator(euerCalculation, defaultCompanyInfo, selectedKontenrahmen, bankType, isKleinunternehmer, transactions);
 };
 
 export const downloadReport = (reportContent: string, currentYear: number, selectedKontenrahmen: KontenrahmenType, isKleinunternehmer: boolean): void => {
@@ -27,10 +34,9 @@ export const downloadReport = (reportContent: string, currentYear: number, selec
 export const generateElsterCSV = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    userTaxData: UserTaxData,
     isKleinunternehmer: boolean
 ): string => {
-    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, userTaxData, isKleinunternehmer);
+    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, isKleinunternehmer);
 
     if (!validation.isValid) {
         throw new Error(`ELSTER Export fehlgeschlagen: Fehlende Pflichtfelder: ${validation.missingFields.join(', ')}`);
@@ -60,10 +66,9 @@ export const generateElsterCSV = (
 export const generateElsterJSON = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    userTaxData: UserTaxData,
     isKleinunternehmer: boolean
 ): string => {
-    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, userTaxData, isKleinunternehmer);
+    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, isKleinunternehmer);
 
     if (!validation.isValid) {
         throw new Error(`ELSTER Export fehlgeschlagen: Fehlende Pflichtfelder: ${validation.missingFields.join(', ')}`);
@@ -76,7 +81,6 @@ export const generateElsterJSON = (
             isKleinunternehmer,
             validation: validation
         },
-        personalData: fieldValues.filter(f => f.type === 'personal'),
         incomeData: fieldValues.filter(f => f.type === 'income'),
         expenseData: fieldValues.filter(f => f.type === 'expense'),
         taxData: fieldValues.filter(f => f.type === 'tax'),
@@ -91,12 +95,11 @@ export const generateElsterJSON = (
 export const downloadElsterCSV = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    userTaxData: UserTaxData,
     isKleinunternehmer: boolean,
     currentYear: number
 ): void => {
     try {
-        const csvContent = generateElsterCSV(transactions, categories, userTaxData, isKleinunternehmer);
+        const csvContent = generateElsterCSV(transactions, categories, isKleinunternehmer);
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -113,12 +116,11 @@ export const downloadElsterCSV = (
 export const downloadElsterJSON = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    userTaxData: UserTaxData,
     isKleinunternehmer: boolean,
     currentYear: number
 ): void => {
     try {
-        const jsonContent = generateElsterJSON(transactions, categories, userTaxData, isKleinunternehmer);
+        const jsonContent = generateElsterJSON(transactions, categories, isKleinunternehmer);
         const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -135,10 +137,9 @@ export const downloadElsterJSON = (
 export const validateElsterData = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    userTaxData: UserTaxData,
     isKleinunternehmer: boolean
 ): { isValid: boolean; missingFields: string[]; fieldValues: ElsterFieldValue[] } => {
-    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, userTaxData, isKleinunternehmer);
+    const { fieldValues, validation } = populateAllElsterFields(transactions, categories, isKleinunternehmer);
     return {
         isValid: validation.isValid,
         missingFields: validation.missingFields,

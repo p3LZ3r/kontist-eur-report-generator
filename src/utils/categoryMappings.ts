@@ -139,6 +139,42 @@ export const elsterMapping: ElsterMapping = {
     'expense_memberships': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' }
 };
 
+// Function to load categories based on SKR
+export const getCategoriesForSkr = async (skr: 'SKR03' | 'SKR04' | 'SKR49'): Promise<Record<string, CategoryInfo>> => {
+    try {
+        const response = await fetch(`/data/${skr.toLowerCase()}.json`);
+        const data = await response.json();
+
+        const categories: Record<string, CategoryInfo> = {};
+
+        // Convert SKR JSON data to CategoryInfo format
+        data.forEach((item: any) => {
+            if (item.leaf && item.code && item.name) {
+                // Map SKR types to our category types
+                let type: 'income' | 'expense' | 'private' = 'expense';
+                if (item.type === 'Ertrag') type = 'income';
+                else if (item.name.toLowerCase().includes('privat')) type = 'private';
+
+                // Extract VAT rate from name or set default
+                let vat = 19; // Default
+                if (item.name.includes('7%')) vat = 7;
+                else if (item.name.includes('0%') || item.name.includes('steuerfrei')) vat = 0;
+
+                categories[item.code.toString()] = {
+                    name: item.name,
+                    type,
+                    code: item.code.toString(),
+                    vat
+                };
+            }
+        });
+
+        return categories;
+    } catch (error) {
+        console.warn(`Failed to load ${skr} categories, falling back to SKR04:`, error);
+        return skr04Categories;
+    }
+};
 // Fallback hardcoded data for SKR04
 export const skr04Categories: Record<string, CategoryInfo> = {
     // ERLÖSE (8000-8999)
