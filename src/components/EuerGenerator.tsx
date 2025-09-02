@@ -1230,51 +1230,52 @@ const EuerGenerator = () => {
                                 SKR04 EÜR exportieren
                             </Button>
                         </div>
-                    </div>
+                    </CardContent>
+                </Card>
             )}
 
-                    {transactions.length === 0 && (
-                        <Card className="animate-scale-in">
-                            <CardContent className="p-6 text-center">
-                                <FileText className="mx-auto text-muted-foreground mb-6" size={80} aria-hidden="true" />
-                                <h3 className="text-2xl font-semibold text-foreground mb-4">
-                                    Bereit für Ihre EÜR-Erstellung
-                                </h3>
-                                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                                    Laden Sie Ihre Bank-Transaktionen als CSV-Datei hoch, um automatisch kategorisiert zu werden und Ihre Einnahmen-Überschuss-Rechnung zu erstellen.
-                                </p>
-                                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                        <div className="w-2 h-2 bg-success rounded-full"></div>
-                                        Kontist CSV unterstützt
-                                    </div>
-                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                        <div className="w-2 h-2 bg-info rounded-full"></div>
-                                        Holvi CSV unterstützt
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    )}
+            {transactions.length === 0 && (
+                <Card className="animate-scale-in">
+                    <CardContent className="p-6 text-center">
+                        <FileText className="mx-auto text-muted-foreground mb-6" size={80} aria-hidden="true" />
+                        <h3 className="text-2xl font-semibold text-foreground mb-4">
+                            Bereit für Ihre EÜR-Erstellung
+                        </h3>
+                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+                            Laden Sie Ihre Bank-Transaktionen als CSV-Datei hoch, um automatisch kategorisiert zu werden und Ihre Einnahmen-Überschuss-Rechnung zu erstellen.
+                        </p>
+                        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <div className="w-2 h-2 bg-success rounded-full"></div>
+                                Kontist CSV unterstützt
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <div className="w-2 h-2 bg-info rounded-full"></div>
+                                Holvi CSV unterstützt
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
 
-                    {/* Modals */}
-                    {fieldDetailModal.field && (
-                        <FieldDetailModal
-                            field={fieldDetailModal.field}
-                            drillDownData={fieldDetailModal.drillDownData}
-                            transactions={getFieldTransactions(fieldDetailModal.field, transactions, categories)}
-                            isOpen={fieldDetailModal.isOpen}
-                            onClose={closeFieldDetailModal}
-                        />
-                    )}
+            {/* Modals */}
+            {fieldDetailModal.field && (
+                <FieldDetailModal
+                    field={fieldDetailModal.field}
+                    drillDownData={fieldDetailModal.drillDownData}
+                    transactions={getFieldTransactions(fieldDetailModal.field, transactions, categories)}
+                    isOpen={fieldDetailModal.isOpen}
+                    onClose={closeFieldDetailModal}
+                />
+            )}
 
-                    <HelpModal
-                        isOpen={helpModal.isOpen}
-                        onClose={closeHelpModal}
-                        section={helpModal.section}
-                    />
-                </div>
-            );
+            <HelpModal
+                isOpen={helpModal.isOpen}
+                onClose={closeHelpModal}
+                section={helpModal.section}
+            />
+        </div>
+    );
 };
 
-            export default EuerGenerator;
+export default EuerGenerator;

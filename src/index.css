@@ -1,12 +1,7 @@
-
-
-
+@import "tailwindcss";
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
-
-@import "tailwindcss/preflight";
-@tailwind utilities;
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
