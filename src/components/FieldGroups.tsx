@@ -16,12 +16,12 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
 }) => {
     const getFieldStatus = (field: ElsterFieldValue) => {
         if (field.value && field.value !== 0) {
-            return { color: 'text-green-600', icon: <CheckCircle size={14} className="text-green-600" /> };
+            return { color: 'text-success', icon: <CheckCircle size={14} className="text-success" /> };
         }
         if (field.required) {
-            return { color: 'text-red-600', icon: <AlertCircle size={14} className="text-red-600" /> };
+            return { color: 'text-orange-600', icon: <AlertCircle size={14} className="text-orange-600" /> };
         }
-        return { color: 'text-gray-500', icon: <Info size={14} className="text-gray-500" /> };
+        return { color: 'text-muted-foreground', icon: <Info size={14} className="text-muted-foreground" /> };
     };
 
     const formatValue = (value: number | string) => {
@@ -36,8 +36,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
     };
 
     return (
-        <div className="bg-white min-h-screen">
-            <div className="max-w-4xl mx-auto p-6 space-y-6">
+        <div className="space-y-6">
                 {groups.map((group) => {
                     const groupTotal = group.fields.reduce((sum, field) => {
                         const value = typeof field.value === 'number' ? field.value : 0;
@@ -47,48 +46,48 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                     const requiredMissing = group.fields.filter(f => f.required && (!f.value || f.value === 0)).length;
 
                     return (
-                        <div key={group.id} className="border border-gray-300 rounded-lg bg-white shadow-sm overflow-hidden">
-                            {/* Section Header - Matching ELSTER style */}
+                        <div key={group.id} className="border border-border rounded-lg bg-card shadow-sm overflow-hidden">
+                            {/* Section Header - Toned down colors */}
                             <div 
-                                className="bg-gradient-to-r from-green-600 to-green-700 text-white p-4 cursor-pointer hover:from-green-700 hover:to-green-800 transition-all duration-200"
+                                className="bg-muted/50 border-b border-border p-4 cursor-pointer hover:bg-muted transition-colors duration-200"
                                 onClick={() => onGroupToggle()}
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="flex items-center gap-2">
                                             {group.expanded ? (
-                                                <ChevronDown size={20} className="text-white" />
+                                                <ChevronDown size={20} className="text-foreground" />
                                             ) : (
-                                                <ChevronRight size={20} className="text-white" />
+                                                <ChevronRight size={20} className="text-foreground" />
                                             )}
-                                            <span className="text-lg font-medium">{group.title}</span>
+                                            <span className="text-lg font-medium text-foreground">{group.title}</span>
                                         </div>
                                         {requiredMissing > 0 && (
-                                            <div className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
+                                            <div className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">
                                                 {requiredMissing} Hinweise
                                             </div>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-3">
                                         {hasFilledFields && (
-                                            <div className="flex items-center gap-1 text-white/90">
+                                            <div className="flex items-center gap-1 text-muted-foreground">
                                                 <Euro size={16} />
                                                 <span className="font-mono text-sm">{formatValue(groupTotal)}</span>
                                             </div>
                                         )}
-                                        <div className="bg-white/20 text-white px-2 py-1 rounded text-xs">
+                                        <div className="bg-muted text-muted-foreground px-2 py-1 rounded text-xs">
                                             {group.fields.length} Felder
                                         </div>
                                     </div>
                                 </div>
                                 {group.description && (
-                                    <p className="text-green-100 text-sm mt-2">{group.description}</p>
+                                    <p className="text-muted-foreground text-sm mt-2">{group.description}</p>
                                 )}
                             </div>
 
                             {/* Section Content */}
                             {group.expanded && (
-                                <div className="p-6 bg-gray-50">
+                                <div className="p-6 bg-background">
                                     <div className="space-y-3">
                                         {group.fields.map((field) => {
                                             const status = getFieldStatus(field);
@@ -98,21 +97,21 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                             return (
                                                 <div
                                                     key={field.field}
-                                                    className={`flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-green-300 hover:shadow-md transition-all duration-200 cursor-pointer ${
-                                                        isRequired && isEmpty ? 'border-orange-300 bg-orange-50' : ''
+                                                    className={`flex items-center justify-between p-4 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-sm transition-all duration-200 cursor-pointer ${
+                                                        isRequired && isEmpty ? 'border-orange-300 bg-orange-50/50' : ''
                                                     }`}
                                                     onClick={() => onFieldClick(field)}
                                                 >
                                                     <div className="flex items-center gap-4 flex-1">
                                                         {/* Field Number */}
-                                                        <div className="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-medium text-gray-600">
+                                                        <div className="flex-shrink-0 w-8 h-8 bg-muted rounded-full flex items-center justify-center text-sm font-medium text-muted-foreground">
                                                             {field.field}
                                                         </div>
 
                                                         {/* Field Info */}
                                                         <div className="flex-1">
                                                             <div className="flex items-center gap-2 mb-1">
-                                                                <span className="font-medium text-gray-900">
+                                                                <span className="font-medium text-foreground">
                                                                     {field.label}
                                                                 </span>
                                                                 {isRequired && (
@@ -122,9 +121,9 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                                             
                                                             
                                                             <div className="flex items-center gap-2">
-                                                                <span className="text-sm text-gray-600">Betrag:</span>
+                                                                <span className="text-sm text-muted-foreground">Betrag:</span>
                                                                 <span className={`font-mono text-sm ${
-                                                                    isEmpty ? 'text-gray-400' : 'text-gray-900 font-medium'
+                                                                    isEmpty ? 'text-muted-foreground' : 'text-foreground font-medium'
                                                                 }`}>
                                                                     {formatValue(field.value)}
                                                                 </span>
@@ -140,7 +139,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                                         <Button 
                                                             variant="outline" 
                                                             size="sm" 
-                                                            className="text-green-700 border-green-300 hover:bg-green-50"
+                                                            className="text-muted-foreground border-border hover:bg-muted"
                                                         >
                                                             <Calculator size={14} className="mr-1" />
                                                             Details
@@ -151,12 +150,12 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                         })}
                                     </div>
                                     
-                                    {/* Section Summary - Similar to ELSTER */}
+                                    {/* Section Summary */}
                                     {hasFilledFields && (
-                                        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                        <div className="mt-6 p-4 bg-muted/30 border border-border rounded-lg">
                                             <div className="flex items-center justify-between">
-                                                <span className="font-medium text-green-800">Summe {group.title}:</span>
-                                                <span className="font-mono text-lg font-bold text-green-800">
+                                                <span className="font-medium text-foreground">Summe {group.title}:</span>
+                                                <span className="font-mono text-lg font-bold text-foreground">
                                                     {formatValue(groupTotal)}
                                                 </span>
                                             </div>
@@ -167,7 +166,6 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                         </div>
                     );
                 })}
-            </div>
         </div>
     );
 };

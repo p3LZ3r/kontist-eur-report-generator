@@ -16,18 +16,6 @@ import { skr04Categories } from './categoryMappings';
 export const createNavigationSections = (): NavigationSection[] => {
     return [
         {
-            id: 'personal',
-            title: 'Persönliche Daten',
-            description: 'Ihre persönlichen Angaben für die Steuererklärung',
-            icon: 'user',
-            fields: Array.from(
-                { length: ELSTER_FIELD_RANGES.PERSONAL_DATA_END - ELSTER_FIELD_RANGES.PERSONAL_DATA_START + 1 },
-                (_, i) => (ELSTER_FIELD_RANGES.PERSONAL_DATA_START + i).toString()
-            ),
-            completed: false,
-            required: true
-        },
-        {
             id: 'income',
             title: 'Einnahmen',
             description: 'Betriebliche Einnahmen und Erlöse',
@@ -66,14 +54,6 @@ export const createNavigationSections = (): NavigationSection[] => {
 // Create field groups for display - Matching real ELSTER structure
 export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[] => {
     const groups: FieldGroup[] = [
-        {
-            id: 'personal',
-            title: 'Persönliche Daten',
-            description: 'Ihre persönlichen Angaben für die Steuererklärung',
-            fields: fieldValues.filter(f => f.type === 'personal'),
-            expanded: true,
-            category: 'personal'
-        },
         {
             id: 'income',
             title: 'Einnahmen',
@@ -158,8 +138,8 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             id: 'tax',
             title: 'Steuerliche Angaben',
             description: 'Umsatzsteuer und steuerliche Berechnungen',
-            fields: fieldValues.filter(f => f.type === 'tax'),
-            expanded: false,
+            fields: fieldValues.filter(f => f.type === 'tax' || f.type === 'vat' || f.type === 'vat_paid'),
+            expanded: true,
             category: 'tax'
         },
         {

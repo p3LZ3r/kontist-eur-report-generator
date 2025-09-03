@@ -39,21 +39,20 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
     const getSectionColor = (sectionId: string) => {
         switch (sectionId) {
             case 'personal':
-                return 'text-blue-600';
+                return 'text-muted-foreground';
             case 'income':
-                return 'text-green-600';
+                return 'text-success';
             case 'expenses':
-                return 'text-red-600';
+                return 'text-muted-foreground';
             case 'totals':
-                return 'text-purple-600';
+                return 'text-primary';
             default:
-                return 'text-gray-600';
+                return 'text-muted-foreground';
         }
     };
 
     return (
-        <Card className="w-full lg:w-80 h-fit sticky top-4">
-            <CardContent className="p-6">
+        <div className="w-full h-fit">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
@@ -96,7 +95,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                         </div>
                         <div className="text-center">
                             <div className="text-muted-foreground text-xs">Pflichtfelder</div>
-                            <div className="font-semibold font-mono text-expense">
+                            <div className="font-semibold font-mono text-orange-600">
                                 {progress.completedMandatoryFields}/{progress.mandatoryFields}
                             </div>
                         </div>
@@ -155,8 +154,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                         </div>
                     </div>
                 </div>
-            </CardContent>
-        </Card>
+        </div>
     );
 };
 
