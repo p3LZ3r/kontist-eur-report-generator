@@ -132,67 +132,40 @@ export const generateElsterOverview = (
     if (isKleinunternehmer !== undefined) {
         // Add VAT fields if not Kleinunternehmer
         if (!isKleinunternehmer) {
-            // Umsatzsteuer (field 23)
-            if (!elsterSummary['23']) {
-                elsterSummary['23'] = {
+            // Umsatzsteuer (field 17)
+            if (!elsterSummary['17']) {
+                elsterSummary['17'] = {
                     amount: euerCalculation.vatOwed,
-                    label: ELSTER_FIELDS['23'].label,
+                    label: ELSTER_FIELDS['17'].label,
                     categories: []
                 };
             }
 
-            // Vorsteuer (field 24)
-            if (!elsterSummary['24']) {
-                elsterSummary['24'] = {
+            // Vorsteuer (field 57)
+            if (!elsterSummary['57']) {
+                elsterSummary['57'] = {
                     amount: euerCalculation.vatPaid,
-                    label: ELSTER_FIELDS['24'].label,
-                    categories: []
-                };
-            }
-
-            // Umsatzsteuer-Soll (field 44)
-            if (!elsterSummary['44']) {
-                elsterSummary['44'] = {
-                    amount: euerCalculation.vatOwed,
-                    label: ELSTER_FIELDS['44'].label,
-                    categories: []
-                };
-            }
-
-            // Umsatzsteuer-Haben (field 45)
-            if (!elsterSummary['45']) {
-                elsterSummary['45'] = {
-                    amount: euerCalculation.vatPaid,
-                    label: ELSTER_FIELDS['45'].label,
-                    categories: []
-                };
-            }
-
-            // Umsatzsteuer-Saldo (field 46)
-            if (!elsterSummary['46']) {
-                elsterSummary['46'] = {
-                    amount: euerCalculation.vatBalance,
-                    label: ELSTER_FIELDS['46'].label,
+                    label: ELSTER_FIELDS['57'].label,
                     categories: []
                 };
             }
         }
 
         // Add total fields
-        // Gesamtbetrag der Einkünfte (field 52)
-        if (!elsterSummary['52']) {
-            elsterSummary['52'] = {
-                amount: euerCalculation.totalIncome,
-                label: ELSTER_FIELDS['52'].label,
+        // Gewinn/Verlust (field 92)
+        if (!elsterSummary['92']) {
+            elsterSummary['92'] = {
+                amount: euerCalculation.profit,
+                label: ELSTER_FIELDS['92'].label,
                 categories: []
             };
         }
 
-        // Zu versteuerndes Einkommen (field 54)
-        if (!elsterSummary['54']) {
-            elsterSummary['54'] = {
-                amount: euerCalculation.profit,
-                label: ELSTER_FIELDS['54'].label,
+        // Summe der Einkünfte (field 95)
+        if (!elsterSummary['95']) {
+            elsterSummary['95'] = {
+                amount: euerCalculation.totalIncome,
+                label: ELSTER_FIELDS['95'].label,
                 categories: []
             };
         }
@@ -225,53 +198,23 @@ export const calculateVatFields = (
     const vatFields: ElsterFieldValue[] = [];
 
     if (!isKleinunternehmer) {
-        // Field 23: Umsatzsteuer (VAT owed)
+        // Field 17: Umsatzsteuer (VAT owed)
         vatFields.push({
-            field: '23',
+            field: '17',
             value: euerCalculation.vatOwed,
-            label: ELSTER_FIELDS['23'].label,
-            type: 'income',
-            required: ELSTER_FIELDS['23'].required,
+            label: ELSTER_FIELDS['17'].label,
+            type: 'vat',
+            required: ELSTER_FIELDS['17'].required,
             source: 'calculated'
         });
 
-        // Field 24: Vorsteuer (VAT paid)
+        // Field 57: Vorsteuer (VAT paid)
         vatFields.push({
-            field: '24',
+            field: '57',
             value: euerCalculation.vatPaid,
-            label: ELSTER_FIELDS['24'].label,
-            type: 'income',
-            required: ELSTER_FIELDS['24'].required,
-            source: 'calculated'
-        });
-
-        // Field 44: Umsatzsteuer-Soll
-        vatFields.push({
-            field: '44',
-            value: euerCalculation.vatOwed,
-            label: ELSTER_FIELDS['44'].label,
-            type: 'tax',
-            required: ELSTER_FIELDS['44'].required,
-            source: 'calculated'
-        });
-
-        // Field 45: Umsatzsteuer-Haben
-        vatFields.push({
-            field: '45',
-            value: euerCalculation.vatPaid,
-            label: ELSTER_FIELDS['45'].label,
-            type: 'tax',
-            required: ELSTER_FIELDS['45'].required,
-            source: 'calculated'
-        });
-
-        // Field 46: Umsatzsteuer-Saldo
-        vatFields.push({
-            field: '46',
-            value: euerCalculation.vatBalance,
-            label: ELSTER_FIELDS['46'].label,
-            type: 'tax',
-            required: ELSTER_FIELDS['46'].required,
+            label: ELSTER_FIELDS['57'].label,
+            type: 'vat_paid',
+            required: ELSTER_FIELDS['57'].required,
             source: 'calculated'
         });
     }
@@ -283,23 +226,23 @@ export const calculateVatFields = (
 export const calculateTotalFields = (euerCalculation: EuerCalculation): ElsterFieldValue[] => {
     const totalFields: ElsterFieldValue[] = [];
 
-    // Field 52: Gesamtbetrag der Einkünfte (Total income)
+    // Field 92: Gewinn/Verlust (Profit/Loss)
     totalFields.push({
-        field: '52',
-        value: euerCalculation.totalIncome,
-        label: ELSTER_FIELDS['52'].label,
+        field: '92',
+        value: euerCalculation.profit,
+        label: ELSTER_FIELDS['92'].label,
         type: 'total',
-        required: ELSTER_FIELDS['52'].required,
+        required: ELSTER_FIELDS['92'].required,
         source: 'calculated'
     });
 
-    // Field 54: Zu versteuerndes Einkommen (Taxable income = income - expenses)
+    // Field 95: Summe der Einkünfte (Total income)
     totalFields.push({
-        field: '54',
-        value: euerCalculation.profit,
-        label: ELSTER_FIELDS['54'].label,
+        field: '95',
+        value: euerCalculation.totalIncome,
+        label: ELSTER_FIELDS['95'].label,
         type: 'total',
-        required: ELSTER_FIELDS['54'].required,
+        required: ELSTER_FIELDS['95'].required,
         source: 'calculated'
     });
 
@@ -322,16 +265,25 @@ export const calculateTotalFields = (euerCalculation: EuerCalculation): ElsterFi
 export const validateMandatoryFields = (fieldValues: ElsterFieldValue[]): { isValid: boolean; missingFields: string[] } => {
     const missingFields: string[] = [];
 
-    // Check income fields (17-24) - at least field 17 is required
-    const incomeField17 = fieldValues.find(fv => fv.field === '17');
-    if (!incomeField17 || !incomeField17.value) {
-        missingFields.push(ELSTER_FIELDS['17'].label);
+    // Check income fields - at least field 15 (taxable income) is required for regular businesses
+    const incomeField15 = fieldValues.find(fv => fv.field === '15');
+    if (!incomeField15 || !incomeField15.value) {
+        // For Kleinunternehmer, field 12 might be used instead
+        const incomeField12 = fieldValues.find(fv => fv.field === '12');
+        if (!incomeField12 || !incomeField12.value) {
+            missingFields.push(ELSTER_FIELDS['15'].label + ' oder ' + ELSTER_FIELDS['12'].label);
+        }
     }
 
-    // Check expense fields (25-36) - at least field 25 is required
-    const expenseField25 = fieldValues.find(fv => fv.field === '25');
-    if (!expenseField25 || !expenseField25.value) {
-        missingFields.push(ELSTER_FIELDS['25'].label);
+    // Check main expense fields - at least one expense category should be populated
+    const mainExpenseFields = ['27', '29', '30', '37'];
+    const hasExpenses = mainExpenseFields.some(fieldNum => {
+        const expenseField = fieldValues.find(fv => fv.field === fieldNum);
+        return expenseField && expenseField.value > 0;
+    });
+
+    if (!hasExpenses) {
+        missingFields.push('Mindestens eine Ausgabenkategorie (Waren/Fremdleistungen/Personal/Sonstige)');
     }
 
     return {

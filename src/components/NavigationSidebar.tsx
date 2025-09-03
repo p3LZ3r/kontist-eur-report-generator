@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Circle, User, TrendingUp, TrendingDown, Calculator, HelpCircle } from 'lucide-react';
+import { CheckCircle, Circle, User, TrendingUp, TrendingDown, Calculator, HelpCircle, FileText, Info } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import type { NavigationSection, ProgressState } from '../types';
@@ -55,7 +55,12 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
         <Card className="w-full lg:w-80 h-fit sticky top-4">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold text-foreground">ELSTER Navigation</h2>
+                    <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
+                            <FileText className="text-primary" size={14} />
+                        </div>
+                        <h2 className="text-lg font-semibold text-foreground">ELSTER Navigation</h2>
+                    </div>
                     <Button
                         variant="ghost"
                         size="sm"
@@ -83,15 +88,15 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                            <div className="text-muted-foreground">Felder</div>
-                            <div className="font-medium">
+                        <div className="text-center">
+                            <div className="text-muted-foreground text-xs">Felder</div>
+                            <div className="font-semibold font-mono">
                                 {progress.completedFields}/{progress.totalFields}
                             </div>
                         </div>
-                        <div>
-                            <div className="text-muted-foreground">Pflichtfelder</div>
-                            <div className="font-medium text-red-600">
+                        <div className="text-center">
+                            <div className="text-muted-foreground text-xs">Pflichtfelder</div>
+                            <div className="font-semibold font-mono text-expense">
                                 {progress.completedMandatoryFields}/{progress.mandatoryFields}
                             </div>
                         </div>
@@ -116,15 +121,19 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                                 </div>
                                 <div className="flex-1 text-left">
                                     <div className="font-medium text-sm">{section.title}</div>
-                                    <div className="text-xs opacity-75 mt-1">
+                                    <div className="text-xs opacity-75 mt-1 font-mono">
                                         {section.fields.length} Felder
                                     </div>
                                 </div>
                                 <div className="flex-shrink-0">
                                     {section.completed ? (
-                                        <CheckCircle size={16} className="text-green-600" />
+                                        <div className="w-4 h-4 rounded-full bg-success flex items-center justify-center">
+                                            <CheckCircle size={10} className="text-success-foreground" />
+                                        </div>
                                     ) : (
-                                        <Circle size={16} className="text-muted-foreground" />
+                                        <div className="w-4 h-4 rounded-full border border-muted-foreground flex items-center justify-center">
+                                            <Circle size={8} className="text-muted-foreground" />
+                                        </div>
                                     )}
                                 </div>
                             </div>
@@ -133,11 +142,18 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                 </div>
 
                 {/* Help Text */}
-                <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm text-muted-foreground">
-                        Navigieren Sie durch die ELSTER-Abschnitte. Pflichtfelder sind mit einem roten Sternchen markiert.
-                        Klicken Sie auf Felder für Details und Hilfe.
-                    </p>
+                <div className="mt-6 p-4 bg-muted/30 border rounded-lg">
+                    <div className="flex items-start gap-2">
+                        <div className="w-4 h-4 rounded bg-info/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Info className="text-info" size={10} />
+                        </div>
+                        <div>
+                            <p className="text-sm text-muted-foreground">
+                                Navigieren Sie durch die ELSTER-Abschnitte. Pflichtfelder sind markiert.
+                                Klicken Sie auf Felder für Details.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </CardContent>
         </Card>

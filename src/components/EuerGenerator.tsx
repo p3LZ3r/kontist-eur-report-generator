@@ -1,10 +1,9 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { Upload, Download, Calculator, FileText, Building, Info, ChevronLeft, ChevronRight, Settings, Target } from 'lucide-react';
+import { Upload, Calculator, FileText, Building, ChevronLeft, ChevronRight, RotateCcw, TrendingUp, TrendingDown, User } from 'lucide-react';
 import { getCategoriesForSkr, skr04Categories } from '../utils/categoryMappings';
 import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction } from '../utils/transactionUtils';
-import { calculateEuer, generateElsterOverview } from '../utils/euerCalculations';
-import { generateReport, downloadReport, downloadElsterCSV, downloadElsterJSON, validateElsterData } from '../utils/exportUtils';
-import { PAGINATION, ELSTER_FIELD_RANGES } from '../utils/constants';
+import { calculateEuer } from '../utils/euerCalculations';
+import { PAGINATION } from '../utils/constants';
 import { prepareGuidanceData, generateDrillDownData } from '../utils/guidanceUtils';
 import { Button } from './ui/button';
 
@@ -37,7 +36,6 @@ const EuerGenerator = () => {
 
 
     const [currentSection, setCurrentSection] = useState('personal');
-    const [showGuidance, setShowGuidance] = useState(false);
     const [fieldDetailModal, setFieldDetailModal] = useState<{
         isOpen: boolean;
         field?: ElsterFieldValue;
@@ -108,6 +106,27 @@ const EuerGenerator = () => {
         }
     }, []);
 
+    // Alle Daten zurücksetzen und neue Datei hochladen
+    const resetAndUploadNew = useCallback(() => {
+        const confirmReset = window.confirm(
+            'Achtung: Alle aktuellen Transaktionen und manuellen Kategorisierungen gehen verloren.\n\nMöchten Sie wirklich eine neue CSV-Datei hochladen?'
+        );
+        
+        if (confirmReset) {
+            setTransactions([]);
+            setCategories({});
+            setBankType(null);
+            setCurrentPage(1);
+            // setShowGuidance(false);
+            setErrorMessage(null);
+            // Reset file input
+            const fileInput = document.getElementById('csvUpload') as HTMLInputElement;
+            if (fileInput) {
+                fileInput.value = '';
+            }
+        }
+    }, []);
+
     // Kategorie ändern
     const updateCategory = (transactionId: number, categoryKey: string) => {
         setCategories(prev => ({
@@ -128,9 +147,9 @@ const EuerGenerator = () => {
     }, [transactions, categories, isKleinunternehmer, skrCategories]);
 
     // Elster Übersicht generieren - enhanced with complete field set
-    const elsterSummary = useMemo(() => {
-        return generateElsterOverview(euerCalculation, isKleinunternehmer);
-    }, [euerCalculation, isKleinunternehmer]);
+    // const elsterSummary = useMemo(() => {
+    //     return generateElsterOverview(euerCalculation, isKleinunternehmer);
+    // }, [euerCalculation, isKleinunternehmer]);
 
     // Guidance system data
     const guidanceData = useMemo(() => {
@@ -138,53 +157,6 @@ const EuerGenerator = () => {
         return prepareGuidanceData(transactions, categories, isKleinunternehmer);
     }, [transactions, categories, isKleinunternehmer]);
 
-    // Report generieren
-    const generateReportHandler = () => {
-        const currentYear = new Date().getFullYear();
-        const reportContent = generateReport(
-            euerCalculation,
-            currentSkr,
-            bankType,
-            isKleinunternehmer,
-            transactions
-        );
-        downloadReport(reportContent, currentYear, currentSkr, isKleinunternehmer);
-    };
-
-    // Elster Übersicht herunterladen (legacy text format)
-    const downloadElsterOverview = () => {
-        const currentYear = new Date().getFullYear();
-        const reportContent = generateReport(
-            euerCalculation,
-            currentSkr,
-            bankType,
-            isKleinunternehmer,
-            transactions
-        );
-        downloadReport(reportContent, currentYear, currentSkr, isKleinunternehmer);
-    };
-
-    // New ELSTER CSV export
-    const handleElsterCSVExport = () => {
-        const currentYear = new Date().getFullYear();
-        downloadElsterCSV(transactions, categories, isKleinunternehmer, currentYear);
-    };
-
-    // New ELSTER JSON export
-    const handleElsterJSONExport = () => {
-        const currentYear = new Date().getFullYear();
-        downloadElsterJSON(transactions, categories, isKleinunternehmer, currentYear);
-    };
-
-    // Validate ELSTER data
-    const validateElsterExport = () => {
-        const validation = validateElsterData(transactions, categories, isKleinunternehmer);
-        if (!validation.isValid) {
-            alert(`ELSTER Export nicht möglich:\n\nFehlende Pflichtfelder:\n${validation.missingFields.join('\n')}`);
-            return false;
-        }
-        return true;
-    };
 
     // Guidance system callbacks
     const handleSectionChange = useCallback((sectionId: string) => {
@@ -201,7 +173,7 @@ const EuerGenerator = () => {
         });
     }, [guidanceData, transactions, categories]);
 
-    const handleGroupToggle = useCallback((_groupId: string) => {
+    const handleGroupToggle = useCallback(() => {
         if (!guidanceData) return;
         // Note: In a real implementation, you'd update the state properly
     }, [guidanceData]);
@@ -247,7 +219,7 @@ const EuerGenerator = () => {
                                 {currentSkr} EÜR Generator
                             </h1>
                             <p className="text-muted-foreground text-lg leading-relaxed">
-                                Prozessorientierter Kontenrahmen mit Kleinunternehmerregelung
+                                Automatische Kategorisierung und ELSTER-konforme EÜR-Berechnung
                             </p>
                             {bankType && (
                                 <div className="mt-4 flex items-center gap-3 p-3 bg-success/10 rounded-lg border border-success/20">
@@ -270,12 +242,15 @@ const EuerGenerator = () => {
                                         Kleinunternehmerregelung § 19 UStG
                                     </label>
                                     <div className="mt-2 space-y-3">
-                                        <p className="text-sm text-muted-foreground">
-                                            {isKleinunternehmer
-                                                ? '✅ Kleinunternehmer: Bruttobeträge = EÜR-Beträge (keine USt-Trennung)'
-                                                : '✅ USt-pflichtig: Nettobeträge für EÜR, USt separat für Voranmeldung'
-                                            }
-                                        </p>
+                                        <div className="flex items-center gap-2">
+                                            <div className={`w-2 h-2 rounded-full ${isKleinunternehmer ? 'bg-info' : 'bg-success'}`}></div>
+                                            <p className="text-sm text-muted-foreground">
+                                                {isKleinunternehmer
+                                                    ? 'Kleinunternehmer: Bruttobeträge = EÜR-Beträge (keine USt-Trennung)'
+                                                    : 'USt-pflichtig: Nettobeträge für EÜR, USt separat für Voranmeldung'
+                                                }
+                                            </p>
+                                        </div>
                                         <div className="text-sm bg-muted p-3 rounded-lg border">
                                             <strong className="text-foreground">Beispiel 119€ Ausgabe:</strong><br />
                                             <span className="text-muted-foreground">
@@ -318,56 +293,58 @@ const EuerGenerator = () => {
 
 
 
-            {/* File Upload */}
-            <Card className="animate-fade-in">
-                <CardContent className="p-6">
-                    <h2 className="text-2xl font-semibold mb-6 text-foreground flex items-center gap-2">
-                        <Upload className="text-primary" size={24} aria-hidden="true" />
-                        CSV-Datei hochladen
-                    </h2>
-                    <div className="border-2 border-dashed border-muted-foreground/25 rounded-xl p-8 text-center bg-muted/20 hover:bg-muted/30 transition-colors">
-                        {isProcessingFile ? (
-                            <>
-                                <div className="mx-auto mb-4 w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-                                <h3 className="text-lg font-medium text-foreground mb-2">
-                                    CSV-Datei wird verarbeitet...
-                                </h3>
-                                <p className="text-muted-foreground">
-                                    Transaktionen werden analysiert und kategorisiert.
-                                </p>
-                            </>
-                        ) : (
-                            <>
-                                <Upload className="mx-auto text-muted-foreground mb-4" size={64} aria-hidden="true" />
-                                <h3 className="text-lg font-medium text-foreground mb-2">
-                                    Bank-Export hochladen
-                                </h3>
-                                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                                    Laden Sie Ihre Kontist oder Holvi CSV-Datei hoch, um automatisch Transaktionen zu kategorisieren und Ihre EÜR zu erstellen.
-                                </p>
-                                <input
-                                    type="file"
-                                    accept=".csv"
-                                    onChange={handleFileUpload}
-                                    className="hidden"
-                                    id="csvUpload"
-                                    aria-describedby="file-upload-description"
-                                    disabled={isProcessingFile}
-                                />
-                                <Button asChild size="lg" className="focus-ring" disabled={isProcessingFile}>
-                                    <label htmlFor="csvUpload" className="cursor-pointer">
-                                        <Upload size={18} className="mr-2" aria-hidden="true" />
-                                        CSV-Datei auswählen
-                                    </label>
-                                </Button>
-                                <p id="file-upload-description" className="text-sm text-muted-foreground mt-3">
-                                    Unterstützt: Kontist und Holvi CSV-Formate
-                                </p>
-                            </>
-                        )}
-                    </div>
-                </CardContent>
-            </Card>
+            {/* File Upload - nur anzeigen wenn keine Transaktionen geladen sind */}
+            {transactions.length === 0 && (
+                <Card className="animate-fade-in">
+                    <CardContent className="p-6">
+                        <h2 className="text-2xl font-semibold mb-6 text-foreground flex items-center gap-2">
+                            <Upload className="text-primary" size={24} aria-hidden="true" />
+                            CSV-Datei hochladen
+                        </h2>
+                        <div className="border-2 border-dashed border-muted-foreground/25 rounded-xl p-8 text-center bg-muted/20 hover:bg-muted/30 transition-colors">
+                            {isProcessingFile ? (
+                                <>
+                                    <div className="mx-auto mb-4 w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                                    <h3 className="text-lg font-medium text-foreground mb-2">
+                                        CSV-Datei wird verarbeitet...
+                                    </h3>
+                                    <p className="text-muted-foreground">
+                                        Transaktionen werden analysiert und kategorisiert.
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <Upload className="mx-auto text-muted-foreground mb-4" size={64} aria-hidden="true" />
+                                    <h3 className="text-lg font-medium text-foreground mb-2">
+                                        Bank-Export hochladen
+                                    </h3>
+                                    <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                                        Laden Sie Ihre Kontist oder Holvi CSV-Datei hoch, um automatisch Transaktionen zu kategorisieren und Ihre EÜR zu erstellen.
+                                    </p>
+                                    <input
+                                        type="file"
+                                        accept=".csv"
+                                        onChange={handleFileUpload}
+                                        className="hidden"
+                                        id="csvUpload"
+                                        aria-describedby="file-upload-description"
+                                        disabled={isProcessingFile}
+                                    />
+                                    <Button asChild size="lg" className="focus-ring" disabled={isProcessingFile}>
+                                        <label htmlFor="csvUpload" className="cursor-pointer">
+                                            <Upload size={18} className="mr-2" aria-hidden="true" />
+                                            CSV-Datei auswählen
+                                        </label>
+                                    </Button>
+                                    <p id="file-upload-description" className="text-sm text-muted-foreground mt-3">
+                                        Unterstützt: Kontist und Holvi CSV-Formate
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
 
             {/* Transaktionsübersicht mit Pagination */}
             {transactions.length > 0 && (
@@ -378,8 +355,20 @@ const EuerGenerator = () => {
                                 <FileText className="text-primary" size={24} aria-hidden="true" />
                                 Transaktionen kategorisieren
                             </h2>
-                            <div className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                                {transactions.length} Transaktionen insgesamt
+                            <div className="flex items-center gap-4">
+                                <div className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full">
+                                    {transactions.length} Transaktionen insgesamt
+                                </div>
+                                <Button
+                                    onClick={resetAndUploadNew}
+                                    variant="outline"
+                                    size="sm"
+                                    className="flex items-center gap-2 text-muted-foreground hover:text-foreground focus-ring"
+                                    title="Neue CSV-Datei hochladen (aktueller Fortschritt geht verloren)"
+                                >
+                                    <RotateCcw size={16} aria-hidden="true" />
+                                    Neue Datei
+                                </Button>
                             </div>
                         </div>
 
@@ -416,15 +405,15 @@ const EuerGenerator = () => {
                         </div>
 
                         {/* Desktop Table View */}
-                        <div className="hidden sm:block mobile-table">
-                            <table className="w-full text-sm">
+                        <div className="hidden sm:block overflow-x-auto">
+                            <table className="w-full min-w-full text-sm border-collapse">
                                 <thead>
                                     <tr className="border-b border-border bg-muted/50">
-                                        <th className="text-left p-4 font-semibold text-foreground">Datum</th>
-                                        <th className="text-left p-4 font-semibold text-foreground">Gegenpartei</th>
-                                        <th className="text-left p-4 font-semibold text-foreground">Betrag</th>
-                                        <th className="text-left p-4 font-semibold text-foreground">Verwendungszweck</th>
-                                        <th className="text-left p-4 font-semibold text-foreground">{currentSkr}-Konto</th>
+                                        <th className="text-left p-3 font-semibold text-foreground w-24">Datum</th>
+                                        <th className="text-left p-3 font-semibold text-foreground w-1/5 min-w-32">Gegenpartei</th>
+                                        <th className="text-right p-3 font-semibold text-foreground w-20">Betrag</th>
+                                        <th className="text-left p-3 font-semibold text-foreground w-1/4 min-w-40">Verwendungszweck</th>
+                                        <th className="text-left p-3 font-semibold text-foreground w-1/3 min-w-48">{currentSkr}-Konto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -435,39 +424,50 @@ const EuerGenerator = () => {
 
                                         return (
                                             <tr key={transaction.id} className={`border-b border-border hover:bg-muted/50 transition-colors ${isPrivate ? 'bg-private/5' : ''}`}>
-                                                <td className="p-4 text-foreground">{transaction.dateField}</td>
-                                                <td className="p-4 text-foreground max-w-xs truncate" title={transaction.counterpartyField}>{transaction.counterpartyField}</td>
-                                                <td className={`p-4 font-semibold ${transaction.BetragNumeric > 0 ? 'text-income' :
+                                                <td className="p-3 text-foreground text-xs whitespace-nowrap text-left">{transaction.dateField}</td>
+                                                <td className="p-3 text-foreground truncate max-w-0 text-left" title={transaction.counterpartyField}>
+                                                    <div className="truncate">{transaction.counterpartyField}</div>
+                                                </td>
+                                                <td className={`p-3 font-semibold whitespace-nowrap text-right ${transaction.BetragNumeric > 0 ? 'text-income' :
                                                     isPrivate ? 'text-private' : 'text-expense'
                                                     }`}>
                                                     {transaction.BetragNumeric.toFixed(2)}€
                                                 </td>
-                                                <td className="p-4 text-muted-foreground max-w-xs truncate" title={transaction.purposeField}>{transaction.purposeField}</td>
-                                                <td className="p-4">
+                                                <td className="p-3 text-muted-foreground truncate max-w-0 text-left" title={transaction.purposeField}>
+                                                    <div className="truncate text-xs">{transaction.purposeField}</div>
+                                                </td>
+                                                <td className="p-3 text-left">
                                                     <Select
                                                         aria-label={`${currentSkr}-Konto für Transaktion ${transaction.id} auswählen`}
                                                         value={categoryKey}
                                                         onValueChange={(value) => updateCategory(transaction.id, value)}
                                                     >
-                                                        <SelectTrigger className={`w-full focus-ring ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
+                                                        <SelectTrigger className={`w-full min-w-0 focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring text-xs ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
                                                             <SelectValue />
                                                         </SelectTrigger>
-                                                        <SelectContent>
-                                                            {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
-                                                                <SelectItem key={key} value={key}>
-                                                                    {category.code} - {category.name}
-                                                                </SelectItem>
-                                                            ))}
-                                                            {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
-                                                                <SelectItem key={key} value={key}>
-                                                                    {category.code} - {category.name}
-                                                                </SelectItem>
-                                                            ))}
-                                                            {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
-                                                                <SelectItem key={key} value={key}>
-                                                                    {category.code} - {category.name}
-                                                                </SelectItem>
-                                                            ))}
+                                                        <SelectContent className="max-h-60 overflow-y-auto">
+                                                            {transaction.BetragNumeric > 0 ? (
+                                                                // Für Einnahmen: nur Einnahme-Konten anzeigen
+                                                                Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
+                                                                    <SelectItem key={key} value={key}>
+                                                                        {category.code} - {category.name}
+                                                                    </SelectItem>
+                                                                ))
+                                                            ) : (
+                                                                // Für Ausgaben: Ausgabe- und Privat-Konten anzeigen
+                                                                <>
+                                                                    {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
+                                                                        <SelectItem key={key} value={key}>
+                                                                            {category.code} - {category.name}
+                                                                        </SelectItem>
+                                                                    ))}
+                                                                    {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
+                                                                        <SelectItem key={key} value={key}>
+                                                                            {category.code} - {category.name}
+                                                                        </SelectItem>
+                                                                    ))}
+                                                                </>
+                                                            )}
                                                         </SelectContent>
                                                     </Select>
                                                 </td>
@@ -513,25 +513,32 @@ const EuerGenerator = () => {
                                                     value={categoryKey}
                                                     onValueChange={(value) => updateCategory(transaction.id, value)}
                                                 >
-                                                    <SelectTrigger id={`category-${transaction.id}`} className={`w-full focus-ring ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
+                                                    <SelectTrigger id={`category-${transaction.id}`} className={`w-full focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
                                                         <SelectValue />
                                                     </SelectTrigger>
-                                                    <SelectContent>
-                                                        {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
-                                                            <SelectItem key={key} value={key}>
-                                                                {category.code} - {category.name}
-                                                            </SelectItem>
-                                                        ))}
-                                                        {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
-                                                            <SelectItem key={key} value={key}>
-                                                                {category.code} - {category.name}
-                                                            </SelectItem>
-                                                        ))}
-                                                        {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
-                                                            <SelectItem key={key} value={key}>
-                                                                {category.code} - {category.name}
-                                                            </SelectItem>
-                                                        ))}
+                                                    <SelectContent className="max-h-60 overflow-y-auto">
+                                                        {transaction.BetragNumeric > 0 ? (
+                                                            // Für Einnahmen: nur Einnahme-Konten anzeigen
+                                                            Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'income').map(([key, category]) => (
+                                                                <SelectItem key={key} value={key}>
+                                                                    {category.code} - {category.name}
+                                                                </SelectItem>
+                                                            ))
+                                                        ) : (
+                                                            // Für Ausgaben: Ausgabe- und Privat-Konten anzeigen
+                                                            <>
+                                                                {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'expense').map(([key, category]) => (
+                                                                    <SelectItem key={key} value={key}>
+                                                                        {category.code} - {category.name}
+                                                                    </SelectItem>
+                                                                ))}
+                                                                {Object.entries(skrCategories).filter(([_, cat]) => cat.type === 'private').map(([key, category]) => (
+                                                                    <SelectItem key={key} value={key}>
+                                                                        {category.code} - {category.name}
+                                                                    </SelectItem>
+                                                                ))}
+                                                            </>
+                                                        )}
                                                     </SelectContent>
                                                 </Select>
                                             </div>
@@ -561,20 +568,34 @@ const EuerGenerator = () => {
                             >
                                 ‹
                             </Button>
-                            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                                const pageNum = Math.max(1, Math.min(currentPage - 2 + i, totalPages - 4 + i));
-                                return (
-                                    <Button
-                                        key={pageNum}
-                                        onClick={() => setCurrentPage(pageNum)}
-                                        variant={currentPage === pageNum ? 'default' : 'outline'}
-                                        size="sm"
-                                        className="focus-ring"
-                                    >
-                                        {pageNum}
-                                    </Button>
-                                );
-                            })}
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                .filter((pageNum) => {
+                                    // Show first page, last page, current page, and pages around current
+                                    if (totalPages <= 5) return true;
+                                    if (pageNum === 1 || pageNum === totalPages) return true;
+                                    return Math.abs(pageNum - currentPage) <= 1;
+                                })
+                                .map((pageNum, index, visiblePages) => {
+                                    // Add ellipsis where needed
+                                    const prevPage = visiblePages[index - 1];
+                                    const showEllipsis = prevPage && pageNum - prevPage > 1;
+                                    
+                                    return (
+                                        <div key={pageNum} className="flex items-center">
+                                            {showEllipsis && (
+                                                <span className="px-2 text-muted-foreground">...</span>
+                                            )}
+                                            <Button
+                                                onClick={() => setCurrentPage(pageNum)}
+                                                variant={currentPage === pageNum ? 'default' : 'outline'}
+                                                size="sm"
+                                                className="focus-ring"
+                                            >
+                                                {pageNum}
+                                            </Button>
+                                        </div>
+                                    );
+                                })}
                             <Button
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
@@ -599,7 +620,7 @@ const EuerGenerator = () => {
             )}
 
             {/* ELSTER Guidance System */}
-            {showGuidance && guidanceData && (
+            {guidanceData && (
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                     {/* Navigation Sidebar */}
                     <div className="lg:col-span-1">
@@ -615,355 +636,141 @@ const EuerGenerator = () => {
 
                     {/* Main Content */}
                     <div className="lg:col-span-3">
-                        <Card className="animate-fade-in">
-                            <CardContent className="p-6">
-                                <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-2xl font-semibold text-foreground">
-                                        ELSTER Felder - {guidanceData.sections.find(s => s.id === currentSection)?.title}
-                                    </h2>
-                                    <Button
-                                        onClick={() => setShowGuidance(false)}
-                                        variant="outline"
-                                        size="sm"
-                                    >
-                                        Zurück zur Übersicht
-                                    </Button>
-                                </div>
-
-                                <FieldGroups
-                                    groups={guidanceData.groups.filter(group => {
-                                        if (currentSection === 'personal') return group.category === 'personal';
-                                        if (currentSection === 'income') return group.category === 'income';
-                                        if (currentSection === 'expenses') return group.category === 'expense';
-                                        if (currentSection === 'totals') return group.category === 'total' || group.category === 'tax';
-                                        return true;
-                                    })}
-                                    onFieldClick={handleFieldClick}
-                                    onGroupToggle={handleGroupToggle}
-                                />
-
-                                {/* Action Buttons */}
-                                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                                    <Button
-                                        onClick={() => {
-                                            if (validateElsterExport()) {
-                                                handleElsterCSVExport();
-                                            }
-                                        }}
-                                        variant="default"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <Download size={20} />
-                                        ELSTER CSV Export
-                                    </Button>
-
-                                    <Button
-                                        onClick={() => {
-                                            if (validateElsterExport()) {
-                                                handleElsterJSONExport();
-                                            }
-                                        }}
-                                        variant="outline"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <Download size={20} />
-                                        ELSTER JSON Export
-                                    </Button>
-
-                                    <Button
-                                        onClick={downloadElsterOverview}
-                                        variant="outline"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <Download size={20} />
-                                        Legacy Text Export
-                                    </Button>
-
-                                    <Button
-                                        onClick={generateReportHandler}
-                                        variant="default"
-                                        className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
-                                    >
-                                        <Download size={20} />
-                                        Detaillierte EÜR exportieren
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
+                        <FieldGroups
+                            groups={guidanceData.groups.filter(group => {
+                                if (currentSection === 'personal') return group.category === 'personal';
+                                if (currentSection === 'income') return group.category === 'income';
+                                if (currentSection === 'expenses') return group.category === 'expense';
+                                if (currentSection === 'totals') return group.category === 'total' || group.category === 'tax';
+                                return true;
+                            })}
+                            onFieldClick={handleFieldClick}
+                            onGroupToggle={handleGroupToggle}
+                        />
                     </div>
                 </div>
             )}
 
-            {/* Legacy Elster Overview (when not in guidance mode) */}
-            {!showGuidance && transactions.length > 0 && (
-                <Card className="mb-6">
-                    <CardContent className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-semibold flex items-center gap-2">
-                                <FileText className="text-blue-600" aria-hidden="true" />
-                                Elster EÜR-Übertragung
-                            </h2>
-                            <Button
-                                onClick={() => setShowGuidance(true)}
-                                variant="outline"
-                                size="sm"
-                                className="flex items-center gap-2"
-                            >
-                                <Target size={16} />
-                                Interaktive Navigation
-                            </Button>
-                        </div>
-
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                            <div className="flex items-start gap-2">
-                                <Info className="text-blue-600 mt-1" size={20} aria-hidden="true" />
-                                <div>
-                                    <h3 className="font-medium text-blue-800">Direkte Übertragung in Elster</h3>
-                                    <p className="text-blue-700 text-sm mt-1">
-                                        Die Beträge sind nach Elster-Zeilennummern gruppiert. Übertragen Sie die Werte direkt in Ihr Elster-Formular.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            {/* Einnahmen */}
-                            <div>
-                                <h3 className="text-lg font-medium text-green-600 mb-4">📋 Elster-Einnahmen</h3>
-                                <div className="space-y-3">
-                                    {Object.entries(elsterSummary)
-                                        .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.INCOME_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.INCOME_END)
-                                        .sort(([a], [b]) => parseInt(a) - parseInt(b))
-                                        .map(([fieldNumber, fieldData]) => (
-                                            <div key={fieldNumber} className="bg-green-50 border border-green-200 rounded p-3">
-                                                <div className="flex justify-between items-center mb-2">
-                                                    <div className="font-medium text-green-800">
-                                                        📝 Zeile {fieldNumber}
-                                                    </div>
-                                                    <div className="text-green-700 font-bold text-lg">
-                                                        {fieldData.amount.toFixed(2)} €
-                                                    </div>
-                                                </div>
-                                                <div className="text-sm text-green-700 font-medium mb-2">
-                                                    {fieldData.label}
-                                                </div>
-                                                <div className="text-xs text-green-600">
-                                                    {fieldData.categories.map((cat, idx) => (
-                                                        <div key={`${fieldNumber}-${cat.name}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
-                                </div>
-                            </div>
-
-                            {/* Ausgaben */}
-                            <div>
-                                <h3 className="text-lg font-medium text-red-600 mb-4">📋 Elster-Ausgaben</h3>
-                                <div className="space-y-3 max-h-96 overflow-y-auto">
-                                    {Object.entries(elsterSummary)
-                                        .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.EXPENSE_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.EXPENSE_END)
-                                        .sort(([a], [b]) => parseInt(a) - parseInt(b))
-                                        .map(([fieldNumber, fieldData]) => (
-                                            <div key={fieldNumber} className="bg-red-50 border border-red-200 rounded p-3">
-                                                <div className="flex justify-between items-center mb-2">
-                                                    <div className="font-medium text-red-800">
-                                                        📝 Zeile {fieldNumber}
-                                                    </div>
-                                                    <div className="text-red-700 font-bold text-lg">
-                                                        {fieldData.amount.toFixed(2)} € {(fieldData as any).note || ''}
-                                                    </div>
-                                                </div>
-                                                <div className="text-sm text-red-700 font-medium mb-2">
-                                                    {fieldData.label}
-                                                </div>
-                                                <div className="text-xs text-red-600">
-                                                    {fieldData.categories.map((cat, idx) => (
-                                                        <div key={`${fieldNumber}-${cat.name}-${idx}`}>• {cat.name}: {cat.amount.toFixed(2)} €</div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Elster Download */}
-                        <div className="mt-6 text-center space-y-3">
-                            <div className="bg-gray-100 p-4 rounded-lg">
-                                <h4 className="font-medium text-gray-800 mb-2">✅ Bereit für Elster-Übertragung</h4>
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                                    <div>
-                                        <div className="text-gray-600">Einnahmen gesamt:</div>
-                                        <div className="font-bold text-green-600">
-                                            {Object.entries(elsterSummary)
-                                                .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.INCOME_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.INCOME_END)
-                                                .reduce((sum, [, fieldData]) => sum + fieldData.amount, 0)
-                                                .toFixed(2)} €
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="text-gray-600">Ausgaben gesamt:</div>
-                                        <div className="font-bold text-red-600">
-                                            {Object.entries(elsterSummary)
-                                                .filter(([fieldNumber]) => parseInt(fieldNumber) >= ELSTER_FIELD_RANGES.EXPENSE_START && parseInt(fieldNumber) <= ELSTER_FIELD_RANGES.EXPENSE_END)
-                                                .reduce((sum, [, fieldData]) => sum + fieldData.amount, 0)
-                                                .toFixed(2)} €
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="text-gray-600">Gewinn/Verlust:</div>
-                                        <div className={`font-bold ${euerCalculation.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                            {euerCalculation.profit.toFixed(2)} €
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="text-gray-600">Status:</div>
-                                        <div className="font-bold text-blue-600">
-                                            {isKleinunternehmer ? 'KU §19' : 'USt-pflichtig'}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                                <Button
-                                    onClick={() => {
-                                        if (validateElsterExport()) {
-                                            handleElsterCSVExport();
-                                        }
-                                    }}
-                                    variant="default"
-                                    className="flex items-center gap-2"
-                                >
-                                    <Download size={20} aria-hidden="true" />
-                                    ELSTER CSV Export
-                                </Button>
-
-                                <Button
-                                    onClick={() => {
-                                        if (validateElsterExport()) {
-                                            handleElsterJSONExport();
-                                        }
-                                    }}
-                                    variant="outline"
-                                    className="flex items-center gap-2"
-                                >
-                                    <Download size={20} aria-hidden="true" />
-                                    ELSTER JSON Export
-                                </Button>
-
-                                <Button
-                                    onClick={downloadElsterOverview}
-                                    variant="outline"
-                                    className="flex items-center gap-2"
-                                >
-                                    <Download size={20} aria-hidden="true" />
-                                    Legacy Text Export
-                                </Button>
-
-                                <Button
-                                    onClick={generateReportHandler}
-                                    variant="default"
-                                    className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
-                                >
-                                    <Download size={20} aria-hidden="true" />
-                                    Detaillierte EÜR exportieren
-                                </Button>
-                            </div>
-                        </div>
-
-                        <div className="mt-4 text-xs text-gray-500 bg-gray-50 p-3 rounded">
-                            <strong>💡 Anleitung:</strong> Öffnen Sie Elster → EÜR-Formular → Übertragen Sie die Beträge in die entsprechenden Zeilen.
-                            Die Zeilennummern entsprechen exakt den Elster-Formularfeldern.
-                        </div>
-                    </CardContent>
-                </Card>
-            )}
 
             {/* EÜR-Ergebnis */}
             {transactions.length > 0 && (
                 <Card className="mb-6">
                     <CardContent className="p-6">
-                        <h2 className="text-xl font-semibold mb-4">Einnahmen-Überschuss-Rechnung ({currentSkr})</h2>
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                <Calculator className="text-primary" size={18} />
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-semibold text-foreground">Einnahmen-Überschuss-Rechnung</h2>
+                                <p className="text-sm text-muted-foreground">{currentSkr} Kontenrahmen</p>
+                            </div>
+                        </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                             {/* Einnahmen */}
                             <div>
-                                <h3 className="text-lg font-medium text-green-600 mb-3">Betriebseinnahmen</h3>
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="w-5 h-5 rounded bg-income/20 flex items-center justify-center">
+                                        <TrendingUp className="text-income" size={12} />
+                                    </div>
+                                    <h3 className="text-lg font-semibold text-income">Betriebseinnahmen</h3>
+                                </div>
                                 <div className="space-y-1 max-h-64 overflow-y-auto">
                                     {Object.entries(euerCalculation.income).map(([key, amount]) => (
                                         <div key={key} className="flex justify-between text-sm">
                                             <span className="truncate">{skrCategories[key]?.code} {skrCategories[key]?.name}</span>
-                                            <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
+                                            <span className="font-medium ml-2 font-mono">{amount.toFixed(2)} €</span>
                                         </div>
                                     ))}
                                 </div>
-                                <div className="border-t mt-3 pt-2 flex justify-between font-bold text-green-600">
-                                    <span>Gesamteinnahmen:</span>
-                                    <span>{euerCalculation.totalIncome.toFixed(2)}€</span>
+                                <div className="border-t border-income/20 mt-3 pt-3 flex justify-between font-bold text-income">
+                                    <span>Gesamteinnahmen</span>
+                                    <span className="font-mono">{euerCalculation.totalIncome.toFixed(2)} €</span>
                                 </div>
                             </div>
 
                             {/* Ausgaben */}
                             <div>
-                                <h3 className="text-lg font-medium text-red-600 mb-3">Betriebsausgaben</h3>
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="w-5 h-5 rounded bg-expense/20 flex items-center justify-center">
+                                        <TrendingDown className="text-expense" size={12} />
+                                    </div>
+                                    <h3 className="text-lg font-semibold text-expense">Betriebsausgaben</h3>
+                                </div>
                                 <div className="space-y-1 max-h-64 overflow-y-auto">
                                     {Object.entries(euerCalculation.expenses).map(([key, amount]) => (
                                         <div key={key} className="flex justify-between text-sm">
                                             <span className="truncate">{skrCategories[key]?.code} {skrCategories[key]?.name}</span>
-                                            <span className="font-medium ml-2">{amount.toFixed(2)}€</span>
+                                            <span className="font-medium ml-2 font-mono">{amount.toFixed(2)} €</span>
                                         </div>
                                     ))}
                                 </div>
-                                <div className="border-t mt-3 pt-2 flex justify-between font-bold text-red-600">
-                                    <span>Gesamtausgaben:</span>
-                                    <span>{euerCalculation.totalExpenses.toFixed(2)}€</span>
+                                <div className="border-t border-expense/20 mt-3 pt-3 flex justify-between font-bold text-expense">
+                                    <span>Gesamtausgaben</span>
+                                    <span className="font-mono">{euerCalculation.totalExpenses.toFixed(2)} €</span>
                                 </div>
                             </div>
 
                             {/* Zusammenfassung */}
-                            <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="text-lg font-medium mb-1">Zusammenfassung</h3>
-                                <div className="text-xs text-blue-600 mb-3">
-                                    {isKleinunternehmer ? '§ 19 UStG - Bruttobeträge' : 'USt-pflichtig - Nettobeträge + USt separat'}
+                            <div className="bg-muted/30 border rounded-lg p-4">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-5 h-5 rounded bg-primary/20 flex items-center justify-center">
+                                        <Calculator className="text-primary" size={12} />
+                                    </div>
+                                    <h3 className="text-lg font-semibold text-foreground">Zusammenfassung</h3>
+                                </div>
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className={`w-2 h-2 rounded-full ${isKleinunternehmer ? 'bg-info' : 'bg-primary'}`}></div>
+                                    <div className="text-xs text-muted-foreground">
+                                        {isKleinunternehmer ? '§ 19 UStG - Bruttobeträge' : 'USt-pflichtig - Nettobeträge + USt separat'}
+                                    </div>
                                 </div>
 
                                 <div className="space-y-2 text-sm">
-                                    <div className="text-xs text-gray-500 mb-2">
-                                        {isKleinunternehmer
-                                            ? '📊 Beträge: Brutto (inkl. USt)'
-                                            : '📊 Beträge: Netto (ohne USt)'
-                                        }
+                                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                                        <div className="w-3 h-3 rounded bg-muted flex items-center justify-center">
+                                            <Calculator className="text-muted-foreground" size={8} />
+                                        </div>
+                                        <span>
+                                            {isKleinunternehmer
+                                                ? 'Beträge: Brutto (inkl. USt)'
+                                                : 'Beträge: Netto (ohne USt)'
+                                            }
+                                        </span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span>Betriebseinnahmen:</span>
-                                        <span className="text-green-600 font-medium">{euerCalculation.totalIncome.toFixed(2)}€</span>
+                                        <span className="text-income font-medium font-mono">{euerCalculation.totalIncome.toFixed(2)} €</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span>Betriebsausgaben:</span>
-                                        <span className="text-red-600 font-medium">-{euerCalculation.totalExpenses.toFixed(2)}€</span>
+                                        <span className="text-expense font-medium font-mono">-{euerCalculation.totalExpenses.toFixed(2)} €</span>
                                     </div>
                                     <div className="border-t pt-2 flex justify-between font-bold">
                                         <span>Steuerpflichtiger Gewinn:</span>
-                                        <span className={euerCalculation.profit >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                            {euerCalculation.profit.toFixed(2)}€
+                                        <span className={`font-mono ${euerCalculation.profit >= 0 ? 'text-income' : 'text-expense'}`}>
+                                            {euerCalculation.profit.toFixed(2)} €
                                         </span>
                                     </div>
 
                                     {/* Privatbereich */}
                                     {Object.keys(euerCalculation.privateTransactions).length > 0 && (
                                         <div className="border-t pt-2 mt-2">
-                                            <h4 className="font-medium text-orange-600 mb-1">Privatbereich</h4>
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <div className="w-4 h-4 rounded bg-private/20 flex items-center justify-center">
+                                                    <User className="text-private" size={10} />
+                                                </div>
+                                                <h4 className="font-medium text-private text-sm">Privatbereich</h4>
+                                            </div>
                                             {Object.entries(euerCalculation.privateTransactions).map(([key, amount]) => (
-                                                <div key={key} className="flex justify-between text-orange-600 text-xs">
-                                                    <span>{skrCategories[key]?.name}:</span>
-                                                    <span>{amount.toFixed(2)}€</span>
+                                                <div key={key} className="flex justify-between text-private text-xs">
+                                                    <span>{skrCategories[key]?.name}</span>
+                                                    <span className="font-mono">{amount.toFixed(2)} €</span>
                                                 </div>
                                             ))}
-                                            <div className="flex justify-between font-medium mt-1">
-                                                <span>Verbleibt im Betrieb:</span>
-                                                <span>{(euerCalculation.profit - euerCalculation.privateWithdrawals + euerCalculation.privateDeposits).toFixed(2)}€</span>
+                                            <div className="flex justify-between font-medium mt-2 pt-1 border-t border-private/20">
+                                                <span className="text-sm">Verbleibt im Betrieb</span>
+                                                <span className="font-mono">{(euerCalculation.profit - euerCalculation.privateWithdrawals + euerCalculation.privateDeposits).toFixed(2)} €</span>
                                             </div>
                                         </div>
                                     )}
@@ -972,21 +779,28 @@ const EuerGenerator = () => {
                                 {/* USt-Berechnung */}
                                 {!isKleinunternehmer && (
                                     <div className="mt-4 pt-3 border-t">
-                                        <h4 className="font-medium text-blue-600 mb-2">Umsatzsteuer-Voranmeldung</h4>
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="w-4 h-4 rounded bg-info/20 flex items-center justify-center">
+                                                <Calculator className="text-info" size={10} />
+                                            </div>
+                                            <h4 className="font-medium text-info text-sm">Umsatzsteuer-Voranmeldung</h4>
+                                        </div>
                                         <div className="space-y-1 text-sm">
                                             <div className="flex justify-between">
                                                 <span>Umsatzsteuer (schuldig):</span>
-                                                <span>{euerCalculation.vatOwed.toFixed(2)}€</span>
+                                                <span className="font-mono">{euerCalculation.vatOwed.toFixed(2)} €</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span>Vorsteuer (bezahlt):</span>
-                                                <span>-{euerCalculation.vatPaid.toFixed(2)}€</span>
+                                                <span className="font-mono">-{euerCalculation.vatPaid.toFixed(2)} €</span>
                                             </div>
                                             <div className="flex justify-between font-medium">
                                                 <span>USt-Saldo:</span>
-                                                <span className={euerCalculation.vatBalance >= 0 ? 'text-red-600' : 'text-green-600'}>
-                                                    {euerCalculation.vatBalance.toFixed(2)}€
-                                                    {euerCalculation.vatBalance >= 0 ? ' (nachzahlen)' : ' (Erstattung)'}
+                                                <span className={`font-mono ${euerCalculation.vatBalance >= 0 ? 'text-expense' : 'text-income'}`}>
+                                                    {euerCalculation.vatBalance.toFixed(2)} €
+                                                    <span className="font-sans text-xs ml-1">
+                                                        {euerCalculation.vatBalance >= 0 ? '(nachzahlen)' : '(Erstattung)'}
+                                                    </span>
                                                 </span>
                                             </div>
                                         </div>
@@ -995,26 +809,15 @@ const EuerGenerator = () => {
 
                                 {isKleinunternehmer && (
                                     <div className="mt-4 pt-3 border-t">
-                                        <div className="text-xs text-gray-600 bg-gray-100 p-2 rounded">
-                                            <strong>Kleinunternehmerregelung § 19 UStG</strong><br />
-                                            Keine Umsatzsteuer-Berechnung
+                                        <div className="text-xs text-info bg-info/10 border border-info/20 p-3 rounded">
+                                            <strong className="text-info">Kleinunternehmerregelung § 19 UStG</strong><br />
+                                            <span className="text-info/80">Keine Umsatzsteuer-Berechnung erforderlich</span>
                                         </div>
                                     </div>
                                 )}
                             </div>
                         </div>
 
-                        {/* Export Button */}
-                        <div className="mt-6 text-center">
-                            <Button
-                                onClick={generateReportHandler}
-                                variant="default"
-                                className="bg-green-600 hover:bg-green-700 flex items-center gap-2 mx-auto"
-                            >
-                                <Download size={20} aria-hidden="true" />
-                                {currentSkr} EÜR exportieren
-                            </Button>
-                        </div>
                     </CardContent>
                 </Card>
             )}

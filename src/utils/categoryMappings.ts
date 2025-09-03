@@ -7,136 +7,139 @@ export type CategoryInfo = {
     vat: number;
 };
 
-// Elster EÜR-Feldmapping (extended for all fields 1-60+)
+// Elster EÜR-Feldmapping (based on official ELSTER documentation)
 export const elsterMapping: ElsterMapping = {
-    // PERSONAL DATA FIELDS (1-16) - Populated from user tax data, not transactions
+    // PERSONAL DATA FIELDS (1-11) - Populated from user tax data, not transactions
     // These fields are handled separately in automatic population functions
 
-    // INCOME FIELDS (17-24)
-    'income_services_19': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_services_7': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_services_0': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_goods_19': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_goods_7': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_eu': { elsterField: '19', label: 'Erlöse aus EU-Lieferungen' },
-    'income_export': { elsterField: '19', label: 'Erlöse aus EU-Lieferungen' },
-    'income_prepayments': { elsterField: '17', label: 'Umsatzerlöse (steuerpflichtig)' },
-    'income_other': { elsterField: '18', label: 'Sonstige Leistungen' },
-    'income_refunds': { elsterField: '18', label: 'Sonstige Leistungen' },
-    'income_interest': { elsterField: '20', label: 'Einnahmen aus Kapitalvermögen' },
+    // INCOME FIELDS (12, 15-16, 19-20)
+    // Field 12: For Kleinunternehmer (gross amounts)
+    'income_services_19': { elsterField: '15', label: 'Umsatzsteuerpflichtige Umsätze (netto)' },
+    'income_services_7': { elsterField: '15', label: 'Umsatzsteuerpflichtige Umsätze (netto)' },
+    'income_services_0': { elsterField: '16', label: 'Steuerfreie und nicht steuerbare Umsätze' },
+    'income_goods_19': { elsterField: '15', label: 'Umsatzsteuerpflichtige Umsätze (netto)' },
+    'income_goods_7': { elsterField: '15', label: 'Umsatzsteuerpflichtige Umsätze (netto)' },
+    'income_eu': { elsterField: '16', label: 'Steuerfreie und nicht steuerbare Umsätze' },
+    'income_export': { elsterField: '16', label: 'Steuerfreie und nicht steuerbare Umsätze' },
+    'income_prepayments': { elsterField: '15', label: 'Umsatzsteuerpflichtige Umsätze (netto)' },
+    'income_other': { elsterField: '16', label: 'Steuerfreie und nicht steuerbare Umsätze' },
+    'income_refunds': { elsterField: '16', label: 'Steuerfreie und nicht steuerbare Umsätze' },
+    'income_interest': { elsterField: '16', label: 'Steuerfreie und nicht steuerbare Umsätze' },
 
-    // AUSGABEN - Betriebsausgaben
-    'purchase_goods_19': { elsterField: '25', label: 'Wareneinkauf/Fremdleistungen' },
-    'purchase_goods_7': { elsterField: '25', label: 'Wareneinkauf/Fremdleistungen' },
-    'purchase_materials': { elsterField: '25', label: 'Wareneinkauf/Fremdleistungen' },
-    'purchase_packaging': { elsterField: '25', label: 'Wareneinkauf/Fremdleistungen' },
+    // EXPENSE FIELDS (27, 29-37, 44, 55-56, 62-66)
+    // Waren und Material
+    'purchase_goods_19': { elsterField: '27', label: 'Waren, Rohstoffe und Hilfsstoffe' },
+    'purchase_goods_7': { elsterField: '27', label: 'Waren, Rohstoffe und Hilfsstoffe' },
+    'purchase_materials': { elsterField: '27', label: 'Waren, Rohstoffe und Hilfsstoffe' },
+    'purchase_packaging': { elsterField: '27', label: 'Waren, Rohstoffe und Hilfsstoffe' },
 
-    // Personalkosten
-    'expense_wages': { elsterField: '26', label: 'Löhne und Gehälter' },
-    'expense_social_employer': { elsterField: '27', label: 'Gesetzliche soziale Aufwendungen' },
-    'expense_pension': { elsterField: '28', label: 'Altersversorgung' },
-    'expense_freelancer': { elsterField: '25', label: 'Wareneinkauf/Fremdleistungen' },
-    'expense_training': { elsterField: '30', label: 'Fortbildungskosten' },
+    // Personalkosten und Fremdleistungen
+    'expense_wages': { elsterField: '30', label: 'Personalkosten' },
+    'expense_social_employer': { elsterField: '30', label: 'Personalkosten' },
+    'expense_pension': { elsterField: '30', label: 'Personalkosten' },
+    'expense_freelancer': { elsterField: '29', label: 'Fremdleistungen' },
+    'expense_training': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
 
     // Raumkosten
-    'expense_rent_business': { elsterField: '29', label: 'Mieten und Pachten' },
-    'expense_rent_storage': { elsterField: '29', label: 'Mieten und Pachten' },
-    'expense_utilities': { elsterField: '29', label: 'Mieten und Pachten' },
-    'expense_heating': { elsterField: '29', label: 'Mieten und Pachten' },
-    'expense_cleaning': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_security': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    'expense_rent_business': { elsterField: '34', label: 'Miet- und Leasingaufwendungen für unbewegliche Wirtschaftsgüter' },
+    'expense_rent_storage': { elsterField: '34', label: 'Miet- und Leasingaufwendungen für unbewegliche Wirtschaftsgüter' },
+    'expense_utilities': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_heating': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_cleaning': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_security': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
 
     // Fahrzeugkosten
-    'expense_vehicle_fuel': { elsterField: '31', label: 'Kraftfahrzeugkosten' },
-    'expense_vehicle_repairs': { elsterField: '31', label: 'Kraftfahrzeugkosten' },
-    'expense_vehicle_insurance': { elsterField: '31', label: 'Kraftfahrzeugkosten' },
-    'expense_vehicle_tax': { elsterField: '31', label: 'Kraftfahrzeugkosten' },
-    'expense_vehicle_leasing': { elsterField: '31', label: 'Kraftfahrzeugkosten' },
-    'expense_vehicle_parking': { elsterField: '31', label: 'Kraftfahrzeugkosten' },
+    'expense_vehicle_fuel': { elsterField: '35', label: 'Miet- und Leasingaufwendungen für bewegliche Wirtschaftsgüter' },
+    'expense_vehicle_repairs': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_vehicle_insurance': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_vehicle_tax': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_vehicle_leasing': { elsterField: '35', label: 'Miet- und Leasingaufwendungen für bewegliche Wirtschaftsgüter' },
+    'expense_vehicle_parking': { elsterField: '44', label: 'Reise- und Fahrtkosten' },
 
     // Werbekosten
-    'expense_advertising_print': { elsterField: '32', label: 'Werbe- und Reisekosten' },
-    'expense_advertising_online': { elsterField: '32', label: 'Werbe- und Reisekosten' },
-    'expense_advertising_radio': { elsterField: '32', label: 'Werbe- und Reisekosten' },
-    'expense_trade_shows': { elsterField: '32', label: 'Werbe- und Reisekosten' },
-    'expense_promotional': { elsterField: '32', label: 'Werbe- und Reisekosten' },
+    'expense_advertising_print': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_advertising_online': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_advertising_radio': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_trade_shows': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_promotional': { elsterField: '62', label: 'Geschenke' },
 
     // Reisekosten
-    'expense_travel_domestic': { elsterField: '32', label: 'Werbe- und Reisekosten' },
-    'expense_travel_foreign': { elsterField: '32', label: 'Werbe- und Reisekosten' },
-    'expense_accommodation': { elsterField: '32', label: 'Werbe- und Reisekosten' },
-    'expense_meals_business': { elsterField: '33', label: 'Bewirtungskosten (70%)' },
-    'expense_meals_travel': { elsterField: '32', label: 'Werbe- und Reisekosten' },
+    'expense_travel_domestic': { elsterField: '44', label: 'Reise- und Fahrtkosten' },
+    'expense_travel_foreign': { elsterField: '44', label: 'Reise- und Fahrtkosten' },
+    'expense_accommodation': { elsterField: '44', label: 'Reise- und Fahrtkosten' },
+    'expense_meals_business': { elsterField: '63', label: 'Bewirtungskosten' },
+    'expense_meals_travel': { elsterField: '64', label: 'Reiseverpflegungsmehraufwand' },
 
     // Kommunikation & Büro
-    'expense_phone': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_mobile': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_internet': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_postage': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_office_supplies': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_office_equipment': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_software': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_books': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_subscriptions': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    'expense_phone': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_mobile': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_internet': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_postage': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_office_supplies': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_office_equipment': { elsterField: '36', label: 'Sofort abziehbare GWG' },
+    'expense_software': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_books': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_subscriptions': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
 
     // Beratung
-    'expense_legal': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_tax_advisor': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_consulting': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_auditing': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    'expense_legal': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_tax_advisor': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_consulting': { elsterField: '29', label: 'Fremdleistungen' },
+    'expense_auditing': { elsterField: '29', label: 'Fremdleistungen' },
 
     // Versicherungen & Beiträge
-    'expense_insurance_business': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_insurance_legal': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_insurance_cyber': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_insurance_property': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_chamber': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_associations': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_licenses': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    'expense_insurance_business': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_insurance_legal': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_insurance_cyber': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_insurance_property': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_chamber': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_associations': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_licenses': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
 
     // Finanzkosten
-    'expense_banking': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_payment_fees': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_interest': { elsterField: '34', label: 'Schuldzinsen und ähnliche Entgelte' },
-    'expense_fees_financing': { elsterField: '34', label: 'Schuldzinsen und ähnliche Entgelte' },
+    'expense_banking': { elsterField: '56', label: 'Andere Finanzierungskosten' },
+    'expense_payment_fees': { elsterField: '56', label: 'Andere Finanzierungskosten' },
+    'expense_interest': { elsterField: '55', label: 'Schuldzinsen und ähnliche Entgelte' },
+    'expense_fees_financing': { elsterField: '56', label: 'Andere Finanzierungskosten' },
 
     // Instandhaltung
-    'expense_maintenance_building': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_maintenance_equipment': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_maintenance_software': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_maintenance_website': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    'expense_maintenance_building': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_maintenance_equipment': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_maintenance_software': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_maintenance_website': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
 
-    // Steuern (nur Gewerbesteuer ist Betriebsausgabe)
-    'expense_taxes_trade': { elsterField: '35', label: 'Gewerbesteuer' },
-    'expense_taxes_other': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
+    // Steuern und sonstige Ausgaben
+    'expense_taxes_trade': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_taxes_other': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
 
-    // Andere
-    'expense_other': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_non_deductible': { elsterField: '36', label: 'Beschränkt abziehbare Betriebsausgaben' },
+    // Andere und Home Office
+    'expense_other': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_non_deductible': { elsterField: '81', label: 'Nicht abziehbare Betriebsausgaben' },
 
-    // EXTENDED EXPENSE FIELDS (37-60+)
     // Depreciation and amortization
-    'expense_depreciation_movable': { elsterField: '37', label: 'AfA bewegliche Wirtschaftsgüter' },
-    'expense_depreciation_building': { elsterField: '38', label: 'AfA Gebäude' },
-    'expense_special_depreciation': { elsterField: '39', label: 'Sonderabschreibungen' },
+    'expense_depreciation_movable': { elsterField: '32', label: 'AfA auf bewegliche Wirtschaftsgüter des Anlagevermögens' },
+    'expense_depreciation_building': { elsterField: '31', label: 'AfA auf unbewegliche Wirtschaftsgüter des Anlagevermögens' },
+    'expense_special_depreciation': { elsterField: '33', label: 'Andere AfA' },
 
-    // Tax-related expenses
-    'expense_trade_tax_prepayments': { elsterField: '47', label: 'Gewerbesteuer-Vorauszahlungen' },
-    'expense_corporate_tax_prepayments': { elsterField: '48', label: 'Körperschaftsteuer-Vorauszahlungen' },
-    'expense_income_tax_prepayments': { elsterField: '49', label: 'Einkommensteuer-Vorauszahlungen' },
-    'expense_solidarity_surcharge': { elsterField: '50', label: 'Solidaritätszuschlag' },
-    'expense_church_tax': { elsterField: '51', label: 'Kirchensteuer' },
+    // Additional business expenses from official fields
+    'expense_low_value_assets': { elsterField: '36', label: 'Sofort abziehbare GWG' },
+    'expense_home_office': { elsterField: '65', label: 'Häusliches Arbeitszimmer' },
+    'expense_home_office_flat_rate': { elsterField: '66', label: 'Homeoffice-Pauschale' },
+    'expense_continuing_education': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
+    'expense_memberships': { elsterField: '37', label: 'Andere sofort abzugsfähige Betriebsausgaben' },
 
-    // Loss carryforward and other tax items
-    'expense_loss_carryforward': { elsterField: '40', label: 'Verlustvortrag' },
-    'expense_tax_free_income': { elsterField: '42', label: 'Steuerfreie Einnahmen' },
-    'expense_non_deductible_tax': { elsterField: '43', label: 'Nicht abzugsfähige Ausgaben' },
+    // Tax-free income and non-deductible expenses (profit calculation fields)
+    'expense_tax_free_income': { elsterField: '78', label: 'Steuerfreie Betriebseinnahmen' },
+    'expense_non_deductible_tax': { elsterField: '81', label: 'Nicht abziehbare Betriebsausgaben' },
+    'expense_loss_carryforward': { elsterField: '79', label: 'Absetzungsbeträge' },
 
-    // Additional business expenses
-    'expense_low_value_assets': { elsterField: '37', label: 'AfA bewegliche Wirtschaftsgüter' },
-    'expense_home_office': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_continuing_education': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' },
-    'expense_memberships': { elsterField: '30', label: 'Sonstige unbeschränkt abziehbare Betriebsausgaben' }
+    // Investment-related fields
+    'expense_investment_deduction': { elsterField: '80', label: 'Investitionsabzugsbeträge' },
+    'expense_investment_deduction_claimed': { elsterField: '84', label: 'Investitionsabzugsbetrag in Anspruch genommen' },
+    'expense_investment_deduction_added': { elsterField: '85', label: 'Investitionsabzugsbetrag hinzugerechnet' },
+
+    // Partnership income
+    'income_partnership_share': { elsterField: '91', label: 'Gewinnanteil aus Personengesellschaften' }
 };
 
 // Function to load categories based on SKR

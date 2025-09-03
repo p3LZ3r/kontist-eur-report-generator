@@ -63,7 +63,7 @@ export const createNavigationSections = (): NavigationSection[] => {
     ];
 };
 
-// Create field groups for display
+// Create field groups for display - Matching real ELSTER structure
 export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[] => {
     const groups: FieldGroup[] = [
         {
@@ -79,14 +79,78 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             title: 'Einnahmen',
             description: 'Betriebliche Einnahmen und Erlöse',
             fields: fieldValues.filter(f => f.type === 'income'),
-            expanded: false,
+            expanded: true,
             category: 'income'
         },
         {
-            id: 'expenses',
-            title: 'Ausgaben',
-            description: 'Betriebsausgaben und Aufwendungen',
-            fields: fieldValues.filter(f => f.type === 'expense'),
+            id: 'betriebsausgaben',
+            title: '4 - 2. Betriebsausgaben',
+            description: 'Unmittelbar mit Ihren steuerpflichtigen Einnahmen entstandene Betriebsausgaben',
+            fields: fieldValues.filter(f => f.type === 'expense' && f.field >= '31' && f.field <= '35'),
+            expanded: true,
+            category: 'expense'
+        },
+        {
+            id: 'waren_rohstoffe',
+            title: 'Waren, Rohstoffe und Hilfsstoffe einschließlich der Nebenkosten',
+            description: '',
+            fields: fieldValues.filter(f => f.field === '37'),
+            expanded: false,
+            category: 'expense'
+        },
+        {
+            id: 'bezogene_fremdleistungen',
+            title: 'Bezogene Fremdleistungen',
+            description: '',
+            fields: fieldValues.filter(f => f.field === '39'),
+            expanded: false,
+            category: 'expense'
+        },
+        {
+            id: 'ausgaben_personal',
+            title: 'Ausgaben für eigenes Personal (z. B. Gehälter, Löhne und Versicherungsbeiträge)',
+            description: '',
+            fields: fieldValues.filter(f => f.field === '40'),
+            expanded: false,
+            category: 'expense'
+        },
+        {
+            id: 'abschreibungen',
+            title: 'Absetzung für Abnutzung (AfA)',
+            description: 'Sie haben die Möglichkeit, die Anlage AVEÜR als Abgabebestandteil zu nutzen. In diesem Fall braucht das entsprechende Feld nicht ausgefüllt zu werden.',
+            fields: fieldValues.filter(f => f.field >= '31' && f.field <= '34'),
+            expanded: false,
+            category: 'expense'
+        },
+        {
+            id: 'herabsetzungsbetraege',
+            title: 'Herabsetzungsbeträge nach § 7g Abs. 1 Satz 3 EStG',
+            description: '',
+            fields: fieldValues.filter(f => f.field === '35'),
+            expanded: false,
+            category: 'expense'
+        },
+        {
+            id: 'aufwendungen_wirtschaftsgut',
+            title: 'Aufwendungen für geringwertige Wirtschaftsgüter nach § 6 Abs. 2 EStG',
+            description: '',
+            fields: fieldValues.filter(f => f.field === '36'),
+            expanded: false,
+            category: 'expense'
+        },
+        {
+            id: 'weitere_ausgaben',
+            title: 'Weitere Angaben',
+            description: '',
+            fields: fieldValues.filter(f => f.field >= '41' && f.field <= '45'),
+            expanded: false,
+            category: 'expense'
+        },
+        {
+            id: 'raumkosten',
+            title: 'Raumkosten und sonstige Grundstücksaufwendungen',
+            description: 'Abzug berücksichtigt Einzelheiten nach der Buchf über Aufwendungen zu Grundstücks- und Miet- und Pachtaufwendungen für eigenes Wohneigentum',
+            fields: fieldValues.filter(f => f.field >= '46' && f.field <= '48'),
             expanded: false,
             category: 'expense'
         },
