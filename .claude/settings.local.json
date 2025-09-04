@@ -15,7 +15,10 @@
       "Bash(node:*)",
       "Read(/G:\\kontist-eur-report-generator/**)",
       "Bash(npm run test:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []
