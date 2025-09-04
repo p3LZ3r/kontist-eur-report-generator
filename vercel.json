@@ -5,13 +5,7 @@
   "framework": "vite",
   "installCommand": "npm ci",
   "devCommand": "npm run dev",
-  "routes": [
-    {
-      "src": "/[^.]+",
-      "dest": "/",
-      "status": 200
-    }
-  ],
+  
   "headers": [
     {
       "source": "/.*\\.(js|css|woff2?|png|jpe?g|gif|svg|ico|webp|avif)",
