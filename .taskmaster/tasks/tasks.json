@@ -1,0 +1,140 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize SPA Project with Vite, React, and Tailwind CSS",
+        "description": "Set up the foundational client-side project structure for the EÜR Report Generator Single-Page Application (SPA).",
+        "details": "Use Vite to scaffold a new React project. Integrate Tailwind CSS for styling as per the 'Logical Dependency Chain' foundation step. Establish the basic folder structure for components, logic (engines), and data models (`RawTransaction`, `NormalizedTransaction`, `EuerReport`).",
+        "testStrategy": "Verify that the development server runs successfully and that a basic component with Tailwind CSS classes renders correctly in the browser.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Build Static UI Components for Upload and Report Display",
+        "description": "Create the static, non-functional React components for the main application interface based on the specified user flow.",
+        "details": "Implement a single-page layout as per the 'UI/UX Considerations'. Create a file input component with a clear call-to-action for CSV upload. Build a placeholder report display component with static labels matching the official EÜR form terminology.",
+        "testStrategy": "Visual verification of components in the app or a tool like Storybook. Ensure the layout is clean, minimal, and follows the single-page design principle.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Implement CSV Parser and Data Normalization Logic",
+        "description": "Develop the client-side logic to parse uploaded CSV files from Kontist and Holvi and transform them into a standardized internal format.",
+        "details": "Use a client-side parsing library. Implement distinct adapters for Kontist and Holvi formats to handle potential future changes. The parser must identify the source bank and convert each row into the `NormalizedTransaction` data model.",
+        "testStrategy": "Unit test the parsing and normalization logic with sample Kontist and Holvi CSV files. Assert that the output array of `NormalizedTransaction` objects is correct for both formats.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Develop SKR Categorization Engine",
+        "description": "Create the core engine to automatically assign an official SKR accounting category to each transaction.",
+        "details": "Build a function that takes a `NormalizedTransaction` and a ruleset. The engine will use keyword and pattern matching on the transaction description to map it to an SKR03/SKR04 category. The ruleset will be loaded from a JSON file as specified in the Appendix.",
+        "testStrategy": "Write extensive unit tests. For a given transaction description and ruleset, assert that the correct SKR category is returned. Test edge cases and transactions that should remain uncategorized.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Develop EÜR Calculation Engine",
+        "description": "Create the logic to calculate final EÜR financial figures from the set of categorized transactions.",
+        "details": "Build a function that takes an array of categorized transactions. It will iterate through them, summing up income and expenses into buckets corresponding to the EÜR form fields. The output should match the `EuerReport` data model, calculating total income, expenses, and final profit/loss.",
+        "testStrategy": "Unit test the calculation engine with various sets of categorized transactions. Verify that total income, total expenses, profit/loss, and category-specific totals are calculated correctly.",
+        "priority": "high",
+        "dependencies": [
+          4
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Integrate Components for End-to-End Flow",
+        "description": "Connect the UI, parser, and engines to create the complete, functional user workflow from file upload to final calculation.",
+        "details": "Wire the file upload component (Task 2) to trigger the CSV parser (Task 3). Pass the normalized transactions to the categorization engine (Task 4) and then to the calculation engine (Task 5). The final `EuerReport` object should be stored in the application's state.",
+        "testStrategy": "Manual end-to-end testing. Upload a test CSV and verify using browser dev tools that the application state is correctly updated with the final report data. Implement and test a loading indicator during processing.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          5
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Populate Report Display with Calculated Data",
+        "description": "Dynamically render the calculated EÜR report in the UI, making it ready for the user to transcribe to ELSTER.",
+        "details": "Modify the report display component (Task 2) to consume the `EuerReport` data from the application state. Display the key calculated values with labels and line numbers that directly correspond to the official EÜR form, as specified in 'ELSTER-mapped Report Display'.",
+        "testStrategy": "Visual and functional testing. Upload a test CSV and verify that the numbers displayed in the UI match the expected calculated totals. Cross-reference the UI labels with the official EÜR form.",
+        "priority": "high",
+        "dependencies": [
+          6
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Comprehensive Unit Testing for Core Logic",
+        "description": "Fulfill the MVP requirement for unit tests covering the calculation and categorization logic.",
+        "details": "Review and expand the unit tests for the categorization (Task 4) and calculation (Task 5) engines. Ensure high test coverage for these critical components to mitigate the risk of inaccurate financial reporting.",
+        "testStrategy": "Run the full test suite and check coverage reports. Ensure tests cover common freelance income/expense types and edge cases.",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Refine UI/UX and Handle Error States",
+        "description": "Polish the user interface and implement robust handling for potential user errors and edge cases.",
+        "details": "Implement user-friendly error messages for invalid file types (non-CSV), corrupted files, or parsing failures. Add a small info section explaining the client-side privacy model. Ensure the entire experience is intuitive for the non-accountant user persona.",
+        "testStrategy": "Manual testing of error paths: upload a .txt file, a corrupted CSV, or a CSV from an unsupported bank. Ensure clear, helpful feedback is provided to the user.",
+        "priority": "medium",
+        "dependencies": [
+          7
+        ],
+        "status": "todo",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Configure Static Site Deployment",
+        "description": "Set up automated deployment to a static web hosting provider to make the MVP publicly accessible.",
+        "details": "Configure a CI/CD pipeline (e.g., using GitHub Actions) to automatically build and deploy the application to a provider like Vercel, Netlify, or GitHub Pages upon pushes to the main branch.",
+        "testStrategy": "Trigger a deployment by pushing a commit. Verify that the deployed site is live and fully functional by performing a complete user flow on the production URL.",
+        "priority": "high",
+        "dependencies": [
+          9
+        ],
+        "status": "todo",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-04T07:57:30.681Z",
+      "updated": "2025-09-04T07:57:30.681Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
