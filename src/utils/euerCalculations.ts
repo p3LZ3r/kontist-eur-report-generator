@@ -23,7 +23,7 @@ export const calculateEuer = (
     transactions: Transaction[],
     categories: { [key: number]: string },
     isKleinunternehmer: boolean,
-    skrCategories: Record<string, any> = skr04Categories
+    skrCategories: Record<string, { code: string; name: string; type: string; vat: number; elsterField?: string }> = skr04Categories
 ): EuerCalculation => {
     const result: EuerCalculation = {
         income: {},
@@ -203,7 +203,7 @@ export const calculateVatFields = (
             field: '17',
             value: euerCalculation.vatOwed,
             label: ELSTER_FIELDS['17'].label,
-            type: 'vat',
+            type: 'tax',
             required: ELSTER_FIELDS['17'].required,
             source: 'calculated'
         });
@@ -213,7 +213,7 @@ export const calculateVatFields = (
             field: '57',
             value: euerCalculation.vatPaid,
             label: ELSTER_FIELDS['57'].label,
-            type: 'vat_paid',
+            type: 'tax',
             required: ELSTER_FIELDS['57'].required,
             source: 'calculated'
         });
@@ -279,7 +279,7 @@ export const validateMandatoryFields = (fieldValues: ElsterFieldValue[]): { isVa
     const mainExpenseFields = ['27', '29', '30', '37'];
     const hasExpenses = mainExpenseFields.some(fieldNum => {
         const expenseField = fieldValues.find(fv => fv.field === fieldNum);
-        return expenseField && expenseField.value > 0;
+        return expenseField && Number(expenseField.value) > 0;
     });
 
     if (!hasExpenses) {
@@ -329,26 +329,42 @@ export const populateAllElsterFields = (
     // 2. Generate Elster overview from transactions
     const elsterOverview = generateElsterOverview(euerCalculation, isKleinunternehmer);
 
-    // 3. Convert overview to field values
-    Object.entries(elsterOverview).forEach(([field, data]) => {
-        const fieldDef = ELSTER_FIELDS[field as keyof typeof ELSTER_FIELDS];
+    // 3. Create all field entries from ELSTER_FIELDS definition
+    Object.entries(ELSTER_FIELDS).forEach(([fieldNumber, fieldDef]) => {
+        // Skip personal data fields for now
+        if (fieldDef.type === 'personal') return;
+        
+        // Get value from overview or use 0 as default
+        const overviewData = elsterOverview[fieldNumber];
+        let value = overviewData?.amount || 0;
+        let source = 'calculated';
+        
+        // Override with calculated values for specific fields
+        if (fieldNumber === '17' && !isKleinunternehmer) {
+            value = euerCalculation.vatOwed;
+            source = 'calculated';
+        } else if (fieldNumber === '57' && !isKleinunternehmer) {
+            value = euerCalculation.vatPaid;
+            source = 'calculated';
+        } else if (fieldNumber === '92') {
+            value = euerCalculation.profit;
+            source = 'calculated';
+        } else if (fieldNumber === '95') {
+            value = euerCalculation.totalIncome;
+            source = 'calculated';
+        } else if (overviewData) {
+            source = 'transaction';
+        }
+
         fieldValues.push({
-            field,
-            value: data.amount,
-            label: data.label,
-            type: fieldDef?.type || 'expense',
-            required: fieldDef?.required || false,
-            source: 'transaction'
+            field: fieldNumber,
+            value: value,
+            label: fieldDef.label,
+            type: fieldDef.type as 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc',
+            required: fieldDef.required || false,
+            source: source as 'transaction' | 'calculated' | 'user_data'
         });
     });
-
-    // 4. Calculate VAT fields
-    const vatFields = calculateVatFields(euerCalculation, isKleinunternehmer);
-    fieldValues.push(...vatFields);
-
-    // 5. Calculate total fields
-    const totalFields = calculateTotalFields(euerCalculation);
-    fieldValues.push(...totalFields);
 
     // 6. Validate mandatory fields (skip personal data validation)
     const validation = validateMandatoryFields(fieldValues);

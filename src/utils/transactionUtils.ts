@@ -23,18 +23,18 @@ export const parseKontistCSV = (csvContent: string): Transaction[] => {
 
     return lines.slice(1).map((line, index) => {
         const values = line.split(';').map(v => v.replace(/"/g, '').trim());
-        const transaction: any = {};
+        const transaction: Record<string, string | number> = {};
 
         headers.forEach((header, i) => {
             transaction[header] = values[i] || '';
         });
 
-        const betragStr = transaction.Betrag.replace(',', '.');
+        const betragStr = String(transaction.Betrag || '').replace(',', '.');
         transaction.BetragNumeric = parseFloat(betragStr) || 0;
         transaction.id = index;
-        transaction.dateField = transaction.Buchungsdatum;
-        transaction.counterpartyField = transaction.Empfänger;
-        transaction.purposeField = transaction.Verwendungszweck;
+        transaction.dateField = String(transaction.Buchungsdatum || '');
+        transaction.counterpartyField = String(transaction.Empfänger || '');
+        transaction.purposeField = String(transaction.Verwendungszweck || '');
 
         return transaction as Transaction;
     });
@@ -72,17 +72,17 @@ export const parseHolviCSV = (csvContent: string): Transaction[] => {
         }
         values.push(currentValue.trim());
 
-        const transaction: any = {};
+        const transaction: Record<string, string | number> = {};
         headers.forEach((header, i) => {
             transaction[header] = values[i] || '';
         });
 
-        const betragStr = transaction.Betrag.replace(',', '.');
+        const betragStr = String(transaction.Betrag || '').replace(',', '.');
         transaction.BetragNumeric = parseFloat(betragStr) || 0;
         transaction.id = index;
-        transaction.dateField = transaction.Valutadatum;
-        transaction.counterpartyField = transaction.Gegenpartei;
-        transaction.purposeField = transaction.Bezeichnung || transaction.Nachricht;
+        transaction.dateField = String(transaction.Valutadatum || '');
+        transaction.counterpartyField = String(transaction.Gegenpartei || '');
+        transaction.purposeField = String(transaction.Bezeichnung || transaction.Nachricht || '');
 
         result.push(transaction as Transaction);
     });

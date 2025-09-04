@@ -32,7 +32,7 @@ export interface Transaction {
   purposeField: string;
   BetragNumeric: number;
   euerCategory?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 
@@ -62,7 +62,7 @@ export interface ElsterMapping {
 
 export interface ElsterField {
   label: string;
-  type: 'personal' | 'income' | 'expense' | 'tax' | 'total';
+  type: 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc';
   required: boolean;
 }
 
@@ -72,7 +72,7 @@ export interface ElsterFieldValue {
   field: string;
   value: number | string;
   label: string;
-  type: 'personal' | 'income' | 'expense' | 'tax' | 'total';
+  type: 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc';
   required: boolean;
   source: 'transaction' | 'user_data' | 'calculated';
 }

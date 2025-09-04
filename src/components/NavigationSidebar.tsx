@@ -1,13 +1,11 @@
 import React from 'react';
-import { CheckCircle, Circle, User, TrendingUp, TrendingDown, Calculator, HelpCircle, FileText, Info } from 'lucide-react';
+import { User, TrendingUp, TrendingDown, Calculator, HelpCircle, FileText } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
-import type { NavigationSection, ProgressState } from '../types';
+import type { NavigationSection } from '../types';
 
 interface NavigationSidebarProps {
     sections: NavigationSection[];
     currentSection: string;
-    progress: ProgressState;
     onSectionChange: (sectionId: string) => void;
     onHelpToggle: () => void;
     helpVisible: boolean;
@@ -16,7 +14,6 @@ interface NavigationSidebarProps {
 const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
     sections,
     currentSection,
-    progress,
     onSectionChange,
     onHelpToggle,
     helpVisible
@@ -32,7 +29,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
             case 'totals':
                 return <Calculator size={20} />;
             default:
-                return <Circle size={20} />;
+                return <FileText size={20} />;
         }
     };
 
@@ -71,36 +68,6 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                     </Button>
                 </div>
 
-                {/* Progress Overview */}
-                <div className="mb-6 space-y-3">
-                    <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Gesamtfortschritt</span>
-                        <span className="font-medium">
-                            {progress.completedSections}/{progress.totalSections} Abschnitte
-                        </span>
-                    </div>
-                    <div className="w-full bg-muted rounded-full h-2">
-                        <div
-                            className="bg-primary h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${(progress.completedSections / progress.totalSections) * 100}%` }}
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div className="text-center">
-                            <div className="text-muted-foreground text-xs">Felder</div>
-                            <div className="font-semibold font-mono">
-                                {progress.completedFields}/{progress.totalFields}
-                            </div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-muted-foreground text-xs">Pflichtfelder</div>
-                            <div className="font-semibold font-mono text-orange-600">
-                                {progress.completedMandatoryFields}/{progress.mandatoryFields}
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 {/* Navigation Sections */}
                 <div className="space-y-2">
@@ -124,36 +91,11 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                                         {section.fields.length} Felder
                                     </div>
                                 </div>
-                                <div className="flex-shrink-0">
-                                    {section.completed ? (
-                                        <div className="w-4 h-4 rounded-full bg-success flex items-center justify-center">
-                                            <CheckCircle size={10} className="text-success-foreground" />
-                                        </div>
-                                    ) : (
-                                        <div className="w-4 h-4 rounded-full border border-muted-foreground flex items-center justify-center">
-                                            <Circle size={8} className="text-muted-foreground" />
-                                        </div>
-                                    )}
-                                </div>
                             </div>
                         </Button>
                     ))}
                 </div>
 
-                {/* Help Text */}
-                <div className="mt-6 p-4 bg-muted/30 border rounded-lg">
-                    <div className="flex items-start gap-2">
-                        <div className="w-4 h-4 rounded bg-info/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Info className="text-info" size={10} />
-                        </div>
-                        <div>
-                            <p className="text-sm text-muted-foreground">
-                                Navigieren Sie durch die ELSTER-Abschnitte. Pflichtfelder sind markiert.
-                                Klicken Sie auf Felder für Details.
-                            </p>
-                        </div>
-                    </div>
-                </div>
         </div>
     );
 };

@@ -51,108 +51,134 @@ export const createNavigationSections = (): NavigationSection[] => {
     ];
 };
 
-// Create field groups for display - Matching real ELSTER structure
+// Create field groups for display - Matching authentic ELSTER EÜR form structure
 export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[] => {
     const groups: FieldGroup[] = [
+        // 4 - EINNAHMEN
         {
-            id: 'income',
-            title: 'Einnahmen',
-            description: 'Betriebliche Einnahmen und Erlöse',
-            fields: fieldValues.filter(f => f.type === 'income'),
+            id: 'einnahmen',
+            title: '4 - Einnahmen',
+            description: 'Betriebseinnahmen',
+            fields: fieldValues.filter(f => f.type === 'income').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
             expanded: true,
             category: 'income'
         },
+        
+        // 4 - BETRIEBSAUSGABEN
         {
-            id: 'betriebsausgaben',
-            title: '4 - 2. Betriebsausgaben',
-            description: 'Unmittelbar mit Ihren steuerpflichtigen Einnahmen entstandene Betriebsausgaben',
-            fields: fieldValues.filter(f => f.type === 'expense' && f.field >= '31' && f.field <= '35'),
+            id: 'betriebsausgaben_1',
+            title: '4 - Betriebsausgaben',
+            description: '',
+            fields: fieldValues.filter(f => f.field === '27'),
             expanded: true,
             category: 'expense'
         },
         {
-            id: 'waren_rohstoffe',
-            title: 'Waren, Rohstoffe und Hilfsstoffe einschließlich der Nebenkosten',
+            id: 'betriebsausgaben_2', 
+            title: '',
             description: '',
-            fields: fieldValues.filter(f => f.field === '37'),
-            expanded: false,
+            fields: fieldValues.filter(f => f.field === '29'),
+            expanded: true,
             category: 'expense'
         },
         {
-            id: 'bezogene_fremdleistungen',
-            title: 'Bezogene Fremdleistungen',
-            description: '',
-            fields: fieldValues.filter(f => f.field === '39'),
-            expanded: false,
+            id: 'betriebsausgaben_3',
+            title: '',
+            description: '', 
+            fields: fieldValues.filter(f => f.field === '30'),
+            expanded: true,
             category: 'expense'
         },
-        {
-            id: 'ausgaben_personal',
-            title: 'Ausgaben für eigenes Personal (z. B. Gehälter, Löhne und Versicherungsbeiträge)',
-            description: '',
-            fields: fieldValues.filter(f => f.field === '40'),
-            expanded: false,
-            category: 'expense'
-        },
+        
+        // ABSCHREIBUNGEN
         {
             id: 'abschreibungen',
-            title: 'Absetzung für Abnutzung (AfA)',
-            description: 'Sie haben die Möglichkeit, die Anlage AVEÜR als Abgabebestandteil zu nutzen. In diesem Fall braucht das entsprechende Feld nicht ausgefüllt zu werden.',
-            fields: fieldValues.filter(f => f.field >= '31' && f.field <= '34'),
-            expanded: false,
-            category: 'expense'
-        },
-        {
-            id: 'herabsetzungsbetraege',
-            title: 'Herabsetzungsbeträge nach § 7g Abs. 1 Satz 3 EStG',
+            title: '',
             description: '',
-            fields: fieldValues.filter(f => f.field === '35'),
-            expanded: false,
+            fields: fieldValues.filter(f => ['31', '32', '33'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
+            expanded: true,
             category: 'expense'
         },
+        
+        // MIETE UND LEASING
         {
-            id: 'aufwendungen_wirtschaftsgut',
-            title: 'Aufwendungen für geringwertige Wirtschaftsgüter nach § 6 Abs. 2 EStG',
+            id: 'miete_leasing',
+            title: '',
             description: '',
-            fields: fieldValues.filter(f => f.field === '36'),
-            expanded: false,
+            fields: fieldValues.filter(f => ['34', '35'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
+            expanded: true,
             category: 'expense'
         },
+        
+        // WEITERE AUSGABEN
         {
-            id: 'weitere_ausgaben',
-            title: 'Weitere Angaben',
+            id: 'weitere_ausgaben_1',
+            title: '',
             description: '',
-            fields: fieldValues.filter(f => f.field >= '41' && f.field <= '45'),
-            expanded: false,
+            fields: fieldValues.filter(f => ['36', '37'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
+            expanded: true,
             category: 'expense'
         },
         {
-            id: 'raumkosten',
-            title: 'Raumkosten und sonstige Grundstücksaufwendungen',
-            description: 'Abzug berücksichtigt Einzelheiten nach der Buchf über Aufwendungen zu Grundstücks- und Miet- und Pachtaufwendungen für eigenes Wohneigentum',
-            fields: fieldValues.filter(f => f.field >= '46' && f.field <= '48'),
-            expanded: false,
+            id: 'weitere_ausgaben_2', 
+            title: '',
+            description: '',
+            fields: fieldValues.filter(f => f.field === '44'),
+            expanded: true,
             category: 'expense'
         },
         {
-            id: 'tax',
-            title: 'Steuerliche Angaben',
-            description: 'Umsatzsteuer und steuerliche Berechnungen',
-            fields: fieldValues.filter(f => f.type === 'tax' || f.type === 'vat' || f.type === 'vat_paid'),
+            id: 'weitere_ausgaben_3',
+            title: '',
+            description: '',
+            fields: fieldValues.filter(f => ['55', '56'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
+            expanded: true,
+            category: 'expense'
+        },
+        
+        // SONSTIGE AUSGABEN
+        {
+            id: 'sonstige_ausgaben',
+            title: '',
+            description: '',
+            fields: fieldValues.filter(f => ['62', '63', '64', '65', '66'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
+            expanded: true,
+            category: 'expense'
+        },
+        
+        // GEWINNERMITTLUNG
+        {
+            id: 'gewinnermittlung',
+            title: '',
+            description: '',
+            fields: fieldValues.filter(f => f.type === 'profit_calc').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
+            expanded: true,
+            category: 'total'
+        },
+        
+        // UMSATZSTEUER
+        {
+            id: 'umsatzsteuer',
+            title: '',
+            description: '',
+            fields: fieldValues.filter(f => f.type === 'vat' || f.type === 'vat_paid').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
             expanded: true,
             category: 'tax'
         },
+        
+        // SUMMEN
         {
-            id: 'totals',
-            title: 'Gesamtbeträge',
-            description: 'Zusammenfassung und steuerpflichtiger Gewinn',
-            fields: fieldValues.filter(f => f.type === 'total'),
-            expanded: false,
+            id: 'summen',
+            title: '',
+            description: '',
+            fields: fieldValues.filter(f => f.type === 'total').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
+            expanded: true,
             category: 'total'
         }
     ];
 
-    return groups;
+    // Remove groups with no fields
+    return groups.filter(group => group.fields.length > 0);
 };
 
 // Calculate progress state

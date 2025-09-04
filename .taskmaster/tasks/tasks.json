@@ -9,7 +9,7 @@
         "testStrategy": "Verify that the development server runs successfully and that a basic component with Tailwind CSS classes renders correctly in the browser.",
         "priority": "high",
         "dependencies": [],
-        "status": "todo",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -22,7 +22,7 @@
         "dependencies": [
           1
         ],
-        "status": "todo",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -35,7 +35,7 @@
         "dependencies": [
           1
         ],
-        "status": "todo",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -48,7 +48,7 @@
         "dependencies": [
           3
         ],
-        "status": "todo",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -61,7 +61,7 @@
         "dependencies": [
           4
         ],
-        "status": "todo",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -75,8 +75,45 @@
           2,
           5
         ],
-        "status": "todo",
-        "subtasks": []
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and Set Up User Database Schema",
+            "description": "Create the necessary database tables and migrations to store user information, including credentials and profile data.",
+            "dependencies": [],
+            "details": "Define a 'users' table with columns for id (PK), username (unique), email (unique), hashed_password, created_at, and updated_at. Use the project's ORM and migration tool to generate and apply the schema changes.",
+            "status": "pending",
+            "testStrategy": "Run the migration and manually inspect the database schema to confirm the table and all columns, indexes, and constraints are created correctly. Write a test to ensure the migration can be reversed cleanly."
+          },
+          {
+            "id": 2,
+            "title": "Implement User Registration API Endpoint",
+            "description": "Develop a public API endpoint (e.g., POST /api/auth/register) to allow new users to create an account.",
+            "dependencies": [],
+            "details": "The endpoint should accept username, email, and password. It must validate inputs (e.g., password complexity, valid email format), hash the password using bcrypt, and save the new user record to the database. Return a success message or user object upon successful registration.",
+            "status": "pending",
+            "testStrategy": "Write unit tests for the validation logic and password hashing service. Create integration tests that call the endpoint with valid data, duplicate data (email/username), and invalid data (e.g., weak password) to verify correct responses and database state."
+          },
+          {
+            "id": 3,
+            "title": "Implement User Login API Endpoint",
+            "description": "Develop a public API endpoint (e.g., POST /api/auth/login) to authenticate users and issue a session token.",
+            "dependencies": [],
+            "details": "The endpoint should accept user credentials (email/username and password). It will retrieve the user from the database, verify the provided password against the stored hash, and if successful, generate a signed JSON Web Token (JWT) containing the user ID and an expiration date. The JWT should be returned in the response body.",
+            "status": "pending",
+            "testStrategy": "Unit test the password comparison logic. Write integration tests for successful login (asserting a valid JWT is returned) and failed login attempts (wrong password, user not found), ensuring appropriate HTTP status codes (200, 401) are returned."
+          },
+          {
+            "id": 4,
+            "title": "Create Authentication Middleware for Protected Routes",
+            "description": "Implement middleware to verify the JWT on incoming requests to secure specific API endpoints.",
+            "dependencies": [],
+            "details": "The middleware should extract the JWT from the 'Authorization' header. It must validate the token's signature and check for expiration. If valid, decode the payload and attach the user's identity to the request object for use by route handlers. If invalid, it must terminate the request and return a 401 Unauthorized response.",
+            "status": "pending",
+            "testStrategy": "Create a sample protected endpoint. Write integration tests attempting to access this endpoint with a valid token, an expired token, a malformed token, and no token. Assert that the correct HTTP status code is returned in each case and that the request context contains user data only on success."
+          }
+        ]
       },
       {
         "id": 7,

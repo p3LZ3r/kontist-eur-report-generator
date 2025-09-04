@@ -7,7 +7,7 @@ export const generateReport = (
     selectedKontenrahmen: KontenrahmenType,
     bankType: string | null,
     isKleinunternehmer: boolean,
-    transactions: any[]
+    transactions: Transaction[]
 ): string => {
     // Use default company info for report generation
     const defaultCompanyInfo = {

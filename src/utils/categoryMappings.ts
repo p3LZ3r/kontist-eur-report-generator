@@ -151,7 +151,7 @@ export const getCategoriesForSkr = async (skr: 'SKR03' | 'SKR04' | 'SKR49'): Pro
         const categories: Record<string, CategoryInfo> = {};
 
         // Convert SKR JSON data to CategoryInfo format
-        data.forEach((item: any) => {
+        data.forEach((item: { leaf?: boolean; code?: string; name?: string; type?: string; 'tax-related'?: boolean }) => {
             if (item.leaf && item.code && item.name) {
                 // Map SKR types to our category types
                 let type: 'income' | 'expense' | 'private' = 'expense';

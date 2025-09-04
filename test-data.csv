@@ -1,0 +1,7 @@
+Buchungsdatum;Empfänger;Verwendungszweck;Betrag;Transaktionstyp
+2024-01-15;Kundenaufrag GmbH;Beratungsleistung;"2.380,00";Zahlungseingang
+2024-01-20;Büromaterial AG;Büroausstattung;"-89,25";Kartenzahlung
+2024-02-01;Webhoster Pro;Server & Hosting;"-23,80";Lastschrift
+2024-02-10;Freelancer John;Grafik Design;"-595,00";Überweisung
+2024-02-15;Software Lizenz Co;Adobe Creative Suite;"-71,40";Kartenzahlung
+2024-03-01;Max Mustermann;Privatentnahme;"-500,00";Überweisung
