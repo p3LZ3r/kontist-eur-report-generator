@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Build Static UI Components for Upload and Report Display
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Create the static, non-functional React components for the main application interface based on the specified user flow.
+# Details:
+Implement a single-page layout as per the 'UI/UX Considerations'. Create a file input component with a clear call-to-action for CSV upload. Build a placeholder report display component with static labels matching the official EÜR form terminology.
+
+# Test Strategy:
+Visual verification of components in the app or a tool like Storybook. Ensure the layout is clean, minimal, and follows the single-page design principle.

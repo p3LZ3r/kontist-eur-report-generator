@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { calculateEuer, populateAllElsterFields } from '../utils/euerCalculations';
 import type { Transaction, UserTaxData } from '../types';
 
@@ -196,9 +196,6 @@ describe('Performance Tests', () => {
             expect(result.fieldValues.length).toBeGreaterThan(16);
 
             // Verify that the result contains reasonable data
-            const incomeFields = result.fieldValues.filter(f => f.type === 'income');
-            const expenseFields = result.fieldValues.filter(f => f.type === 'expense');
-
             // With random data, we might not have both types, so just check we have fields
             expect(result.fieldValues.length).toBeGreaterThan(0);
         });

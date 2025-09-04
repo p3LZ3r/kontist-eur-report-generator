@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Develop SKR Categorization Engine
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Create the core engine to automatically assign an official SKR accounting category to each transaction.
+# Details:
+Build a function that takes a `NormalizedTransaction` and a ruleset. The engine will use keyword and pattern matching on the transaction description to map it to an SKR03/SKR04 category. The ruleset will be loaded from a JSON file as specified in the Appendix.
+
+# Test Strategy:
+Write extensive unit tests. For a given transaction description and ruleset, assert that the correct SKR category is returned. Test edge cases and transactions that should remain uncategorized.

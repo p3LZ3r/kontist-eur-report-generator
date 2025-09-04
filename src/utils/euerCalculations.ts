@@ -316,17 +316,14 @@ export const validateMandatoryFields = (fieldValues: ElsterFieldValue[]): { isVa
  * @param isKleinunternehmer - Kleinunternehmer status
  * @returns Complete field population with validation results
  */
-export const populateAllElsterFields = (
-    transactions: Transaction[],
-    categories: { [key: number]: string },
+// Helper function that uses pre-computed EuerCalculation
+export const populateElsterFieldsFromCalculation = (
+    euerCalculation: EuerCalculation,
     isKleinunternehmer: boolean
 ): { fieldValues: ElsterFieldValue[]; validation: { isValid: boolean; missingFields: string[] } } => {
     const fieldValues: ElsterFieldValue[] = [];
 
-    // 1. Calculate EÜR from transactions
-    const euerCalculation = calculateEuer(transactions, categories, isKleinunternehmer);
-
-    // 2. Generate Elster overview from transactions
+    // 2. Generate Elster overview from pre-computed calculation
     const elsterOverview = generateElsterOverview(euerCalculation, isKleinunternehmer);
 
     // 3. Create all field entries from ELSTER_FIELDS definition
@@ -338,39 +335,49 @@ export const populateAllElsterFields = (
         const overviewData = elsterOverview[fieldNumber];
         let value = overviewData?.amount || 0;
         let source = 'calculated';
-        
-        // Override with calculated values for specific fields
-        if (fieldNumber === '17' && !isKleinunternehmer) {
-            value = euerCalculation.vatOwed;
-            source = 'calculated';
-        } else if (fieldNumber === '57' && !isKleinunternehmer) {
-            value = euerCalculation.vatPaid;
-            source = 'calculated';
-        } else if (fieldNumber === '92') {
-            value = euerCalculation.profit;
-            source = 'calculated';
-        } else if (fieldNumber === '95') {
+
+        // Handle special total fields from EÜR totals
+        if (fieldNumber === '52') {
             value = euerCalculation.totalIncome;
             source = 'calculated';
-        } else if (overviewData) {
-            source = 'transaction';
+        } else if (fieldNumber === '54') {
+            value = euerCalculation.profit;
+            source = 'calculated';
         }
 
         fieldValues.push({
             field: fieldNumber,
-            value: value,
             label: fieldDef.label,
-            type: fieldDef.type as 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc',
+            value: value,
+            source: source as 'transaction' | 'user_data' | 'calculated',
             required: fieldDef.required || false,
-            source: source as 'transaction' | 'calculated' | 'user_data'
+            type: fieldDef.type as 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc'
         });
     });
 
-    // 6. Validate mandatory fields (skip personal data validation)
-    const validation = validateMandatoryFields(fieldValues);
+    // Validation
+    const requiredFields = fieldValues.filter(f => f.required);
+    const missingFields = requiredFields
+        .filter(f => f.value === undefined || f.value === null || f.value === 0)
+        .map(f => f.field);
 
     return {
         fieldValues,
-        validation
+        validation: {
+            isValid: missingFields.length === 0,
+            missingFields
+        }
     };
+};
+
+export const populateAllElsterFields = (
+    transactions: Transaction[],
+    categories: { [key: number]: string },
+    isKleinunternehmer: boolean
+): { fieldValues: ElsterFieldValue[]; validation: { isValid: boolean; missingFields: string[] } } => {
+    // 1. Calculate EÜR from transactions
+    const euerCalculation = calculateEuer(transactions, categories, isKleinunternehmer);
+
+    // 2. Use helper function with the calculated data
+    return populateElsterFieldsFromCalculation(euerCalculation, isKleinunternehmer);
 };

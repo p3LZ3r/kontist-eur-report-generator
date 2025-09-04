@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: Develop EÜR Calculation Engine
+# Status: done
+# Dependencies: 4
+# Priority: high
+# Description: Create the logic to calculate final EÜR financial figures from the set of categorized transactions.
+# Details:
+Build a function that takes an array of categorized transactions. It will iterate through them, summing up income and expenses into buckets corresponding to the EÜR form fields. The output should match the `EuerReport` data model, calculating total income, expenses, and final profit/loss.
+
+# Test Strategy:
+Unit test the calculation engine with various sets of categorized transactions. Verify that total income, total expenses, profit/loss, and category-specific totals are calculated correctly.

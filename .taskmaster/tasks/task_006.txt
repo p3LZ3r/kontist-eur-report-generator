@@ -1,0 +1,43 @@
+# Task ID: 6
+# Title: Integrate Components for End-to-End Flow
+# Status: done
+# Dependencies: 2, 5
+# Priority: high
+# Description: Connect the UI, parser, and engines to create the complete, functional user workflow from file upload to final calculation and export.
+# Details:
+Wire the file upload component (Task 2) to trigger the CSV parser (Task 3). Pass the normalized transactions to the categorization engine (Task 4) and then to the calculation engine (Task 5). The final `EuerReport` object should be stored in the application's state, making it available for the report display (Task 7) and ELSTER export.
+
+# Test Strategy:
+Manual end-to-end testing. Upload a test CSV and verify using browser dev tools that the application state is correctly updated with the final report data. Implement and test a loading indicator during processing.
+
+# Subtasks:
+## 1. Connect File Upload UI to CSV Parser [done]
+### Dependencies: None
+### Description: Wire the file input component to trigger the CSV parsing logic upon file selection.
+### Details:
+Implement an `onChange` handler for the file input from Task 2. Use the FileReader API to read the selected file's content and pass it to the CSV parser function from Task 3. Handle potential file reading errors.
+
+## 2. Chain Parser Output to Categorization Engine [done]
+### Dependencies: 6.1
+### Description: Pass the normalized transactions from the parser to the categorization engine.
+### Details:
+Once the parser successfully returns an array of `NormalizedTransaction` objects, pass this array as input to the categorization engine (Task 4). This will enrich each transaction object with an EÜR category.
+
+## 3. Feed Categorized Data into Calculation Engine [done]
+### Dependencies: 6.2
+### Description: Use the output of the categorization engine to run the final EÜR calculations.
+### Details:
+Take the array of categorized transactions and pass it to the EÜR calculation engine (Task 5). The engine will process this data and return the final `EuerReport` object.
+
+## 4. Store Final Report in Application State [done]
+### Dependencies: 6.3
+### Description: Update the global application state with the generated `EuerReport` and processing status.
+### Details:
+Implement state management logic (e.g., React Context). On successful calculation, update the state with the `EuerReport` object. Implement a loading state that is active from file selection until the calculation is complete. Handle and store any errors that occur during the process.
+
+## 5. Implement ELSTER Data Export Function [done]
+### Dependencies: 6.4
+### Description: Create a function to export the calculated EÜR report data into a downloadable format.
+### Details:
+Add a button to the UI that becomes active after a report is generated. On click, this button should trigger a function that formats the `EuerReport` data into a simple, structured format (e.g., a key-value CSV or JSON file) and initiates a browser download.
+

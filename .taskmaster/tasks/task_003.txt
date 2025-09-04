@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Implement CSV Parser and Data Normalization Logic
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Develop the client-side logic to parse uploaded CSV files from Kontist and Holvi and transform them into a standardized internal format.
+# Details:
+Use a client-side parsing library. Implement distinct adapters for Kontist and Holvi formats to handle potential future changes. The parser must identify the source bank and convert each row into the `NormalizedTransaction` data model.
+
+# Test Strategy:
+Unit test the parsing and normalization logic with sample Kontist and Holvi CSV files. Assert that the output array of `NormalizedTransaction` objects is correct for both formats.

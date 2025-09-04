@@ -1,0 +1,11 @@
+# Task ID: 1
+# Title: Initialize SPA Project with Vite, React, and Tailwind CSS
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Set up the foundational client-side project structure for the EÜR Report Generator Single-Page Application (SPA).
+# Details:
+Use Vite to scaffold a new React project. Integrate Tailwind CSS for styling as per the 'Logical Dependency Chain' foundation step. Establish the basic folder structure for components, logic (engines), and data models (`RawTransaction`, `NormalizedTransaction`, `EuerReport`).
+
+# Test Strategy:
+Verify that the development server runs successfully and that a basic component with Tailwind CSS classes renders correctly in the browser.

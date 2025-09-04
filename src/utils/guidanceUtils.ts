@@ -4,10 +4,12 @@ import type {
     NavigationSection,
     FieldGroup,
     ProgressState,
-    DrillDownData
+    DrillDownData,
+    EuerCalculation
 } from '../types';
 import {
-    populateAllElsterFields
+    populateAllElsterFields,
+    populateElsterFieldsFromCalculation
 } from './euerCalculations';
 import { ELSTER_FIELD_RANGES } from './constants';
 import { skr04Categories } from './categoryMappings';
@@ -254,14 +256,13 @@ export const generateDrillDownData = (
 export const prepareGuidanceData = (
     transactions: Transaction[],
     categories: { [key: number]: string },
-    isKleinunternehmer: boolean
+    isKleinunternehmer: boolean,
+    euerCalculation?: EuerCalculation
 ) => {
-    // Get populated fields
-    const { fieldValues } = populateAllElsterFields(
-        transactions,
-        categories,
-        isKleinunternehmer
-    );
+    // Get populated fields - use provided calculation to avoid duplication
+    const { fieldValues } = euerCalculation 
+        ? populateElsterFieldsFromCalculation(euerCalculation, isKleinunternehmer)
+        : populateAllElsterFields(transactions, categories, isKleinunternehmer);
 
     // Create navigation sections
     const sections = createNavigationSections();

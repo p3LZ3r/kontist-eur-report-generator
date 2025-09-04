@@ -1,0 +1,11 @@
+# Task ID: 9
+# Title: Refine UI/UX and Handle Error States
+# Status: todo
+# Dependencies: 7
+# Priority: medium
+# Description: Polish the user interface and implement robust handling for potential user errors and edge cases.
+# Details:
+Implement user-friendly error messages for invalid file types (non-CSV), corrupted files, or parsing failures. Add a small info section explaining the client-side privacy model. Ensure the entire experience is intuitive for the non-accountant user persona.
+
+# Test Strategy:
+Manual testing of error paths: upload a .txt file, a corrupted CSV, or a CSV from an unsupported bank. Ensure clear, helpful feedback is provided to the user.

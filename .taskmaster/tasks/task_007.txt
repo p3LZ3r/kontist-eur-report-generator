@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: Populate Report Display with Calculated Data
+# Status: done
+# Dependencies: 6
+# Priority: high
+# Description: Dynamically render the calculated EÜR report in the UI, making it ready for the user to transcribe to ELSTER.
+# Details:
+Modify the report display component (Task 2) to consume the `EuerReport` data from the application state. Display the key calculated values with labels and line numbers that directly correspond to the official EÜR form, as specified in 'ELSTER-mapped Report Display'.
+
+# Test Strategy:
+Visual and functional testing. Upload a test CSV and verify that the numbers displayed in the UI match the expected calculated totals. Cross-reference the UI labels with the official EÜR form.

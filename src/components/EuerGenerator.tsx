@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { Upload, FileText, Building, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { Upload, FileText, Building, ChevronLeft, ChevronRight, RotateCcw, AlertCircle, X, Shield, Info } from 'lucide-react';
 import { getCategoriesForSkr, skr04Categories } from '../utils/categoryMappings';
 import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction } from '../utils/transactionUtils';
 import { calculateEuer } from '../utils/euerCalculations';
@@ -63,7 +63,40 @@ const EuerGenerator = () => {
         setErrorMessage(null);
 
         try {
-            const text = await file.text();
+            // Validate file type
+            if (!file.name.toLowerCase().endsWith('.csv') && file.type !== 'text/csv') {
+                throw new Error('Ungültiger Dateityp. Bitte laden Sie eine CSV-Datei (.csv) hoch.');
+            }
+
+            // Validate file size (max 10MB)
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            if (file.size > maxSize) {
+                throw new Error('Datei ist zu groß. Maximale Dateigröße: 10MB.');
+            }
+
+            // Validate file is not empty
+            if (file.size === 0) {
+                throw new Error('Die hochgeladene Datei ist leer. Bitte wählen Sie eine gültige CSV-Datei.');
+            }
+
+            let text: string;
+            try {
+                text = await file.text();
+            } catch {
+                throw new Error('Fehler beim Lesen der Datei. Die Datei könnte beschädigt sein.');
+            }
+
+            // Validate file content is not empty
+            if (text.trim().length === 0) {
+                throw new Error('Die CSV-Datei ist leer oder enthält keine gültigen Daten.');
+            }
+
+            // Validate CSV structure (basic check for commas/semicolons)
+            const lines = text.split('\n').filter(line => line.trim().length > 0);
+            if (lines.length < 2) {
+                throw new Error('Die CSV-Datei enthält zu wenig Daten. Mindestens eine Kopfzeile und eine Datenzeile sind erforderlich.');
+            }
+
             const detectedBankType = detectBankFormat(text);
             setBankType(detectedBankType);
 
@@ -74,7 +107,12 @@ const EuerGenerator = () => {
             } else if (detectedBankType === 'holvi') {
                 parsedTransactions = parseHolviCSV(text);
             } else {
-                throw new Error('Unbekanntes CSV-Format. Unterstützt werden Kontist und Holvi.');
+                throw new Error('Unbekanntes CSV-Format. Unterstützt werden nur Kontist und Holvi Exporte. Bitte stellen Sie sicher, dass Sie die CSV-Datei direkt aus Ihrem Banking-Portal exportiert haben.');
+            }
+
+            // Validate that transactions were successfully parsed
+            if (!parsedTransactions || parsedTransactions.length === 0) {
+                throw new Error('Keine Transaktionen in der CSV-Datei gefunden. Bitte überprüfen Sie, ob die Datei Transaktionsdaten enthält.');
             }
 
             // EÜR-Kategorien zuweisen (alle Transaktionen, auch Privatentnahmen)
@@ -93,9 +131,19 @@ const EuerGenerator = () => {
             setCurrentPage(1); // Zurück zur ersten Seite
 
         } catch (error) {
-            setErrorMessage('Fehler beim Einlesen der CSV-Datei: ' + (error instanceof Error ? error.message : String(error)));
+            let errorMsg = 'Unbekannter Fehler beim Verarbeiten der Datei.';
+            
+            if (error instanceof Error) {
+                errorMsg = error.message;
+            } else if (typeof error === 'string') {
+                errorMsg = error;
+            }
+            
+            setErrorMessage(errorMsg);
         } finally {
             setIsProcessingFile(false);
+            // Reset file input to allow re-uploading the same file
+            event.target.value = '';
         }
     }, []);
 
@@ -138,19 +186,17 @@ const EuerGenerator = () => {
     const euerCalculation = useMemo(() => {
         return calculateEuer(transactions, categories, isKleinunternehmer, skrCategories);
     }, [transactions, categories, isKleinunternehmer, skrCategories]);
-    // Reference to prevent TS6133 error - this will be used by guidance system expansion
-    void euerCalculation;
 
     // Elster Übersicht generieren - enhanced with complete field set
     // const elsterSummary = useMemo(() => {
     //     return generateElsterOverview(euerCalculation, isKleinunternehmer);
     // }, [euerCalculation, isKleinunternehmer]);
 
-    // Guidance system data
+    // Guidance system data - use pre-computed euerCalculation
     const guidanceData = useMemo(() => {
         if (transactions.length === 0) return null;
-        return prepareGuidanceData(transactions, categories, isKleinunternehmer);
-    }, [transactions, categories, isKleinunternehmer]);
+        return prepareGuidanceData(transactions, categories, isKleinunternehmer, euerCalculation);
+    }, [transactions, categories, isKleinunternehmer, euerCalculation]);
 
 
     // Guidance system callbacks
@@ -171,20 +217,40 @@ const EuerGenerator = () => {
 
     return (
         <div className="space-y-6">
-            {/* Error Display */}
+            {/* Enhanced Error Display */}
             {errorMessage && (
-                <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 animate-fade-in">
-                    <div className="flex items-start gap-3">
-                        <div className="text-destructive font-medium flex-shrink-0">Fehler:</div>
-                        <div className="text-destructive flex-1">{errorMessage}</div>
+                <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-5 animate-fade-in">
+                    <div className="flex items-start gap-4">
+                        <AlertCircle className="text-destructive flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
+                        <div className="flex-1 space-y-3">
+                            <div className="font-semibold text-destructive">
+                                Fehler beim Verarbeiten der Datei
+                            </div>
+                            <div className="text-destructive/90 text-sm leading-relaxed">
+                                {errorMessage}
+                            </div>
+                            
+                            {/* Help section for common issues */}
+                            <div className="bg-background/50 border border-border/30 rounded-md p-3">
+                                <div className="text-xs font-medium text-foreground/70 mb-2">
+                                    Häufige Lösungsansätze:
+                                </div>
+                                <ul className="text-xs text-muted-foreground space-y-1">
+                                    <li>• Stellen Sie sicher, dass die Datei eine .csv-Datei ist</li>
+                                    <li>• Exportieren Sie die CSV direkt aus Kontist oder Holvi</li>
+                                    <li>• Überprüfen Sie, ob die Datei Transaktionsdaten enthält</li>
+                                    <li>• Maximale Dateigröße: 10MB</li>
+                                </ul>
+                            </div>
+                        </div>
                         <Button
                             onClick={() => setErrorMessage(null)}
-                            variant="outline"
+                            variant="ghost"
                             size="sm"
-                            className="flex-shrink-0 focus-ring"
+                            className="flex-shrink-0 focus-ring h-8 w-8 p-0"
                             aria-label="Fehlermeldung schließen"
                         >
-                            Schließen
+                            <X size={14} />
                         </Button>
                     </div>
                 </div>
@@ -223,12 +289,12 @@ const EuerGenerator = () => {
                                 </SelectContent>
                             </Select>
                             <HelpTooltip
-                                title="Kleinunternehmerregelung"
-                                content="Bestimmt die Behandlung der Umsatzsteuer in der EÜR-Berechnung."
+                                title="Kleinunternehmerregelung (§19 UStG)"
+                                content="Diese Einstellung bestimmt, wie Ihre Umsatzsteuer behandelt wird. Falls Sie unsicher sind, fragen Sie Ihren Steuerberater oder schauen Sie in Ihre letzte Steuererklärung."
                                 examples={[
-                                    "Ja: Bruttobeträge = EÜR-Beträge (keine USt-Trennung)",
-                                    "Nein: Nettobeträge für EÜR, USt separat für Voranmeldung",
-                                    "Beispiel 119€: Kleinunternehmer → 119€ EÜR | Normal → 100€ EÜR + 19€ USt"
+                                    "JA wählen wenn: Sie haben weniger als 22.000€ Umsatz im Vorjahr oder erwarten unter 50.000€ dieses Jahr",
+                                    "NEIN wählen wenn: Sie sind regulär umsatzsteuerpflichtig und geben Voranmeldungen ab",
+                                    "Beispiel: Bei 119€ Rechnung → Kleinunternehmer: 119€ Umsatz | Normal: 100€ Umsatz + 19€ Umsatzsteuer"
                                 ]}
                                 position="bottom"
                             />
@@ -251,11 +317,11 @@ const EuerGenerator = () => {
                             </Select>
                             <HelpTooltip
                                 title="Kontenrahmen (SKR)"
-                                content="Bestimmt die verwendeten Kontenkategorien für die EÜR-Kategorisierung."
+                                content="Der Kontenrahmen bestimmt, nach welchem System Ihre Ausgaben und Einnahmen kategorisiert werden. SKR04 ist für die meisten Selbständigen der richtige Kontenrahmen."
                                 examples={[
-                                    "SKR03: Industrie und Handel",
-                                    "SKR04: Dienstleistungen (Standard)",
-                                    "SKR49: Freiberufler und Selbständige"
+                                    "SKR03: Wenn Sie Waren verkaufen (Handel, Produktion, E-Commerce)",
+                                    "SKR04: Wenn Sie Dienstleistungen anbieten (Beratung, IT, Design) - EMPFOHLEN",
+                                    "SKR49: Wenn Sie Freiberufler sind (Arzt, Anwalt, Architekt, Steuerberater)"
                                 ]}
                                 position="bottom"
                             />
@@ -345,6 +411,59 @@ const EuerGenerator = () => {
                                     </p>
                                 </>
                             )}
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
+            {/* Privacy Information - only show when no transactions loaded */}
+            {transactions.length === 0 && (
+                <Card className="animate-fade-in">
+                    <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
+                            <Shield className="text-primary flex-shrink-0 mt-1" size={24} aria-hidden="true" />
+                            <div className="space-y-4">
+                                <div>
+                                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                                        100% Client-Side Processing - Ihre Daten bleiben bei Ihnen
+                                    </h3>
+                                    <p className="text-muted-foreground text-sm leading-relaxed">
+                                        Diese Anwendung verarbeitet Ihre Finanzdaten vollständig in Ihrem Browser. 
+                                        Keine Daten werden an externe Server gesendet oder gespeichert.
+                                    </p>
+                                </div>
+                                
+                                <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <Info className="text-primary" size={16} />
+                                        <span className="text-sm font-medium text-foreground">Datenschutz-Details</span>
+                                    </div>
+                                    <ul className="text-sm text-muted-foreground space-y-2">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
+                                            <span>Lokale Verarbeitung: Alle Berechnungen erfolgen in Ihrem Browser</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
+                                            <span>Keine Datenübertragung: CSV-Inhalte verlassen nie Ihren Computer</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
+                                            <span>Keine Speicherung: Daten werden nicht dauerhaft gespeichert</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
+                                            <span>Open Source: Der gesamte Code ist transparent einsehbar</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div className="text-xs text-muted-foreground">
+                                    <strong>Technischer Hinweis:</strong> Diese Webanwendung verwendet moderne Browser-Technologien 
+                                    zur sicheren, lokalen Verarbeitung Ihrer CSV-Dateien. Für optimale Sicherheit empfehlen wir, 
+                                    die Anwendung offline zu verwenden.
+                                </div>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

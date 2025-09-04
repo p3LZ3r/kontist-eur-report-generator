@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: Implement Comprehensive Unit Testing for Core Logic
+# Status: todo
+# Dependencies: 5
+# Priority: medium
+# Description: Fulfill the MVP requirement for unit tests covering the calculation and categorization logic.
+# Details:
+Review and expand the unit tests for the categorization (Task 4) and calculation (Task 5) engines. Ensure high test coverage for these critical components to mitigate the risk of inaccurate financial reporting.
+
+# Test Strategy:
+Run the full test suite and check coverage reports. Ensure tests cover common freelance income/expense types and edge cases.

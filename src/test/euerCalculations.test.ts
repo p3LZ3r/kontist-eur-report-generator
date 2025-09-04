@@ -1,11 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import {
     calculateEuer,
-    populatePersonalDataFields,
     calculateVatFields,
     validateMandatoryFields,
-    populateAllElsterFields,
-    generateElsterOverview
+    populateAllElsterFields
 } from '../utils/euerCalculations';
 import type { Transaction, UserTaxData, EuerCalculation, ElsterFieldValue } from '../types';
 
@@ -41,14 +39,16 @@ vi.mock('../utils/constants', () => ({
         '15': { label: 'Buchführungspflichtig', type: 'personal', required: true },
         '16': { label: 'Bilanzierungspflichtig', type: 'personal', required: true },
         '17': { label: 'Umsatzerlöse (steuerpflichtig)', type: 'income', required: true },
-        '23': { label: 'Umsatzsteuer', type: 'income', required: false },
-        '24': { label: 'Vorsteuer', type: 'income', required: false },
         '25': { label: 'Wareneinkauf/Fremdleistungen', type: 'expense', required: true },
         '44': { label: 'Umsatzsteuer-Soll', type: 'tax', required: false },
         '45': { label: 'Umsatzsteuer-Haben', type: 'tax', required: false },
         '46': { label: 'Umsatzsteuer-Saldo', type: 'tax', required: false },
         '52': { label: 'Gesamtbetrag der Einkünfte', type: 'total', required: false },
-        '54': { label: 'Zu versteuerndes Einkommen', type: 'total', required: false }
+        '54': { label: 'Zu versteuerndes Einkommen', type: 'total', required: false },
+        '57': { label: 'Vorsteuer', type: 'vat_paid', required: false },
+        '92': { label: 'Gewinn/Verlust', type: 'profit', required: true },
+        '23': { label: 'Umsatzsteuer', type: 'vat', required: false },
+        '24': { label: 'Vorsteuer', type: 'vat', required: false }
     },
     ELSTER_FIELD_RANGES: {
         PERSONAL_DATA_START: 1,
@@ -147,80 +147,8 @@ describe('calculateEuer', () => {
     });
 });
 
-describe('populatePersonalDataFields', () => {
-    it('should populate required personal data fields correctly', () => {
-        const userTaxData: UserTaxData = {
-            name: 'Mustermann',
-            firstName: 'Max',
-            street: 'Hauptstraße',
-            houseNumber: '123',
-            postalCode: '12345',
-            city: 'Berlin',
-            taxNumber: '123/456/789',
-            vatId: 'DE123456789',
-            fiscalYearStart: '2024',
-            fiscalYearEnd: '2024',
-            profession: 'Software Developer',
-            profitDeterminationMethod: 'Einnahmen-Überschuss-Rechnung',
-            isKleinunternehmer: false,
-            isVatLiable: true,
-            isBookkeepingRequired: false,
-            isBalanceSheetRequired: false
-        };
-
-        const result = populatePersonalDataFields(userTaxData);
-
-        expect(result).toHaveLength(16); // All personal fields
-
-        // Check required fields
-        const nameField = result.find(f => f.field === '1');
-        expect(nameField?.value).toBe('Mustermann');
-        expect(nameField?.required).toBe(true);
-
-        const taxNumberField = result.find(f => f.field === '7');
-        expect(taxNumberField?.value).toBe('123/456/789');
-
-        // Check optional fields
-        const firstNameField = result.find(f => f.field === '2');
-        expect(firstNameField?.value).toBe('Max');
-
-        const vatIdField = result.find(f => f.field === '8');
-        expect(vatIdField?.value).toBe('DE123456789');
-
-        // Check boolean fields
-        const kleinunternehmerField = result.find(f => f.field === '13');
-        expect(kleinunternehmerField?.value).toBe('Nein');
-    });
-
-    it('should handle missing optional fields', () => {
-        const userTaxData: UserTaxData = {
-            name: 'Mustermann',
-            street: 'Hauptstraße',
-            houseNumber: '123',
-            postalCode: '12345',
-            city: 'Berlin',
-            taxNumber: '123/456/789',
-            fiscalYearStart: '2024',
-            fiscalYearEnd: '2024',
-            profession: 'Software Developer',
-            profitDeterminationMethod: 'Einnahmen-Überschuss-Rechnung',
-            isKleinunternehmer: true,
-            isVatLiable: true,
-            isBookkeepingRequired: false,
-            isBalanceSheetRequired: false
-        };
-
-        const result = populatePersonalDataFields(userTaxData);
-
-        // Should not include firstName field if not provided
-        const firstNameField = result.find(f => f.field === '2');
-        expect(firstNameField).toBeUndefined();
-
-        // Should not include VAT ID field if not provided
-        const vatIdField = result.find(f => f.field === '8');
-        expect(vatIdField).toBeUndefined();
-    });
-});
+// Note: populatePersonalDataFields function doesn't exist in euerCalculations.ts
+// Personal data population is handled separately in the application
 
 describe('calculateVatFields', () => {
     it('should calculate VAT fields for regular business', () => {

@@ -67,51 +67,68 @@
       {
         "id": 6,
         "title": "Integrate Components for End-to-End Flow",
-        "description": "Connect the UI, parser, and engines to create the complete, functional user workflow from file upload to final calculation.",
-        "details": "Wire the file upload component (Task 2) to trigger the CSV parser (Task 3). Pass the normalized transactions to the categorization engine (Task 4) and then to the calculation engine (Task 5). The final `EuerReport` object should be stored in the application's state.",
-        "testStrategy": "Manual end-to-end testing. Upload a test CSV and verify using browser dev tools that the application state is correctly updated with the final report data. Implement and test a loading indicator during processing.",
-        "priority": "high",
+        "description": "Connect the UI, parser, and engines to create the complete, functional user workflow from file upload to final calculation and export.",
+        "status": "done",
         "dependencies": [
           2,
           5
         ],
-        "status": "in-progress",
+        "priority": "high",
+        "details": "Wire the file upload component (Task 2) to trigger the CSV parser (Task 3). Pass the normalized transactions to the categorization engine (Task 4) and then to the calculation engine (Task 5). The final `EuerReport` object should be stored in the application's state, making it available for the report display (Task 7) and ELSTER export.",
+        "testStrategy": "Manual end-to-end testing. Upload a test CSV and verify using browser dev tools that the application state is correctly updated with the final report data. Implement and test a loading indicator during processing.",
         "subtasks": [
           {
             "id": 1,
-            "title": "Design and Set Up User Database Schema",
-            "description": "Create the necessary database tables and migrations to store user information, including credentials and profile data.",
+            "title": "Connect File Upload UI to CSV Parser",
+            "description": "Wire the file input component to trigger the CSV parsing logic upon file selection.",
+            "status": "done",
             "dependencies": [],
-            "details": "Define a 'users' table with columns for id (PK), username (unique), email (unique), hashed_password, created_at, and updated_at. Use the project's ORM and migration tool to generate and apply the schema changes.",
-            "status": "pending",
-            "testStrategy": "Run the migration and manually inspect the database schema to confirm the table and all columns, indexes, and constraints are created correctly. Write a test to ensure the migration can be reversed cleanly."
+            "details": "Implement an `onChange` handler for the file input from Task 2. Use the FileReader API to read the selected file's content and pass it to the CSV parser function from Task 3. Handle potential file reading errors.",
+            "testStrategy": "Manually upload a file and use console logs or a debugger to confirm the parser function is called with the file content."
           },
           {
             "id": 2,
-            "title": "Implement User Registration API Endpoint",
-            "description": "Develop a public API endpoint (e.g., POST /api/auth/register) to allow new users to create an account.",
-            "dependencies": [],
-            "details": "The endpoint should accept username, email, and password. It must validate inputs (e.g., password complexity, valid email format), hash the password using bcrypt, and save the new user record to the database. Return a success message or user object upon successful registration.",
-            "status": "pending",
-            "testStrategy": "Write unit tests for the validation logic and password hashing service. Create integration tests that call the endpoint with valid data, duplicate data (email/username), and invalid data (e.g., weak password) to verify correct responses and database state."
+            "title": "Chain Parser Output to Categorization Engine",
+            "description": "Pass the normalized transactions from the parser to the categorization engine.",
+            "status": "done",
+            "dependencies": [
+              1
+            ],
+            "details": "Once the parser successfully returns an array of `NormalizedTransaction` objects, pass this array as input to the categorization engine (Task 4). This will enrich each transaction object with an EÜR category.",
+            "testStrategy": "After parsing, inspect the data being passed to the categorization engine to ensure it's the correct array of normalized transactions."
           },
           {
             "id": 3,
-            "title": "Implement User Login API Endpoint",
-            "description": "Develop a public API endpoint (e.g., POST /api/auth/login) to authenticate users and issue a session token.",
-            "dependencies": [],
-            "details": "The endpoint should accept user credentials (email/username and password). It will retrieve the user from the database, verify the provided password against the stored hash, and if successful, generate a signed JSON Web Token (JWT) containing the user ID and an expiration date. The JWT should be returned in the response body.",
-            "status": "pending",
-            "testStrategy": "Unit test the password comparison logic. Write integration tests for successful login (asserting a valid JWT is returned) and failed login attempts (wrong password, user not found), ensuring appropriate HTTP status codes (200, 401) are returned."
+            "title": "Feed Categorized Data into Calculation Engine",
+            "description": "Use the output of the categorization engine to run the final EÜR calculations.",
+            "status": "done",
+            "dependencies": [
+              2
+            ],
+            "details": "Take the array of categorized transactions and pass it to the EÜR calculation engine (Task 5). The engine will process this data and return the final `EuerReport` object.",
+            "testStrategy": "Verify that the calculation engine receives the categorized transactions and that its output is a structured `EuerReport` object."
           },
           {
             "id": 4,
-            "title": "Create Authentication Middleware for Protected Routes",
-            "description": "Implement middleware to verify the JWT on incoming requests to secure specific API endpoints.",
-            "dependencies": [],
-            "details": "The middleware should extract the JWT from the 'Authorization' header. It must validate the token's signature and check for expiration. If valid, decode the payload and attach the user's identity to the request object for use by route handlers. If invalid, it must terminate the request and return a 401 Unauthorized response.",
-            "status": "pending",
-            "testStrategy": "Create a sample protected endpoint. Write integration tests attempting to access this endpoint with a valid token, an expired token, a malformed token, and no token. Assert that the correct HTTP status code is returned in each case and that the request context contains user data only on success."
+            "title": "Store Final Report in Application State",
+            "description": "Update the global application state with the generated `EuerReport` and processing status.",
+            "status": "done",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement state management logic (e.g., React Context). On successful calculation, update the state with the `EuerReport` object. Implement a loading state that is active from file selection until the calculation is complete. Handle and store any errors that occur during the process.",
+            "testStrategy": "Use React DevTools to inspect the application state. Verify the loading state is set during processing and that the final state contains the correct `EuerReport` object or an error message."
+          },
+          {
+            "id": 5,
+            "title": "Implement ELSTER Data Export Function",
+            "description": "Create a function to export the calculated EÜR report data into a downloadable format.",
+            "status": "done",
+            "dependencies": [
+              4
+            ],
+            "details": "Add a button to the UI that becomes active after a report is generated. On click, this button should trigger a function that formats the `EuerReport` data into a simple, structured format (e.g., a key-value CSV or JSON file) and initiates a browser download.",
+            "testStrategy": "Generate a report, click the export button, and verify that a file is downloaded. Inspect the file's contents to ensure it accurately reflects the data from the `EuerReport` object."
           }
         ]
       },
@@ -125,7 +142,7 @@
         "dependencies": [
           6
         ],
-        "status": "todo",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -138,8 +155,61 @@
         "dependencies": [
           5
         ],
-        "status": "todo",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Review & Document Categorization Engine Test Coverage",
+            "description": "Analyze existing unit tests for the SKR Categorization Engine (Task 4), documenting current test cases, their coverage, and initial areas for expansion.",
+            "dependencies": [],
+            "details": "Utilize code coverage tools to assess current coverage. Document existing test cases for keyword/pattern matching, and uncategorized transactions as per Task 4's original test strategy.\n<info added on 2025-09-04T16:34:04.062Z>\nInitial review in 8.1 found a critical gap: no prior unit tests existed for the categorization engine. While a new suite (`src/test/categoryMappings.test.ts`) was created to validate static category definitions, the dynamic categorization logic remains untested.\n\nThis subtask will address this by adding tests for the core categorization algorithm, focusing on:\n- Keyword/pattern matching logic for assigning categories to transactions.\n- Fallback behavior for uncategorized transactions.\n- Correct category assignment using a variety of transaction descriptions and edge cases.\n- Multi-language keyword support.\n</info added on 2025-09-04T16:34:04.062Z>",
+            "status": "done",
+            "testStrategy": "N/A (This subtask focuses on review and documentation of existing tests)"
+          },
+          {
+            "id": 2,
+            "title": "Expand Categorization Engine Unit Tests",
+            "description": "Develop new unit tests for the SKR Categorization Engine (Task 4) to cover common freelance income/expense types and specific edge cases, ensuring comprehensive coverage.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Focus on scenarios not adequately covered by existing tests, including ambiguous descriptions, multiple matching rules, and transactions that should remain uncategorized. Ensure tests align with the parent task's requirement for covering common freelance income/expense types and edge cases.",
+            "status": "done",
+            "testStrategy": "Write new unit tests using various transaction descriptions and rulesets, asserting correct SKR category assignment or non-assignment for identified gaps."
+          },
+          {
+            "id": 3,
+            "title": "Review & Document Calculation Engine Test Coverage",
+            "description": "Analyze existing unit tests for the EÜR Calculation Engine (Task 5), documenting current test cases, their coverage, and initial areas for expansion.",
+            "dependencies": [],
+            "details": "Utilize code coverage tools to assess current coverage. Document existing test cases for various income/expense types, profit/loss calculation, and category-specific totals as per Task 5's original test strategy.",
+            "status": "done",
+            "testStrategy": "N/A (This subtask focuses on review and documentation of existing tests)"
+          },
+          {
+            "id": 4,
+            "title": "Expand Calculation Engine Unit Tests",
+            "description": "Develop new unit tests for the EÜR Calculation Engine (Task 5) using diverse sets of categorized transactions to verify accurate financial figure calculation across various scenarios.",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Create test data targeting the calculation of total income, total expenses, profit/loss, and category-specific totals under conditions like zero values, mixed types, and large transaction volumes. Ensure tests align with the parent task's requirement for covering common freelance income/expense types and edge cases.",
+            "status": "done",
+            "testStrategy": "Write new unit tests with varied categorized transaction inputs, asserting correct output for `EuerReport` fields."
+          },
+          {
+            "id": 5,
+            "title": "Achieve & Verify High Test Coverage for Core Logic",
+            "description": "Run the full unit test suite for both Categorization (Task 4) and Calculation (Task 5) engines, analyze coverage reports, and ensure high test coverage (e.g., >90% line coverage) for their core logic.",
+            "dependencies": [
+              "8.2",
+              "8.4"
+            ],
+            "details": "Use the configured test runner and coverage reporting tools. Address any remaining low-coverage areas by adding targeted tests until the high test coverage requirement is met for both critical components.",
+            "status": "done",
+            "testStrategy": "Run the full test suite and check coverage reports. Ensure the target coverage percentage is met for both the categorization and calculation engines."
+          }
+        ]
       },
       {
         "id": 9,
@@ -151,7 +221,7 @@
         "dependencies": [
           7
         ],
-        "status": "todo",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -164,13 +234,13 @@
         "dependencies": [
           9
         ],
-        "status": "todo",
+        "status": "in-progress",
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-09-04T07:57:30.681Z",
-      "updated": "2025-09-04T07:57:30.681Z",
+      "updated": "2025-09-04T17:15:10.301Z",
       "description": "Tasks for master context"
     }
   }

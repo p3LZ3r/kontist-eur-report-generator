@@ -1,0 +1,11 @@
+# Task ID: 10
+# Title: Configure Static Site Deployment
+# Status: todo
+# Dependencies: 9
+# Priority: high
+# Description: Set up automated deployment to a static web hosting provider to make the MVP publicly accessible.
+# Details:
+Configure a CI/CD pipeline (e.g., using GitHub Actions) to automatically build and deploy the application to a provider like Vercel, Netlify, or GitHub Pages upon pushes to the main branch.
+
+# Test Strategy:
+Trigger a deployment by pushing a commit. Verify that the deployed site is live and fully functional by performing a complete user flow on the production URL.

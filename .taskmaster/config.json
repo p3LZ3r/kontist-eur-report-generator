@@ -33,5 +33,38 @@
     "azureOpenaiBaseURL": "https://your-endpoint.openai.azure.com/",
     "userId": "1234567890"
   },
-  "claudeCode": {}
+  "claudeCode": {
+    "maxTurns": 5,
+    "customSystemPrompt": "You are a helpful assistant focused on code quality",
+    "appendSystemPrompt": "Always follow coding best practices",
+    "permissionMode": "bypassPermissions",
+    "mcpServers": {
+      "playwright": {
+        "type": "stdio",
+        "command": "npx",
+        "args": [
+          "-y",
+          "@playwright/mcp@latest"
+        ],
+        "env": {}
+      },
+      "context7": {
+        "type": "stdio",
+        "command": "npx",
+        "args": [
+          "-y",
+          "@upstash/context7-mcp"
+        ],
+        "env": {}
+      }
+    }
+  },
+  "commandSpecific": {
+    "maxTurns": 10,
+    "customSystemPrompt": "You are a task breakdown specialist"
+  },
+  "analyze-complexity": {
+    "maxTurns": 3,
+    "appendSystemPrompt": "Focus on identifying bottlenecks"
+  }
 }
