@@ -1,21 +1,93 @@
 {
 	"meta": {
-		"generatedAt": "2025-09-04T08:07:34.646Z",
-		"tasksAnalyzed": 1,
-		"totalTasks": 10,
-		"analysisCount": 1,
+		"generatedAt": "2025-09-04T19:58:35.447Z",
+		"tasksAnalyzed": 10,
+		"totalTasks": 20,
+		"analysisCount": 10,
 		"thresholdScore": 5,
 		"projectName": "Taskmaster",
-		"usedResearch": false
+		"usedResearch": true
 	},
 	"complexityAnalysis": [
 		{
-			"taskId": 6,
-			"taskTitle": "Integrate Components for End-to-End Flow",
-			"complexityScore": 7,
+			"taskId": 11,
+			"taskTitle": "Setup SPA Project and Basic UI Shell",
+			"complexityScore": 3,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Break down the task of setting up the basic SPA UI shell into creating the main layout component, implementing placeholder sections for file upload and report display, and verifying Tailwind CSS integration.",
+			"reasoning": "This task involves standard UI component creation and basic styling using established tools (Vite, React, Tailwind CSS). It's a foundational UI step, not complex logic or integration."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Define Core Data Models and Static Data",
+			"complexityScore": 2,
 			"recommendedSubtasks": 4,
-			"expansionPrompt": "Expand the task 'Integrate Components for End-to-End Flow'. The goal is to create the main data processing pipeline. Create subtasks for: 1. Creating an event handler for the file upload component that receives the file. 2. Implementing a primary 'orchestration' function that sequentially calls the parser, categorization engine, and calculation engine. 3. Integrating this pipeline with the application's state management to handle loading states and store the final `EuerReport` object. 4. Implementing the UI loading indicator that is displayed during the processing.",
-			"reasoning": "Complexity is rated 7/10 as this task is the central integration point for multiple complex, independent modules (UI, parser, two engines). It involves managing an asynchronous data pipeline, orchestrating function calls, and handling application state (loading, final data, potential errors), which is a critical and moderately complex architectural challenge. Breaking it into 4 subtasks follows the logical data flow: capturing input, processing through the pipeline, managing state, and providing user feedback, making the implementation more structured and manageable."
+			"expansionPrompt": "Detail the subtasks required to define the core data models (`RawTransaction`, `NormalizedTransaction`, `EuerReport`) as TypeScript interfaces and to create the initial static SKR mapping JSON files (`skr03.json`, `skr04.json`).",
+			"reasoning": "This is a straightforward data definition task, primarily involving writing TypeScript interfaces and creating static JSON files based on predefined specifications. No complex logic or external integrations are required."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Implement CSV Parsing for Kontist & Holvi",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the CSV parsing task into integrating a parsing library, developing specific adapter functions for Kontist and Holvi CSV formats, creating a bank detection mechanism, and implementing robust error handling.",
+			"reasoning": "This task requires integrating a third-party library (PapaParse), implementing specific data transformation logic for two distinct CSV formats, and robust error handling for parsing issues. It involves more than just basic coding."
+		},
+		{
+			"taskId": 14,
+			"taskTitle": "Build the SKR Categorization Engine",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the SKR Categorization Engine task into loading SKR mapping rules, implementing the core rule matching logic, creating a function to categorize individual transactions, and handling uncategorized items gracefully.",
+			"reasoning": "This task involves implementing rule-based logic, loading external data (JSON files), and applying pattern matching or keyword search for categorization. It also requires handling edge cases like uncategorized items, adding to its complexity."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Build the EÜR Calculation Engine",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Detail the subtasks for building the EÜR Calculation Engine, including designing the aggregation logic for income and expenses by SKR category, implementing the processing function, and structuring the final output into the `EuerReport` object.",
+			"reasoning": "This task requires implementing financial aggregation logic, grouping data by specific categories, and structuring the output into a predefined report object. It's a core business logic component."
+		},
+		{
+			"taskId": 16,
+			"taskTitle": "Create the ELSTER-mapped Report Display",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the ELSTER-mapped Report Display task into designing the component structure, mapping `EuerReport` fields to ELSTER labels, and implementing the rendering logic for income, expense, and summary sections.",
+			"reasoning": "This task involves creating a detailed UI component that accurately maps internal data to an external, complex form structure (ELSTER). It requires careful attention to detail and presentation."
+		},
+		{
+			"taskId": 17,
+			"taskTitle": "Integrate All MVP Components for End-to-End Flow",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Detail the subtasks for integrating all MVP components, including designing the application state flow, chaining the parsing, categorization, and calculation processes, passing data to the display component, and implementing a comprehensive loading indicator.",
+			"reasoning": "This is a high-complexity orchestration task. It involves managing application state across multiple asynchronous operations, ensuring data flow between distinct components, handling potential errors, and providing user feedback (loading states). It's the core of the application's functionality."
+		},
+		{
+			"taskId": 18,
+			"taskTitle": "Integrate Polar.sh Payment Modal",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the Polar.sh payment modal integration into integrating the SDK, creating the trigger mechanism for the modal, and implementing the 'skip and continue' functionality.",
+			"reasoning": "This task involves integrating a third-party SDK, handling its lifecycle, and implementing specific UI interactions (triggering the modal, handling a 'skip' option). It's a standard external service integration."
+		},
+		{
+			"taskId": 19,
+			"taskTitle": "Manage Payment Flow and Add Secondary CTA",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Detail the subtasks for managing the payment flow, including handling success and failure callbacks from Polar.sh, displaying appropriate user feedback, and implementing a secondary call-to-action for future contributions.",
+			"reasoning": "This task builds on the previous one, requiring event handling for external service outcomes, updating the UI based on these outcomes, and implementing a persistent UI element for re-engagement."
+		},
+		{
+			"taskId": 20,
+			"taskTitle": "Deploy MVP to Static Hosting",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the MVP deployment task into selecting a static hosting provider, configuring the build pipeline, setting up deployment on the chosen platform, and managing environment variables.",
+			"reasoning": "This task involves DevOps practices, including configuring a build pipeline, setting up deployment on a specific hosting platform, and managing environment variables. While common, it requires specific platform knowledge and attention to detail."
 		}
 	]
 }

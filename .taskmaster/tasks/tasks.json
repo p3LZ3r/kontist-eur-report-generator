@@ -236,11 +236,271 @@
         ],
         "status": "done",
         "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Setup SPA Project and Basic UI Shell",
+        "description": "Initialize a client-side Single-Page Application (SPA) and create the main layout with placeholders for the file upload and report display areas.",
+        "details": "Use Vite and Tailwind CSS as specified in the PRD. Create a single-page layout with a clear call-to-action for file upload and an empty placeholder section for the final report display. This task corresponds to the 'Foundation' and 'Static UI' steps in the logical dependency chain.",
+        "testStrategy": "Run the development server and verify the basic layout renders correctly in the browser without errors. The file input and a placeholder for the report should be visible.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Define Core Data Models and Static Data",
+        "description": "Create the TypeScript/JavaScript definitions for `RawTransaction`, `NormalizedTransaction`, and `EuerReport`, and set up the static SKR mapping files.",
+        "details": "Define the data structures as specified in the 'Data Models' section of the PRD. Create `src/data/skr03.json` and `src/data/skr04.json` with initial mapping rules for common freelance income/expense categories.",
+        "testStrategy": "Code review to ensure models match the PRD specifications. JSON files should be linted and validated to ensure they are parseable.",
+        "priority": "high",
+        "dependencies": [
+          11
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Implement CSV Parsing for Kontist & Holvi",
+        "description": "Develop the logic to parse uploaded `.csv` files from Kontist and Holvi, transforming the data into the standardized `NormalizedTransaction` format.",
+        "details": "Use a client-side CSV parsing library (e.g., PapaParse). Implement an adapter layer that detects the source bank (Kontist/Holvi) based on header columns and maps its specific format to the `NormalizedTransaction` model. Handle potential parsing errors gracefully.",
+        "testStrategy": "Unit test the parsing logic with sample CSV files for both banks. Verify that the output is an array of valid `NormalizedTransaction` objects and that edge cases (empty files, malformed rows) are handled.",
+        "priority": "high",
+        "dependencies": [
+          12
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Build the SKR Categorization Engine",
+        "description": "Create the core engine that assigns an SKR category to each `NormalizedTransaction` based on predefined rules.",
+        "details": "The engine will iterate through an array of `NormalizedTransaction`s. It will use a ruleset based on keywords and patterns in the transaction description to match against the SKR mapping data loaded from the JSON files. Uncategorized items should be handled gracefully as per the PRD's risk mitigation.",
+        "testStrategy": "Write unit tests that pass in various `NormalizedTransaction` objects and assert that the correct SKR category is assigned. Test with common freelance expenses like 'Software', 'Travel', and 'Office Supplies'.",
+        "priority": "high",
+        "dependencies": [
+          12
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Build the EÜR Calculation Engine",
+        "description": "Create the logic to process the list of categorized transactions and compute the final EÜR report totals.",
+        "details": "The engine will take an array of categorized `NormalizedTransaction`s as input. It will sum up all income and expense lines, grouping them by their assigned SKR category, to produce the final `EuerReport` object containing total income, total expenses, and profit/loss.",
+        "testStrategy": "Unit test the calculation engine with a predefined set of categorized transactions. Verify that total income, total expenses, and profit/loss are calculated correctly. Test with zero transactions and only income/expense transactions.",
+        "priority": "high",
+        "dependencies": [
+          14
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Create the ELSTER-mapped Report Display",
+        "description": "Build the UI component that takes the final `EuerReport` object and displays the results in a clean, read-only format matching the ELSTER form.",
+        "details": "The component will render the key calculated values (e.g., 'Betriebseinnahmen', 'Wareneinkauf', 'Gewinn/Verlust') with labels and line numbers corresponding to the official EÜR form. This component will replace the placeholder from task 11.",
+        "testStrategy": "Manually test by feeding a mock `EuerReport` object to the component and verifying the display is accurate, clean, and user-friendly. Check that all relevant fields from the report object are displayed.",
+        "priority": "medium",
+        "dependencies": [
+          11
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Integrate All MVP Components for End-to-End Flow",
+        "description": "Connect the file upload, parsing, categorization, calculation, and display components to create the complete, functional user workflow for the MVP.",
+        "details": "Wire the file input to trigger the CSV parser. Pass the normalized data to the categorization and calculation engines. Feed the final `EuerReport` to the display component. Implement a loading indicator that is shown during processing.",
+        "testStrategy": "Perform end-to-end manual testing: upload a Kontist CSV, verify the loading state, and check that the final report is displayed correctly. Repeat the process for a Holvi CSV.",
+        "priority": "high",
+        "dependencies": [
+          13,
+          15,
+          16
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Project Repository and Basic Structure",
+            "description": "Set up the version control repository, define initial project directories (e.g., `src`, `tests`, `docs`), and configure basic build tools and dependency management.",
+            "dependencies": [],
+            "details": "Use Git for version control. Create a `.gitignore` file. Configure `package.json` (for Node.js), `pyproject.toml` (for Python), or `pom.xml` (for Java) for dependency management. Establish a clear folder structure for frontend, backend, and shared components.",
+            "status": "done",
+            "testStrategy": "Verify repository creation and that basic build/install commands (e.g., `npm install`, `pip install -e .`) run without errors. Confirm `.gitignore` is effective."
+          },
+          {
+            "id": 2,
+            "title": "Design Database Schema and Configure ORM",
+            "description": "Define the necessary database tables, relationships, and data types for the application's core entities. Integrate and configure an Object-Relational Mapper (ORM) to interact with the database.",
+            "dependencies": [],
+            "details": "Choose a suitable database (e.g., PostgreSQL, MySQL). Design tables for users, items, orders, etc., including primary keys, foreign keys, and appropriate data types. Use an ORM like SQLAlchemy, Sequelize, or Hibernate. Define ORM models corresponding to the database schema.",
+            "status": "done",
+            "testStrategy": "Write and apply initial database migration scripts to a local development database. Verify that ORM models can connect to the database and perform basic CRUD (Create, Read, Update, Delete) operations on dummy data."
+          },
+          {
+            "id": 3,
+            "title": "Develop Core Backend API Endpoints",
+            "description": "Implement the essential RESTful API endpoints for data manipulation (CRUD operations) based on the defined database schema and ORM models.",
+            "dependencies": [],
+            "details": "Use a chosen backend framework (e.g., Flask, Express, Spring Boot). Implement endpoints for creating, reading, updating, and deleting primary resources (e.g., `/api/items`, `/api/users`). Ensure proper request validation, error handling, and serialization/deserialization of data.",
+            "status": "done",
+            "testStrategy": "Use an API client (e.g., Postman, Insomnia) or write unit/integration tests to verify each endpoint's functionality, HTTP status codes, and response payloads for various scenarios (success, invalid input, resource not found)."
+          },
+          {
+            "id": 4,
+            "title": "Implement Key Frontend UI Components",
+            "description": "Create the main user interface components required for displaying and interacting with the data exposed by the backend API.",
+            "dependencies": [],
+            "details": "Choose a frontend framework (e.g., React, Angular, Vue.js). Develop reusable components such as data display tables/lists, forms for data input, navigation elements, and basic layout components. Focus on static rendering and component structure initially.",
+            "status": "done",
+            "testStrategy": "Visually inspect components in a browser to ensure correct rendering and responsiveness. Use component-level testing frameworks (e.g., Jest, React Testing Library) to verify components render correctly with different props and respond to basic simulated user interactions."
+          },
+          {
+            "id": 5,
+            "title": "Integrate Frontend with Backend API and Implement Data Flow",
+            "description": "Connect the frontend UI components to the backend API endpoints to fetch, display, and submit data. Implement application-wide state management for data flow.",
+            "dependencies": [],
+            "details": "Use `fetch` API or a library like Axios for HTTP requests from the frontend. Implement data fetching on component mount, form submission handling, and real-time updates. Manage application state using a suitable pattern (e.g., Context API, Redux, Vuex, Zustand) to ensure consistent data across components.",
+            "status": "done",
+            "testStrategy": "Perform end-to-end testing by interacting with the UI and verifying that data is correctly fetched from and submitted to the backend. Use browser developer tools to monitor network requests and responses. Test various user flows involving data interaction."
+          },
+          {
+            "id": 6,
+            "title": "Implement User Authentication and Authorization",
+            "description": "Add user authentication (e.g., login, registration, logout) and authorization (e.g., role-based access control) to secure the application's resources and features.",
+            "dependencies": [],
+            "details": "Implement user registration and login endpoints on the backend, using secure password hashing (e.g., bcrypt) and token-based (e.g., JWT) or session-based authentication. Protect API routes based on user roles/permissions. Implement login/logout UI flows, protected routes, and display user-specific content on the frontend.",
+            "status": "done",
+            "testStrategy": "Test login/logout functionality with valid and invalid credentials. Verify that protected API routes are inaccessible without proper authentication/authorization. Test different user roles to ensure correct access levels to features and data. Check for secure storage of tokens/sessions."
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "title": "Integrate Polar.sh Payment Modal",
+        "description": "Implement the payment modal that appears when a user clicks on an ELSTER export button or information icon.",
+        "details": "Use the Polar.sh SDK to trigger and display the checkout modal. The modal should offer the option to make a voluntary payment or to skip and continue for free, as described in the user flow.",
+        "testStrategy": "Manually trigger the modal from the UI. Verify the Polar.sh checkout loads correctly within the modal. Test the 'skip' functionality to ensure the user can proceed without paying.",
+        "priority": "medium",
+        "dependencies": [
+          17
+        ],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and Implement Product Database Schema",
+            "description": "Define the database schema for products, categories, and related entities. Set up the database and initial tables.",
+            "dependencies": [],
+            "details": "Use PostgreSQL. Tables: `products` (id, name, description, price, stock, category_id), `categories` (id, name). Ensure proper indexing and foreign key constraints. Create migration scripts.",
+            "status": "pending",
+            "testStrategy": "Verify table creation, column types, constraints, and ability to insert/retrieve basic data using SQL queries directly against the database."
+          },
+          {
+            "id": 2,
+            "title": "Implement Product Listing API Endpoint",
+            "description": "Create an API endpoint to retrieve a list of all products, with optional filtering and pagination.",
+            "dependencies": [],
+            "details": "Endpoint: `/api/products`. Support query parameters for `category_id`, `min_price`, `max_price`, `page`, `limit`. Use a RESTful approach, returning JSON.",
+            "status": "pending",
+            "testStrategy": "Unit tests for data retrieval logic. Integration tests for the API endpoint using HTTP requests, checking various filter combinations, pagination, and empty results."
+          },
+          {
+            "id": 3,
+            "title": "Implement Single Product Details API Endpoint",
+            "description": "Create an API endpoint to retrieve details for a specific product by its ID.",
+            "dependencies": [],
+            "details": "Endpoint: `/api/products/{id}`. Handle cases where the product ID does not exist (return 404 Not Found). Include category name in the response.",
+            "status": "pending",
+            "testStrategy": "Unit tests for fetching by ID. Integration tests for the API endpoint, checking valid IDs, non-existent IDs, and ensuring correct data structure and status codes."
+          },
+          {
+            "id": 4,
+            "title": "Implement Product Creation API Endpoint",
+            "description": "Create an API endpoint to allow authenticated users to add new products to the catalog.",
+            "dependencies": [],
+            "details": "Endpoint: `/api/products` (POST request). Request body should include `name`, `description`, `price`, `stock`, `category_id`. Implement input validation (e.g., price > 0, stock >= 0, category_id exists). Return 201 Created with the new product's details.",
+            "status": "pending",
+            "testStrategy": "Unit tests for validation logic. Integration tests for the API endpoint, sending valid and invalid product data, verifying successful creation, and checking error responses for invalid inputs."
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "title": "Manage Payment Flow and Add Secondary CTA",
+        "description": "Implement logic to handle payment success/failure and add a subtle call-to-action for later contributions in the export view.",
+        "details": "Use callbacks or promises from the Polar.sh SDK to detect payment completion. Display a simple confirmation message on success. Add a non-intrusive 'Support this tool' button in the final report view that re-opens the payment modal.",
+        "testStrategy": "Use Polar.sh test mode to simulate a successful payment and verify the confirmation UI appears. Verify the secondary CTA is present and correctly triggers the payment modal again.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and Implement Database Schema",
+            "description": "Define the database schema for core entities (e.g., users, products, orders) and set up the initial database environment.",
+            "dependencies": [],
+            "details": "Create SQL DDL scripts for tables like `users` (id, name, email, password_hash), `products` (id, name, description, price, stock), and `orders` (id, user_id, order_date, total_amount). Use PostgreSQL for the database. Ensure proper indexing for foreign keys and frequently queried columns.",
+            "status": "pending",
+            "testStrategy": "Verify table creation and schema integrity using a database client. Insert sample data to confirm data types and constraints are enforced correctly."
+          },
+          {
+            "id": 2,
+            "title": "Develop User Authentication and Authorization Module",
+            "description": "Implement user registration, login, and token-based authentication (e.g., JWT). Include basic role-based authorization.",
+            "dependencies": [],
+            "details": "Create API endpoints for `/register` (POST), `/login` (POST), and `/profile` (GET, protected). Use bcrypt for password hashing. Implement JWT generation on login and validation for protected routes. Define roles (e.g., 'user', 'admin') and enforce access control on specific endpoints.",
+            "status": "pending",
+            "testStrategy": "Test user registration with valid/invalid data. Verify successful login and JWT generation. Test access to protected routes with valid/invalid/missing tokens. Confirm authorization rules are applied correctly for different user roles."
+          },
+          {
+            "id": 3,
+            "title": "Implement Product Catalog Management API",
+            "description": "Develop CRUD (Create, Read, Update, Delete) API endpoints for managing product information.",
+            "dependencies": [],
+            "details": "Create RESTful endpoints: `/products` (GET all, POST new), `/products/{id}` (GET by ID, PUT/PATCH update, DELETE). Implement input validation for product data (name, price, stock). Ensure only authenticated and authorized users (e.g., 'admin' role) can create, update, or delete products.",
+            "status": "pending",
+            "testStrategy": "Use Postman or cURL to test all CRUD operations. Verify correct HTTP status codes (200, 201, 204, 400, 401, 403, 404). Test edge cases like invalid product IDs, missing required fields, and unauthorized access attempts."
+          },
+          {
+            "id": 4,
+            "title": "Set Up API Documentation and Deployment Configuration",
+            "description": "Generate comprehensive API documentation and configure basic deployment settings for the application.",
+            "dependencies": [],
+            "details": "Use OpenAPI/Swagger to document all implemented API endpoints, including request/response schemas, authentication requirements, and error codes. Create a `Dockerfile` for containerizing the application and a basic `docker-compose.yml` for local development and testing environment setup.",
+            "status": "pending",
+            "testStrategy": "Verify that the generated API documentation is accurate, complete, and accessible. Build the Docker image and run the application in a container to ensure it starts correctly and all endpoints are reachable from within the containerized environment."
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "title": "Deploy MVP to Static Hosting",
+        "description": "Configure and deploy the completed client-side application to a static web host like Vercel, Netlify, or GitHub Pages.",
+        "details": "Set up a build pipeline for the SPA. Configure the chosen hosting provider to serve the static files from the `dist` directory. Ensure environment variables for Polar.sh (if any) are set up correctly.",
+        "testStrategy": "Access the live URL and perform a final smoke test of the entire user flow, including file upload and the payment modal, to ensure it works correctly in a production environment.",
+        "priority": "low",
+        "dependencies": [
+          17,
+          19
+        ],
+        "status": "pending",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-09-04T07:57:30.681Z",
-      "updated": "2025-09-04T17:21:42.901Z",
+      "updated": "2025-09-04T20:28:54.934Z",
       "description": "Tasks for master context"
     }
   }

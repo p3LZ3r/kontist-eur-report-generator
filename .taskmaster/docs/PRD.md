@@ -19,6 +19,11 @@ The application is for users of Kontist and Holvi online banks who need to trans
   - **Why it's important:** This makes it trivial for the user to transfer their results into the ELSTER tax portal, eliminating confusion and potential for transcription errors.
   - **How it works at a high level:** A simple UI component will display the key calculated values (e.g., "Betriebseinnahmen," "Wareneinkauf," "Gewinn/Verlust") with labels that match the official EÜR form's terminology and line numbers.
 
+- **Polar.sh Payment Integration:**
+  - **What it does:** Provides an optional payment gateway for users who want to support the application or unlock premium features.
+  - **Why it's important:** Enables sustainable development and maintenance of the application while keeping it accessible to all users.
+  - **How it works at a high level:** When users click on ELSTER export or information buttons, a payment modal appears with Polar.sh checkout integration. Users can choose to pay or continue without payment. A secondary CTA in the export view allows users to contribute later if they change their mind.
+
 # User Experience
 - **User Persona:** A German freelance consultant who is comfortable with technology but is not an accounting expert. Their primary goal is to complete their tax obligations as quickly and accurately as possible without hiring an accountant.
 - **Key User Flow:**
@@ -27,7 +32,11 @@ The application is for users of Kontist and Holvi online banks who need to trans
   3. User selects their Kontist or Holvi transaction CSV from their local machine.
   4. The application displays a brief loading indicator while processing.
   5. The final EÜR report is displayed on the same page.
-  6. User opens the ELSTER portal in another tab and copies the values from the application into the corresponding fields.
+  6. **NEW:** When user clicks on ELSTER export button or information icon, a payment modal appears with Polar.sh integration.
+  7. **NEW:** User can choose to make a voluntary payment or skip and continue for free.
+  8. **NEW:** If payment is completed, user receives confirmation and access continues normally.
+  9. **NEW:** In the export view, a subtle CTA allows users to make a contribution if they change their mind.
+  10. User opens the ELSTER portal in another tab and copies the values from the application into the corresponding fields.
 - **UI/UX Considerations:** The design must be minimal, clean, and highly intuitive. The entire user journey should exist on a single page. There should be no unnecessary steps, configurations, or distractions from the core workflow.
 
 # Technical Architecture
@@ -36,7 +45,9 @@ The application is for users of Kontist and Holvi online banks who need to trans
   - `RawTransaction`: Represents a row from the source CSV.
   - `NormalizedTransaction`: A unified internal object for a transaction, e.g., `{ id, date, description, amount, type: '''income''' | '''expense''' }`.
   - `EuerReport`: The final calculated output, containing fields for total income, total expenses, and breakdowns by key SKR categories.
-- **APIs and Integrations:** None. All logic is contained within the application.
+- **APIs and Integrations:** 
+  - Polar.sh SDK for payment processing and checkout integration
+  - All core logic remains client-side with no backend dependencies
 - **Infrastructure Requirements:** A static web hosting provider (e.g., Vercel, Netlify, GitHub Pages).
 
 # Development Roadmap
@@ -47,11 +58,21 @@ The application is for users of Kontist and Holvi online banks who need to trans
   - The EÜR calculation engine to sum categorized transactions.
   - Integration of the components to create the end-to-end user flow.
   - Unit tests for the calculation and categorization logic.
+- **Post-MVP Payment Features (v1.1):**
+  - Polar.sh payment modal integration triggered by ELSTER export buttons
+  - Optional payment gateway with "Pay What You Want" or fixed pricing tiers
+  - Graceful handling of payment success/failure states
+  - Secondary CTA in export views for delayed contributions
+  - Payment completion confirmation and user feedback
+  - Integration with Polar.sh webhooks for payment verification (if needed)
+
 - **Future Enhancements:**
   - A UI for users to manually review and correct transaction categories.
   - Support for additional bank CSV formats.
   - Export functionality for the final report (PDF or CSV).
   - Persistence of data in the browser's `localStorage`.
+  - Premium features unlocked through payments
+  - User account system with payment history
 
 # Logical Dependency Chain
 1. **Foundation:** Finalize the basic React project setup with Vite and Tailwind CSS.

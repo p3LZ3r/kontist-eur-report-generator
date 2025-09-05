@@ -18,7 +18,10 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Read(/G:\\kontist-eur-report-generator\\.taskmaster\\docs/**)",
+      "Read(/G:\\kontist-eur-report-generator\\src/**)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

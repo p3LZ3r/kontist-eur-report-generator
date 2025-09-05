@@ -5,6 +5,8 @@ import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction
 import { calculateEuer } from '../utils/euerCalculations';
 import { PAGINATION } from '../utils/constants';
 import { prepareGuidanceData } from '../utils/guidanceUtils';
+import { generateReport, downloadReport, downloadElsterCSV, downloadElsterJSON } from '../utils/exportUtils';
+import { generateReport as generatePDFReport } from '../utils/reportGenerator';
 import { Button } from './ui/button';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
@@ -214,6 +216,65 @@ const EuerGenerator = () => {
     const closeHelpModal = useCallback(() => {
         setHelpModal({ isOpen: false });
     }, []);
+
+    // Export handler
+    const handleExport = useCallback((type: 'txt' | 'csv' | 'json' | 'pdf') => {
+        const currentYear = new Date().getFullYear();
+        
+        try {
+            switch (type) {
+                case 'txt':
+                    const reportContent = generateReport(
+                        euerCalculation, 
+                        currentSkr as any, 
+                        bankType, 
+                        isKleinunternehmer, 
+                        transactions
+                    );
+                    downloadReport(reportContent, currentYear, currentSkr as any, isKleinunternehmer);
+                    break;
+                
+                case 'csv':
+                    downloadElsterCSV(transactions, categories, isKleinunternehmer, currentYear);
+                    break;
+                
+                case 'json':
+                    downloadElsterJSON(transactions, categories, isKleinunternehmer, currentYear);
+                    break;
+                
+                case 'pdf':
+                    // Create default company info for PDF
+                    const defaultCompanyInfo = {
+                        name: '',
+                        address: '',
+                        taxNumber: '',
+                        vatNumber: '',
+                        taxRate: '19'
+                    };
+                    const pdfContent = generatePDFReport(
+                        euerCalculation,
+                        defaultCompanyInfo,
+                        currentSkr as any,
+                        bankType,
+                        isKleinunternehmer,
+                        transactions
+                    );
+                    
+                    // Download PDF (simplified - in a real implementation you'd use a PDF library)
+                    const blob = new Blob([pdfContent], { type: 'text/plain;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `EÜR_Detailbericht_${currentYear}_${currentSkr}.txt`;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                    break;
+            }
+        } catch (error) {
+            const errorMsg = error instanceof Error ? error.message : 'Unbekannter Fehler beim Export';
+            alert(errorMsg);
+        }
+    }, [transactions, categories, isKleinunternehmer, currentSkr, bankType, euerCalculation]);
 
     return (
         <div className="space-y-6">
@@ -802,6 +863,12 @@ const EuerGenerator = () => {
                                             if (currentSection === 'totals') return group.category === 'total' || group.category === 'tax';
                                             return true;
                                         })}
+                                        transactions={transactions}
+                                        categories={categories}
+                                        isKleinunternehmer={isKleinunternehmer}
+                                        currentYear={new Date().getFullYear()}
+                                        currentSkr={currentSkr}
+                                        onExport={handleExport}
                                     />
                                 </div>
                             </div>
