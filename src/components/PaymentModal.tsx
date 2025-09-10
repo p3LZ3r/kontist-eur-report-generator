@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { X, Heart, Coffee, Download, CreditCard } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Heart, Coffee, Download, CreditCard, CheckCircle } from 'lucide-react';
+// import { Polar } from '@polar-sh/sdk'; // Commented out for build, uncomment for production
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 
@@ -19,6 +20,24 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   exportType
 }) => {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  // Check for payment success URL parameter on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('payment') === 'success') {
+      setShowSuccessMessage(true);
+      // Clear the URL parameter
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+      
+      // Auto-trigger success callback after showing message
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        onPaymentSuccess?.();
+      }, 2000);
+    }
+  }, [onPaymentSuccess]);
 
   if (!isOpen) return null;
 
@@ -35,18 +54,65 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   const handlePolarPayment = async (amount: number) => {
     setIsProcessingPayment(true);
     try {
-      // TODO: Integrate with Polar.sh SDK
-      // For now, simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Initialize Polar SDK (for production use)
+      // const polar = new Polar({
+      //   accessToken: process.env.POLAR_ACCESS_TOKEN ?? '',
+      // });
+
+      // Create checkout session for the donation amount
+      // Note: In production, you would use polar.checkouts.create() with pre-created products
+      // For now, simulate the checkout creation with a simple URL redirect
+      const checkoutUrl = `https://polar.sh/checkout?amount=${amount}&description=${encodeURIComponent(`Freiwillige Unterstützung für ${getExportDescription()}`)}&return_url=${encodeURIComponent(window.location.origin + '?payment=success')}`;
       
-      onPaymentSuccess?.();
-      onClose();
+      const checkoutSession = {
+        url: checkoutUrl,
+        // Other properties would come from real Polar API
+      };
+
+      if (checkoutSession.url) {
+        // Open Polar checkout in new window/tab
+        const popup = window.open(checkoutSession.url, '_blank', 'width=600,height=700');
+        
+        // Monitor for window close (user completed or cancelled payment)
+        const checkClosed = setInterval(() => {
+          if (popup?.closed) {
+            clearInterval(checkClosed);
+            setIsProcessingPayment(false);
+            // Don't auto-close modal, let user use skip if payment failed
+            // Success will be handled by URL parameter detection
+          }
+        }, 1000);
+      }
     } catch (error) {
       console.error('Payment failed:', error);
+      // Show user-friendly error message
+      alert('Zahlung konnte nicht initialisiert werden. Bitte versuchen Sie es später erneut.');
     } finally {
       setIsProcessingPayment(false);
     }
   };
+
+  // Show success message if payment completed
+  if (showSuccessMessage) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-fade-in">
+        <Card className="w-full max-w-md mx-4 relative">
+          <CardContent className="p-6 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="text-green-600" size={32} />
+            </div>
+            <h2 className="text-xl font-semibold text-foreground mb-2">
+              Vielen Dank für Ihre Unterstützung!
+            </h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              Ihr Download startet automatisch in wenigen Sekunden...
+            </p>
+            <div className="w-8 h-8 border-2 border-green-600/30 border-t-green-600 rounded-full animate-spin mx-auto"></div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-fade-in">

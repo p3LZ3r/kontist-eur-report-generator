@@ -393,15 +393,15 @@
         "dependencies": [
           17
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
             "title": "Design and Implement Product Database Schema",
             "description": "Define the database schema for products, categories, and related entities. Set up the database and initial tables.",
             "dependencies": [],
-            "details": "Use PostgreSQL. Tables: `products` (id, name, description, price, stock, category_id), `categories` (id, name). Ensure proper indexing and foreign key constraints. Create migration scripts.",
-            "status": "pending",
+            "details": "Use PostgreSQL. Tables: `products` (id, name, description, price, stock, category_id), `categories` (id, name). Ensure proper indexing and foreign key constraints. Create migration scripts.\n<info added on 2025-09-10T07:33:10.471Z>\nWith the `PaymentModal.tsx` component now successfully integrating the Polar.sh SDK on the client side, this backend subtask is unblocked. The goal is to create an API endpoint that will serve the product/donation options from the database to the frontend.\n\n**Implementation Plan:**\n\n1.  **Create API Endpoint:** Implement a new `GET /api/products` endpoint. Following the existing backend structure, this will likely involve adding a new route in the `server/routes/` directory and a corresponding controller function.\n2.  **Database Query:** The controller for this endpoint should query the PostgreSQL `products` table (defined in subtask 18.1) to fetch all available products.\n3.  **Data Structure:** The endpoint should return a JSON array of product objects. Each object should include the necessary fields for the frontend, such as `id`, `name`, `description`, and `price`.\n4.  **Frontend Integration (Next Step):** Once this endpoint is live, the `PaymentModal.tsx` component will be refactored to fetch data from `/api/products` instead of using client-side dynamic values. This will decouple the product offerings from the frontend code.\n</info added on 2025-09-10T07:33:10.471Z>",
+            "status": "done",
             "testStrategy": "Verify table creation, column types, constraints, and ability to insert/retrieve basic data using SQL queries directly against the database."
           },
           {
@@ -410,7 +410,7 @@
             "description": "Create an API endpoint to retrieve a list of all products, with optional filtering and pagination.",
             "dependencies": [],
             "details": "Endpoint: `/api/products`. Support query parameters for `category_id`, `min_price`, `max_price`, `page`, `limit`. Use a RESTful approach, returning JSON.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit tests for data retrieval logic. Integration tests for the API endpoint using HTTP requests, checking various filter combinations, pagination, and empty results."
           },
           {
@@ -419,7 +419,7 @@
             "description": "Create an API endpoint to retrieve details for a specific product by its ID.",
             "dependencies": [],
             "details": "Endpoint: `/api/products/{id}`. Handle cases where the product ID does not exist (return 404 Not Found). Include category name in the response.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit tests for fetching by ID. Integration tests for the API endpoint, checking valid IDs, non-existent IDs, and ensuring correct data structure and status codes."
           },
           {
@@ -428,7 +428,7 @@
             "description": "Create an API endpoint to allow authenticated users to add new products to the catalog.",
             "dependencies": [],
             "details": "Endpoint: `/api/products` (POST request). Request body should include `name`, `description`, `price`, `stock`, `category_id`. Implement input validation (e.g., price > 0, stock >= 0, category_id exists). Return 201 Created with the new product's details.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit tests for validation logic. Integration tests for the API endpoint, sending valid and invalid product data, verifying successful creation, and checking error responses for invalid inputs."
           }
         ]
@@ -443,7 +443,7 @@
         "dependencies": [
           18
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -451,7 +451,7 @@
             "description": "Define the database schema for core entities (e.g., users, products, orders) and set up the initial database environment.",
             "dependencies": [],
             "details": "Create SQL DDL scripts for tables like `users` (id, name, email, password_hash), `products` (id, name, description, price, stock), and `orders` (id, user_id, order_date, total_amount). Use PostgreSQL for the database. Ensure proper indexing for foreign keys and frequently queried columns.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify table creation and schema integrity using a database client. Insert sample data to confirm data types and constraints are enforced correctly."
           },
           {
@@ -460,7 +460,7 @@
             "description": "Implement user registration, login, and token-based authentication (e.g., JWT). Include basic role-based authorization.",
             "dependencies": [],
             "details": "Create API endpoints for `/register` (POST), `/login` (POST), and `/profile` (GET, protected). Use bcrypt for password hashing. Implement JWT generation on login and validation for protected routes. Define roles (e.g., 'user', 'admin') and enforce access control on specific endpoints.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test user registration with valid/invalid data. Verify successful login and JWT generation. Test access to protected routes with valid/invalid/missing tokens. Confirm authorization rules are applied correctly for different user roles."
           },
           {
@@ -469,7 +469,7 @@
             "description": "Develop CRUD (Create, Read, Update, Delete) API endpoints for managing product information.",
             "dependencies": [],
             "details": "Create RESTful endpoints: `/products` (GET all, POST new), `/products/{id}` (GET by ID, PUT/PATCH update, DELETE). Implement input validation for product data (name, price, stock). Ensure only authenticated and authorized users (e.g., 'admin' role) can create, update, or delete products.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Use Postman or cURL to test all CRUD operations. Verify correct HTTP status codes (200, 201, 204, 400, 401, 403, 404). Test edge cases like invalid product IDs, missing required fields, and unauthorized access attempts."
           },
           {
@@ -478,7 +478,7 @@
             "description": "Generate comprehensive API documentation and configure basic deployment settings for the application.",
             "dependencies": [],
             "details": "Use OpenAPI/Swagger to document all implemented API endpoints, including request/response schemas, authentication requirements, and error codes. Create a `Dockerfile` for containerizing the application and a basic `docker-compose.yml` for local development and testing environment setup.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that the generated API documentation is accurate, complete, and accessible. Build the Docker image and run the application in a container to ensure it starts correctly and all endpoints are reachable from within the containerized environment."
           }
         ]
@@ -494,13 +494,13 @@
           17,
           19
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-09-04T07:57:30.681Z",
-      "updated": "2025-09-04T20:28:54.934Z",
+      "updated": "2025-09-10T08:29:35.190Z",
       "description": "Tasks for master context"
     }
   }

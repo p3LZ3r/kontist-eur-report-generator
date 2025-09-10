@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, FileText, Database, Code } from 'lucide-react';
+import { Download, FileText, Database, Code, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import PaymentModal from './PaymentModal';
@@ -18,7 +18,7 @@ interface FieldGroupsProps {
 const FieldGroups: React.FC<FieldGroupsProps> = ({
     groups,
     transactions = [],
-    categories = {},
+    categories: _categories = {}, // Underscore prefix to indicate unused parameter
     isKleinunternehmer = false,
     currentYear = new Date().getFullYear(),
     currentSkr = 'SKR04',
@@ -28,6 +28,8 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
         isOpen: boolean;
         exportType: 'txt' | 'csv' | 'json' | 'pdf' | null;
     }>({ isOpen: false, exportType: null });
+    
+    const [hasRecentExport, setHasRecentExport] = useState(false);
 
     const formatValue = (value: number | string) => {
         if (typeof value === 'number') {
@@ -49,6 +51,9 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
         setPaymentModal({ isOpen: false, exportType: null });
         if (exportType && onExport) {
             onExport(exportType);
+            setHasRecentExport(true);
+            // Hide secondary CTA after 30 seconds
+            setTimeout(() => setHasRecentExport(false), 30000);
         }
     };
 
@@ -57,7 +62,14 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
         setPaymentModal({ isOpen: false, exportType: null });
         if (exportType && onExport) {
             onExport(exportType);
+            setHasRecentExport(true);
+            // Hide secondary CTA after 30 seconds
+            setTimeout(() => setHasRecentExport(false), 30000);
         }
+    };
+
+    const handleSecondaryCTA = () => {
+        setPaymentModal({ isOpen: true, exportType: 'txt' }); // Default to txt for support
     };
 
     const closeModal = () => {
@@ -179,6 +191,26 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                 {isKleinunternehmer ? ' Kleinunternehmer (Brutto)' : ' Umsatzsteuerpflichtig (Netto)'}
                             </p>
                         </div>
+
+                        {/* Secondary CTA - Show after recent export */}
+                        {hasRecentExport && (
+                            <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
+                                <div className="text-center space-y-2">
+                                    <p className="text-xs text-muted-foreground">
+                                        Hat Ihnen dieses Tool geholfen?
+                                    </p>
+                                    <Button
+                                        onClick={handleSecondaryCTA}
+                                        variant="outline"
+                                        size="sm"
+                                        className="text-xs h-8"
+                                    >
+                                        <Heart size={12} className="mr-1" />
+                                        Tool unterstützen
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             )}
