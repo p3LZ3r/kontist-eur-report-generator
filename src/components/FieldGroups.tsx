@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, FileText, Database, Code, Heart } from 'lucide-react';
+import { Download, FileText, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import PaymentModal from './PaymentModal';
@@ -136,10 +136,10 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                     <CardContent className="p-6">
                         <div className="text-center mb-6">
                             <h3 className="text-lg font-semibold text-foreground mb-2">
-                                ELSTER Export
+                                ELSTER Export-Zugang
                             </h3>
                             <p className="text-sm text-muted-foreground">
-                                Laden Sie Ihre EÜR-Daten in verschiedenen Formaten herunter
+                                Erwerben Sie Zugang zu Ihren EÜR-Exporten in verschiedenen Formaten
                             </p>
                         </div>
 
@@ -150,29 +150,10 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                 className="flex flex-col items-center gap-2 h-auto py-4 hover:bg-primary/5"
                             >
                                 <FileText className="text-primary" size={24} />
-                                <span className="font-medium">EÜR Bericht</span>
+                                <span className="font-medium">ELSTER-Export freischalten</span>
                                 <span className="text-xs text-muted-foreground">Textformat (.txt)</span>
                             </Button>
 
-                            <Button
-                                onClick={() => handleExportClick('csv')}
-                                variant="outline"
-                                className="flex flex-col items-center gap-2 h-auto py-4 hover:bg-primary/5"
-                            >
-                                <Database className="text-primary" size={24} />
-                                <span className="font-medium">ELSTER CSV</span>
-                                <span className="text-xs text-muted-foreground">Für ELSTER Import</span>
-                            </Button>
-
-                            <Button
-                                onClick={() => handleExportClick('json')}
-                                variant="outline"
-                                className="flex flex-col items-center gap-2 h-auto py-4 hover:bg-primary/5"
-                            >
-                                <Code className="text-primary" size={24} />
-                                <span className="font-medium">ELSTER JSON</span>
-                                <span className="text-xs text-muted-foreground">Strukturierte Daten</span>
-                            </Button>
 
                             <Button
                                 onClick={() => handleExportClick('pdf')}
@@ -180,7 +161,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                 className="flex flex-col items-center gap-2 h-auto py-4 hover:bg-primary/5"
                             >
                                 <Download className="text-primary" size={24} />
-                                <span className="font-medium">PDF Bericht</span>
+                                <span className="font-medium">PDF-Export freischalten</span>
                                 <span className="text-xs text-muted-foreground">Detailliert (.pdf)</span>
                             </Button>
                         </div>
@@ -197,7 +178,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                             <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
                                 <div className="text-center space-y-2">
                                     <p className="text-xs text-muted-foreground">
-                                        Hat Ihnen dieses Tool geholfen?
+                                        War dieser Export hilfreich?
                                     </p>
                                     <Button
                                         onClick={handleSecondaryCTA}
@@ -206,7 +187,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                         className="text-xs h-8"
                                     >
                                         <Heart size={12} className="mr-1" />
-                                        Tool unterstützen
+                                        Zugang erwerben
                                     </Button>
                                 </div>
                             </div>

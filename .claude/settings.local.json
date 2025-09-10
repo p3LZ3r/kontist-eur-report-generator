@@ -43,7 +43,12 @@
       "mcp__task-master-ai__update_subtask",
       "Bash(rm:*)",
       "mcp__task-master-ai__add_task",
-      "mcp__task-master-ai__analyze_project_complexity"
+      "mcp__task-master-ai__analyze_project_complexity",
+      "mcp__task-master-ai__update_task",
+      "mcp__task-master-ai__complexity_report",
+      "mcp__task-master-ai__expand_task",
+      "mcp__task-master-ai__clear_subtasks",
+      "mcp__task-master-ai__expand_all"
     ],
     "deny": [],
     "ask": []

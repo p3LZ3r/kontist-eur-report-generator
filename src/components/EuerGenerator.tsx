@@ -5,7 +5,7 @@ import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction
 import { calculateEuer } from '../utils/euerCalculations';
 import { PAGINATION } from '../utils/constants';
 import { prepareGuidanceData } from '../utils/guidanceUtils';
-import { generateReport, downloadReport, downloadElsterCSV, downloadElsterJSON } from '../utils/exportUtils';
+import { generateReport, downloadReport } from '../utils/exportUtils';
 import { generateReport as generatePDFReport } from '../utils/reportGenerator';
 import { Button } from './ui/button';
 
@@ -14,6 +14,7 @@ import { Card, CardContent } from './ui/card';
 import NavigationSidebar from './NavigationSidebar';
 import FieldGroups from './FieldGroups';
 import HelpTooltip from './HelpTooltip';
+import PaymentModal from './PaymentModal';
 
 import type {
     Transaction
@@ -35,6 +36,36 @@ const EuerGenerator = () => {
 
     const [currentView, setCurrentView] = useState<'transactions' | 'elster'>('transactions');
     const [currentSection, setCurrentSection] = useState('income');
+    
+    // Payment gating state
+    const [isElsterAccessGranted, setIsElsterAccessGranted] = useState(false);
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    
+    // Handle ELSTER view access with payment gating
+    const handleElsterAccess = () => {
+        if (isElsterAccessGranted) {
+            setCurrentView('elster');
+        } else {
+            setIsPaymentModalOpen(true);
+        }
+    };
+    
+    // Handle payment modal callbacks
+    const handlePaymentSuccess = () => {
+        setIsElsterAccessGranted(true);
+        setCurrentView('elster');
+        setIsPaymentModalOpen(false);
+    };
+    
+    const handlePaymentSkip = () => {
+        setIsElsterAccessGranted(true);
+        setCurrentView('elster');
+        setIsPaymentModalOpen(false);
+    };
+    
+    const handlePaymentClose = () => {
+        setIsPaymentModalOpen(false);
+    };
 
     // Load SKR categories dynamically
     useEffect(() => {
@@ -221,13 +252,6 @@ const EuerGenerator = () => {
                     downloadReport(reportContent, currentYear, currentSkr as any, isKleinunternehmer);
                     break;
                 
-                case 'csv':
-                    downloadElsterCSV(transactions, categories, isKleinunternehmer, currentYear);
-                    break;
-                
-                case 'json':
-                    downloadElsterJSON(transactions, categories, isKleinunternehmer, currentYear);
-                    break;
                 
                 case 'pdf':
                     // Create default company info for PDF
@@ -534,7 +558,7 @@ const EuerGenerator = () => {
                                 1. Transaktionen
                             </button>
                             <button
-                                onClick={() => setCurrentView('elster')}
+                                onClick={handleElsterAccess}
                                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                                     currentView === 'elster'
                                         ? 'bg-background text-foreground shadow-sm'
@@ -681,16 +705,16 @@ const EuerGenerator = () => {
                             </table>
                         </div>
 
-                        {/* Mobile Card View */}
-                        <div className="sm:hidden space-y-4">
-                            {currentTransactions.map((transaction) => {
-                                const categoryKey = categories[transaction.id] || transaction.euerCategory || '';
-                                const category = skrCategories[categoryKey];
-                                const isPrivate = category?.type === 'private';
+                        {/* Mobile List View */}
+                        <div className="sm:hidden">
+                            <ul className="divide-y divide-border">
+                                {currentTransactions.map((transaction) => {
+                                    const categoryKey = categories[transaction.id] || transaction.euerCategory || '';
+                                    const category = skrCategories[categoryKey];
+                                    const isPrivate = category?.type === 'private';
 
-                                return (
-                                    <Card key={transaction.id} className={`animate-fade-in ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
-                                        <CardContent className="p-4">
+                                    return (
+                                        <li key={transaction.id} className={`animate-fade-in py-4 px-2 ${isPrivate ? 'bg-private/5' : ''}`}>
                                             <div className="flex justify-between items-start mb-3">
                                                 <div className="flex-1">
                                                     <div className="text-sm text-muted-foreground mb-1">{transaction.dateField}</div>
@@ -745,10 +769,10 @@ const EuerGenerator = () => {
                                                     </SelectContent>
                                                 </Select>
                                             </div>
-                                        </CardContent>
-                                    </Card>
-                                );
-                            })}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
                         </div>
 
                         {/* Pagination Controls unten */}
@@ -864,7 +888,14 @@ const EuerGenerator = () => {
                 </div>
             )}
 
-
+            {/* Payment Modal for ELSTER access */}
+            <PaymentModal
+                isOpen={isPaymentModalOpen}
+                onClose={handlePaymentClose}
+                onSkip={handlePaymentSkip}
+                onPaymentSuccess={handlePaymentSuccess}
+                exportType="txt" // Default export type for ELSTER access
+            />
         </div>
     );
 };
