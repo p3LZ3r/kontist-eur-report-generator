@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, TrendingUp, TrendingDown, Calculator, HelpCircle, FileText } from 'lucide-react';
+import { User, TrendingUp, TrendingDown, Calculator, FileText } from 'lucide-react';
 import { Button } from './ui/button';
 import type { NavigationSection } from '../types';
 
@@ -7,16 +7,12 @@ interface NavigationSidebarProps {
     sections: NavigationSection[];
     currentSection: string;
     onSectionChange: (sectionId: string) => void;
-    onHelpToggle: () => void;
-    helpVisible: boolean;
 }
 
 const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
     sections,
     currentSection,
-    onSectionChange,
-    onHelpToggle,
-    helpVisible
+    onSectionChange
 }) => {
     const getSectionIcon = (sectionId: string) => {
         switch (sectionId) {
@@ -50,22 +46,11 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
 
     return (
         <div className="w-full h-fit">
-                <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
-                            <FileText className="text-primary" size={14} />
-                        </div>
-                        <h2 className="text-lg font-semibold text-foreground">ELSTER Navigation</h2>
+                <div className="flex items-center gap-2 mb-6">
+                    <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
+                        <FileText className="text-primary" size={14} />
                     </div>
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={onHelpToggle}
-                        className={`p-2 ${helpVisible ? 'bg-primary/10 text-primary' : ''}`}
-                        aria-label="Hilfe umschalten"
-                    >
-                        <HelpCircle size={18} />
-                    </Button>
+                    <h2 className="text-lg font-semibold text-foreground">ELSTER Navigation</h2>
                 </div>
 
 

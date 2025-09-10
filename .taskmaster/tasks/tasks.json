@@ -494,13 +494,84 @@
           17,
           19
         ],
-        "status": "in-progress",
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Research and Implement Compliant Payment Integration",
+        "description": "Replace the current Polar.sh integration with a payment solution that complies with German regulations, avoiding the 'voluntary support' classification, and using appropriate terminology.",
+        "details": "This task involves a multi-phase approach to replace the existing Polar.sh payment integration with a legally compliant alternative for the German market.\n\n**Phase 1: Research & Legal Clarification**\n*   Consult with legal counsel (if available) or thoroughly research German tax and commercial law (e.g., § 3 Abs. 9 UStG for services, § 10 Abs. 1 UStG for taxable base) regarding the distinction between 'voluntary support' (Spende) and 'payment for service' (Leistungsentgelt) for digital tools. Identify key characteristics that differentiate a donation from a service fee in the German context.\n*   Research alternative payment providers (e.g., Stripe, Paddle, PayPal Business, Mollie) suitable for the German market. Evaluate providers based on ease of integration, transaction fees, compliance features (e.g., VAT handling, Impressum requirements), and user experience.\n*   Define a clear payment model (e.g., fixed price for ELSTER export access, tiered pricing, or a 'pay-what-you-want' model explicitly framed as a purchase for the service).\n\n**Phase 2: Design & Terminology**\n*   Based on legal research, update all user-facing text related to payment (buttons, modal titles, descriptions, success messages) to use compliant terminology. Examples: 'ELSTER-Export freischalten' (Unlock ELSTER Export), 'Zugang erwerben' (Acquire Access), 'Preis wählen' (Choose Price) instead of 'Spenden' or 'Freiwillige Unterstützung'.\n*   Design the new payment modal/flow (likely modifying `src/components/PaymentModal.jsx` or similar) to clearly present the service being paid for, ensuring the UI communicates that a service is being provided in exchange for payment.\n\n**Phase 3: Implementation**\n*   **Remove Polar.sh:** Uninstall `@polar-sh/sdk` from `package.json`. Remove all related imports and calls from `src/components/PaymentModal.jsx`, `src/hooks/usePayment.js`, and any other files identified during codebase analysis that interact with Polar.sh.\n*   **Integrate New Provider:** Install the SDK/library for the chosen payment provider.\n*   **Refactor Payment Logic:**\n    *   Modify `src/components/PaymentModal.jsx` to integrate the new payment provider's checkout/modal functionality.\n    *   Update `src/hooks/usePayment.js` (or create a new equivalent) to encapsulate the new provider's API calls for initiating payments, handling success/failure callbacks, and managing payment state.\n    *   Ensure the payment initiation (e.g., from the ELSTER export button in `src/components/ReportDisplay.jsx`) correctly triggers the new, compliant payment flow.\n*   **Handle Payment Outcomes:** Implement robust logic to handle payment success, failure, and cancellation. This might involve listening to client-side callbacks or, if applicable, integrating with server-side webhooks for validation. Update the UI to reflect these states (e.g., confirmation message on success, clear error message on failure).\n*   **Secondary CTA:** Adjust the 'Support this tool' button (from Task 19, likely in `src/components/ReportDisplay.jsx`) to reflect the new terminology and trigger the new, compliant payment flow.\n\n**Phase 4: Legal & UI Review**\n*   Conduct a thorough internal review of the new payment flow, UI, and all associated texts to ensure alignment with the legal research and compliant terminology.",
+        "testStrategy": "To verify the correct implementation and functionality:\n*   **Unit Tests:** If the chosen payment provider offers a test mode or mock API, write unit tests for the payment initiation and callback handling logic within `src/hooks/usePayment.js`.\n*   **Integration Tests (Sandbox/Test Mode):**\n    *   Use the chosen payment provider's sandbox/test environment to simulate successful payments, failed payments (e.g., invalid card, insufficient funds), and user cancellations.\n    *   Verify that the payment modal appears with the correct, compliant terminology and clearly presents the service being paid for.\n    *   Confirm that successful payments lead to the expected outcome (e.g., ELSTER export enabled, confirmation message displayed).\n    *   Verify that failed payments or cancellations are handled gracefully with appropriate user feedback.\n    *   Test the secondary CTA (e.g., in `src/components/ReportDisplay.jsx`) to ensure it correctly re-initiates the new, compliant payment flow.\n*   **Legal Review:** Have the implemented solution and all user-facing texts reviewed by a legal expert specializing in German commercial law to ensure full compliance with regulations.",
+        "status": "pending",
+        "dependencies": [
+          18,
+          19,
+          2,
+          9,
+          17
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Remove ELSTER Export File Functionality",
+        "description": "Remove the CSV and JSON file export features and associated UI elements, as they do not provide a valid import format for the ELSTER software.",
+        "details": "Based on codebase analysis, the export functionality is primarily located in `src/components/ReportDisplay.tsx` and `src/utils/exportHelper.ts`.\n\n1.  **Modify UI Component:** In `src/components/ReportDisplay.tsx` (created in Task 16), remove the JSX for the 'Export CSV' and 'Export JSON' buttons.\n2.  **Remove Event Handlers:** Delete the corresponding `onClick` handler functions (e.g., `handleExportCSV`, `handleExportJSON`) from the component logic. These handlers contain the triggers for the Polar.sh payment modal (from Tasks 18 & 19), so removing them will also remove the primary payment trigger.\n3.  **Delete Utility File:** The file `src/utils/exportHelper.ts`, which contains the `exportAsCSV` and `exportAsJSON` functions, should be deleted entirely as it will no longer be used.\n4.  **Clean Up Imports:** Remove the import statement for `exportHelper.ts` from `src/components/ReportDisplay.tsx`.\n5.  **Review Payment Hook Usage:** Since the export buttons were the main trigger for the payment modal via the `usePayment` hook, review `ReportDisplay.tsx` to ensure no orphaned calls remain. This change will impact the implementation of the new payment solution in Task 21.",
+        "testStrategy": "1.  **UI Verification:** Run the application and complete the workflow to the final report screen. Visually confirm that the 'Export CSV' and 'Export JSON' buttons are no longer present.\n2.  **Functional Verification:** Ensure that the removal of the export buttons has not negatively impacted the rendering or display of the calculated report data from Task 7.\n3.  **Code Review:** Perform a code review to confirm that the `src/utils/exportHelper.ts` file has been deleted. Verify that all related code (buttons, handler functions, and imports) has been removed from `src/components/ReportDisplay.tsx`.\n4.  **DevTools Check:** Check the browser's developer console for any errors related to missing functions or variables after the changes.",
+        "status": "pending",
+        "dependencies": [
+          16,
+          18,
+          19
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Implement Gated Access to ELSTER View via Payment Modal",
+        "description": "Replace the previous direct export functionality by gating access to the ELSTER report view (Task 16) behind the existing Polar.sh payment modal (Task 18).",
+        "details": "This task involves modifying the main report display to introduce a modal-based payment flow for accessing the ELSTER data.\n\n1.  **Modify `src/components/ReportDisplay.tsx`:** In the component from Task 16, add a new primary button or tab labeled 'Prepare for ELSTER'. This will be the sole entry point to the ELSTER view, replacing the buttons removed in Task 22.\n2.  **Implement State Management:** Introduce a new state variable, e.g., `isElsterAccessGranted`, initialized to `false`. This can be a simple React `useState` within the main application component that manages the end-to-end flow (as established in Task 6).\n3.  **Connect the Modal Trigger:** The `onClick` handler for the new 'Prepare for ELSTER' button should not navigate directly. Instead, it should call the function that displays the Polar.sh payment modal implemented in Task 18.\n4.  **Handle Modal Outcomes:** The Polar.sh modal component from Task 18 provides callbacks for success (payment) and skip. Both of these callbacks must be configured to update the state, setting `isElsterAccessGranted` to `true`.\n5.  **Conditional Rendering:** The ELSTER report component (from Task 16) should now be rendered conditionally. It should only be displayed when `isElsterAccessGranted` is `true`. Before that, the user should only see the main report summary and the 'Prepare for ELSTER' button.",
+        "testStrategy": "1.  **Initial State:** After uploading a CSV and viewing the report, confirm that the ELSTER-mapped view is hidden and a 'Prepare for ELSTER' button is visible.\n2.  **Modal Trigger:** Click the 'Prepare for ELSTER' button. Verify that the Polar.sh payment modal (from Task 18) opens correctly.\n3.  **Skip Flow:** Click the 'Skip' or 'Continue for free' link within the modal. The modal should close, and the ELSTER-mapped report component (from Task 16) should become visible on the page.\n4.  **Payment Flow (Simulation):** Trigger the modal again. Simulate a successful payment via the Polar.sh SDK's test mode. Verify the modal closes and the ELSTER report becomes visible.\n5.  **State Persistence:** Once access has been granted (via skip or payment), verify that interacting with the 'Prepare for ELSTER' button again shows the report directly without re-triggering the modal for the current session.",
+        "status": "pending",
+        "dependencies": [
+          16,
+          18,
+          22
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Redesign Landing Page Proof Section for Simplicity and Accessibility",
+        "description": "Refactor the social proof/features section on the landing page to remove the card-based design and background, presenting the content in a simpler, more accessible list format.",
+        "details": "Based on codebase analysis, the target component is likely a dedicated 'ProofSection' or similar within the main landing page view. The goal is to flatten the design for better readability.\n\n1. **Locate and Modify Component:** Identify the component responsible for rendering the proof/testimonial section on the landing page (e.g., `src/components/ProofSection.tsx` or a similar name).\n2. **Remove Card Styling:** In the component's associated CSS or styled-component definition, remove styles related to the card layout. This includes properties like `box-shadow`, `border`, `border-radius`, and any specific background colors applied to individual proof items.\n3. **Remove Section Background:** Eliminate any background image or complex background color from the main container of the proof section to create a cleaner look that matches the rest of the page body.\n4. **Refactor HTML Structure:** Change the markup to be more semantic and simpler. Replace the `div`-based card structure with a `<ul>` and `<li>` structure for the list of proofs. Each `<li>` can contain a heading and a paragraph for the proof's content.\n5. **Ensure Visual Separation:** Add a simple `border-top` and `border-bottom` to the section's main container, or use sufficient `margin-top` and `padding-bottom`, to visually distinguish it from the sections above and below it.\n6. **Review Content:** Simplify the text content within the proof section to be more direct and easier for end-users to understand quickly.",
+        "testStrategy": "1. **Visual Verification:** Load the application and view the landing page. Confirm that the card design and section background have been removed and replaced with a simple list format.\n2. **Responsiveness Check:** Using browser developer tools, verify that the redesigned section is fully responsive and displays correctly on desktop, tablet, and mobile viewport sizes.\n3. **Accessibility Audit:** Run a Lighthouse accessibility audit on the landing page. Ensure the new section scores high, paying attention to color contrast, semantic HTML (e.g., correct use of lists), and font readability.\n4. **Separation Check:** Scroll the page to confirm there is clear visual separation between the redesigned proof section and the elements directly above and below it.",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Left-Align Report View Rows",
+        "description": "Update the styling of the EÜR report view to change the text alignment within rows from center to left. This improves readability and aligns with standard data table presentation.",
+        "details": "Based on codebase analysis, the report data is rendered by the `src/components/ReportDisplay.tsx` component, as established in Task 7. The current implementation center-aligns the content within the report rows.\n\n1. **Locate Target Component:** Open the `src/components/ReportDisplay.tsx` file.\n2. **Identify Styling Rule:** Inspect the JSX and associated styles (could be an imported CSS/SCSS file, a styled-component block, or inline styles) that render the rows of the report.\n3. **Modify Alignment:** Search for the CSS property responsible for the center alignment, which is likely `text-align: center;` applied to a `<td>`, `<tr>`, or a container `<div>`. It could also be a flexbox property like `justify-content: center;`.\n4. **Apply Left Alignment:** Change the property to `text-align: left;` or `justify-content: flex-start;`. Ensure this change is applied consistently to all data rows in the report for a uniform appearance.",
+        "testStrategy": "1. **UI Verification:** Run the application and navigate to the final report screen (as implemented in Task 7 and gated by Task 23). \n2. **Alignment Check:** Visually confirm that all text and numerical data within the report table/list are aligned to the left within their respective cells or containers.\n3. **Consistency Check:** Ensure that both the labels (e.g., 'Betriebseinnahmen') and the corresponding values (e.g., '€1234.56') are left-aligned.\n4. **Responsiveness Check:** Use browser developer tools to view the report on various screen sizes (mobile, tablet, desktop) and confirm the left-alignment is maintained and does not negatively impact the layout.",
+        "status": "pending",
+        "dependencies": [
+          7
+        ],
+        "priority": "medium",
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-09-04T07:57:30.681Z",
-      "updated": "2025-09-10T08:29:35.190Z",
+      "updated": "2025-09-10T09:26:28.196Z",
       "description": "Tasks for master context"
     }
   }

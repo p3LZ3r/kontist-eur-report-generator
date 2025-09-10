@@ -40,7 +40,10 @@
       "mcp__task-master-ai__set_task_status",
       "mcp__context7__resolve-library-id",
       "mcp__context7__get-library-docs",
-      "mcp__task-master-ai__update_subtask"
+      "mcp__task-master-ai__update_subtask",
+      "Bash(rm:*)",
+      "mcp__task-master-ai__add_task",
+      "mcp__task-master-ai__analyze_project_complexity"
     ],
     "deny": [],
     "ask": []

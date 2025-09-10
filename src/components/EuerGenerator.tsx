@@ -13,7 +13,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Card, CardContent } from './ui/card';
 import NavigationSidebar from './NavigationSidebar';
 import FieldGroups from './FieldGroups';
-import HelpModal from './HelpModal';
 import HelpTooltip from './HelpTooltip';
 
 import type {
@@ -36,10 +35,6 @@ const EuerGenerator = () => {
 
     const [currentView, setCurrentView] = useState<'transactions' | 'elster'>('transactions');
     const [currentSection, setCurrentSection] = useState('income');
-    const [helpModal, setHelpModal] = useState<{
-        isOpen: boolean;
-        section?: string;
-    }>({ isOpen: false });
 
     // Load SKR categories dynamically
     useEffect(() => {
@@ -208,14 +203,6 @@ const EuerGenerator = () => {
 
 
 
-    const handleHelpToggle = useCallback(() => {
-        setHelpModal({ isOpen: !helpModal.isOpen, section: currentSection });
-    }, [helpModal.isOpen, currentSection]);
-
-
-    const closeHelpModal = useCallback(() => {
-        setHelpModal({ isOpen: false });
-    }, []);
 
     // Export handler
     const handleExport = useCallback((type: 'txt' | 'csv' | 'json' | 'pdf') => {
@@ -847,8 +834,6 @@ const EuerGenerator = () => {
                                         sections={guidanceData.sections}
                                         currentSection={currentSection}
                                         onSectionChange={handleSectionChange}
-                                        onHelpToggle={handleHelpToggle}
-                                        helpVisible={helpModal.isOpen}
                                     />
                                 </div>
                             </div>
@@ -880,12 +865,6 @@ const EuerGenerator = () => {
             )}
 
 
-            {/* Help Modal */}
-            <HelpModal
-                isOpen={helpModal.isOpen}
-                section={helpModal.section}
-                onClose={closeHelpModal}
-            />
         </div>
     );
 };
