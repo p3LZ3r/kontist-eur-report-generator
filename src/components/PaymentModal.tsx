@@ -128,13 +128,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         }
         
         // Monitor for window close with timeout
+        // eslint-disable-next-line prefer-const
         let timeoutId: NodeJS.Timeout;
         const checkClosed = setInterval(() => {
           if (popup?.closed) {
             clearInterval(checkClosed);
             clearTimeout(timeoutId);
             setIsProcessingPayment(false);
-            
+
             // Check if we have a success parameter in current URL
             // If not, assume cancellation after a short delay to allow URL updates
             setTimeout(() => {
@@ -145,7 +146,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             }, 500);
           }
         }, 1000);
-        
+
         // Set a timeout for extremely long-running processes
         timeoutId = setTimeout(() => {
           clearInterval(checkClosed);

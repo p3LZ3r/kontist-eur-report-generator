@@ -18,7 +18,7 @@ interface FieldGroupsProps {
 const FieldGroups: React.FC<FieldGroupsProps> = ({
     groups,
     transactions = [],
-    categories: _categories = {}, // Underscore prefix to indicate unused parameter
+    categories: _categories = {}, // eslint-disable-line @typescript-eslint/no-unused-vars
     isKleinunternehmer = false,
     currentYear = new Date().getFullYear(),
     currentSkr = 'SKR04',

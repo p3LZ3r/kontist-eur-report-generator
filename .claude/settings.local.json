@@ -48,9 +48,15 @@
       "mcp__task-master-ai__complexity_report",
       "mcp__task-master-ai__expand_task",
       "mcp__task-master-ai__clear_subtasks",
-      "mcp__task-master-ai__expand_all"
+      "mcp__task-master-ai__expand_all",
+      "Bash(npm run lint:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "task-master-ai",
+    "playwright",
+    "context7"
+  ]
 }

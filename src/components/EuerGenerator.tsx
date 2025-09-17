@@ -289,55 +289,18 @@ const EuerGenerator = () => {
 
     return (
         <div className="space-y-6">
-            {/* Enhanced Error Display */}
-            {errorMessage && (
-                <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-5 animate-fade-in">
-                    <div className="flex items-start gap-4">
-                        <AlertCircle className="text-destructive flex-shrink-0 mt-0.5" size={20} aria-hidden="true" />
-                        <div className="flex-1 space-y-3">
-                            <div className="font-semibold text-destructive">
-                                Fehler beim Verarbeiten der Datei
-                            </div>
-                            <div className="text-destructive/90 text-sm leading-relaxed">
-                                {errorMessage}
-                            </div>
-                            
-                            {/* Help section for common issues */}
-                            <div className="bg-background/50 border border-border/30 rounded-md p-3">
-                                <div className="text-xs font-medium text-foreground/70 mb-2">
-                                    Häufige Lösungsansätze:
-                                </div>
-                                <ul className="text-xs text-muted-foreground space-y-1">
-                                    <li>• Stellen Sie sicher, dass die Datei eine .csv-Datei ist</li>
-                                    <li>• Exportieren Sie die CSV direkt aus Kontist oder Holvi</li>
-                                    <li>• Überprüfen Sie, ob die Datei Transaktionsdaten enthält</li>
-                                    <li>• Maximale Dateigröße: 10MB</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <Button
-                            onClick={() => setErrorMessage(null)}
-                            variant="ghost"
-                            size="sm"
-                            className="flex-shrink-0 focus-ring h-8 w-8 p-0"
-                            aria-label="Fehlermeldung schließen"
-                        >
-                            <X size={14} />
-                        </Button>
-                    </div>
-                </div>
-            )}
+            {/* Error messages are now integrated into the upload area */}
             {/* Hero Section */}
             <div className="py-12 animate-fade-in">
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8">
                     <div className="flex-1">
-                        <h1 className="text-5xl font-bold text-foreground mb-4 text-left">
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 text-left">
                             ELSTER EÜR Generator für Kontist und Holvi
                         </h1>
-                        <p className="text-muted-foreground text-xl leading-relaxed mb-2 text-left">
+                        <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-2 text-left">
                             Automatische Kategorisierung und ELSTER-konforme EÜR-Berechnung
                         </p>
-                        <p className="text-muted-foreground text-base leading-relaxed max-w-3xl text-left">
+                        <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-3xl text-left">
                             Laden Sie Ihre CSV-Exporte von Kontist oder Holvi hoch und erhalten Sie automatisch kategorisierte Transaktionen nach {currentSkr}-Standard. 
                             Das Tool erstellt ELSTER-konforme Übersichten für Ihre Einnahmen-Überschuss-Rechnung und unterstützt sowohl Kleinunternehmer 
                             als auch umsatzsteuerpflichtige Unternehmen.
@@ -413,55 +376,75 @@ const EuerGenerator = () => {
                             CSV-Datei hochladen
                         </h2>
                         
-                        {/* 3-Schritt Anleitung */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                            <div className="text-center p-4 bg-primary/5 rounded-lg border border-primary/20">
-                                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        {/* Condensed Steps Guide */}
+                        <div className="flex items-start gap-6 mb-6 p-4 bg-muted/30 rounded-lg">
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                <div className="flex items-center gap-2">
                                     <Upload className="text-primary" size={16} />
+                                    <span className="font-medium">1. CSV hochladen</span>
                                 </div>
-                                <h3 className="text-base font-semibold text-foreground mb-2">1. CSV-Datei hochladen</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Exportieren Sie Ihre Transaktionen aus Kontist oder Holvi als CSV-Datei und laden Sie diese hier hoch.
-                                </p>
-                            </div>
-                            <div className="text-center p-4 bg-info/5 rounded-lg border border-info/20">
-                                <div className="w-10 h-10 bg-info/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <span className="text-muted-foreground/50">→</span>
+                                <div className="flex items-center gap-2">
                                     <FileText className="text-info" size={16} />
+                                    <span className="font-medium">2. Kategorien prüfen</span>
                                 </div>
-                                <h3 className="text-base font-semibold text-foreground mb-2">2. Kategorien überprüfen</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Prüfen und korrigieren Sie die automatische {currentSkr}-Kategorisierung Ihrer Transaktionen.
-                                </p>
-                            </div>
-                            <div className="text-center p-4 bg-success/5 rounded-lg border border-success/20">
-                                <div className="w-10 h-10 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <span className="text-muted-foreground/50">→</span>
+                                <div className="flex items-center gap-2">
                                     <Building className="text-success" size={16} />
+                                    <span className="font-medium">3. ELSTER-Export</span>
                                 </div>
-                                <h3 className="text-base font-semibold text-foreground mb-2">3. ELSTER-Export</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Nutzen Sie die ELSTER-Übersicht für eine einfache Übertragung in Ihre Steuererklärung.
-                                </p>
                             </div>
                         </div>
-                        <div className="border-2 border-dashed border-muted-foreground/25 rounded-xl p-8 text-center bg-muted/20 hover:bg-muted/30 transition-colors">
-                            {isProcessingFile ? (
-                                <>
-                                    <div className="mx-auto mb-4 w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-                                    <h3 className="text-lg font-medium text-foreground mb-2">
+
+                        <div className={`border-2 border-dashed rounded-xl p-6 transition-colors ${
+                            errorMessage
+                                ? 'border-destructive/50 bg-destructive/5'
+                                : 'border-muted-foreground/25 bg-muted/20 hover:bg-muted/30'
+                        }`}>
+                            {errorMessage ? (
+                                <div className="space-y-4">
+                                    <div className="flex items-start gap-3">
+                                        <AlertCircle className="text-destructive flex-shrink-0 mt-1" size={20} aria-hidden="true" />
+                                        <div className="flex-1 text-left">
+                                            <h3 className="font-semibold text-destructive mb-1">
+                                                Datei konnte nicht verarbeitet werden
+                                            </h3>
+                                            <p className="text-destructive/80 text-sm mb-3">
+                                                {errorMessage}
+                                            </p>
+                                            <p className="text-xs text-muted-foreground">
+                                                Bitte stellen Sie sicher, dass es sich um eine valide Kontist oder Holvi CSV-Datei handelt.
+                                            </p>
+                                        </div>
+                                        <Button
+                                            onClick={() => setErrorMessage(null)}
+                                            variant="ghost"
+                                            size="sm"
+                                            className="flex-shrink-0 h-8 w-8 p-0 hover:bg-destructive/10"
+                                            aria-label="Fehler schließen"
+                                        >
+                                            <X size={14} />
+                                        </Button>
+                                    </div>
+                                </div>
+                            ) : isProcessingFile ? (
+                                <div className="text-center">
+                                    <div className="mx-auto mb-3 w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                                    <h3 className="text-base font-medium text-foreground mb-1">
                                         CSV-Datei wird verarbeitet...
                                     </h3>
-                                    <p className="text-muted-foreground">
+                                    <p className="text-sm text-muted-foreground">
                                         Transaktionen werden analysiert und kategorisiert.
                                     </p>
-                                </>
+                                </div>
                             ) : (
-                                <>
-                                    <Upload className="mx-auto text-muted-foreground mb-4" size={64} aria-hidden="true" />
-                                    <h3 className="text-lg font-medium text-foreground mb-2">
+                                <div className="text-center">
+                                    <Upload className="mx-auto text-muted-foreground mb-3" size={48} aria-hidden="true" />
+                                    <h3 className="text-base font-medium text-foreground mb-2">
                                         Bank-Export hochladen
                                     </h3>
-                                    <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                                        Laden Sie Ihre Kontist oder Holvi CSV-Datei hoch, um automatisch Transaktionen zu kategorisieren und Ihre EÜR zu erstellen.
+                                    <p className="text-sm text-muted-foreground mb-4 max-w-sm mx-auto">
+                                        Laden Sie Ihre CSV-Datei hoch, um Transaktionen automatisch zu kategorisieren.
                                     </p>
                                     <input
                                         type="file"
@@ -474,14 +457,14 @@ const EuerGenerator = () => {
                                     />
                                     <Button asChild size="lg" className="focus-ring" disabled={isProcessingFile}>
                                         <label htmlFor="csvUpload" className="cursor-pointer">
-                                            <Upload size={18} className="mr-2" aria-hidden="true" />
+                                            <Upload size={16} className="mr-2" aria-hidden="true" />
                                             CSV-Datei auswählen
                                         </label>
                                     </Button>
-                                    <p id="file-upload-description" className="text-sm text-muted-foreground mt-3">
+                                    <p id="file-upload-description" className="text-xs text-muted-foreground mt-2">
                                         Unterstützt: Kontist und Holvi CSV-Formate
                                     </p>
-                                </>
+                                </div>
                             )}
                         </div>
                     </CardContent>
@@ -492,48 +475,28 @@ const EuerGenerator = () => {
             {transactions.length === 0 && (
                 <Card className="animate-fade-in">
                     <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                            <Shield className="text-primary flex-shrink-0 mt-1" size={24} aria-hidden="true" />
-                            <div className="space-y-4">
-                                <div>
-                                    <h3 className="text-lg font-semibold text-foreground mb-2">
-                                        100% Client-Side Processing - Ihre Daten bleiben bei Ihnen
-                                    </h3>
-                                    <p className="text-muted-foreground text-sm leading-relaxed">
-                                        Diese Anwendung verarbeitet Ihre Finanzdaten vollständig in Ihrem Browser. 
-                                        Keine Daten werden an externe Server gesendet oder gespeichert.
-                                    </p>
-                                </div>
-                                
-                                <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                                    <div className="flex items-center gap-2 mb-3">
-                                        <Info className="text-primary" size={16} />
-                                        <span className="text-sm font-medium text-foreground">Datenschutz-Details</span>
-                                    </div>
-                                    <ul className="text-sm text-muted-foreground space-y-2">
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
-                                            <span>Lokale Verarbeitung: Alle Berechnungen erfolgen in Ihrem Browser</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
-                                            <span>Keine Datenübertragung: CSV-Inhalte verlassen nie Ihren Computer</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
-                                            <span>Keine Speicherung: Daten werden nicht dauerhaft gespeichert</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-primary flex-shrink-0 mt-0.5">✓</span>
-                                            <span>Open Source: Der gesamte Code ist transparent einsehbar</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                                <div className="text-xs text-muted-foreground">
-                                    <strong>Technischer Hinweis:</strong> Diese Webanwendung verwendet moderne Browser-Technologien 
-                                    zur sicheren, lokalen Verarbeitung Ihrer CSV-Dateien. Für optimale Sicherheit empfehlen wir, 
-                                    die Anwendung offline zu verwenden.
+                        <div className="flex items-start gap-3">
+                            <Shield className="text-primary flex-shrink-0 mt-1" size={20} aria-hidden="true" />
+                            <div>
+                                <h3 className="text-base font-semibold text-foreground mb-2">
+                                    100% Client-Side Processing
+                                </h3>
+                                <p className="text-sm text-muted-foreground mb-3">
+                                    Ihre Daten werden nur lokal in Ihrem Browser verarbeitet und niemals hochgeladen.
+                                </p>
+                                <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                    <span className="flex items-center gap-1">
+                                        <span className="text-primary">✓</span>
+                                        Lokale Verarbeitung
+                                    </span>
+                                    <span className="flex items-center gap-1">
+                                        <span className="text-primary">✓</span>
+                                        Keine Speicherung
+                                    </span>
+                                    <span className="flex items-center gap-1">
+                                        <span className="text-primary">✓</span>
+                                        Open Source
+                                    </span>
                                 </div>
                             </div>
                         </div>
