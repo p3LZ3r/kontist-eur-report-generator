@@ -12,6 +12,9 @@ import NavigationSidebar from './NavigationSidebar';
 import FieldGroups from './FieldGroups';
 import SettingsBar from './SettingsBar';
 import HelpTooltip from './HelpTooltip';
+import Impressum from './Impressum';
+import Datenschutz from './Datenschutz';
+import FAQ from './FAQ';
 
 import type {
     Transaction
@@ -31,7 +34,7 @@ const EuerGenerator = () => {
     const [isProcessingFile, setIsProcessingFile] = useState(false);
 
 
-    const [currentView, setCurrentView] = useState<'transactions' | 'elster'>('transactions');
+    const [currentView, setCurrentView] = useState<'transactions' | 'elster' | 'impressum' | 'datenschutz'>('transactions');
     const [currentSection, setCurrentSection] = useState('income');
 
     // Load SKR categories dynamically
@@ -203,6 +206,15 @@ const EuerGenerator = () => {
 
 
 
+    // Show Impressum or Datenschutz if selected
+    if (currentView === 'impressum') {
+        return <Impressum onBack={() => setCurrentView('transactions')} />;
+    }
+
+    if (currentView === 'datenschutz') {
+        return <Datenschutz onBack={() => setCurrentView('transactions')} />;
+    }
+
     return (
         <div className="space-y-6">
             {/* Enhanced Error Display */}
@@ -258,6 +270,7 @@ const EuerGenerator = () => {
                             <img
                                 src="/assets/logos/kontist-wordmark.svg"
                                 alt="Kontist Logo"
+                                loading="lazy"
                                 className="h-6 md:h-8 w-auto"
                             />
                         </a>{' '}
@@ -272,6 +285,7 @@ const EuerGenerator = () => {
                             <img
                                 src="/assets/logos/holvi-wordmark.svg"
                                 alt="Holvi Logo"
+                                loading="lazy"
                                 className="h-6 md:h-8 w-auto"
                             />
                         </a>
@@ -812,6 +826,39 @@ const EuerGenerator = () => {
                     )}
                 </div>
             )}
+
+            {/* FAQ Section */}
+            <FAQ />
+
+            {/* Footer with Legal Links */}
+            <footer className="mt-12 pt-8 border-t border-border">
+                <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+                    <button
+                        onClick={() => setCurrentView('impressum')}
+                        className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+                    >
+                        Impressum
+                    </button>
+                    <button
+                        onClick={() => setCurrentView('datenschutz')}
+                        className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+                    >
+                        Datenschutz
+                    </button>
+                    <a
+                        href="https://github.com/torstendngh/kontist-eur-report-generator"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-foreground transition-colors underline-offset-4 hover:underline inline-flex items-center gap-1"
+                    >
+                        <Github size={14} />
+                        GitHub
+                    </a>
+                </div>
+                <div className="text-center mt-4 text-xs text-muted-foreground">
+                    © {new Date().getFullYear()} Torsten Linnecke. Alle Rechte vorbehalten.
+                </div>
+            </footer>
         </div>
     );
 };

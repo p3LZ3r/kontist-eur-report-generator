@@ -51,7 +51,8 @@
       "mcp__task-master-ai__expand_all",
       "Bash(mkdir:*)",
       "Bash(npx:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

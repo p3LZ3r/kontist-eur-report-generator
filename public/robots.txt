@@ -1,0 +1,13 @@
+# robots.txt for EÜR Generator
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://www.eür-generator.de/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow sensitive paths (if any)
+Disallow: /api/
+Disallow: /*.json$
