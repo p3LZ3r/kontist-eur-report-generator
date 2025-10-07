@@ -51,7 +51,7 @@ export interface EuerCalculation {
   privateDeposits: number;
 }
 
-export type KontenrahmenType = 'SKR03' | 'SKR04';
+export type KontenrahmenType = 'SKR03' | 'SKR04' | 'SKR49';
 
 export interface ElsterMapping {
   [categoryKey: string]: {

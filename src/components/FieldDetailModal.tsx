@@ -61,7 +61,7 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
             <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden p-6">
                 <div className="flex items-center justify-between border-b">
                     <div>
-                        <h2 className="text-2xl font-semibold">
+                        <h2 className="text-2xl">
                             Feld {field.field}: {field.label}
                         </h2>
                         <div className="flex items-center gap-2 mt-2">
@@ -93,19 +93,19 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div>
-                                    <label className="text-sm font-medium text-muted-foreground">Aktueller Wert</label>
-                                    <div className="text-lg font-semibold mt-1">
+                                    <label className="text-sm text-muted-foreground">Aktueller Wert</label>
+                                    <div className="text-lg mt-1">
                                         {field.value ? formatValue(field.value) : 'Nicht ausgefüllt'}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="text-sm font-medium text-muted-foreground">Feldtyp</label>
+                                    <label className="text-sm text-muted-foreground">Feldtyp</label>
                                     <div className="mt-1 capitalize">{field.type}</div>
                                 </div>
 
                                 <div>
-                                    <label className="text-sm font-medium text-muted-foreground">Quelle</label>
+                                    <label className="text-sm text-muted-foreground">Quelle</label>
                                     <div className="mt-1 flex items-center gap-2">
                                         {getSourceIcon(field.source)}
                                         <span>{getSourceDescription(field.source)}</span>
@@ -134,14 +134,14 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Gesamtbetrag</label>
-                                        <div className="text-lg font-semibold mt-1">
+                                        <label className="text-sm text-muted-foreground">Gesamtbetrag</label>
+                                        <div className="text-lg mt-1">
                                             {drillDownData.totalAmount.toFixed(2)} €
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="text-sm font-medium text-muted-foreground">Kategorie-Aufschlüsselung</label>
+                                        <label className="text-sm text-muted-foreground">Kategorie-Aufschlüsselung</label>
                                         <div className="mt-2 space-y-2">
                                             {Object.entries(drillDownData.categoryBreakdown).map(([category, amount]) => (
                                                 <div key={category} className="flex justify-between text-sm">
@@ -154,7 +154,7 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
 
                                     {drillDownData.vatBreakdown && Object.keys(drillDownData.vatBreakdown).length > 0 && (
                                         <div>
-                                            <label className="text-sm font-medium text-muted-foreground">USt-Aufschlüsselung</label>
+                                            <label className="text-sm text-muted-foreground">USt-Aufschlüsselung</label>
                                             <div className="mt-2 space-y-2">
                                                 {Object.entries(drillDownData.vatBreakdown).map(([rate, amount]) => (
                                                     <div key={rate} className="flex justify-between text-sm">

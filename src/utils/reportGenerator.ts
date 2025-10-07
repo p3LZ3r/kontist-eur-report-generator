@@ -105,7 +105,7 @@ export const openReportInNewWindow = (
             <title>EÜR Report ${currentYear}</title>
             <style>
                 body { font-family: monospace; white-space: pre; padding: 20px; background: #f5f5f5; }
-                .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+                .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; }
                 h1 { color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 10px; }
             </style>
         </head>

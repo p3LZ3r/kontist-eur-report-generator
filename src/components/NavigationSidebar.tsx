@@ -50,7 +50,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                     <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
                         <FileText className="text-primary" size={14} />
                     </div>
-                    <h2 className="text-lg font-semibold text-foreground">ELSTER Navigation</h2>
+                    <h2 className="text-lg text-foreground">ELSTER Navigation</h2>
                 </div>
 
 

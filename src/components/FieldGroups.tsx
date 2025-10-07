@@ -1,79 +1,28 @@
-import React, { useState } from 'react';
-import { Download, FileText, Heart } from 'lucide-react';
-import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
-import PaymentModal from './PaymentModal';
-import type { FieldGroup, Transaction } from '../types';
+import React from 'react';
+import type { FieldGroup } from '../types';
 
 interface FieldGroupsProps {
     groups: FieldGroup[];
-    transactions?: Transaction[];
-    categories?: { [key: number]: string };
-    isKleinunternehmer?: boolean;
     currentYear?: number;
     currentSkr?: string;
-    onExport?: (type: 'txt' | 'csv' | 'json' | 'pdf') => void;
+    isKleinunternehmer?: boolean;
 }
 
 const FieldGroups: React.FC<FieldGroupsProps> = ({
     groups,
-    transactions = [],
-    categories: _categories = {}, // Underscore prefix to indicate unused parameter
     isKleinunternehmer = false,
     currentYear = new Date().getFullYear(),
-    currentSkr = 'SKR04',
-    onExport
+    currentSkr = 'SKR04'
 }) => {
-    const [paymentModal, setPaymentModal] = useState<{
-        isOpen: boolean;
-        exportType: 'txt' | 'csv' | 'json' | 'pdf' | null;
-    }>({ isOpen: false, exportType: null });
-    
-    const [hasRecentExport, setHasRecentExport] = useState(false);
-
     const formatValue = (value: number | string) => {
         if (typeof value === 'number') {
-            return new Intl.NumberFormat('de-DE', { 
-                style: 'currency', 
+            return new Intl.NumberFormat('de-DE', {
+                style: 'currency',
                 currency: 'EUR',
                 minimumFractionDigits: 2
             }).format(value);
         }
         return value || '---';
-    };
-
-    const handleExportClick = (type: 'txt' | 'csv' | 'json' | 'pdf') => {
-        setPaymentModal({ isOpen: true, exportType: type });
-    };
-
-    const handleSkipPayment = () => {
-        const { exportType } = paymentModal;
-        setPaymentModal({ isOpen: false, exportType: null });
-        if (exportType && onExport) {
-            onExport(exportType);
-            setHasRecentExport(true);
-            // Hide secondary CTA after 30 seconds
-            setTimeout(() => setHasRecentExport(false), 30000);
-        }
-    };
-
-    const handlePaymentSuccess = () => {
-        const { exportType } = paymentModal;
-        setPaymentModal({ isOpen: false, exportType: null });
-        if (exportType && onExport) {
-            onExport(exportType);
-            setHasRecentExport(true);
-            // Hide secondary CTA after 30 seconds
-            setTimeout(() => setHasRecentExport(false), 30000);
-        }
-    };
-
-    const handleSecondaryCTA = () => {
-        setPaymentModal({ isOpen: true, exportType: 'txt' }); // Default to txt for support
-    };
-
-    const closeModal = () => {
-        setPaymentModal({ isOpen: false, exportType: null });
     };
 
     return (
@@ -83,7 +32,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                     {/* Section Header - Only show if has title */}
                     {group.title && (
                         <div className="py-3 px-4 bg-slate-50 border-l-4 border-primary">
-                            <h3 className="text-sm font-semibold text-gray-800">{group.title}</h3>
+                            <h3 className="text-sm text-gray-800">{group.title}</h3>
                             {group.description && (
                                 <p className="text-xs text-gray-600 mt-1">{group.description}</p>
                             )}
@@ -118,7 +67,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                     {/* Amount - Right */}
                                     <div className="flex-shrink-0 text-right min-w-28">
                                         <span className={`font-mono text-sm ${
-                                            isEmpty ? 'text-gray-400' : 'text-gray-900 font-medium'
+                                            isEmpty ? 'text-gray-400' : 'text-gray-900'
                                         }`}>
                                             {formatValue(field.value)}
                                         </span>
@@ -130,80 +79,23 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                 </div>
             ))}
 
-            {/* Export Section */}
-            {transactions.length > 0 && (
-                <Card className="mt-6">
-                    <CardContent className="p-6">
-                        <div className="text-center mb-6">
-                            <h3 className="text-lg font-semibold text-foreground mb-2">
-                                ELSTER Export-Zugang
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                                Erwerben Sie Zugang zu Ihren EÜR-Exporten in verschiedenen Formaten
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                            <Button
-                                onClick={() => handleExportClick('txt')}
-                                variant="outline"
-                                className="flex flex-col items-center gap-2 h-auto py-4 hover:bg-primary/5"
-                            >
-                                <FileText className="text-primary" size={24} />
-                                <span className="font-medium">ELSTER-Export freischalten</span>
-                                <span className="text-xs text-muted-foreground">Textformat (.txt)</span>
-                            </Button>
-
-
-                            <Button
-                                onClick={() => handleExportClick('pdf')}
-                                variant="outline"
-                                className="flex flex-col items-center gap-2 h-auto py-4 hover:bg-primary/5"
-                            >
-                                <Download className="text-primary" size={24} />
-                                <span className="font-medium">PDF-Export freischalten</span>
-                                <span className="text-xs text-muted-foreground">Detailliert (.pdf)</span>
-                            </Button>
-                        </div>
-
-                        <div className="text-center mt-4">
-                            <p className="text-xs text-muted-foreground">
-                                Jahr: {currentYear} • Kontenrahmen: {currentSkr} • 
-                                {isKleinunternehmer ? ' Kleinunternehmer (Brutto)' : ' Umsatzsteuerpflichtig (Netto)'}
-                            </p>
-                        </div>
-
-                        {/* Secondary CTA - Show after recent export */}
-                        {hasRecentExport && (
-                            <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
-                                <div className="text-center space-y-2">
-                                    <p className="text-xs text-muted-foreground">
-                                        War dieser Export hilfreich?
-                                    </p>
-                                    <Button
-                                        onClick={handleSecondaryCTA}
-                                        variant="outline"
-                                        size="sm"
-                                        className="text-xs h-8"
-                                    >
-                                        <Heart size={12} className="mr-1" />
-                                        Zugang erwerben
-                                    </Button>
-                                </div>
-                            </div>
-                        )}
-                    </CardContent>
-                </Card>
-            )}
-
-            {/* Payment Modal */}
-            <PaymentModal
-                isOpen={paymentModal.isOpen}
-                onClose={closeModal}
-                onSkip={handleSkipPayment}
-                onPaymentSuccess={handlePaymentSuccess}
-                exportType={paymentModal.exportType || 'txt'}
-            />
+            {/* Information Section */}
+            <div className="mt-6 p-6 bg-primary/5 rounded-lg border border-primary/20">
+                <div className="text-center">
+                    <h3 className="text-lg text-foreground mb-2">
+                        ELSTER-Felder Übersicht
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                        Diese Übersicht zeigt Ihnen alle relevanten ELSTER-Felder mit den berechneten Werten für Ihre EÜR.
+                    </p>
+                    <div className="text-center">
+                        <p className="text-xs text-muted-foreground">
+                            Jahr: {currentYear} • Kontenrahmen: {currentSkr} •
+                            {isKleinunternehmer ? ' Kleinunternehmer (Brutto)' : ' Umsatzsteuerpflichtig (Netto)'}
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
