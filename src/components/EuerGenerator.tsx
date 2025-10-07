@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { Upload, FileText, Building, ChevronLeft, ChevronRight, RotateCcw, AlertCircle, X, Shield, Info, Cpu, ShieldOff, Database, Github } from 'lucide-react';
+import { Upload, FileText, Building, ChevronLeft, ChevronRight, RotateCcw, AlertCircle, X, Cpu, ShieldOff, Database, Github } from 'lucide-react';
 import { getCategoriesForSkr, skr04Categories } from '../utils/categoryMappings';
 import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction } from '../utils/transactionUtils';
 import { calculateEuer } from '../utils/euerCalculations';
