@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { Card, CardContent, CardHeader } from './ui/card';
 
 interface FAQItem {
     question: string;
@@ -79,14 +78,14 @@ const FAQ = () => {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
 
-            <Card>
-                <CardHeader>
-                    <h2 className="text-3xl">Häufig gestellte Fragen (FAQ)</h2>
-                    <p className="text-muted-foreground">
+            <div>
+                <div className="mb-6">
+                    <h2 className="text-3xl text-left">Häufig gestellte Fragen (FAQ)</h2>
+                    <p className="text-muted-foreground text-left">
                         Antworten auf die wichtigsten Fragen zum EÜR Generator
                     </p>
-                </CardHeader>
-                <CardContent className="space-y-4">
+                </div>
+                <div className="space-y-4">
                     {faqData.map((item, index) => (
                         <div
                             key={index}
@@ -97,7 +96,7 @@ const FAQ = () => {
                                 className="w-full flex justify-between items-center p-4 text-left hover:bg-muted/50 transition-colors"
                                 aria-expanded={openIndex === index}
                             >
-                                <span className="font-semibold text-foreground pr-4">
+                                <span className="text-foreground pr-4">
                                     {item.question}
                                 </span>
                                 {openIndex === index ? (
@@ -107,14 +106,14 @@ const FAQ = () => {
                                 )}
                             </button>
                             {openIndex === index && (
-                                <div className="p-4 pt-0 text-muted-foreground leading-relaxed animate-fade-in">
+                                <div className="p-4 pt-0 text-muted-foreground leading-relaxed animate-fade-in text-left">
                                     {item.answer}
                                 </div>
                             )}
                         </div>
                     ))}
-                </CardContent>
-            </Card>
+                </div>
+            </div>
         </section>
     );
 };

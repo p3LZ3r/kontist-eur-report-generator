@@ -264,7 +264,7 @@ const EuerGenerator = () => {
                             href="https://kontist.com/r/torsten7HU"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block bg-white p-2 rounded-lg transform rotate-[-2deg] translate-y-1 transition-all duration-300 hover:rotate-[-0.5deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md"
+                            className="inline-block bg-white p-2 rounded-lg transform rotate-[-2deg] translate-y-2 transition-all duration-300 hover:rotate-[-0.5deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md"
                             aria-label="Kontist Website besuchen"
                         >
                             <img
@@ -279,7 +279,7 @@ const EuerGenerator = () => {
                             href="https://holvi.com"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block bg-white p-2 rounded-lg transform rotate-[3deg] translate-y-1 transition-all duration-300 hover:rotate-[1deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md"
+                            className="inline-block bg-white p-2 rounded-lg transform rotate-[3deg] translate-y-2 transition-all duration-300 hover:rotate-[1deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md"
                             aria-label="Holvi Website besuchen"
                         >
                             <img
@@ -832,18 +832,12 @@ const EuerGenerator = () => {
 
             {/* Footer with Legal Links */}
             <footer className="mt-12 pt-8 border-t border-border">
-                <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+                <div className="flex flex-wrap justify-between items-center gap-4 text-sm text-muted-foreground">
                     <button
                         onClick={() => setCurrentView('impressum')}
                         className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
                     >
                         Impressum
-                    </button>
-                    <button
-                        onClick={() => setCurrentView('datenschutz')}
-                        className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
-                    >
-                        Datenschutz
                     </button>
                     <a
                         href="https://github.com/torstendngh/kontist-eur-report-generator"
@@ -854,9 +848,9 @@ const EuerGenerator = () => {
                         <Github size={14} />
                         GitHub
                     </a>
-                </div>
-                <div className="text-center mt-4 text-xs text-muted-foreground">
-                    © {new Date().getFullYear()} Torsten Linnecke. Alle Rechte vorbehalten.
+                    <span className="text-xs">
+                        © {new Date().getFullYear()} Torsten Linnecke
+                    </span>
                 </div>
             </footer>
         </div>
