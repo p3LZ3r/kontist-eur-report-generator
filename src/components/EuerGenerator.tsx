@@ -801,7 +801,7 @@ const EuerGenerator = () => {
                                 <div className="flex flex-col lg:flex-row">
                                     {/* Navigation Sidebar */}
                                     <div className="lg:w-80 border-b lg:border-b-0 lg:border-r border-border bg-muted/30">
-                                        <div className="p-6">
+<div className="p-6 h-full flex flex-col">
 <NavigationSidebar
                                                 sections={guidanceData.sections}
                                                 currentSection={currentSection}

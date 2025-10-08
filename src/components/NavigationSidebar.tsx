@@ -90,11 +90,15 @@ return (
                 </div>
 
                 {/* Sidebar footer with configuration info (subtle, two columns, bottom) */}
-                <div className="mt-auto pt-4 text-xs text-muted-foreground grid grid-cols-2 gap-x-3 gap-y-1">
-                    <div>Kontenrahmen</div>
-                    <div className="text-right">{currentSkr}</div>
-                    <div>Kleinunternehmer</div>
-                    <div className="text-right">{isKleinunternehmer ? 'Ja' : 'Nein'}</div>
+                <div className="mt-auto pt-4 grid grid-cols-2 gap-x-4 text-muted-foreground">
+                    <div className="flex flex-col items-start">
+                        <div className="text-[10px] uppercase tracking-wide">Kontenrahmen</div>
+                        <div className="text-sm font-medium text-foreground leading-tight">{currentSkr}</div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                        <div className="text-[10px] uppercase tracking-wide">Kleinunternehmer</div>
+                        <div className="text-sm font-medium text-foreground leading-tight">{isKleinunternehmer ? 'Ja' : 'Nein'}</div>
+                    </div>
                 </div>
         </div>
     );
