@@ -11,42 +11,41 @@ import {
     populateAllElsterFields,
     populateElsterFieldsFromCalculation
 } from './euerCalculations';
-import { ELSTER_FIELD_RANGES } from './constants';
 import { skr04Categories } from './categoryMappings';
 
-// Create navigation sections
+// Create navigation sections - Based on official ELSTER EÜR form structure
 export const createNavigationSections = (): NavigationSection[] => {
     return [
         {
             id: 'income',
-            title: 'Einnahmen',
-            description: 'Betriebliche Einnahmen und Erlöse',
+            title: 'Betriebseinnahmen',
+            description: 'Einnahmen und Umsatzsteuer',
             icon: 'trending-up',
-            fields: Array.from(
-                { length: ELSTER_FIELD_RANGES.INCOME_END - ELSTER_FIELD_RANGES.INCOME_START + 1 },
-                (_, i) => (ELSTER_FIELD_RANGES.INCOME_START + i).toString()
-            ),
+            fields: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
             completed: false,
             required: true
         },
         {
             id: 'expenses',
-            title: 'Ausgaben',
-            description: 'Betriebsausgaben und Aufwendungen',
+            title: 'Betriebsausgaben',
+            description: 'Ausgaben und Vorsteuer',
             icon: 'trending-down',
             fields: Array.from(
-                { length: ELSTER_FIELD_RANGES.EXPENSE_END - ELSTER_FIELD_RANGES.EXPENSE_START + 1 },
-                (_, i) => (ELSTER_FIELD_RANGES.EXPENSE_START + i).toString()
+                { length: 75 - 24 + 1 },
+                (_, i) => (24 + i).toString()
             ),
             completed: false,
             required: true
         },
         {
-            id: 'totals',
-            title: 'Zusammenfassung',
-            description: 'Gesamtbeträge und steuerpflichtiger Gewinn',
+            id: 'profit',
+            title: 'Gewinnermittlung',
+            description: 'Gewinn/Verlust Berechnung',
             icon: 'calculator',
-            fields: ['52', '54'], // Main total fields
+            fields: Array.from(
+                { length: 98 - 76 + 1 },
+                (_, i) => (76 + i).toString()
+            ),
             completed: false,
             required: true
         }

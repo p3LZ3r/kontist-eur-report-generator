@@ -208,11 +208,17 @@ const EuerGenerator = () => {
 
     // Show Impressum or Datenschutz if selected
     if (currentView === 'impressum') {
-        return <Impressum onBack={() => setCurrentView('transactions')} />;
+        return <Impressum onBack={() => {
+            setCurrentView('transactions');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }} />;
     }
 
     if (currentView === 'datenschutz') {
-        return <Datenschutz onBack={() => setCurrentView('transactions')} />;
+        return <Datenschutz onBack={() => {
+            setCurrentView('transactions');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }} />;
     }
 
     return (
@@ -804,15 +810,49 @@ const EuerGenerator = () => {
                                         </div>
                                     </div>
 
-                                    {/* Main Content */}
+{/* Main Content */}
                                     <div className="flex-1 min-h-[600px]">
-                                        <div className="p-6">
+<div className="p-6 space-y-6">
+                                            {/* Compact Summary Cards */}
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="p-4 rounded-lg border border-border bg-background">
+                                                    <div className="text-sm text-muted-foreground mb-2">Gewinnermittlung (Zahlungsbasis)</div>
+                                                    <div className="space-y-1">
+                                                        <div className="flex items-center justify-between text-sm">
+                                                            <span>Summe Betriebseinnahmen</span>
+                                                            <span className="font-mono">{euerCalculation.totalIncome.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                                                        </div>
+                                                        <div className="flex items-center justify-between text-sm">
+                                                            <span>Summe Betriebsausgaben</span>
+                                                            <span className="font-mono">{euerCalculation.totalExpenses.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                                                        </div>
+                                                        <div className="flex items-center justify-between text-sm pt-1 border-t border-border/60 mt-2">
+                                                            <span className="font-medium">Gewinn / Verlust</span>
+                                                            <span className="font-mono font-medium">{euerCalculation.profit.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="p-4 rounded-lg border border-border bg-background">
+                                                    <div className="text-sm text-muted-foreground mb-2">Private Geldflüsse</div>
+                                                    <div className="space-y-1">
+                                                        <div className="flex items-center justify-between text-sm">
+                                                            <span>Privatentnahmen (Geld)</span>
+                                                            <span className="font-mono">{euerCalculation.privateWithdrawals.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                                                        </div>
+                                                        <div className="flex items-center justify-between text-sm">
+                                                            <span>Privateinlagen (Geld)</span>
+                                                            <span className="font-mono">{euerCalculation.privateDeposits.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <FieldGroups
                                                 groups={guidanceData.groups.filter(group => {
                                                     if (currentSection === 'income') return group.category === 'income';
                                                     if (currentSection === 'expenses') return group.category === 'expense';
-                                                    if (currentSection === 'totals') return group.category === 'total' || group.category === 'tax';
-                                                    return true;
+                                                    if (currentSection === 'profit') return group.category === 'total' || group.category === 'tax';
+                                                    return group.category === 'income';
                                                 })}
                                                 isKleinunternehmer={isKleinunternehmer}
                                                 currentYear={new Date().getFullYear()}
@@ -833,12 +873,26 @@ const EuerGenerator = () => {
             {/* Footer with Legal Links */}
             <footer className="mt-12 pt-8 border-t border-border">
                 <div className="flex flex-wrap justify-between items-center gap-4 text-sm text-muted-foreground">
-                    <button
-                        onClick={() => setCurrentView('impressum')}
-                        className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
-                    >
-                        Impressum
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={() => {
+                                setCurrentView('impressum');
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="hover:text-foreground transition-colors underline-offset-4 hover:underline cursor-pointer"
+                        >
+                            Impressum
+                        </button>
+                        <button
+                            onClick={() => {
+                                setCurrentView('datenschutz');
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="hover:text-foreground transition-colors underline-offset-4 hover:underline cursor-pointer"
+                        >
+                            Datenschutz
+                        </button>
+                    </div>
                     <a
                         href="https://github.com/torstendngh/kontist-eur-report-generator"
                         target="_blank"
