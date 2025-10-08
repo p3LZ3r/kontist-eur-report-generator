@@ -16,7 +16,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
     isKleinunternehmer,
     categories,
     skrCategories,
-    currentSkr: _currentSkr
+    currentSkr
 }) => {
     // State für aufgeklappte Transaktionsdetails
     const [expandedFields, setExpandedFields] = useState<Set<string>>(new Set());
@@ -85,10 +85,10 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                         }}
                                     >
                                         {/* Field Number - Left */}
-                                        <td className="w-24 p-2">  {/* Erweiterte Breite für Bereiche */}
+                                        <td className="w-24 px-3 py-2">  {/* Etwas breitere Spalte mit mehr Padding */}
                                             <div className="flex items-center justify-center h-full">
                                                 <span
-                                                    className="inline-flex items-center justify-center min-w-8 px-2 h-6 rounded-sm bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground"
+                                                    className="inline-flex items-center justify-center min-w-10 h-6 px-2 rounded-sm bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground whitespace-nowrap"
                                                     style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace' }}
                                                 >
                                                     {field.field}
@@ -97,7 +97,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                         </td>
 
                                         {/* Field Label - Left */}
-                                        <td className="px-4 py-2 text-left">
+                                        <td className="px-3 py-2 text-left">
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sm text-gray-800 font-mono" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
                                                     {field.label}
@@ -111,7 +111,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                         </td>
 
                                         {/* Amount - Right */}
-                                        <td className="w-32 px-3 py-2 text-right">  {/* Erweiterte Breite und mehr Padding */}
+                                        <td className="w-32 px-3 py-2 text-right">  {/* Feste Breite mit mehr Padding */}
                                             <div className="flex items-center justify-end gap-2">
                                                 {field.transactions && field.transactions.length > 0 && (
                                                     <>

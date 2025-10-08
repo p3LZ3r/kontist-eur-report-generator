@@ -590,26 +590,27 @@ const EuerGenerator = () => {
                                         Transaktionen kategorisieren
                                     </h2>
 
-                                    <div className="flex-1 flex justify-center gap-2">
-                                        <div className="px-4 py-1 bg-green-100 text-green-800 rounded-full border border-green-200">
+                                    <div className="flex-1 flex justify-center gap-2 flex-wrap">
+                                        <div className="px-3 py-1 bg-green-100 text-green-800 rounded-full border border-green-200">
                                             <span className="text-xs font-medium">
                                                 {bankType === 'kontist' ? 'Kontist' : 'Holvi'} CSV erkannt
                                             </span>
                                         </div>
                                         {isDemoMode && (
-                                            <div className="px-4 py-1 bg-orange-100 text-orange-800 rounded-full border border-orange-200">
+                                            <div className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full border border-orange-200">
                                                 <span className="text-xs font-medium">
                                                     Demo-Modus
                                                 </span>
                                             </div>
                                         )}
-                                    </div>
-
-                                    {/* SKR/Kleinunternehmer badge matching demo/CSV style */}
-                                    <div className="hidden lg:flex items-center gap-2">
-                                        <div className="px-4 py-1 bg-blue-100 text-blue-800 rounded-full border border-blue-200">
+                                        <div className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full border border-blue-200">
                                             <span className="text-xs font-medium">
-                                                {currentSkr} · {isKleinunternehmer ? 'Kleinunternehmer' : 'USt-pflichtig'}
+                                                {currentSkr}
+                                            </span>
+                                        </div>
+                                        <div className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full border border-purple-200">
+                                            <span className="text-xs font-medium">
+                                                {isKleinunternehmer ? 'Kleinunternehmer §19 UStG' : 'Regelbesteuerung'}
                                             </span>
                                         </div>
                                     </div>
@@ -848,8 +849,4 @@ const EuerGenerator = () => {
     );
 };
 
-
-
 export default EuerGenerator;
-
-

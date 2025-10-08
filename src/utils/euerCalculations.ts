@@ -363,33 +363,65 @@ export const populateElsterFieldsFromCalculation = (
         let transactions: Transaction[] = [];
         let categoryBreakdown: { [category: string]: { amount: number; transactions: Transaction[] } } = {};
 
-        // Handle special total fields from EÜR totals
-        if (fieldNumber === '23') {
-            // Summe der Einnahmen (field 23)
+        // Handle special calculated fields (Summenfelder und berechnete Werte)
+        if (fieldNumber === '17') {
+            // Feld 17: Umsatzsteuer (nur für Nicht-Kleinunternehmer)
+            value = isKleinunternehmer ? 0 : euerCalculation.vatOwed;
+            source = 'calculated';
+        } else if (fieldNumber === '57') {
+            // Feld 57: Vorsteuer (nur für Nicht-Kleinunternehmer)
+            value = isKleinunternehmer ? 0 : euerCalculation.vatPaid;
+            source = 'calculated';
+        } else if (fieldNumber === '23') {
+            // Feld 23: Summe der Betriebseinnahmen
             value = euerCalculation.totalIncome;
             source = 'calculated';
-            // Sammle alle Einnahmen-Transaktionen
             Object.values(euerCalculation.incomeTransactions).forEach(categoryTransactions => {
                 transactions.push(...categoryTransactions);
             });
         } else if (fieldNumber === '52') {
+            // Feld 52: Summe Betriebseinnahmen (immer Netto, USt separat in Feld 17)
             value = euerCalculation.totalIncome;
             source = 'calculated';
             // Sammle alle Einnahmen-Transaktionen
             Object.values(euerCalculation.incomeTransactions).forEach(categoryTransactions => {
                 transactions.push(...categoryTransactions);
             });
-        } else if (fieldNumber === '54') {
-            value = euerCalculation.profit;
-            source = 'calculated';
         } else if (fieldNumber === '75') {
-            // Summe der Betriebsausgaben (field 75)
+            // Feld 75: Summe der Betriebsausgaben
             value = euerCalculation.totalExpenses;
             source = 'calculated';
-            // Sammle alle Ausgaben-Transaktionen
             Object.values(euerCalculation.expenseTransactions).forEach(categoryTransactions => {
                 transactions.push(...categoryTransactions);
             });
+        } else if (fieldNumber === '76') {
+            // Feld 76: Gewinn/Verlust
+            value = euerCalculation.profit;
+            source = 'calculated';
+        } else if (fieldNumber === '77') {
+            // Feld 77: Hinzurechnungen (nicht implementiert, bleibt 0)
+            value = 0;
+            source = 'calculated';
+        } else if (fieldNumber === '92') {
+            // Feld 92: Gewinn
+            value = euerCalculation.profit > 0 ? euerCalculation.profit : 0;
+            source = 'calculated';
+        } else if (fieldNumber === '93') {
+            // Feld 93: Verlust
+            value = euerCalculation.profit < 0 ? Math.abs(euerCalculation.profit) : 0;
+            source = 'calculated';
+        } else if (fieldNumber === '94') {
+            // Feld 94: Nicht verwendbar (immer 0)
+            value = 0;
+            source = 'calculated';
+        } else if (fieldNumber === '95') {
+            // Feld 95: Summe der Einkünfte (= Gewinn)
+            value = euerCalculation.profit > 0 ? euerCalculation.profit : 0;
+            source = 'calculated';
+        } else if (fieldNumber === '96') {
+            // Feld 96: Summe der Einkünfte negativ (= Verlust)
+            value = euerCalculation.profit < 0 ? Math.abs(euerCalculation.profit) : 0;
+            source = 'calculated';
         } else if (overviewData?.categories) {
             // Für berechnete Felder mit Kategorien: sammle die entsprechenden Transaktionen
             overviewData.categories.forEach(categoryData => {

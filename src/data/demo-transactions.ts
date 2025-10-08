@@ -9,45 +9,40 @@ export interface DemoTransaction {
 }
 
 export const demoTransactions: DemoTransaction[] = [
-  // January 2024
-  { Buchungsdatum: "2024-01-03", Betrag: "-89,50", Verwendungszweck: "Büromaterial - Druckerpapier und Stifte", Empfänger: "Bürobedarf Müller" },
-  { Buchungsdatum: "2024-01-05", Betrag: "2850,00", Verwendungszweck: "RG 001 - Webentwicklung Projekt Alpha", Empfänger: "TechStart GmbH" },
-  { Buchungsdatum: "2024-01-08", Betrag: "-45,90", Verwendungszweck: "Monatliche Internetgebühr", Empfänger: "Telekom Deutschland" },
-  { Buchungsdatum: "2024-01-12", Betrag: "-1250,00", Verwendungszweck: "Büromiete Januar", Empfänger: "Immobilien Schmidt" },
-  { Buchungsdatum: "2024-01-15", Betrag: "1420,00", Verwendungszweck: "RG 002 - Beratungsleistungen", Empfänger: "ConsultingPro AG" },
-  { Buchungsdatum: "2024-01-18", Betrag: "-89,90", Verwendungszweck: "Software-Lizenz Adobe Creative Suite", Empfänger: "Adobe Systems" },
-  { Buchungsdatum: "2024-01-22", Betrag: "-35,50", Verwendungszweck: "Telefonkosten Januar", Empfänger: "Vodafone" },
-  { Buchungsdatum: "2024-01-25", Betrag: "1980,00", Verwendungszweck: "RG 003 - App-Entwicklung", Empfänger: "MobileApps Ltd" },
-  { Buchungsdatum: "2024-01-28", Betrag: "-450,00", Verwendungszweck: "Steuerberater-Honorar", Empfänger: "Steuerkanzlei Weber" },
-  { Buchungsdatum: "2024-01-30", Betrag: "-67,80", Verwendungszweck: "Büromaterial - Ordner und Hefter", Empfänger: "Schreibwaren Klein" },
+  // Q1 2024 - Diversifizierte Einnahmen
+  { Buchungsdatum: "2024-01-05", Betrag: "4850,00", Verwendungszweck: "RG 001 - Webentwicklung Projekt Alpha", Empfänger: "TechStart GmbH" },
+  { Buchungsdatum: "2024-01-12", Betrag: "1200,00", Verwendungszweck: "RG 002 - Schulungshonorar JavaScript", Empfänger: "CodeAcademy GmbH" },
+  { Buchungsdatum: "2024-01-20", Betrag: "3200,00", Verwendungszweck: "RG 003 - Warenverkauf Software-Module", Empfänger: "SoftwareHouse AG" },
+  { Buchungsdatum: "2024-01-25", Betrag: "850,00", Verwendungszweck: "RG 004 - Provisionseinnahmen Vermittlung", Empfänger: "PartnerNetwork Ltd" },
+  { Buchungsdatum: "2024-02-08", Betrag: "2650,00", Verwendungszweck: "RG 005 - Lizenzeinnahmen Software-Patent", Empfänger: "LicenseTech AG" },
+  { Buchungsdatum: "2024-02-15", Betrag: "5200,00", Verwendungszweck: "RG 006 - E-Commerce Plattform", Empfänger: "OnlineShop Solutions" },
+  { Buchungsdatum: "2024-02-28", Betrag: "1950,00", Verwendungszweck: "RG 007 - Autorenhonorar Fachbuch", Empfänger: "Verlag Schmidt" },
+  { Buchungsdatum: "2024-03-10", Betrag: "3800,00", Verwendungszweck: "RG 008 - Warenverkauf E-Books und Kurse", Empfänger: "DigitalStore GmbH" },
+  { Buchungsdatum: "2024-03-18", Betrag: "6450,00", Verwendungszweck: "RG 009 - CRM-System Entwicklung", Empfänger: "BusinessTech Solutions" },
+  { Buchungsdatum: "2024-03-25", Betrag: "1400,00", Verwendungszweck: "RG 010 - Schulungshonorar React & TypeScript", Empfänger: "WebDev Academy" },
 
-  // February 2024
-  { Buchungsdatum: "2024-02-02", Betrag: "-156,00", Verwendungszweck: "Betriebshaftpflichtversicherung", Empfänger: "Allianz Versicherung" },
-  { Buchungsdatum: "2024-02-05", Betrag: "3200,00", Verwendungszweck: "RG 004 - E-Commerce Plattform", Empfänger: "OnlineShop Solutions" },
-  { Buchungsdatum: "2024-02-08", Betrag: "-89,50", Verwendungszweck: "Büromaterial - Druckerpapier und Stifte", Empfänger: "Bürobedarf Müller" },
-  { Buchungsdatum: "2024-02-12", Betrag: "-1250,00", Verwendungszweck: "Büromiete Februar", Empfänger: "Immobilien Schmidt" },
-  { Buchungsdatum: "2024-02-14", Betrag: "-245,00", Verwendungszweck: "Google Ads Werbekampagne", Empfänger: "Google Ireland" },
-  { Buchungsdatum: "2024-02-16", Betrag: "1850,00", Verwendungszweck: "RG 005 - Datenbankentwicklung", Empfänger: "DataTech GmbH" },
-  { Buchungsdatum: "2024-02-20", Betrag: "-35,50", Verwendungszweck: "Telefonkosten Februar", Empfänger: "Vodafone" },
-  { Buchungsdatum: "2024-02-22", Betrag: "-89,90", Verwendungszweck: "Software-Lizenz Microsoft Office", Empfänger: "Microsoft Deutschland" },
-  { Buchungsdatum: "2024-02-26", Betrag: "-178,00", Verwendungszweck: "Treibstoff Tankstelle", Empfänger: "Shell Tankstelle" },
-  { Buchungsdatum: "2024-02-28", Betrag: "2650,00", Verwendungszweck: "RG 006 - Website-Redesign", Empfänger: "WebDesign Pro" },
+  // Q1 2024 - Diversifizierte Ausgaben
+  { Buchungsdatum: "2024-01-10", Betrag: "-3200,00", Verwendungszweck: "Wareneinkauf - Elektronikbauteile und Komponenten", Empfänger: "Conrad Electronic" },
+  { Buchungsdatum: "2024-01-15", Betrag: "-1850,00", Verwendungszweck: "Laptop MacBook Pro M3", Empfänger: "Apple Store München" },
+  { Buchungsdatum: "2024-01-20", Betrag: "-750,00", Verwendungszweck: "Monitor Dell UltraSharp 32 4K", Empfänger: "Dell Deutschland" },
+  { Buchungsdatum: "2024-01-25", Betrag: "-3750,00", Verwendungszweck: "Büromiete Q1 2024 (3 Monate)", Empfänger: "Immobilien Schmidt" },
+  { Buchungsdatum: "2024-02-05", Betrag: "-2400,00", Verwendungszweck: "Wareneinkauf Handelswaren für Wiederverkauf", Empfänger: "Großhandel Meyer" },
+  { Buchungsdatum: "2024-02-10", Betrag: "-890,00", Verwendungszweck: "Schreibtisch elektrisch höhenverstellbar", Empfänger: "Büromöbel24" },
+  { Buchungsdatum: "2024-02-15", Betrag: "-650,00", Verwendungszweck: "Bürostuhl ergonomisch Herman Miller", Empfänger: "Office Depot" },
+  { Buchungsdatum: "2024-02-20", Betrag: "-1350,00", Verwendungszweck: "Steuerberater Jahresabschluss 2023", Empfänger: "Steuerkanzlei Weber" },
+  { Buchungsdatum: "2024-02-28", Betrag: "-580,00", Verwendungszweck: "Google Ads + Meta Ads Kampagnen", Empfänger: "Google & Meta Platforms" },
+  { Buchungsdatum: "2024-03-05", Betrag: "-2800,00", Verwendungszweck: "Wareneinkauf Hardware-Komponenten Lager", Empfänger: "TechSupply GmbH" },
+  { Buchungsdatum: "2024-03-10", Betrag: "-320,00", Verwendungszweck: "Fachbücher - Programmierung und Cloud", Empfänger: "O'Reilly Verlag" },
+  { Buchungsdatum: "2024-03-15", Betrag: "-285,90", Verwendungszweck: "Software-Lizenzen (Adobe, Office 365, GitHub)", Empfänger: "Software-Abos" },
+  { Buchungsdatum: "2024-03-20", Betrag: "-468,00", Verwendungszweck: "Versicherungen (Haftpflicht, Cyber, Rechtsschutz)", Empfänger: "Allianz & Hiscox" },
+  { Buchungsdatum: "2024-03-25", Betrag: "-390,00", Verwendungszweck: "KFZ-Kosten (Treibstoff, Wartung)", Empfänger: "Shell & Autowerkstatt" },
+  { Buchungsdatum: "2024-03-28", Betrag: "-245,00", Verwendungszweck: "Telefon & Internet (3 Monate)", Empfänger: "Telekom & Vodafone" },
+  { Buchungsdatum: "2024-03-30", Betrag: "-189,50", Verwendungszweck: "Büromaterial & Verbrauchsmaterial", Empfänger: "Bürobedarf Müller" },
 
-  // March 2024
-  { Buchungsdatum: "2024-03-01", Betrag: "-45,90", Verwendungszweck: "Monatliche Internetgebühr", Empfänger: "Telekom Deutschland" },
-  { Buchungsdatum: "2024-03-05", Betrag: "2100,00", Verwendungszweck: "RG 007 - SEO-Optimierung", Empfänger: "DigitalMarketing AG" },
-  { Buchungsdatum: "2024-03-08", Betrag: "-1250,00", Verwendungszweck: "Büromiete März", Empfänger: "Immobilien Schmidt" },
-  { Buchungsdatum: "2024-03-12", Betrag: "-89,50", Verwendungszweck: "Büromaterial - Druckerpapier und Stifte", Empfänger: "Bürobedarf Müller" },
-  { Buchungsdatum: "2024-03-15", Betrag: "-320,00", Verwendungszweck: "Fachbuch - Programmierung", Empfänger: "O'Reilly Verlag" },
-  { Buchungsdatum: "2024-03-18", Betrag: "3450,00", Verwendungszweck: "RG 008 - CRM-System Entwicklung", Empfänger: "BusinessTech Solutions" },
-  { Buchungsdatum: "2024-03-22", Betrag: "-35,50", Verwendungszweck: "Telefonkosten März", Empfänger: "Vodafone" },
-  { Buchungsdatum: "2024-03-25", Betrag: "-156,00", Verwendungszweck: "Cyber-Versicherung", Empfänger: "Hiscox Versicherung" },
-  { Buchungsdatum: "2024-03-28", Betrag: "-89,90", Verwendungszweck: "Software-Lizenz Slack Pro", Empfänger: "Slack Technologies" },
-  { Buchungsdatum: "2024-03-30", Betrag: "1780,00", Verwendungszweck: "RG 009 - API-Entwicklung", Empfänger: "APITech GmbH" },
-
-  // April 2024
-  { Buchungsdatum: "2024-04-02", Betrag: "-1250,00", Verwendungszweck: "Büromiete April", Empfänger: "Immobilien Schmidt" },
-  { Buchungsdatum: "2024-04-05", Betrag: "-89,50", Verwendungszweck: "Büromaterial - Druckerpapier und Stifte", Empfänger: "Bürobedarf Müller" },
+  // Private transactions (not business-related)
+  { Buchungsdatum: "2024-01-15", Betrag: "-89,90", Verwendungszweck: "Amazon Prime Jahresabo", Empfänger: "Amazon Deutschland" },
+  { Buchungsdatum: "2024-02-10", Betrag: "-156,00", Verwendungszweck: "Netflix Jahresabo", Empfänger: "Netflix International" },
+  { Buchungsdatum: "2024-03-20", Betrag: "-234,50", Verwendungszweck: "Einkommensteuer Vorauszahlung Q1", Empfänger: "Finanzamt München" },
   { Buchungsdatum: "2024-04-08", Betrag: "4200,00", Verwendungszweck: "RG 010 - Mobile App Entwicklung", Empfänger: "MobileFirst AG" },
   { Buchungsdatum: "2024-04-12", Betrag: "-45,90", Verwendungszweck: "Monatliche Internetgebühr", Empfänger: "Telekom Deutschland" },
   { Buchungsdatum: "2024-04-15", Betrag: "-450,00", Verwendungszweck: "Steuerberater-Honorar", Empfänger: "Steuerkanzlei Weber" },
@@ -152,52 +147,6 @@ export const demoTransactions: DemoTransaction[] = [
   { Buchungsdatum: "2024-12-23", Betrag: "-89,90", Verwendungszweck: "Software-Lizenz GitLab", Empfänger: "GitLab Inc" },
   { Buchungsdatum: "2024-12-28", Betrag: "-178,00", Verwendungszweck: "Treibstoff Tankstelle", Empfänger: "Shell Tankstelle" },
   { Buchungsdatum: "2024-12-30", Betrag: "3550,00", Verwendungszweck: "RG 028 - System Migration", Empfänger: "MigrationTech Solutions" },
-
-  // Additional diverse transactions for more ELSTER field coverage
-  { Buchungsdatum: "2024-06-10", Betrag: "-2500,00", Verwendungszweck: "Laptop Dell XPS 15 - Anschaffung", Empfänger: "Dell Deutschland" },
-  { Buchungsdatum: "2024-08-15", Betrag: "-850,00", Verwendungszweck: "Monitor Samsung 32\" - Anschaffung", Empfänger: "Samsung Electronics" },
-  { Buchungsdatum: "2024-03-20", Betrag: "-1200,00", Verwendungszweck: "Ergonomischer Bürostuhl", Empfänger: "Herman Miller" },
-  { Buchungsdatum: "2024-09-10", Betrag: "-450,00", Verwendungszweck: "Standing Desk elektrisch", Empfänger: "FlexiSpot" },
-  { Buchungsdatum: "2024-11-05", Betrag: "-180,00", Verwendungszweck: "Externe Festplatte 2TB", Empfänger: "Western Digital" },
-  { Buchungsdatum: "2024-04-25", Betrag: "-320,00", Verwendungszweck: "Mechanische Tastatur", Empfänger: "Keychron" },
-  { Buchungsdatum: "2024-07-08", Betrag: "-150,00", Verwendungszweck: "Gaming Maus Logitech", Empfänger: "Logitech Deutschland" },
-  { Buchungsdatum: "2024-10-12", Betrag: "-95,00", Verwendungszweck: "USB-C Hub mit 4 Ports", Empfänger: "Anker" },
-  { Buchungsdatum: "2024-02-28", Betrag: "-75,00", Verwendungszweck: "Bluetooth Kopfhörer", Empfänger: "Sony Deutschland" },
-  { Buchungsdatum: "2024-05-18", Betrag: "-120,00", Verwendungszweck: "Webcam HD 1080p", Empfänger: "Logitech Deutschland" },
-
-  // Personnel costs (field 30)
-  { Buchungsdatum: "2024-01-31", Betrag: "-2800,00", Verwendungszweck: "Freelancer Honorar - UI/UX Designer", Empfänger: "Sarah Weber" },
-  { Buchungsdatum: "2024-02-29", Betrag: "-3200,00", Verwendungszweck: "Freelancer Honorar - Frontend Entwickler", Empfänger: "Max Müller" },
-  { Buchungsdatum: "2024-03-31", Betrag: "-2400,00", Verwendungszweck: "Freelancer Honorar - Backend Entwickler", Empfänger: "Lisa Schmidt" },
-  { Buchungsdatum: "2024-04-30", Betrag: "-1800,00", Verwendungszweck: "Freelancer Honorar - QA Tester", Empfänger: "Tom Becker" },
-  { Buchungsdatum: "2024-05-31", Betrag: "-2100,00", Verwendungszweck: "Freelancer Honorar - DevOps Engineer", Empfänger: "Anna Klein" },
-
-  // Travel and vehicle costs (field 44)
-  { Buchungsdatum: "2024-03-15", Betrag: "-45,00", Verwendungszweck: "Bahnfahrt Berlin - Geschäftsreise", Empfänger: "Deutsche Bahn" },
-  { Buchungsdatum: "2024-06-22", Betrag: "-85,00", Verwendungszweck: "Bahnfahrt Hamburg - Kundentermin", Empfänger: "Deutsche Bahn" },
-  { Buchungsdatum: "2024-09-18", Betrag: "-120,00", Verwendungszweck: "Bahnfahrt Frankfurt - Messe", Empfänger: "Deutsche Bahn" },
-  { Buchungsdatum: "2024-11-08", Betrag: "-65,00", Verwendungszweck: "Bahnfahrt München - Workshop", Empfänger: "Deutsche Bahn" },
-  { Buchungsdatum: "2024-12-12", Betrag: "-95,00", Verwendungszweck: "Bahnfahrt Köln - Konferenz", Empfänger: "Deutsche Bahn" },
-
-  // VAT payments (field 58)
-  { Buchungsdatum: "2024-03-10", Betrag: "-1250,00", Verwendungszweck: "Umsatzsteuer Q1 2024", Empfänger: "Finanzamt München" },
-  { Buchungsdatum: "2024-06-10", Betrag: "-1680,00", Verwendungszweck: "Umsatzsteuer Q2 2024", Empfänger: "Finanzamt München" },
-  { Buchungsdatum: "2024-09-10", Betrag: "-1420,00", Verwendungszweck: "Umsatzsteuer Q3 2024", Empfänger: "Finanzamt München" },
-  { Buchungsdatum: "2024-12-10", Betrag: "-1950,00", Verwendungszweck: "Umsatzsteuer Q4 2024", Empfänger: "Finanzamt München" },
-
-  // VAT refunds (field 18)
-  { Buchungsdatum: "2024-04-15", Betrag: "450,00", Verwendungszweck: "Umsatzsteuer-Erstattung März", Empfänger: "Finanzamt München" },
-  { Buchungsdatum: "2024-07-20", Betrag: "320,00", Verwendungszweck: "Umsatzsteuer-Erstattung Juni", Empfänger: "Finanzamt München" },
-
-  // Other business expenses
-  { Buchungsdatum: "2024-01-15", Betrag: "-180,00", Verwendungszweck: "Rechtsschutzversicherung", Empfänger: "Allianz Versicherung" },
-  { Buchungsdatum: "2024-04-20", Betrag: "-95,00", Verwendungszweck: "Berufshaftpflichtversicherung", Empfänger: "Hiscox Versicherung" },
-  { Buchungsdatum: "2024-08-10", Betrag: "-250,00", Verwendungszweck: "Gewerbeversicherung", Empfänger: "AXA Versicherung" },
-  { Buchungsdatum: "2024-11-25", Betrag: "-120,00", Verwendungszweck: "Cyber-Versicherung", Empfänger: "Hiscox Versicherung" },
-  { Buchungsdatum: "2024-02-10", Betrag: "-75,00", Verwendungszweck: "Gewerbeanmeldung", Empfänger: "Stadt München" },
-  { Buchungsdatum: "2024-05-15", Betrag: "-45,00", Verwendungszweck: "Handelsregistereintrag", Empfänger: "Amtsgericht München" },
-  { Buchungsdatum: "2024-09-05", Betrag: "-85,00", Verwendungszweck: "Notarkosten Vertragsprüfung", Empfänger: "Notar Dr. Weber" },
-  { Buchungsdatum: "2024-12-20", Betrag: "-150,00", Verwendungszweck: "Anwaltskosten Beratung", Empfänger: "Rechtsanwaltskanzlei Müller" },
 
   // Private transactions (not EÜR relevant)
   { Buchungsdatum: "2024-01-20", Betrag: "-89,90", Verwendungszweck: "Amazon Prime Jahresabo", Empfänger: "Amazon Deutschland" },

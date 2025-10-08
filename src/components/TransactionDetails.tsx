@@ -117,18 +117,21 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                 <Minus size={10} />
                                 <span className="font-mono">{formatCurrency(netTotal)}</span>
                             </div>
-                            {/* Pro-Satz-Aufschlüsselung - zeigt USt-Sätze direkt ohne Gesamtsumme */}
-                            {Object.keys(vatRates).length > 0 && (
-                                <div className="flex flex-wrap justify-end gap-x-2 gap-y-0.5">
+                            <div className="flex items-center gap-1">
+                                <Percent size={10} />
+                                <span className="font-mono">
+                                    {formatCurrency(vatTotal)}
+                                </span>
+                            </div>
+                            {/* Pro-Satz-Aufschlüsselung nur wenn mehrere USt-Sätze vorhanden */}
+                            {Object.keys(vatRates).length > 1 && (
+                                <div className="flex flex-wrap justify-end gap-x-2 gap-y-0.5 mt-0.5">
                                     {Object.entries(vatRates)
-                                        .sort((a, b) => Number(a[0]) - Number(b[0]))
+                                        .sort((a, b) => Number(b[0]) - Number(a[0]))
                                         .map(([rate, amount]) => (
-                                            <div key={rate} className="flex items-center gap-1">
-                                                <Percent size={10} />
-                                                <span className="font-mono">
-                                                    {Number(rate).toFixed(0)}%: {formatCurrency(amount)}
-                                                </span>
-                                            </div>
+                                            <span key={rate} className="font-mono text-[10px]">
+                                                {Number(rate).toFixed(0)}%: {formatCurrency(amount)}
+                                            </span>
                                         ))}
                                 </div>
                             )}
