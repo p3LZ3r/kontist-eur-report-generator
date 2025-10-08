@@ -52,8 +52,13 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                     }`}
                                 >
                                     {/* Field Number - Left */}
-<div className="flex-shrink-0 w-8 text-xs font-mono text-gray-500" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
-                                        {field.field}
+<div className="flex-shrink-0 w-12 pr-2 text-right">
+                                        <span
+                                            className="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground"
+                                            style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
+                                        >
+                                            {field.field}
+                                        </span>
                                     </div>
 
                                     {/* Field Label - Left */}

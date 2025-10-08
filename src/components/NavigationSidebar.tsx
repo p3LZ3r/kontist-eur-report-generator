@@ -75,7 +75,7 @@ className={`w-full justify-start p-3 h-auto cursor-pointer ${currentSection === 
                             onClick={() => onSectionChange(section.id)}
                         >
                             <div className="flex items-center gap-3 w-full">
-                                <div className={`flex-shrink-0 ${getSectionColor(section.id)}`}>
+<div className={`flex-shrink-0 ${currentSection === section.id ? 'text-primary-foreground' : getSectionColor(section.id)}`}>
                                     {getSectionIcon(section.id)}
                                 </div>
                                 <div className="flex-1 text-left">
