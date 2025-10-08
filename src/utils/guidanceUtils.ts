@@ -54,132 +54,26 @@ export const createNavigationSections = (): NavigationSection[] => {
 
 // Create field groups for display - Matching authentic ELSTER EÜR form structure
 export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[] => {
-    const groups: FieldGroup[] = [
-        // 4 - EINNAHMEN
-        {
-            id: 'einnahmen',
-            title: 'Betriebseinnahmen',
-            description: '',
-            fields: fieldValues.filter(f => f.type === 'income').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'income'
-        },
+    const income = fieldValues.filter(f => f.type === 'income').sort((a, b) => parseInt(a.field) - parseInt(b.field));
+    const expenses = fieldValues.filter(f => f.type === 'expense').sort((a, b) => parseInt(a.field) - parseInt(b.field));
+    const vat = fieldValues.filter(f => f.type === 'vat' || f.type === 'vat_paid').sort((a, b) => parseInt(a.field) - parseInt(b.field));
+    const totals = fieldValues.filter(f => f.type === 'total' || f.type === 'profit_calc').sort((a, b) => parseInt(a.field) - parseInt(b.field));
 
-        // 4 - BETRIEBSAUSGABEN
-        {
-            id: 'betriebsausgaben_1',
-            title: 'Betriebsausgaben',
-            description: '',
-            fields: fieldValues.filter(f => f.field === '27'),
-            expanded: true,
-            category: 'expense'
-        },
-        {
-            id: 'betriebsausgaben_2',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => f.field === '29'),
-            expanded: true,
-            category: 'expense'
-        },
-        {
-            id: 'betriebsausgaben_3',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => f.field === '30'),
-            expanded: true,
-            category: 'expense'
-        },
+    const groups: FieldGroup[] = [];
+    if (income.length) {
+        groups.push({ id: 'einnahmen', title: 'Betriebseinnahmen', description: '', fields: income, expanded: true, category: 'income' });
+    }
+    if (expenses.length) {
+        groups.push({ id: 'ausgaben', title: 'Betriebsausgaben', description: '', fields: expenses, expanded: true, category: 'expense' });
+    }
+    if (vat.length) {
+        groups.push({ id: 'umsatzsteuer', title: 'Umsatzsteuer', description: '', fields: vat, expanded: true, category: 'tax' });
+    }
+    if (totals.length) {
+        groups.push({ id: 'gewinnermittlung', title: 'Gewinnermittlung', description: '', fields: totals, expanded: true, category: 'total' });
+    }
 
-        // ABSCHREIBUNGEN
-        {
-            id: 'abschreibungen',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => ['31', '32', '33'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'expense'
-        },
-
-        // MIETE UND LEASING
-        {
-            id: 'miete_leasing',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => ['34', '35'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'expense'
-        },
-
-        // WEITERE AUSGABEN
-        {
-            id: 'weitere_ausgaben_1',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => ['36', '37'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'expense'
-        },
-        {
-            id: 'weitere_ausgaben_2',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => f.field === '44'),
-            expanded: true,
-            category: 'expense'
-        },
-        {
-            id: 'weitere_ausgaben_3',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => ['55', '56'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'expense'
-        },
-
-        // SONSTIGE AUSGABEN
-        {
-            id: 'sonstige_ausgaben',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => ['62', '63', '64', '65', '66'].includes(f.field)).sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'expense'
-        },
-
-        // GEWINNERMITTLUNG
-        {
-            id: 'gewinnermittlung',
-            title: 'Gewinnermittlung',
-            description: '',
-            fields: fieldValues.filter(f => f.type === 'profit_calc').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'total'
-        },
-
-        // UMSATZSTEUER
-        {
-            id: 'umsatzsteuer',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => f.type === 'vat' || f.type === 'vat_paid').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'tax'
-        },
-
-        // SUMMEN
-        {
-            id: 'summen',
-            title: '',
-            description: '',
-            fields: fieldValues.filter(f => f.type === 'total').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
-            expanded: true,
-            category: 'total'
-        }
-    ];
-
-    // Remove groups with no fields
-    return groups.filter(group => group.fields.length > 0);
+    return groups;
 };
 
 // Calculate progress state

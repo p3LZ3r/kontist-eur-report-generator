@@ -364,7 +364,15 @@ export const populateElsterFieldsFromCalculation = (
         let categoryBreakdown: { [category: string]: { amount: number; transactions: Transaction[] } } = {};
 
         // Handle special total fields from EÜR totals
-        if (fieldNumber === '52') {
+        if (fieldNumber === '23') {
+            // Summe der Einnahmen (field 23)
+            value = euerCalculation.totalIncome;
+            source = 'calculated';
+            // Sammle alle Einnahmen-Transaktionen
+            Object.values(euerCalculation.incomeTransactions).forEach(categoryTransactions => {
+                transactions.push(...categoryTransactions);
+            });
+        } else if (fieldNumber === '52') {
             value = euerCalculation.totalIncome;
             source = 'calculated';
             // Sammle alle Einnahmen-Transaktionen
@@ -374,6 +382,14 @@ export const populateElsterFieldsFromCalculation = (
         } else if (fieldNumber === '54') {
             value = euerCalculation.profit;
             source = 'calculated';
+        } else if (fieldNumber === '75') {
+            // Summe der Betriebsausgaben (field 75)
+            value = euerCalculation.totalExpenses;
+            source = 'calculated';
+            // Sammle alle Ausgaben-Transaktionen
+            Object.values(euerCalculation.expenseTransactions).forEach(categoryTransactions => {
+                transactions.push(...categoryTransactions);
+            });
         } else if (overviewData?.categories) {
             // Für berechnete Felder mit Kategorien: sammle die entsprechenden Transaktionen
             overviewData.categories.forEach(categoryData => {
@@ -405,6 +421,7 @@ export const populateElsterFieldsFromCalculation = (
             source: source as 'transaction' | 'user_data' | 'calculated',
             required: fieldDef.required || false,
             type: fieldDef.type as 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc',
+            readOnlyCalculated: fieldDef.autoCalculated === true,
             // Transaktionsdetails hinzufügen, wenn vorhanden
             transactions: transactions.length > 0 ? transactions : undefined,
             categoryBreakdown: Object.keys(categoryBreakdown).length > 0 ? categoryBreakdown : undefined

@@ -79,6 +79,7 @@ export interface ElsterFieldValue {
   type: 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc';
   required: boolean;
   source: 'transaction' | 'user_data' | 'calculated';
+  readOnlyCalculated?: boolean;
   // Transaktionsdetails für aufklappbare Bereiche
   transactions?: Transaction[];
   categoryBreakdown?: { [category: string]: { amount: number; transactions: Transaction[] } };

@@ -59,24 +59,24 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
         // Berechne USt pro Transaktion basierend auf der tatsächlichen Kategorie
         netTotal = 0;
         vatTotal = 0;
-        
+
         transactions.forEach(transaction => {
             const categoryKey = categories[transaction.id] || transaction.euerCategory;
             if (!categoryKey) return;
-            
+
             const category = skrCategories[categoryKey];
             if (!category) return;
-            
+
             const grossAmount = Math.abs(transaction.BetragNumeric);
-            
+
             if (category.vat > 0) {
                 hasVat = true;
                 const netAmount = grossAmount / (1 + category.vat / 100);
                 const vatAmount = grossAmount - netAmount;
-                
+
                 netTotal += netAmount;
                 vatTotal += vatAmount;
-                
+
                 // Sammle USt-Sätze für die Anzeige
                 if (!vatRates[category.vat]) {
                     vatRates[category.vat] = 0;
@@ -87,7 +87,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                 netTotal += grossAmount;
             }
         });
-        
+
         // Wenn keine USt vorhanden ist, setze Netto = Brutto
         if (!hasVat) {
             netTotal = grossTotal;
@@ -96,8 +96,8 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
     }
 
     const rows = [];
-    
-    // Zusammenfassungszeile mit Gesamtsumme und USt-Info
+
+    // Zusammenfassungszeile mit Gesamtsumme und USt-Info inkl. pro-Satz-Aufschlüsselung
     rows.push(
         <tr key="summary" className="border-b border-gray-200 bg-gray-50">
             <td className="px-2 py-2 text-left w-20">  {/* Feste Breite wie bei Transaktionen */}
@@ -117,19 +117,28 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                                 <Minus size={10} />
                                 <span className="font-mono">{formatCurrency(netTotal)}</span>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <Percent size={10} />
-                                <span className="font-mono">
-                                    {formatCurrency(vatTotal)}
-                                </span>
-                            </div>
+                            {/* Pro-Satz-Aufschlüsselung - zeigt USt-Sätze direkt ohne Gesamtsumme */}
+                            {Object.keys(vatRates).length > 0 && (
+                                <div className="flex flex-wrap justify-end gap-x-2 gap-y-0.5">
+                                    {Object.entries(vatRates)
+                                        .sort((a, b) => Number(a[0]) - Number(b[0]))
+                                        .map(([rate, amount]) => (
+                                            <div key={rate} className="flex items-center gap-1">
+                                                <Percent size={10} />
+                                                <span className="font-mono">
+                                                    {Number(rate).toFixed(0)}%: {formatCurrency(amount)}
+                                                </span>
+                                            </div>
+                                        ))}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
             </td>
         </tr>
     );
-    
+
     // Transaction detail rows
     transactions.forEach((transaction, index) => {
         rows.push(
@@ -153,18 +162,17 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
                     )}
                 </td>
                 <td className="px-2 py-1 text-right w-28">
-                    <span className={`text-xs font-mono ${
-                        transaction.BetragNumeric > 0 
-                            ? 'text-green-600 dark:text-green-400' 
+                    <span className={`text-xs font-mono ${transaction.BetragNumeric > 0
+                            ? 'text-green-600 dark:text-green-400'
                             : 'text-red-600 dark:text-red-400'
-                    }`}>
+                        }`}>
                         {formatCurrency(transaction.BetragNumeric)}
                     </span>
                 </td>
             </tr>
         );
     });
-    
+
     return <>{rows}</>;
 };
 
