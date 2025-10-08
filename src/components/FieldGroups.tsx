@@ -26,7 +26,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                     {/* Section Header - Only show if has title */}
 {group.title && (
                         <div className="py-3 px-4 bg-slate-50 border-l-4 border-primary text-left">
-<h3 className="text-base md:text-lg font-normal text-gray-900 font-mono" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{group.title}</h3>
+<h3 className="text-base md:text-lg font-normal text-gray-900">{group.title}</h3>
 {group.description && group.description !== group.title && (
                                 <p
                                     className="text-xs md:text-sm text-gray-600 mt-1 font-mono"
@@ -58,7 +58,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
 
                                     {/* Field Label - Left */}
                                     <div className="flex-1 px-4 text-left">
-                                        <span className="text-sm text-gray-800">
+<span className="text-sm text-gray-800 font-mono" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
                                             {field.label}
                                         </span>
                                     </div>
