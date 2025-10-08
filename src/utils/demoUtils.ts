@@ -1,5 +1,5 @@
 import type { Transaction } from '../types';
-import { demoTransactions, type DemoTransaction } from '../data/demo-transactions';
+import { demoTransactions } from '../data/demo-transactions';
 
 /**
  * Converts demo transaction data to the same format as CSV upload

@@ -8,13 +8,15 @@ interface FieldGroupsProps {
     isKleinunternehmer: boolean;
     categories: { [key: number]: string };
     skrCategories: Record<string, { code: string; name: string; type: string; vat: number; elsterField?: string }>;
+    currentSkr?: 'SKR03' | 'SKR04' | 'SKR49';
 }
 
 const FieldGroups: React.FC<FieldGroupsProps> = ({
     groups,
     isKleinunternehmer,
     categories,
-    skrCategories
+    skrCategories,
+    currentSkr: _currentSkr
 }) => {
     // State für aufgeklappte Transaktionsdetails
     const [expandedFields, setExpandedFields] = useState<Set<string>>(new Set());
