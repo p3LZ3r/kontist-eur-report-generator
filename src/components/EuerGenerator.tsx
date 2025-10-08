@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { Upload, FileText, Building, ChevronLeft, ChevronRight, RotateCcw, AlertCircle, X, Cpu, ShieldOff, Database, Github } from 'lucide-react';
+import { Upload, FileText, Building, ChevronLeft, ChevronRight, RotateCcw, AlertCircle, X, Cpu, ShieldOff, Database, Github, Calculator, Sheet } from 'lucide-react';
 import { getCategoriesForSkr, skr04Categories } from '../utils/categoryMappings';
 import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction } from '../utils/transactionUtils';
 import { calculateEuer } from '../utils/euerCalculations';
@@ -270,7 +270,7 @@ const EuerGenerator = () => {
                             href="https://kontist.com/r/torsten7HU"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block bg-white p-2 rounded-lg transform rotate-[-2deg] translate-y-2 transition-all duration-300 hover:rotate-[-0.5deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md"
+                            className="inline-block bg-white p-2 rounded-lg transform rotate-[-2deg] translate-y-2 transition-all duration-300 hover:rotate-[-0.5deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md cursor-pointer"
                             aria-label="Kontist Website besuchen"
                         >
                             <img
@@ -285,7 +285,7 @@ const EuerGenerator = () => {
                             href="https://holvi.com"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block bg-white p-2 rounded-lg transform rotate-[3deg] translate-y-2 transition-all duration-300 hover:rotate-[1deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md"
+                            className="inline-block bg-white p-2 rounded-lg transform rotate-[3deg] translate-y-2 transition-all duration-300 hover:rotate-[1deg] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 shadow-sm hover:shadow-md cursor-pointer"
                             aria-label="Holvi Website besuchen"
                         >
                             <img
@@ -486,21 +486,23 @@ const EuerGenerator = () => {
                         <div className="flex p-1 bg-muted rounded-lg">
                             <button
                                 onClick={() => setCurrentView('transactions')}
-                                className={`px-4 py-2 rounded-md text-sm transition-colors ${currentView === 'transactions'
+                                className={`px-4 py-2 rounded-md text-sm transition-colors flex items-center gap-2 cursor-pointer ${currentView === 'transactions'
                                     ? 'bg-background text-foreground'
                                     : 'text-muted-foreground hover:text-foreground'
                                     }`}
                             >
-                                1. Transaktionen
+                                <Sheet size={16} />
+                                Transaktionen
                             </button>
                             <button
                                 onClick={() => setCurrentView('elster')}
-                                className={`px-4 py-2 rounded-md text-sm transition-colors ${currentView === 'elster'
+                                className={`px-4 py-2 rounded-md text-sm transition-colors flex items-center gap-2 cursor-pointer ${currentView === 'elster'
                                     ? 'bg-background text-foreground'
                                     : 'text-muted-foreground hover:text-foreground'
                                     }`}
                             >
-                                2. Elsterfelder
+                                <Calculator size={16} />
+                                Elsterfelder
                             </button>
                         </div>
                     </div>
@@ -511,27 +513,27 @@ const EuerGenerator = () => {
                             <CardContent className="p-6">
                                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-6">
                                     <h2 className="text-2xl text-foreground flex items-center gap-2">
-                                        <FileText className="text-primary" size={24} aria-hidden="true" />
                                         Transaktionen kategorisieren
                                     </h2>
-                                    <div className="flex items-center gap-4">
-                                        <div className="flex items-center gap-3 px-3 py-1 bg-success/10 rounded-full border border-success/20">
-                                            <Building className="text-success" size={16} aria-hidden="true" />
-                                            <span className="text-sm text-success">
-                                                {bankType === 'kontist' ? 'Kontist' : 'Holvi'} CSV erkannt - {transactions.length} Transaktionen
+
+                                    <div className="flex-1 flex justify-center">
+                                        <div className="px-4 py-1 bg-green-100 text-green-800 rounded-full border border-green-200">
+                                            <span className="text-sm font-medium">
+                                                {bankType === 'kontist' ? 'Kontist' : 'Holvi'} CSV erkannt
                                             </span>
                                         </div>
-                                        <Button
-                                            onClick={resetAndUploadNew}
-                                            variant="outline"
-                                            size="sm"
-                                            className="flex items-center gap-2 text-muted-foreground hover:text-foreground focus-ring"
-                                            title="Neue CSV-Datei hochladen (aktueller Fortschritt geht verloren)"
-                                        >
-                                            <RotateCcw size={16} aria-hidden="true" />
-                                            Neue Datei
-                                        </Button>
                                     </div>
+
+                                    <Button
+                                        onClick={resetAndUploadNew}
+                                        variant="outline"
+                                        size="sm"
+                                        className="flex items-center gap-2 text-muted-foreground hover:text-foreground focus-ring"
+                                        title="Neue CSV-Datei hochladen (aktueller Fortschritt geht verloren)"
+                                    >
+                                        <RotateCcw size={16} aria-hidden="true" />
+                                        Neue Datei
+                                    </Button>
                                 </div>
 
                                 {/* Pagination Controls */}
@@ -550,9 +552,9 @@ const EuerGenerator = () => {
                                             <ChevronLeft size={16} aria-hidden="true" />
                                             Zurück
                                         </Button>
-                                        <span className="px-3 py-1 bg-primary/10 text-primary rounded-md">
+                                        <div className="flex items-center px-3 py-1.5 bg-muted text-muted-foreground rounded-md border text-sm h-8">
                                             {currentPage} / {totalPages}
-                                        </span>
+                                        </div>
                                         <Button
                                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                             disabled={currentPage === totalPages}
@@ -585,15 +587,30 @@ const EuerGenerator = () => {
                                                 const isPrivate = category?.type === 'private';
 
                                                 return (
-                                                    <tr key={transaction.id} className={`border-b border-border hover:bg-muted/50 transition-colors ${isPrivate ? 'bg-private/5' : ''}`}>
-                                                        <td className="p-3 text-foreground text-sm whitespace-nowrap text-left">{transaction.dateField}</td>
+                                                    <tr key={transaction.id} className={`border-b border-border ${isPrivate ? 'bg-private/5' : ''}`}>
+                                                        <td className="p-3 text-foreground text-sm whitespace-nowrap text-left font-mono text-center">
+                                                            {(() => {
+                                                                try {
+                                                                    const date = new Date(transaction.dateField);
+                                                                    const day = date.getDate().toString().padStart(2, '0');
+                                                                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                                                                    const year = date.getFullYear();
+                                                                    return `${day}.${month}.${year}`;
+                                                                } catch {
+                                                                    return transaction.dateField;
+                                                                }
+                                                            })()}
+                                                        </td>
                                                         <td className="p-3 text-foreground truncate max-w-0 text-left" title={transaction.counterpartyField}>
                                                             <div className="truncate text-sm">{transaction.counterpartyField}</div>
                                                         </td>
-                                                        <td className={`p-3 whitespace-nowrap text-right text-sm ${transaction.BetragNumeric > 0 ? 'text-income' :
+                                                        <td className={`p-3 whitespace-nowrap text-right text-sm font-mono ${transaction.BetragNumeric > 0 ? 'text-income' :
                                                             isPrivate ? 'text-private' : 'text-expense'
                                                             }`}>
-                                                            {transaction.BetragNumeric.toFixed(2)}€
+                                                            {transaction.BetragNumeric.toLocaleString('de-DE', {
+                                                                minimumFractionDigits: 2,
+                                                                maximumFractionDigits: 2
+                                                            })} €
                                                         </td>
                                                         <td className="p-3 text-muted-foreground truncate max-w-0 text-left" title={transaction.purposeField}>
                                                             <div className="truncate text-sm">{transaction.purposeField}</div>
@@ -604,7 +621,7 @@ const EuerGenerator = () => {
                                                                 value={categoryKey}
                                                                 onValueChange={(value) => updateCategory(transaction.id, value)}
                                                             >
-                                                                <SelectTrigger className={`w-full min-w-0 focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring text-sm ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
+                                                                <SelectTrigger className={`w-full min-w-0 focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring text-sm cursor-pointer hover:cursor-pointer ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
                                                                     <SelectValue />
                                                                 </SelectTrigger>
                                                                 <SelectContent className="max-h-60 overflow-y-auto">
@@ -652,15 +669,30 @@ const EuerGenerator = () => {
                                                 <li key={transaction.id} className={`animate-fade-in py-4 px-2 ${isPrivate ? 'bg-private/5' : ''}`}>
                                                     <div className="flex justify-between items-start mb-3">
                                                         <div className="flex-1">
-                                                            <div className="text-sm text-muted-foreground mb-1">{transaction.dateField}</div>
+                                                            <div className="text-sm text-muted-foreground mb-1 font-mono">
+                                                                {(() => {
+                                                                    try {
+                                                                        const date = new Date(transaction.dateField);
+                                                                        const day = date.getDate().toString().padStart(2, '0');
+                                                                        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                                                                        const year = date.getFullYear();
+                                                                        return `${day}.${month}.${year}`;
+                                                                    } catch {
+                                                                        return transaction.dateField;
+                                                                    }
+                                                                })()}
+                                                            </div>
                                                             <div className="text-foreground truncate" title={transaction.counterpartyField}>
                                                                 {transaction.counterpartyField}
                                                             </div>
                                                         </div>
-                                                        <div className={`text-lg ${transaction.BetragNumeric > 0 ? 'text-income' :
+                                                        <div className={`text-lg font-mono ${transaction.BetragNumeric > 0 ? 'text-income' :
                                                             isPrivate ? 'text-private' : 'text-expense'
                                                             }`}>
-                                                            {transaction.BetragNumeric.toFixed(2)}€
+                                                            {transaction.BetragNumeric.toLocaleString('de-DE', {
+                                                                minimumFractionDigits: 2,
+                                                                maximumFractionDigits: 2
+                                                            })} €
                                                         </div>
                                                     </div>
 
@@ -675,7 +707,7 @@ const EuerGenerator = () => {
                                                             value={categoryKey}
                                                             onValueChange={(value) => updateCategory(transaction.id, value)}
                                                         >
-                                                            <SelectTrigger id={`category-${transaction.id}`} className={`w-full focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
+                                                            <SelectTrigger id={`category-${transaction.id}`} className={`w-full focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring cursor-pointer hover:cursor-pointer ${isPrivate ? 'border-private/30 bg-private/5' : ''}`}>
                                                                 <SelectValue />
                                                             </SelectTrigger>
                                                             <SelectContent className="max-h-60 overflow-y-auto">
@@ -711,83 +743,46 @@ const EuerGenerator = () => {
                                 </div>
 
                                 {/* Pagination Controls unten */}
-                                <div className="flex flex-wrap justify-center items-center gap-2 mt-8">
-                                    <Button
-                                        onClick={() => setCurrentPage(1)}
-                                        disabled={currentPage === 1}
-                                        variant="outline"
-                                        size="sm"
-                                        className="focus-ring"
-                                    >
-                                        Erste
-                                    </Button>
-                                    <Button
-                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                        disabled={currentPage === 1}
-                                        variant="outline"
-                                        size="sm"
-                                        className="focus-ring"
-                                    >
-                                        ‹
-                                    </Button>
-                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
-                                        .filter((pageNum) => {
-                                            // Show first page, last page, current page, and pages around current
-                                            if (totalPages <= 5) return true;
-                                            if (pageNum === 1 || pageNum === totalPages) return true;
-                                            return Math.abs(pageNum - currentPage) <= 1;
-                                        })
-                                        .map((pageNum, index, visiblePages) => {
-                                            // Add ellipsis where needed
-                                            const prevPage = visiblePages[index - 1];
-                                            const showEllipsis = prevPage && pageNum - prevPage > 1;
-
-                                            return (
-                                                <div key={pageNum} className="flex items-center">
-                                                    {showEllipsis && (
-                                                        <span className="px-2 text-muted-foreground">...</span>
-                                                    )}
-                                                    <Button
-                                                        onClick={() => setCurrentPage(pageNum)}
-                                                        variant={currentPage === pageNum ? 'default' : 'outline'}
-                                                        size="sm"
-                                                        className="focus-ring"
-                                                    >
-                                                        {pageNum}
-                                                    </Button>
-                                                </div>
-                                            );
-                                        })}
-                                    <Button
-                                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                        disabled={currentPage === totalPages}
-                                        variant="outline"
-                                        size="sm"
-                                        className="focus-ring"
-                                    >
-                                        ›
-                                    </Button>
-                                    <Button
-                                        onClick={() => setCurrentPage(totalPages)}
-                                        disabled={currentPage === totalPages}
-                                        variant="outline"
-                                        size="sm"
-                                        className="focus-ring"
-                                    >
-                                        Letzte
-                                    </Button>
+                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mt-8">
+                                    <div className="text-sm text-muted-foreground text-center sm:text-left">
+                                        Zeige {indexOfFirstTransaction + 1}-{Math.min(indexOfLastTransaction, transactions.length)} von {transactions.length}
+                                    </div>
+                                    <div className="flex items-center gap-2 justify-center">
+                                        <Button
+                                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                            disabled={currentPage === 1}
+                                            variant="outline"
+                                            size="sm"
+                                            className="flex items-center gap-1 focus-ring"
+                                        >
+                                            <ChevronLeft size={16} aria-hidden="true" />
+                                            Zurück
+                                        </Button>
+                                        <div className="flex items-center px-3 py-1.5 bg-muted text-muted-foreground rounded-md border text-sm h-8">
+                                            {currentPage} / {totalPages}
+                                        </div>
+                                        <Button
+                                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                            disabled={currentPage === totalPages}
+                                            variant="outline"
+                                            size="sm"
+                                            className="flex items-center gap-1 focus-ring"
+                                        >
+                                            Weiter
+                                            <ChevronRight size={16} aria-hidden="true" />
+                                        </Button>
+                                    </div>
                                     <Button
                                         onClick={() => {
                                             window.scrollTo({ top: 0, behavior: 'smooth' });
-                                            // Switch to elster view after scrolling
                                             setTimeout(() => setCurrentView('elster'), 300);
                                         }}
                                         variant="default"
                                         size="sm"
-                                        className="flex items-center gap-2 focus-ring ml-4"
+                                        className="flex items-center gap-2 focus-ring"
                                     >
                                         <ChevronLeft size={16} className="rotate-90" aria-hidden="true" />
-                                        Zu den Elster-Feldern
+                                        Zu den Elsterfeldern
                                     </Button>
                                 </div>
                             </CardContent>
@@ -801,61 +796,32 @@ const EuerGenerator = () => {
                                 <div className="flex flex-col lg:flex-row">
                                     {/* Navigation Sidebar */}
                                     <div className="lg:w-80 border-b lg:border-b-0 lg:border-r border-border bg-muted/30">
-<div className="p-6 h-full flex flex-col">
-<NavigationSidebar
+                                        <div className="p-6 h-full flex flex-col">
+                                            <NavigationSidebar
                                                 sections={guidanceData.sections}
                                                 currentSection={currentSection}
                                                 onSectionChange={handleSectionChange}
                                                 currentSkr={currentSkr}
                                                 isKleinunternehmer={isKleinunternehmer}
+                                                euerCalculation={euerCalculation}
                                             />
                                         </div>
                                     </div>
 
-{/* Main Content */}
+                                    {/* Main Content */}
                                     <div className="flex-1 min-h-[600px]">
-<div className="p-6 space-y-6">
-                                            {/* Compact Summary Cards */}
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="p-4 rounded-lg border border-border bg-background">
-                                                    <div className="text-sm text-muted-foreground mb-2">Gewinnermittlung (Zahlungsbasis)</div>
-                                                    <div className="space-y-1">
-                                                        <div className="flex items-center justify-between text-sm">
-                                                            <span>Summe Betriebseinnahmen</span>
-                                                            <span className="font-mono">{euerCalculation.totalIncome.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
-                                                        </div>
-                                                        <div className="flex items-center justify-between text-sm">
-                                                            <span>Summe Betriebsausgaben</span>
-                                                            <span className="font-mono">{euerCalculation.totalExpenses.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
-                                                        </div>
-                                                        <div className="flex items-center justify-between text-sm pt-1 border-t border-border/60 mt-2">
-                                                            <span className="font-medium">Gewinn / Verlust</span>
-                                                            <span className="font-mono font-medium">{euerCalculation.profit.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="p-4 rounded-lg border border-border bg-background">
-                                                    <div className="text-sm text-muted-foreground mb-2">Private Geldflüsse</div>
-                                                    <div className="space-y-1">
-                                                        <div className="flex items-center justify-between text-sm">
-                                                            <span>Privatentnahmen (Geld)</span>
-                                                            <span className="font-mono">{euerCalculation.privateWithdrawals.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
-                                                        </div>
-                                                        <div className="flex items-center justify-between text-sm">
-                                                            <span>Privateinlagen (Geld)</span>
-                                                            <span className="font-mono">{euerCalculation.privateDeposits.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div className="p-6 space-y-6">
 
-<FieldGroups
+                                            <FieldGroups
                                                 groups={guidanceData.groups.filter(group => {
                                                     if (currentSection === 'income') return group.category === 'income';
                                                     if (currentSection === 'expenses') return group.category === 'expense';
                                                     if (currentSection === 'profit') return group.category === 'total' || group.category === 'tax';
                                                     return group.category === 'income';
                                                 })}
+                                                isKleinunternehmer={isKleinunternehmer}
+                                                categories={categories}
+                                                skrCategories={skrCategories}
                                             />
                                         </div>
                                     </div>

@@ -36,7 +36,11 @@ export const calculateEuer = (
         vatPaid: 0,
         vatBalance: 0,
         privateWithdrawals: 0,
-        privateDeposits: 0
+        privateDeposits: 0,
+        // Transaktionsdetails für aufklappbare Bereiche
+        incomeTransactions: {},
+        expenseTransactions: {},
+        privateTransactionDetails: {}
     };
 
     transactions.forEach(transaction => {
@@ -59,17 +63,38 @@ export const calculateEuer = (
         if (category.type === 'income') {
             result.income[categoryKey] = (result.income[categoryKey] || 0) + netAmount;
             result.totalIncome += netAmount;
+            
+            // Transaktionsdetails sammeln
+            if (!result.incomeTransactions[categoryKey]) {
+                result.incomeTransactions[categoryKey] = [];
+            }
+            result.incomeTransactions[categoryKey].push(transaction);
+            
             if (!isKleinunternehmer) {
                 result.vatOwed += vatAmount;
             }
         } else if (category.type === 'expense') {
             result.expenses[categoryKey] = (result.expenses[categoryKey] || 0) + netAmount;
             result.totalExpenses += netAmount;
+            
+            // Transaktionsdetails sammeln
+            if (!result.expenseTransactions[categoryKey]) {
+                result.expenseTransactions[categoryKey] = [];
+            }
+            result.expenseTransactions[categoryKey].push(transaction);
+            
             if (!isKleinunternehmer) {
                 result.vatPaid += vatAmount;
             }
         } else if (category.type === 'private') {
             result.privateTransactions[categoryKey] = (result.privateTransactions[categoryKey] || 0) + grossAmount;
+            
+            // Transaktionsdetails sammeln
+            if (!result.privateTransactionDetails[categoryKey]) {
+                result.privateTransactionDetails[categoryKey] = [];
+            }
+            result.privateTransactionDetails[categoryKey].push(transaction);
+            
             if (categoryKey === 'private_withdrawal') {
                 result.privateWithdrawals += grossAmount;
             } else if (categoryKey === 'private_deposit') {
@@ -335,14 +360,42 @@ export const populateElsterFieldsFromCalculation = (
         const overviewData = elsterOverview[fieldNumber];
         let value = overviewData?.amount || 0;
         let source = 'calculated';
+        let transactions: Transaction[] = [];
+        let categoryBreakdown: { [category: string]: { amount: number; transactions: Transaction[] } } = {};
 
         // Handle special total fields from EÜR totals
         if (fieldNumber === '52') {
             value = euerCalculation.totalIncome;
             source = 'calculated';
+            // Sammle alle Einnahmen-Transaktionen
+            Object.values(euerCalculation.incomeTransactions).forEach(categoryTransactions => {
+                transactions.push(...categoryTransactions);
+            });
         } else if (fieldNumber === '54') {
             value = euerCalculation.profit;
             source = 'calculated';
+        } else if (overviewData?.categories) {
+            // Für berechnete Felder mit Kategorien: sammle die entsprechenden Transaktionen
+            overviewData.categories.forEach(categoryData => {
+                // Finde die entsprechende Kategorie in den Transaktionsdaten
+                const categoryKey = Object.keys(skr04Categories).find(key => 
+                    skr04Categories[key].name === categoryData.name
+                );
+                
+                if (categoryKey) {
+                    const categoryTransactions = 
+                        euerCalculation.incomeTransactions[categoryKey] || 
+                        euerCalculation.expenseTransactions[categoryKey] || 
+                        [];
+                    
+                    transactions.push(...categoryTransactions);
+                    
+                    categoryBreakdown[categoryData.name] = {
+                        amount: categoryData.amount,
+                        transactions: [...categoryTransactions]
+                    };
+                }
+            });
         }
 
         fieldValues.push({
@@ -351,7 +404,10 @@ export const populateElsterFieldsFromCalculation = (
             value: value,
             source: source as 'transaction' | 'user_data' | 'calculated',
             required: fieldDef.required || false,
-            type: fieldDef.type as 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc'
+            type: fieldDef.type as 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc',
+            // Transaktionsdetails hinzufügen, wenn vorhanden
+            transactions: transactions.length > 0 ? transactions : undefined,
+            categoryBreakdown: Object.keys(categoryBreakdown).length > 0 ? categoryBreakdown : undefined
         });
     });
 

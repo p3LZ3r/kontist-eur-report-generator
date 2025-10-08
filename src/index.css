@@ -291,6 +291,17 @@
     outline-offset: -2px;
   }
 
+  /* Cursor utilities */
+  .hover-pointer {
+    cursor: default;
+  }
+  .hover-pointer:hover {
+    cursor: pointer;
+  }
+  .cursor-pointer-important {
+    cursor: pointer !important;
+  }
+  
   /* Responsive table utilities */
   .table-responsive {
     overflow-x: auto;

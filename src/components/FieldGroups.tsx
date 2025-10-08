@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ChevronDown, Sigma } from 'lucide-react';
 import type { FieldGroup } from '../types';
+import TransactionDetails from './TransactionDetails';
 
 interface FieldGroupsProps {
     groups: FieldGroup[];
+    isKleinunternehmer: boolean;
+    categories: { [key: number]: string };
+    skrCategories: Record<string, { code: string; name: string; type: string; vat: number; elsterField?: string }>;
 }
 
 const FieldGroups: React.FC<FieldGroupsProps> = ({
-    groups
+    groups,
+    isKleinunternehmer,
+    categories,
+    skrCategories
 }) => {
+    // State für aufgeklappte Transaktionsdetails
+    const [expandedFields, setExpandedFields] = useState<Set<string>>(new Set());
+    
+    const toggleFieldExpansion = (fieldId: string) => {
+        const newExpanded = new Set(expandedFields);
+        if (newExpanded.has(fieldId)) {
+            newExpanded.delete(fieldId);
+        } else {
+            newExpanded.add(fieldId);
+        }
+        setExpandedFields(newExpanded);
+    };
+    
     const formatValue = (value: number | string) => {
         if (typeof value === 'number') {
             return new Intl.NumberFormat('de-DE', {
@@ -38,48 +59,103 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                         </div>
                     )}
                     
-                    {/* Fields - Simple table-like layout */}
-                    <div className="space-y-0">
-                        {group.fields.map((field, fieldIndex) => {
-                            const isEmpty = !field.value || field.value === 0;
-                            const isEven = fieldIndex % 2 === 0;
-                            
-                            return (
-                                <div
-                                    key={field.field}
-className={`flex items-center py-2 px-2 border-b border-gray-200 ${
-                                        isEven ? 'bg-white' : 'bg-gray-50'
-                                    }`}
-                                >
-                                    {/* Field Number - Left */}
-<div className="flex-shrink-0 w-8 pr-0 flex items-center justify-center">
-                                        <span
-                                            className="inline-flex items-center justify-center px-1 py-0.5 rounded-sm bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground"
-                                            style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace' }}
-                                        >
-                                            {field.field}
-                                        </span>
-                                    </div>
+                    {/* Fields - Table layout */}
+                    <table className="w-full table-fixed">
+                        <tbody>
+                            {group.fields.map((field, fieldIndex) => {
+                                const isEmpty = !field.value || field.value === 0;
+                                const isEven = fieldIndex % 2 === 0;
+                                const rows = [];
+                                
+                                // Main field row
+                                rows.push(
+                                    <tr
+                                        key={field.field}
+                                        className={`border-b border-gray-200 ${
+                                            isEven ? 'bg-white' : 'bg-gray-50'
+                                        } ${
+                                            field.transactions && field.transactions.length > 0 
+                                                ? 'cursor-pointer hover:bg-muted/20 transition-colors' 
+                                                : ''
+                                        }`}
+                                        onClick={() => {
+                                            if (field.transactions && field.transactions.length > 0) {
+                                                toggleFieldExpansion(field.field);
+                                            }
+                                        }}
+                                    >
+                                        {/* Field Number - Left */}
+                                        <td className="w-20 p-2">  {/* Feste Breite mit gleichmäßigem Padding */}
+                                            <div className="flex items-center justify-center h-full">
+                                                <span
+                                                    className="inline-flex items-center justify-center w-8 h-6 rounded-sm bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground"
+                                                    style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace' }}
+                                                >
+                                                    {field.field}
+                                                </span>
+                                            </div>
+                                        </td>
 
-                                    {/* Field Label - Left */}
-<div className="flex-1 px-2 text-left">
-<span className="text-sm text-gray-800 font-mono" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
-                                            {field.label}
-                                        </span>
-                                    </div>
+                                        {/* Field Label - Left */}
+                                        <td className="px-2 py-2 text-left">
+                                            <span className="text-sm text-gray-800 font-mono" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
+                                                {field.label}
+                                            </span>
+                                        </td>
 
-                                    {/* Amount - Right */}
-                                    <div className="flex-shrink-0 text-right min-w-28">
-                                        <span className={`font-mono text-sm ${
-                                            isEmpty ? 'text-gray-400' : 'text-gray-900'
-                                        }`}>
-                                            {formatValue(field.value)}
-                                        </span>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                                        {/* Amount - Right */}
+                                        <td className="w-28 px-2 py-2 text-right">  {/* Feste Breite */}
+                                            <div className="flex items-center justify-end gap-2">
+                                                {field.transactions && field.transactions.length > 0 && (
+                                                    <>
+                                                        <div className="flex items-center gap-1">
+                                                            <Sigma size={10} className="text-muted-foreground" />
+                                                            <span className="text-xs text-muted-foreground">
+                                                                {field.transactions.length}
+                                                            </span>
+                                                        </div>
+                                                        <ChevronDown
+                                                            size={16}
+                                                            className={`text-muted-foreground transition-transform duration-200 flex-shrink-0 ${
+                                                                expandedFields.has(field.field) ? 'rotate-180' : 'rotate-0'
+                                                            }`}
+                                                            style={{ minWidth: '16px', minHeight: '16px' }}
+                                                            aria-label="Details anzeigen/ausblenden"
+                                                        />
+                                                    </>
+                                                )}
+                                                <span className={`font-mono text-sm ${
+                                                    isEmpty ? 'text-gray-400' : 'text-gray-900'
+                                                }`}>
+                                                    {formatValue(field.value)}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                );
+                                
+                                // Add transaction detail rows if available
+                                if (field.transactions && field.transactions.length > 0) {
+                                    const transactionRows = (
+                                        <TransactionDetails
+                                            key={`details-${field.field}`}
+                                            transactions={field.transactions}
+                                            categoryBreakdown={field.categoryBreakdown}
+                                            isExpanded={expandedFields.has(field.field)}
+                                            onToggle={() => toggleFieldExpansion(field.field)}
+                                            fieldLabel={field.label}
+                                            isKleinunternehmer={isKleinunternehmer}
+                                            categories={categories}
+                                            skrCategories={skrCategories}
+                                        />
+                                    );
+                                    rows.push(transactionRows);
+                                }
+                                
+                                return rows;
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             ))}
 

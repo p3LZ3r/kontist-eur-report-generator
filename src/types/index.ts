@@ -49,6 +49,10 @@ export interface EuerCalculation {
   vatBalance: number;
   privateWithdrawals: number;
   privateDeposits: number;
+  // Transaktionsdetails für aufklappbare Bereiche
+  incomeTransactions: { [key: string]: Transaction[] };
+  expenseTransactions: { [key: string]: Transaction[] };
+  privateTransactionDetails: { [key: string]: Transaction[] };
 }
 
 export type KontenrahmenType = 'SKR03' | 'SKR04' | 'SKR49';
@@ -75,6 +79,9 @@ export interface ElsterFieldValue {
   type: 'personal' | 'income' | 'expense' | 'tax' | 'total' | 'vat' | 'vat_paid' | 'profit_calc';
   required: boolean;
   source: 'transaction' | 'user_data' | 'calculated';
+  // Transaktionsdetails für aufklappbare Bereiche
+  transactions?: Transaction[];
+  categoryBreakdown?: { [category: string]: { amount: number; transactions: Transaction[] } };
 }
 
 // Navigation and UI interfaces for ELSTER guidance system
