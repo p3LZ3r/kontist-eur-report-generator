@@ -24,11 +24,11 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
             {groups.map((group) => (
                 <div key={group.id}>
                     {/* Section Header - Only show if has title */}
-                    {group.title && (
-                        <div className="py-3 px-4 bg-slate-50 border-l-4 border-primary">
-                            <h3 className="text-sm text-gray-800">{group.title}</h3>
-                            {group.description && (
-                                <p className="text-xs text-gray-600 mt-1">{group.description}</p>
+{group.title && (
+                        <div className="py-3 px-4 bg-slate-50 border-l-4 border-primary text-left">
+                            <h3 className="text-base md:text-lg font-semibold text-gray-900">{group.title}</h3>
+                            {group.description && group.description !== group.title && (
+                                <p className="text-xs md:text-sm text-gray-600 mt-1">{group.description}</p>
                             )}
                         </div>
                     )}

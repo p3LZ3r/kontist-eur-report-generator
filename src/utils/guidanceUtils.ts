@@ -59,7 +59,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
         {
             id: 'einnahmen',
             title: 'Betriebseinnahmen',
-            description: 'Betriebseinnahmen',
+            description: '',
             fields: fieldValues.filter(f => f.type === 'income').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
             expanded: true,
             category: 'income'
