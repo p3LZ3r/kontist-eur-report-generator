@@ -89,11 +89,11 @@ const FAQ = () => {
                     {faqData.map((item, index) => (
                         <div
                             key={index}
-                            className="border border-border rounded-lg overflow-hidden"
+                            className="border border-border rounded-lg overflow-hidden bg-card"
                         >
                             <button
                                 onClick={() => toggleFAQ(index)}
-                                className="w-full flex justify-between items-center p-4 text-left hover:bg-muted/50 transition-colors"
+                                className="w-full flex justify-between items-center p-4 text-left hover:bg-muted/50 transition-colors cursor-pointer"
                                 aria-expanded={openIndex === index}
                             >
                                 <span className="text-foreground pr-4">

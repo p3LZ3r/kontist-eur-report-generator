@@ -64,18 +64,18 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             expanded: true,
             category: 'income'
         },
-        
+
         // 4 - BETRIEBSAUSGABEN
         {
             id: 'betriebsausgaben_1',
-            title: '4 - Betriebsausgaben',
+            title: 'Betriebsausgaben',
             description: '',
             fields: fieldValues.filter(f => f.field === '27'),
             expanded: true,
             category: 'expense'
         },
         {
-            id: 'betriebsausgaben_2', 
+            id: 'betriebsausgaben_2',
             title: '',
             description: '',
             fields: fieldValues.filter(f => f.field === '29'),
@@ -85,12 +85,12 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
         {
             id: 'betriebsausgaben_3',
             title: '',
-            description: '', 
+            description: '',
             fields: fieldValues.filter(f => f.field === '30'),
             expanded: true,
             category: 'expense'
         },
-        
+
         // ABSCHREIBUNGEN
         {
             id: 'abschreibungen',
@@ -100,7 +100,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             expanded: true,
             category: 'expense'
         },
-        
+
         // MIETE UND LEASING
         {
             id: 'miete_leasing',
@@ -110,7 +110,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             expanded: true,
             category: 'expense'
         },
-        
+
         // WEITERE AUSGABEN
         {
             id: 'weitere_ausgaben_1',
@@ -121,7 +121,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             category: 'expense'
         },
         {
-            id: 'weitere_ausgaben_2', 
+            id: 'weitere_ausgaben_2',
             title: '',
             description: '',
             fields: fieldValues.filter(f => f.field === '44'),
@@ -136,7 +136,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             expanded: true,
             category: 'expense'
         },
-        
+
         // SONSTIGE AUSGABEN
         {
             id: 'sonstige_ausgaben',
@@ -146,7 +146,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             expanded: true,
             category: 'expense'
         },
-        
+
         // GEWINNERMITTLUNG
         {
             id: 'gewinnermittlung',
@@ -156,7 +156,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             expanded: true,
             category: 'total'
         },
-        
+
         // UMSATZSTEUER
         {
             id: 'umsatzsteuer',
@@ -166,7 +166,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
             expanded: true,
             category: 'tax'
         },
-        
+
         // SUMMEN
         {
             id: 'summen',
@@ -259,7 +259,7 @@ export const prepareGuidanceData = (
     euerCalculation?: EuerCalculation
 ) => {
     // Get populated fields - use provided calculation to avoid duplication
-    const { fieldValues } = euerCalculation 
+    const { fieldValues } = euerCalculation
         ? populateElsterFieldsFromCalculation(euerCalculation, isKleinunternehmer)
         : populateAllElsterFields(transactions, categories, isKleinunternehmer);
 

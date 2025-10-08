@@ -90,6 +90,17 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Ko-fi Support Widget - Load after DOM is ready -->
+  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+  <script>
+    kofiWidgetOverlay.draw('torstenlinnecke', {
+      'type': 'floating-chat',
+      'floating-chat.donateButton.text': 'Unterstützen',
+      'floating-chat.donateButton.background-color': '#1e40af',
+      'floating-chat.donateButton.text-color': '#f8fafc'
+    });
+  </script>
 </body>
 
 </html>

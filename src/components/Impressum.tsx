@@ -1,6 +1,5 @@
 import { ArrowLeft } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card, CardContent, CardHeader } from './ui/card';
 
 interface ImpressumProps {
     onBack: () => void;
@@ -8,28 +7,30 @@ interface ImpressumProps {
 
 const Impressum = ({ onBack }: ImpressumProps) => {
     return (
-        <div className="space-y-6 max-w-4xl mx-auto">
-            <Button
-                onClick={onBack}
-                variant="ghost"
-                className="mb-4"
-            >
-                <ArrowLeft className="mr-2" size={16} />
-                Zurück zum Generator
-            </Button>
+        <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="flex justify-start">
+                <Button
+                    onClick={onBack}
+                    variant="ghost"
+                    className="mb-4 cursor-pointer"
+                >
+                    <ArrowLeft className="mr-2" size={16} />
+                    Zurück zum Generator
+                </Button>
+            </div>
 
-            <Card>
-                <CardHeader>
-                    <h1 className="text-4xl mb-2">Impressum</h1>
-                    <p className="text-muted-foreground">Angaben gemäß § 5 TMG</p>
-                </CardHeader>
-                <CardContent className="space-y-6">
+            <div>
+                <div className="mb-6">
+                    <h1 className="text-4xl mb-2 text-left">Impressum</h1>
+                    <p className="text-muted-foreground text-left">Angaben gemäß § 5 TMG</p>
+                </div>
+                <div className="space-y-6 text-left">
                     <section>
                         <h2 className="text-2xl mb-3">Betreiber</h2>
                         <address className="not-italic text-muted-foreground leading-relaxed">
                             Torsten Linnecke<br />
-                            [Ihre Straße und Hausnummer]<br />
-                            [PLZ] [Stadt]<br />
+                            Sudenburger Str. 23<br />
+                            39112 Magdeburg<br />
                             Deutschland
                         </address>
                     </section>
@@ -37,8 +38,7 @@ const Impressum = ({ onBack }: ImpressumProps) => {
                     <section>
                         <h2 className="text-2xl mb-3">Kontakt</h2>
                         <div className="text-muted-foreground space-y-1">
-                            <p>E-Mail: [Ihre E-Mail-Adresse]</p>
-                            <p>Telefon: [Ihre Telefonnummer] (optional)</p>
+                            <p>E-Mail: me@torsten-linnecke.de</p>
                         </div>
                     </section>
 
@@ -46,7 +46,7 @@ const Impressum = ({ onBack }: ImpressumProps) => {
                         <h2 className="text-2xl mb-3">Umsatzsteuer-ID</h2>
                         <p className="text-muted-foreground">
                             Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-                            [Ihre USt-IdNr.] (falls vorhanden)
+                            DE312197667
                         </p>
                     </section>
 
@@ -59,23 +59,7 @@ const Impressum = ({ onBack }: ImpressumProps) => {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl mb-3">EU-Streitschlichtung</h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{' '}
-                            <a
-                                href="https://ec.europa.eu/consumers/odr/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary hover:underline"
-                            >
-                                https://ec.europa.eu/consumers/odr/
-                            </a>.<br />
-                            Unsere E-Mail-Adresse finden Sie oben im Impressum.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl mb-3">Verbraucher­streit­beilegung/Universal­schlichtungs­stelle</h2>
+                        <h2 className="text-2xl mb-3">Verbraucherstreitbeilegung</h2>
                         <p className="text-muted-foreground leading-relaxed">
                             Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
                             Verbraucherschlichtungsstelle teilzunehmen.
@@ -132,11 +116,11 @@ const Impressum = ({ onBack }: ImpressumProps) => {
 
                     <section className="pt-6 border-t border-border">
                         <p className="text-xs text-muted-foreground">
-                            Quelle: Erstellt mit Hilfe von eRecht24
+                            Stand: {new Date().toLocaleDateString('de-DE', { year: 'numeric', month: 'long' })}
                         </p>
                     </section>
-                </CardContent>
-            </Card>
+                </div>
+            </div>
         </div>
     );
 };
