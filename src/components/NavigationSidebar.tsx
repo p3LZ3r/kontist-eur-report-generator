@@ -60,10 +60,10 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
         }
     };
 
-    return (
-        <div className="w-full h-fit">
+return (
+        <div className="w-full h-full flex flex-col">
                 {/* Navigation Sections */}
-                <div className="space-y-2">
+                <div className="space-y-2 flex-1">
                     {sections.map((section) => (
                         <Button
                             key={section.id}
@@ -89,12 +89,12 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                     ))}
                 </div>
 
-                {/* Sidebar footer with configuration info */}
-                <div className="mt-4 p-3 rounded-md bg-muted/40 border border-border">
-                    <div className="text-xs text-muted-foreground">Kontenrahmen</div>
-                    <div className="text-sm font-medium text-foreground">{currentSkr}</div>
-                    <div className="text-xs text-muted-foreground mt-2">Kleinunternehmer</div>
-                    <div className="text-sm font-medium text-foreground">{isKleinunternehmer ? 'Ja' : 'Nein'}</div>
+                {/* Sidebar footer with configuration info (subtle, two columns, bottom) */}
+                <div className="mt-auto pt-4 text-xs text-muted-foreground grid grid-cols-2 gap-x-3 gap-y-1">
+                    <div>Kontenrahmen</div>
+                    <div className="text-right">{currentSkr}</div>
+                    <div>Kleinunternehmer</div>
+                    <div className="text-right">{isKleinunternehmer ? 'Ja' : 'Nein'}</div>
                 </div>
         </div>
     );
