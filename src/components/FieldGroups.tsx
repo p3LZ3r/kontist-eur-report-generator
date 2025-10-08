@@ -47,22 +47,22 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                             return (
                                 <div
                                     key={field.field}
-                                    className={`flex items-center py-2 px-4 border-b border-gray-200 ${
+className={`flex items-center py-2 px-2 border-b border-gray-200 ${
                                         isEven ? 'bg-white' : 'bg-gray-50'
                                     }`}
                                 >
                                     {/* Field Number - Left */}
-<div className="flex-shrink-0 w-12 pr-2 text-right">
+<div className="flex-shrink-0 w-8 pr-0 flex items-center justify-center">
                                         <span
-                                            className="inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground"
-                                            style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
+                                            className="inline-flex items-center justify-center px-1 py-0.5 rounded-sm bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground"
+                                            style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace' }}
                                         >
                                             {field.field}
                                         </span>
                                     </div>
 
                                     {/* Field Label - Left */}
-                                    <div className="flex-1 px-4 text-left">
+<div className="flex-1 px-2 text-left">
 <span className="text-sm text-gray-800 font-mono" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
                                             {field.label}
                                         </span>
