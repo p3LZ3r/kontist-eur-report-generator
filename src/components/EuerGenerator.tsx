@@ -802,10 +802,12 @@ const EuerGenerator = () => {
                                     {/* Navigation Sidebar */}
                                     <div className="lg:w-80 border-b lg:border-b-0 lg:border-r border-border bg-muted/30">
                                         <div className="p-6">
-                                            <NavigationSidebar
+<NavigationSidebar
                                                 sections={guidanceData.sections}
                                                 currentSection={currentSection}
                                                 onSectionChange={handleSectionChange}
+                                                currentSkr={currentSkr}
+                                                isKleinunternehmer={isKleinunternehmer}
                                             />
                                         </div>
                                     </div>
@@ -847,16 +849,13 @@ const EuerGenerator = () => {
                                                 </div>
                                             </div>
 
-                                            <FieldGroups
+<FieldGroups
                                                 groups={guidanceData.groups.filter(group => {
                                                     if (currentSection === 'income') return group.category === 'income';
                                                     if (currentSection === 'expenses') return group.category === 'expense';
                                                     if (currentSection === 'profit') return group.category === 'total' || group.category === 'tax';
                                                     return group.category === 'income';
                                                 })}
-                                                isKleinunternehmer={isKleinunternehmer}
-                                                currentYear={new Date().getFullYear()}
-                                                currentSkr={currentSkr}
                                             />
                                         </div>
                                     </div>

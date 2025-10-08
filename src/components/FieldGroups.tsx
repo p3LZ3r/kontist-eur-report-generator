@@ -3,16 +3,10 @@ import type { FieldGroup } from '../types';
 
 interface FieldGroupsProps {
     groups: FieldGroup[];
-    currentYear?: number;
-    currentSkr?: string;
-    isKleinunternehmer?: boolean;
 }
 
 const FieldGroups: React.FC<FieldGroupsProps> = ({
-    groups,
-    isKleinunternehmer = false,
-    currentYear = new Date().getFullYear(),
-    currentSkr = 'SKR04'
+    groups
 }) => {
     const formatValue = (value: number | string) => {
         if (typeof value === 'number') {
@@ -57,8 +51,8 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                         {field.field}
                                     </div>
 
-                                    {/* Field Label - Center */}
-                                    <div className="flex-1 px-4">
+                                    {/* Field Label - Left */}
+                                    <div className="flex-1 px-4 text-left">
                                         <span className="text-sm text-gray-800">
                                             {field.label}
                                         </span>
@@ -79,23 +73,6 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                 </div>
             ))}
 
-            {/* Information Section */}
-            <div className="mt-6 p-6 bg-primary/5 rounded-lg border border-primary/20">
-                <div className="text-center">
-                    <h3 className="text-lg text-foreground mb-2">
-                        ELSTER-Felder Übersicht
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                        Diese Übersicht zeigt Ihnen alle relevanten ELSTER-Felder mit den berechneten Werten für Ihre EÜR.
-                    </p>
-                    <div className="text-center">
-                        <p className="text-xs text-muted-foreground">
-                            Jahr: {currentYear} • Kontenrahmen: {currentSkr} •
-                            {isKleinunternehmer ? ' Kleinunternehmer (Brutto)' : ' Umsatzsteuerpflichtig (Netto)'}
-                        </p>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };

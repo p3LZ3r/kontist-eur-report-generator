@@ -58,7 +58,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
         // 4 - EINNAHMEN
         {
             id: 'einnahmen',
-            title: '4 - Einnahmen',
+            title: 'Betriebseinnahmen',
             description: 'Betriebseinnahmen',
             fields: fieldValues.filter(f => f.type === 'income').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
             expanded: true,
@@ -150,7 +150,7 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
         // GEWINNERMITTLUNG
         {
             id: 'gewinnermittlung',
-            title: '',
+            title: 'Gewinnermittlung',
             description: '',
             fields: fieldValues.filter(f => f.type === 'profit_calc').sort((a, b) => parseInt(a.field) - parseInt(b.field)),
             expanded: true,

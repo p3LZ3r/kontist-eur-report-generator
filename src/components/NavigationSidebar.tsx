@@ -7,23 +7,33 @@ interface NavigationSidebarProps {
     sections: NavigationSection[];
     currentSection: string;
     onSectionChange: (sectionId: string) => void;
+    currentSkr?: string;
+    isKleinunternehmer?: boolean;
 }
 
 const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
     sections,
     currentSection,
-    onSectionChange
+    onSectionChange,
+    currentSkr = 'SKR04',
+    isKleinunternehmer = false
 }) => {
     const getSectionIcon = (sectionId: string) => {
         switch (sectionId) {
-            case 'personal':
+            case 'general':
+                return <FileText size={20} />;
+            case 'advisor':
                 return <User size={20} />;
             case 'income':
                 return <TrendingUp size={20} />;
             case 'expenses':
                 return <TrendingDown size={20} />;
-            case 'totals':
+            case 'profit':
                 return <Calculator size={20} />;
+            case 'reserves':
+                return <FileText size={20} />;
+            case 'withdrawals':
+                return <FileText size={20} />;
             default:
                 return <FileText size={20} />;
         }
@@ -31,14 +41,20 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
 
     const getSectionColor = (sectionId: string) => {
         switch (sectionId) {
-            case 'personal':
+            case 'general':
+                return 'text-muted-foreground';
+            case 'advisor':
                 return 'text-muted-foreground';
             case 'income':
-                return 'text-success';
+                return 'text-green-600';
             case 'expenses':
-                return 'text-muted-foreground';
-            case 'totals':
+                return 'text-red-600';
+            case 'profit':
                 return 'text-primary';
+            case 'reserves':
+                return 'text-muted-foreground';
+            case 'withdrawals':
+                return 'text-muted-foreground';
             default:
                 return 'text-muted-foreground';
         }
@@ -46,14 +62,6 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
 
     return (
         <div className="w-full h-fit">
-                <div className="flex items-center gap-2 mb-6">
-                    <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
-                        <FileText className="text-primary" size={14} />
-                    </div>
-                    <h2 className="text-lg text-foreground">ELSTER Navigation</h2>
-                </div>
-
-
                 {/* Navigation Sections */}
                 <div className="space-y-2">
                     {sections.map((section) => (
@@ -62,7 +70,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                             variant={currentSection === section.id ? 'default' : 'ghost'}
                             className={`w-full justify-start p-3 h-auto ${currentSection === section.id
                                 ? 'bg-primary text-primary-foreground'
-                                : 'hover:bg-muted'
+                                : 'bg-muted/50 hover:bg-muted'
                                 }`}
                             onClick={() => onSectionChange(section.id)}
                         >
@@ -81,6 +89,13 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                     ))}
                 </div>
 
+                {/* Sidebar footer with configuration info */}
+                <div className="mt-4 p-3 rounded-md bg-muted/40 border border-border">
+                    <div className="text-xs text-muted-foreground">Kontenrahmen</div>
+                    <div className="text-sm font-medium text-foreground">{currentSkr}</div>
+                    <div className="text-xs text-muted-foreground mt-2">Kleinunternehmer</div>
+                    <div className="text-sm font-medium text-foreground">{isKleinunternehmer ? 'Ja' : 'Nein'}</div>
+                </div>
         </div>
     );
 };
