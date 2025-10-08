@@ -26,9 +26,9 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                     {/* Section Header - Only show if has title */}
 {group.title && (
                         <div className="py-3 px-4 bg-slate-50 border-l-4 border-primary text-left">
-                            <h3 className="text-base md:text-lg font-semibold text-gray-900">{group.title}</h3>
+                            <h3 className="text-base md:text-lg font-normal text-gray-900">{group.title}</h3>
                             {group.description && group.description !== group.title && (
-                                <p className="text-xs md:text-sm text-gray-600 mt-1">{group.description}</p>
+                                <p className="text-xs md:text-sm text-gray-600 mt-1 font-mono">{group.description}</p>
                             )}
                         </div>
                     )}
