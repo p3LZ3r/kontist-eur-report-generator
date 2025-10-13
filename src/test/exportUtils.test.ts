@@ -3,7 +3,7 @@ import {
     validateElsterData
 } from '../utils/exportUtils';
 import { populateAllElsterFields } from '../utils/euerCalculations';
-import type { Transaction, UserTaxData } from '../types';
+import type { Transaction } from '../types';
 
 // Mock dependencies
 vi.mock('../utils/euerCalculations', () => ({

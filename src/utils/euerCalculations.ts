@@ -360,8 +360,8 @@ export const populateElsterFieldsFromCalculation = (
         const overviewData = elsterOverview[fieldNumber];
         let value = overviewData?.amount || 0;
         let source = 'calculated';
-        let transactions: Transaction[] = [];
-        let categoryBreakdown: { [category: string]: { amount: number; transactions: Transaction[] } } = {};
+        const transactions: Transaction[] = [];
+        const categoryBreakdown: { [category: string]: { amount: number; transactions: Transaction[] } } = {};
 
         // Handle special calculated fields (Summenfelder und berechnete Werte)
         if (fieldNumber === '17') {

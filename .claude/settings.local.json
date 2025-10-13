@@ -53,9 +53,15 @@
       "Bash(npx:*)",
       "Bash(cat:*)",
       "Bash(grep:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(npm run lint:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "task-master-ai",
+    "playwright",
+    "context7"
+  ]
 }

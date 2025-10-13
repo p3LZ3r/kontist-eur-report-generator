@@ -15,10 +15,7 @@ interface TransactionDetailsProps {
 
 const TransactionDetails: React.FC<TransactionDetailsProps> = ({
     transactions,
-    categoryBreakdown: _categoryBreakdown,
     isExpanded,
-    onToggle: _onToggle,
-    fieldLabel: _fieldLabel,
     isKleinunternehmer,
     categories,
     skrCategories
@@ -52,7 +49,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
     let netTotal = grossTotal;
     let vatTotal = 0;
     let hasVat = false;
-    let vatRates: { [rate: number]: number } = {}; // Rate -> Betrag
+    const vatRates: Record<number, number> = {}; // Rate -> Betrag
 
     // USt-Berechnung nur wenn nicht Kleinunternehmer
     if (!isKleinunternehmer) {

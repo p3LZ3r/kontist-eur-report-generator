@@ -7,6 +7,20 @@
   <link href="/src/style.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://umami.torsten-linnecke.de https://storage.ko-fi.com 'unsafe-inline';
+                 style-src 'self' 'unsafe-inline';
+                 img-src 'self' data: https:;
+                 font-src 'self' data:;
+                 connect-src 'self' https://umami.torsten-linnecke.de;
+                 frame-src 'none';
+                 object-src 'none';
+                 base-uri 'self';
+                 form-action 'self';">
+
+
   <!-- Primary Meta Tags -->
   <title>EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER erstellen</title>
   <meta name="title" content="EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER erstellen" />

@@ -1,4 +1,5 @@
 import type { Transaction } from '../types';
+import { sanitizeField } from './sanitization';
 
 // Bank-Format erkennen
 export const detectBankFormat = (csvContent: string): string => {
@@ -32,9 +33,9 @@ export const parseKontistCSV = (csvContent: string): Transaction[] => {
         const betragStr = String(transaction.Betrag || '').replace(',', '.');
         transaction.BetragNumeric = parseFloat(betragStr) || 0;
         transaction.id = index;
-        transaction.dateField = String(transaction.Buchungsdatum || '');
-        transaction.counterpartyField = String(transaction.Empfänger || '');
-        transaction.purposeField = String(transaction.Verwendungszweck || '');
+        transaction.dateField = sanitizeField(String(transaction.Buchungsdatum || ''));
+        transaction.counterpartyField = sanitizeField(String(transaction.Empfänger || ''));
+        transaction.purposeField = sanitizeField(String(transaction.Verwendungszweck || ''));
 
         return transaction as Transaction;
     });
@@ -80,9 +81,9 @@ export const parseHolviCSV = (csvContent: string): Transaction[] => {
         const betragStr = String(transaction.Betrag || '').replace(',', '.');
         transaction.BetragNumeric = parseFloat(betragStr) || 0;
         transaction.id = index;
-        transaction.dateField = String(transaction.Valutadatum || '');
-        transaction.counterpartyField = String(transaction.Gegenpartei || '');
-        transaction.purposeField = String(transaction.Bezeichnung || transaction.Nachricht || '');
+        transaction.dateField = sanitizeField(String(transaction.Valutadatum || ''));
+        transaction.counterpartyField = sanitizeField(String(transaction.Gegenpartei || ''));
+        transaction.purposeField = sanitizeField(String(transaction.Bezeichnung || transaction.Nachricht || ''));
 
         result.push(transaction as Transaction);
     });

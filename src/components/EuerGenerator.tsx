@@ -3,6 +3,7 @@ import { Upload, FileText, Building, ChevronLeft, ChevronRight, RotateCcw, Alert
 import { getCategoriesForSkr, skr04Categories } from '../utils/categoryMappings';
 import { detectBankFormat, parseKontistCSV, parseHolviCSV, categorizeTransaction } from '../utils/transactionUtils';
 import { calculateEuer } from '../utils/euerCalculations';
+import { validateCSVContent } from '../utils/sanitization';
 import { PAGINATION } from '../utils/constants';
 import { prepareGuidanceData } from '../utils/guidanceUtils';
 import { loadDemoData } from '../utils/demoUtils';
@@ -96,6 +97,9 @@ const EuerGenerator = () => {
             if (lines.length < 2) {
                 throw new Error('Die CSV-Datei enthält zu wenig Daten. Mindestens eine Kopfzeile und eine Datenzeile sind erforderlich.');
             }
+
+            // Validate CSV content for security issues
+            validateCSVContent(text);
 
             const detectedBankType = detectBankFormat(text);
             setBankType(detectedBankType);

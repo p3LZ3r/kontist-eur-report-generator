@@ -15,8 +15,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
     groups,
     isKleinunternehmer,
     categories,
-    skrCategories,
-    currentSkr
+    skrCategories
 }) => {
     // State für aufgeklappte Transaktionsdetails
     const [expandedFields, setExpandedFields] = useState<Set<string>>(new Set());
@@ -89,7 +88,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                                             <div className="flex items-center justify-center h-full">
                                                 <span
                                                     className="inline-flex items-center justify-center min-w-10 h-6 px-2 rounded-sm bg-muted/50 border border-border/50 font-mono text-xs text-muted-foreground whitespace-nowrap"
-                                                    style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace' }}
+                                                    style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
                                                 >
                                                     {field.field}
                                                 </span>
