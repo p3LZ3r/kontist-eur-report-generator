@@ -9,53 +9,57 @@ describe('Category Mappings - SKR Categorization Engine', () => {
         });
 
         it('should return SKR04 categories by default', async () => {
+            // Mock fetch failure to trigger fallback
+            global.fetch = vi.fn().mockRejectedValue(new Error('Test environment - no fetch'));
+
             const categories = await getCategoriesForSkr('SKR04');
-            
+
             expect(categories).toBeDefined();
             expect(Object.keys(categories).length).toBeGreaterThan(0);
-            
+
             // Verify it contains expected SKR04 categories
             expect(categories['income_services_19']).toBeDefined();
-            expect(categories['expense_office']).toBeDefined();
-            expect(categories['expense_travel']).toBeDefined();
+            expect(categories['expense_office_supplies']).toBeDefined();
+            expect(categories['expense_travel_domestic']).toBeDefined();
         });
 
         it('should handle SKR03 categories', async () => {
-            // Mock fetch for SKR03 data
+            // Mock fetch for SKR03 data - should return ARRAY format
             global.fetch = vi.fn().mockResolvedValue({
                 ok: true,
-                json: () => Promise.resolve({
-                    'manufacturing_sales': { name: 'Fertigerzeugnisse', type: 'income', code: '8400', vat: 19 },
-                    'raw_materials': { name: 'Rohstoffe', type: 'expense', code: '3000', vat: 19 }
-                })
+                json: () => Promise.resolve([
+                    { leaf: true, name: 'Fertigerzeugnisse', type: 'Ertrag', code: '8400' },
+                    { leaf: true, name: 'Rohstoffe', type: 'Aufwand', code: '3000' }
+                ])
             });
 
             const categories = await getCategoriesForSkr('SKR03');
-            
+
             expect(categories).toBeDefined();
-            expect(categories['manufacturing_sales']).toEqual({
-                name: 'Fertigerzeugnisse', 
-                type: 'income', 
-                code: '8400', 
-                vat: 19
-            });
+            // Check by SKR code since that's the key
+            expect(categories['8400']).toBeDefined();
+            expect(categories['8400'].name).toBe('Fertigerzeugnisse');
+            expect(categories['8400'].type).toBe('income');
         });
 
         it('should handle SKR49 categories for freelancers', async () => {
-            // Mock fetch for SKR49 data
+            // Mock fetch for SKR49 data - should return ARRAY format
             global.fetch = vi.fn().mockResolvedValue({
                 ok: true,
-                json: () => Promise.resolve({
-                    'consulting_income': { name: 'Beratungsleistungen', type: 'income', code: '8590', vat: 19 },
-                    'home_office': { name: 'Häusliches Arbeitszimmer', type: 'expense', code: '6805', vat: 0 }
-                })
+                json: () => Promise.resolve([
+                    { leaf: true, name: 'Beratungsleistungen', type: 'Ertrag', code: '8590' },
+                    { leaf: true, name: 'Häusliches Arbeitszimmer', type: 'Aufwand', code: '6805' }
+                ])
             });
 
             const categories = await getCategoriesForSkr('SKR49');
-            
+
             expect(categories).toBeDefined();
-            expect(categories['consulting_income']).toBeDefined();
-            expect(categories['home_office']).toBeDefined();
+            // Check by SKR code
+            expect(categories['8590']).toBeDefined();
+            expect(categories['8590'].name).toBe('Beratungsleistungen');
+            expect(categories['6805']).toBeDefined();
+            expect(categories['6805'].name).toBe('Häusliches Arbeitszimmer');
         });
 
         it('should fallback to SKR04 when fetch fails', async () => {

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NavigationSidebar from '../components/NavigationSidebar';
-import type { NavigationSection, ProgressState } from '../types';
+import type { NavigationSection } from '../types';
 
 // Mock lucide-react icons
 vi.mock('lucide-react', () => ({
@@ -12,16 +12,17 @@ vi.mock('lucide-react', () => ({
     TrendingUp: () => <div data-testid="trending-up">TrendingUp</div>,
     TrendingDown: () => <div data-testid="trending-down">TrendingDown</div>,
     Calculator: () => <div data-testid="calculator">Calculator</div>,
-    HelpCircle: () => <div data-testid="help-circle">HelpCircle</div>
+    HelpCircle: () => <div data-testid="help-circle">HelpCircle</div>,
+    FileText: () => <div data-testid="file-text">FileText</div>
 }));
 
 describe('NavigationSidebar', () => {
     const mockSections: NavigationSection[] = [
         {
-            id: 'personal',
+            id: 'general',
             title: 'Persönliche Daten',
             description: 'Steuerpflichtige Personendaten',
-            icon: 'user',
+            icon: 'file-text',
             fields: ['1', '2', '3', '4', '5', '6', '7'],
             completed: false,
             required: true
@@ -45,7 +46,7 @@ describe('NavigationSidebar', () => {
             required: true
         },
         {
-            id: 'totals',
+            id: 'profit',
             title: 'Summen',
             description: 'Gesamtbeträge',
             icon: 'calculator',
@@ -55,27 +56,14 @@ describe('NavigationSidebar', () => {
         }
     ];
 
-    const mockProgress: ProgressState = {
-        totalSections: 4,
-        completedSections: 1,
-        totalFields: 20,
-        completedFields: 7,
-        mandatoryFields: 15,
-        completedMandatoryFields: 7
-    };
-
     const mockOnSectionChange = vi.fn();
-    const mockOnHelpToggle = vi.fn();
 
     it('renders navigation sections correctly', () => {
         render(
             <NavigationSidebar
                 sections={mockSections}
-                currentSection="personal"
-                progress={mockProgress}
+                currentSection="general"
                 onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
             />
         );
 
@@ -86,63 +74,53 @@ describe('NavigationSidebar', () => {
         expect(screen.getByText('Summen')).toBeInTheDocument();
     });
 
-    it('displays progress information correctly', () => {
+    it('displays configuration information at the bottom', () => {
         render(
             <NavigationSidebar
                 sections={mockSections}
                 currentSection="personal"
-                progress={mockProgress}
                 onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
+                currentSkr="SKR04"
+                isKleinunternehmer={false}
             />
         );
 
-        expect(screen.getByText('Gesamtfortschritt')).toBeInTheDocument();
-        expect(screen.getByText('1/4 Abschnitte')).toBeInTheDocument();
-        expect(screen.getByText('Felder')).toBeInTheDocument();
-        expect(screen.getByText('7/20')).toBeInTheDocument();
-        expect(screen.getByText('Pflichtfelder')).toBeInTheDocument();
-        expect(screen.getByText('7/15')).toBeInTheDocument();
+        expect(screen.getByText('Kontenrahmen')).toBeInTheDocument();
+        expect(screen.getByText('SKR04')).toBeInTheDocument();
+        expect(screen.getByText('Kleinunternehmer')).toBeInTheDocument();
+        expect(screen.getByText('Nein')).toBeInTheDocument();
     });
 
     it('shows correct icons for different sections', () => {
         render(
             <NavigationSidebar
                 sections={mockSections}
-                currentSection="personal"
-                progress={mockProgress}
+                currentSection="general"
                 onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
             />
         );
 
-        expect(screen.getByTestId('user')).toBeInTheDocument();
+        expect(screen.getByTestId('file-text')).toBeInTheDocument();
         expect(screen.getByTestId('trending-up')).toBeInTheDocument();
         expect(screen.getByTestId('trending-down')).toBeInTheDocument();
         expect(screen.getByTestId('calculator')).toBeInTheDocument();
     });
 
-    it('shows completion status with correct icons', () => {
+    it('shows all section buttons', () => {
         render(
             <NavigationSidebar
                 sections={mockSections}
-                currentSection="personal"
-                progress={mockProgress}
+                currentSection="general"
                 onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
             />
         );
 
-        // Income section should show check circle (completed)
+        // All sections should be rendered as buttons
         const incomeSection = screen.getByText('Einnahmen').closest('button');
         expect(incomeSection).toBeInTheDocument();
 
-        // Other sections should show circle (not completed)
-        const personalSection = screen.getByText('Persönliche Daten').closest('button');
-        expect(personalSection).toBeInTheDocument();
+        const generalSection = screen.getByText('Persönliche Daten').closest('button');
+        expect(generalSection).toBeInTheDocument();
     });
 
     it('calls onSectionChange when section is clicked', async () => {
@@ -151,11 +129,8 @@ describe('NavigationSidebar', () => {
         render(
             <NavigationSidebar
                 sections={mockSections}
-                currentSection="personal"
-                progress={mockProgress}
+                currentSection="general"
                 onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
             />
         );
 
@@ -170,10 +145,7 @@ describe('NavigationSidebar', () => {
             <NavigationSidebar
                 sections={mockSections}
                 currentSection="income"
-                progress={mockProgress}
                 onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
             />
         );
 
@@ -181,56 +153,30 @@ describe('NavigationSidebar', () => {
         expect(incomeButton).toHaveClass('bg-primary');
     });
 
-    it('calls onHelpToggle when help button is clicked', async () => {
-        const user = userEvent.setup();
+    it('displays summary cards when euerCalculation is provided', () => {
+        const mockCalculation = {
+            totalIncome: 10000,
+            totalExpenses: 4000,
+            profit: 6000,
+            privateWithdrawals: 500,
+            privateDeposits: 1000
+        };
 
         render(
             <NavigationSidebar
                 sections={mockSections}
-                currentSection="personal"
-                progress={mockProgress}
+                currentSection="general"
                 onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
+                euerCalculation={mockCalculation}
             />
         );
 
-        const helpButton = screen.getByLabelText('Hilfe umschalten');
-        await user.click(helpButton);
-
-        expect(mockOnHelpToggle).toHaveBeenCalled();
-    });
-
-    it('shows help text', () => {
-        render(
-            <NavigationSidebar
-                sections={mockSections}
-                currentSection="personal"
-                progress={mockProgress}
-                onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
-            />
-        );
-
-        expect(screen.getByText(/Navigieren Sie durch die ELSTER-Abschnitte/)).toBeInTheDocument();
-        expect(screen.getByText(/Pflichtfelder sind mit einem roten Sternchen markiert/)).toBeInTheDocument();
-    });
-
-    it('displays field counts for each section', () => {
-        render(
-            <NavigationSidebar
-                sections={mockSections}
-                currentSection="personal"
-                progress={mockProgress}
-                onSectionChange={mockOnSectionChange}
-                onHelpToggle={mockOnHelpToggle}
-                helpVisible={false}
-            />
-        );
-
-        expect(screen.getByText('7 Felder')).toBeInTheDocument();
-        expect(screen.getAllByText('3 Felder')).toHaveLength(2); // Einnahmen and Ausgaben both have 3 fields
-        expect(screen.getByText('2 Felder')).toBeInTheDocument();
+        expect(screen.getByText('Gewinnermittlung')).toBeInTheDocument();
+        expect(screen.getByText('Betriebseinnahmen')).toBeInTheDocument();
+        expect(screen.getByText('Betriebsausgaben')).toBeInTheDocument();
+        expect(screen.getByText('Gewinn / Verlust')).toBeInTheDocument();
+        expect(screen.getByText('Private Geldflüsse')).toBeInTheDocument();
+        expect(screen.getByText('Privateinlagen')).toBeInTheDocument();
+        expect(screen.getByText('Privatentnahmen')).toBeInTheDocument();
     });
 });
