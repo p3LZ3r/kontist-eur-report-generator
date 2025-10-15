@@ -1,4 +1,4 @@
-import EuerGenerator from "./components/EuerGenerator";
+import EuerGenerator from "./components/euer-generator/EuerGenerator";
 import "./App.css";
 
 function App() {
