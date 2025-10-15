@@ -7,7 +7,9 @@
   <link href="/src/style.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Content Security Policy -->
+  <!-- Content Security Policy
+       frame-src: Allows iframes from Ko-fi.com for donation widget overlay
+       child-src: Legacy browser fallback for frame-src directive -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  script-src 'self' https://umami.torsten-linnecke.de https://storage.ko-fi.com 'unsafe-inline';
@@ -15,7 +17,8 @@
                  img-src 'self' data: https:;
                  font-src 'self' data:;
                  connect-src 'self' https://umami.torsten-linnecke.de;
-                 frame-src 'none';
+                 frame-src https://ko-fi.com;
+                 child-src https://ko-fi.com;
                  object-src 'none';
                  base-uri 'self';
                  form-action 'self';">

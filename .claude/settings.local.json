@@ -55,7 +55,11 @@
       "Bash(grep:*)",
       "Bash(git checkout:*)",
       "Bash(npm run lint:*)",
-      "Bash(npm run test:e2e:*)"
+      "Bash(npm run test:e2e:*)",
+      "SlashCommand(/openspec:proposal)",
+      "Bash(openspec list:*)",
+      "Bash(openspec validate:*)",
+      "Bash(openspec show:*)"
     ],
     "deny": [],
     "ask": []
