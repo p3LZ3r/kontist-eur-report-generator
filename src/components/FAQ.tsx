@@ -38,14 +38,14 @@ const faqData: FAQItem[] = [
 			"Der Generator analysiert Verwendungszweck und Empfänger jeder Transaktion und ordnet sie automatisch passenden Konten zu. Sie können jede Kategorisierung manuell überprüfen und bei Bedarf anpassen. Die Kategorisierung basiert auf häufigen Geschäftsvorfällen und Schlüsselwörtern.",
 	},
 	{
-		question: "Welche Export-Formate sind verfügbar?",
+		question: "Wie nutze ich die ELSTER-Übersicht?",
 		answer:
-			"Der Generator bietet mehrere Export-Optionen: ELSTER CSV (direkt importierbar), ELSTER JSON (strukturierte Daten), klassische EÜR-Übersicht (Textformat) und detaillierte PDF-Berichte mit allen Transaktionen. Alle Formate sind ELSTER-kompatibel.",
+			"Der Generator erstellt eine strukturierte ELSTER-Übersicht mit allen relevanten Feldern für Ihre EÜR. Die Werte werden automatisch berechnet und nach ELSTER-Kategorien (Einnahmen, Ausgaben, Gewinn) gruppiert. Sie können diese Übersicht als Grundlage verwenden, um die Werte manuell in ELSTER oder Ihre Steuersoftware zu übertragen.",
 	},
 	{
 		question: "Kann ich die EÜR direkt bei ELSTER einreichen?",
 		answer:
-			"Der Generator erstellt ELSTER-konforme Übersichten, die Sie als Grundlage für Ihre Steuererklärung verwenden können. Die tatsächliche Übermittlung an das Finanzamt erfolgt über das offizielle ELSTER-Portal oder Ihre Steuersoftware. Sie können die generierten CSV/JSON-Dateien dort importieren.",
+			"Der Generator erstellt ELSTER-konforme Übersichten, die Sie als Grundlage für Ihre Steuererklärung verwenden können. Die tatsächliche Übermittlung an das Finanzamt erfolgt über das offizielle ELSTER-Portal oder Ihre Steuersoftware. Sie übertragen die berechneten Werte manuell in die entsprechenden Felder.",
 	},
 	{
 		question: "Ist der EÜR Generator kostenlos?",

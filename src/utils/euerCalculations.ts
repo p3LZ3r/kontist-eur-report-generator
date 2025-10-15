@@ -137,7 +137,8 @@ export const generateElsterOverview = (
 	// Add transaction-based income and expense fields
 	Object.entries(euerCalculation.income).forEach(([key, amount]) => {
 		const elsterInfo = elsterMapping[key];
-		if (elsterInfo) {
+		const category = skr04Categories[key];
+		if (elsterInfo && category) {
 			if (!elsterSummary[elsterInfo.elsterField]) {
 				elsterSummary[elsterInfo.elsterField] = {
 					amount: 0,
@@ -147,7 +148,7 @@ export const generateElsterOverview = (
 			}
 			elsterSummary[elsterInfo.elsterField].amount += amount;
 			elsterSummary[elsterInfo.elsterField].categories.push({
-				name: skr04Categories[key].name,
+				name: category.name,
 				amount,
 			});
 		}
@@ -155,7 +156,8 @@ export const generateElsterOverview = (
 
 	Object.entries(euerCalculation.expenses).forEach(([key, amount]) => {
 		const elsterInfo = elsterMapping[key];
-		if (elsterInfo) {
+		const category = skr04Categories[key];
+		if (elsterInfo && category) {
 			if (!elsterSummary[elsterInfo.elsterField]) {
 				elsterSummary[elsterInfo.elsterField] = {
 					amount: 0,
@@ -165,7 +167,7 @@ export const generateElsterOverview = (
 			}
 			elsterSummary[elsterInfo.elsterField].amount += amount;
 			elsterSummary[elsterInfo.elsterField].categories.push({
-				name: skr04Categories[key].name,
+				name: category.name,
 				amount,
 			});
 		}
