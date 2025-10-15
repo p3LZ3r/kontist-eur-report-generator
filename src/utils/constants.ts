@@ -1,4 +1,5 @@
 // Application constants for better maintainability
+import { loadNormalizedElsterFields } from "./eurFieldsLoader";
 
 export const PAGINATION = {
 	TRANSACTIONS_PER_PAGE: 25,
@@ -35,7 +36,6 @@ export const ELSTER_FIELD_RANGES = {
 // Complete ELSTER EÜR field definitions (based on official documentation)
 // Build ELSTER_FIELDS from normalized fields to ensure full coverage
 export const ELSTER_FIELDS = (() => {
-	// Placeholder - fields will be loaded dynamically
 	const map: {
 		[key: string]: {
 			label: string;
@@ -44,14 +44,10 @@ export const ELSTER_FIELDS = (() => {
 			autoCalculated?: boolean;
 		};
 	} = {};
-	// Basic field structure - can be expanded as needed
-	const normalized = [] as Array<{
-		field: string;
-		label: string;
-		type: string;
-		required: boolean;
-		autoCalculated?: boolean;
-	}>;
+
+	// Load fields from eurFieldsLoader
+	const normalized = loadNormalizedElsterFields();
+
 	for (const f of normalized) {
 		map[f.field] = {
 			label: f.label,

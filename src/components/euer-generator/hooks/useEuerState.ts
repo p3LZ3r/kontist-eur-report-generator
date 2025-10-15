@@ -47,12 +47,21 @@ export function useEuerState() {
 	// Load SKR categories dynamically when SKR type changes
 	useEffect(() => {
 		const loadCategories = async () => {
+			// IMPORTANT: Always use hardcoded skr04Categories as primary source
+			// The JSON files use different key formats (numeric codes) that don't match
+			// the semantic keys (e.g., 'income_services_19') used throughout the app
+			if (currentSkr === "SKR04") {
+				setSkrCategories(skr04Categories);
+				return;
+			}
+
+			// For other SKR types, try loading from JSON but fall back to SKR04
 			try {
 				const loadedCategories = await getCategoriesForSkr(currentSkr);
 				setSkrCategories(loadedCategories);
 			} catch (error) {
 				console.warn(
-					`Failed to load ${currentSkr} categories, using fallback:`,
+					`Failed to load ${currentSkr} categories, using SKR04 fallback:`,
 					error,
 				);
 				setSkrCategories(skr04Categories);

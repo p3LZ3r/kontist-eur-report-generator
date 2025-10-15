@@ -105,13 +105,13 @@ const TransactionRow = React.memo<TransactionRowProps>(
 				<td className="p-3 text-left">
 					<Select
 						aria-label={`${currentSkr}-Konto für Transaktion ${transaction.id} auswählen`}
-						value={categoryKey}
+						value={categoryKey || undefined}
 						onValueChange={(value) => onCategoryChange(transaction.id, value)}
 					>
 						<SelectTrigger
 							className={`w-full min-w-0 focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring text-sm cursor-pointer hover:cursor-pointer ${isPrivate ? "border-private/30 bg-private/5" : ""}`}
 						>
-							<SelectValue />
+							<SelectValue placeholder="Konto wählen..." />
 						</SelectTrigger>
 						<SelectContent className="max-h-60 overflow-y-auto">
 							{categoryOptions.map(([key, category]) => (

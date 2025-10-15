@@ -1,8 +1,18 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
-	"files": {
-		"maxSize": 10485760,
-		"ignoreUnknown": false,
-		"includes": ["src/**", "*.ts", "*.tsx", "*.js", "*.jsx", "*.json"]
-	}
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "maxSize": 10485760,
+    "ignoreUnknown": false,
+    "includes": [
+      "src/**",
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.jsx",
+      "*.json"
+    ]
+  },
+  "extends": [
+    "ultracite"
+  ]
 }

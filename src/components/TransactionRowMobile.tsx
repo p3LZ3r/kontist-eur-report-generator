@@ -113,14 +113,14 @@ const TransactionRowMobile = React.memo<TransactionRowMobileProps>(
 					</label>
 					<Select
 						aria-label={`${currentSkr}-Konto für Transaktion ${transaction.id} auswählen`}
-						value={categoryKey}
+						value={categoryKey || undefined}
 						onValueChange={(value) => onCategoryChange(transaction.id, value)}
 					>
 						<SelectTrigger
 							id={`category-${transaction.id}`}
 							className={`w-full focus-ring data-[state=open]:ring-2 data-[state=open]:ring-ring cursor-pointer hover:cursor-pointer ${isPrivate ? "border-private/30 bg-private/5" : ""}`}
 						>
-							<SelectValue />
+							<SelectValue placeholder="Konto wählen..." />
 						</SelectTrigger>
 						<SelectContent className="max-h-60 overflow-y-auto">
 							{categoryOptions.map(([key, category]) => (
