@@ -1,17 +1,17 @@
 // Performance-optimized formatters with caching
 
 // Cached formatter instances for better performance
-const dateFormatter = new Intl.DateTimeFormat('de-DE', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric'
+const dateFormatter = new Intl.DateTimeFormat("de-DE", {
+	day: "2-digit",
+	month: "2-digit",
+	year: "numeric",
 });
 
-const currencyFormatter = new Intl.NumberFormat('de-DE', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-  style: 'currency',
-  currency: 'EUR'
+const currencyFormatter = new Intl.NumberFormat("de-DE", {
+	minimumFractionDigits: 2,
+	maximumFractionDigits: 2,
+	style: "currency",
+	currency: "EUR",
 });
 
 /**
@@ -19,16 +19,16 @@ const currencyFormatter = new Intl.NumberFormat('de-DE', {
  * Uses cached Intl.DateTimeFormat instance for performance
  */
 export const formatDate = (dateString: string): string => {
-  try {
-    const date = new Date(dateString);
-    // Check if date is valid
-    if (isNaN(date.getTime())) {
-      return dateString; // Return original string if invalid
-    }
-    return dateFormatter.format(date);
-  } catch {
-    return dateString; // Return original string on error
-  }
+	try {
+		const date = new Date(dateString);
+		// Check if date is valid
+		if (Number.isNaN(date.getTime())) {
+			return dateString; // Return original string if invalid
+		}
+		return dateFormatter.format(date);
+	} catch {
+		return dateString; // Return original string on error
+	}
 };
 
 /**
@@ -36,7 +36,7 @@ export const formatDate = (dateString: string): string => {
  * Uses cached Intl.NumberFormat instance for performance
  */
 export const formatCurrency = (amount: number): string => {
-  return currencyFormatter.format(amount);
+	return currencyFormatter.format(amount);
 };
 
 /**
@@ -44,8 +44,8 @@ export const formatCurrency = (amount: number): string => {
  * For cases where we want just the formatted number with € symbol added separately
  */
 export const formatAmount = (amount: number): string => {
-  return amount.toLocaleString('de-DE', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+	return amount.toLocaleString("de-DE", {
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	});
 };

@@ -3,11 +3,7 @@
 		"task-master-ai": {
 			"type": "stdio",
 			"command": "npx",
-			"args": [
-				"-y",
-				"--package=task-master-ai",
-				"task-master-ai"
-			],
+			"args": ["-y", "--package=task-master-ai", "task-master-ai"],
 			"env": {
 				"ANTHROPIC_API_KEY": "YOUR_ANTHROPIC_API_KEY_HERE",
 				"PERPLEXITY_API_KEY": "YOUR_PERPLEXITY_API_KEY_HERE",
@@ -23,19 +19,13 @@
 		"playwright": {
 			"type": "stdio",
 			"command": "npx",
-			"args": [
-				"-y",
-				"@playwright/mcp@latest"
-			],
+			"args": ["-y", "@playwright/mcp@latest"],
 			"env": {}
 		},
 		"context7": {
 			"type": "stdio",
 			"command": "npx",
-			"args": [
-				"-y",
-				"@upstash/context7-mcp"
-			],
+			"args": ["-y", "@upstash/context7-mcp"],
 			"env": {}
 		}
 	}

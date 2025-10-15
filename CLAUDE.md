@@ -115,7 +115,9 @@ When code examples, setup or configuration steps, or library/API documentation a
 npm run dev          # Start Vite development server at localhost:5173
 npm run build        # Build for production (runs TypeScript compiler and Vite build)
 npm run preview      # Preview production build locally
-npm run lint         # Run ESLint for code quality checks
+npm run lint         # Run Ultracite linter for code quality checks
+npm run format       # Run Ultracite formatter to auto-fix code issues
+npm run format:check # Check formatting without modifying files
 ```
 
 ### Testing
@@ -242,10 +244,7 @@ Critical business logic for German tax compliance:
 - **jsdom 26.1.0** - DOM implementation for Node.js testing environment.
 
 ### Code Quality & Linting
-- **ESLint 9.33.0** - Latest ESLint with flat config support and improved performance.
-- **typescript-eslint 8.39.1** - TypeScript-specific linting rules and parser.
-- **eslint-plugin-react-hooks 5.2.0** - React Hooks linting rules.
-- **eslint-plugin-react-refresh 0.4.20** - Fast Refresh compatibility checks.
+- **Ultracite 5.6.2** - Zero-configuration linting and formatting tool built on Biome (Rust-based). Provides 300+ pre-configured rules optimized for React/TypeScript with 10-100x faster performance than ESLint. Unified replacement for ESLint + Prettier.
 
 ### Development Utilities
 - **@types/node 24.3.0** - Node.js type definitions.
