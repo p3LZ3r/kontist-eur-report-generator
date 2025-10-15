@@ -8,7 +8,7 @@
 	font-style: normal;
 	font-weight: 400 700;
 	font-display: swap;
-	src: url("/fonts/Instrument-Sans-Variable.woff2") format("woff2");
+	src: url("/fonts/instrument/Instrument-Sans-Variable.woff2") format("woff2");
 }
 
 @font-face {
@@ -16,7 +16,7 @@
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
-	src: url("/fonts/Instrument-Serif-Regular.ttf") format("truetype");
+	src: url("/fonts/instrument/Instrument-Serif-Regular.ttf") format("truetype");
 }
 
 @theme inline {

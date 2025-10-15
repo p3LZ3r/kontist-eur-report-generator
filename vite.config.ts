@@ -10,4 +10,14 @@ export default defineConfig({
 			"@": "/src",
 		},
 	},
+	base: "/",
+	build: {
+		assetsDir: "assets",
+		rollupOptions: {
+			output: {
+				manualChunks: undefined,
+			},
+		},
+	},
+	publicDir: "public",
 });

@@ -4,16 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <link href="/src/style.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Self-hosted Nunito Font for GDPR Compliance -->
+  <link rel="stylesheet" href="/fonts/nunito/nunito.css" />
 
   <!-- Content Security Policy
        frame-src: Allows iframes from Ko-fi.com for donation widget overlay
-       child-src: Legacy browser fallback for frame-src directive -->
+       child-src: Legacy browser fallback for frame-src directive
+       style-src-elem: Allows external stylesheets from Ko-fi only (Google Fonts blocked for GDPR)
+       font-src: Only self-hosted fonts (Google Fonts blocked for GDPR) -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  script-src 'self' https://umami.torsten-linnecke.de https://storage.ko-fi.com 'unsafe-inline';
                  style-src 'self' 'unsafe-inline';
+                 style-src-elem 'self' 'unsafe-inline' https://storage.ko-fi.com;
                  img-src 'self' data: https:;
                  font-src 'self' data:;
                  connect-src 'self' https://umami.torsten-linnecke.de;
@@ -57,8 +62,8 @@
   <link rel="dns-prefetch" href="https://holvi.com" />
 
   <!-- Preload Critical Fonts -->
-  <link rel="preload" href="/fonts/Instrument-Sans-Variable.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/Instrument-Serif-Regular.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="/fonts/instrument/Instrument-Sans-Variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/instrument/Instrument-Serif-Regular.ttf" as="font" type="font/ttf" crossorigin />
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json" />

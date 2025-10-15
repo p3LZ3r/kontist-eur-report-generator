@@ -62,7 +62,11 @@
       "Bash(openspec show:*)",
       "Bash(npm run format)",
       "SlashCommand(/openspec:apply refactor-component-structure)",
-      "SlashCommand(/openspec:apply:*)"
+      "SlashCommand(/openspec:apply:*)",
+      "Bash(cp:*)",
+      "Bash(npm run preview)",
+      "Bash(mv:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []
