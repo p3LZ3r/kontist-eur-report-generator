@@ -336,7 +336,7 @@ Built on Radix UI for accessibility and customizability:
 - **`skr49.json`** - SKR49 accounting categories (Freelancers)
 
 #### **Assets** (`/assets/`)
-- **`react.svg`** - React logo for UI
+- _(No assets currently - placeholder directory for future brand assets)_
 
 ### 🔧 Business Logic & Utilities
 

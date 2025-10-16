@@ -69,10 +69,15 @@
       "Bash(pkill:*)",
       "Bash(fc /b \"g:\\kontist-eur-report-generator\\public\\data\\skr04.json\" \"g:\\kontist-eur-report-generator\\src\\data\\skr04.json\")",
       "Bash(fc /b \"g:\\kontist-eur-report-generator\\public\\data\\skr03.json\" \"g:\\kontist-eur-report-generator\\src\\data\\skr03.json\")",
-      "Bash(fc /b \"g:\\kontist-eur-report-generator\\public\\data\\skr49.json\" \"g:\\kontist-eur-report-generator\\src\\data\\skr49.json\")"
+      "Bash(fc /b \"g:\\kontist-eur-report-generator\\public\\data\\skr49.json\" \"g:\\kontist-eur-report-generator\\src\\data\\skr49.json\")",
+      "Bash(awk:*)"
     ],
     "deny": [],
     "ask": []
   },
-  "enabledMcpjsonServers": ["task-master-ai", "playwright", "context7"]
+  "enabledMcpjsonServers": [
+    "task-master-ai",
+    "playwright",
+    "context7"
+  ]
 }
