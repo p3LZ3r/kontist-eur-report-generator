@@ -1,21 +1,21 @@
 <!doctype html>
 <html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Self-hosted Nunito Font for GDPR Compliance -->
+    <link rel="stylesheet" href="/fonts/nunito/nunito.css">
 
-  <!-- Self-hosted Nunito Font for GDPR Compliance -->
-  <link rel="stylesheet" href="/fonts/nunito/nunito.css" />
-
-  <!-- Content Security Policy
+    <!-- Content Security Policy
        frame-src: Allows iframes from Ko-fi.com for donation widget overlay
        child-src: Legacy browser fallback for frame-src directive
        style-src-elem: Allows external stylesheets from Ko-fi only (Google Fonts blocked for GDPR)
        font-src: Only self-hosted fonts (Google Fonts blocked for GDPR) -->
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self';
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
                  script-src 'self' https://umami.torsten-linnecke.de https://storage.ko-fi.com 'unsafe-inline';
                  style-src 'self' 'unsafe-inline';
                  style-src-elem 'self' 'unsafe-inline' https://storage.ko-fi.com;
@@ -26,59 +26,107 @@
                  child-src https://ko-fi.com;
                  object-src 'none';
                  base-uri 'self';
-                 form-action 'self';">
+                 form-action 'self';"
+    >
 
+    <!-- Primary Meta Tags -->
+    <title>
+      EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER erstellen
+    </title>
+    <meta
+      name="title"
+      content="EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER erstellen"
+    >
+    <meta
+      name="description"
+      content="Kostenloser EÜR Generator für Kleinunternehmer und Selbstständige. Erstellen Sie Ihre Einnahmen-Überschuss-Rechnung aus Kontist & Holvi CSV-Exporten für ELSTER. SKR03, SKR04 & SKR49 kompatibel."
+    >
+    <meta
+      name="keywords"
+      content="EÜR, Einnahmen-Überschuss-Rechnung, ELSTER, Kontist, Holvi, Kleinunternehmer, SKR03, SKR04, SKR49, Steuererklärung, CSV Export"
+    >
+    <meta name="author" content="Torsten Linnecke">
+    <meta name="robots" content="index, follow">
+    <meta
+      name="google-site-verification"
+      content="0cBp-WWHtYN-S72p3aCfpKoUA50lEwYMIPUGjN5MF7o"
+    >
 
-  <!-- Primary Meta Tags -->
-  <title>EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER erstellen</title>
-  <meta name="title" content="EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER erstellen" />
-  <meta name="description" content="Kostenloser EÜR Generator für Kleinunternehmer und Selbstständige. Erstellen Sie Ihre Einnahmen-Überschuss-Rechnung aus Kontist & Holvi CSV-Exporten für ELSTER. SKR03, SKR04 & SKR49 kompatibel." />
-  <meta name="keywords" content="EÜR, Einnahmen-Überschuss-Rechnung, ELSTER, Kontist, Holvi, Kleinunternehmer, SKR03, SKR04, SKR49, Steuererklärung, CSV Export" />
-  <meta name="author" content="Torsten Linnecke" />
-  <meta name="robots" content="index, follow" />
-  <meta name="google-site-verification" content="0cBp-WWHtYN-S72p3aCfpKoUA50lEwYMIPUGjN5MF7o" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.eür-generator.de/">
+    <meta
+      property="og:title"
+      content="EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER"
+    >
+    <meta
+      property="og:description"
+      content="Kostenloser EÜR Generator für Kleinunternehmer und Selbstständige. Erstellen Sie Ihre EÜR aus Kontist & Holvi CSV-Exporten für ELSTER."
+    >
+    <meta
+      property="og:image"
+      content="https://www.eür-generator.de/og-image.png"
+    >
+    <meta property="og:locale" content="de_DE">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.eür-generator.de/" />
-  <meta property="og:title" content="EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER" />
-  <meta property="og:description" content="Kostenloser EÜR Generator für Kleinunternehmer und Selbstständige. Erstellen Sie Ihre EÜR aus Kontist & Holvi CSV-Exporten für ELSTER." />
-  <meta property="og:image" content="https://www.eür-generator.de/og-image.png" />
-  <meta property="og:locale" content="de_DE" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.eür-generator.de/">
+    <meta
+      property="twitter:title"
+      content="EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER"
+    >
+    <meta
+      property="twitter:description"
+      content="Kostenloser EÜR Generator für Kleinunternehmer und Selbstständige. Erstellen Sie Ihre EÜR aus Kontist & Holvi CSV-Exporten für ELSTER."
+    >
+    <meta
+      property="twitter:image"
+      content="https://www.eür-generator.de/og-image.png"
+    >
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://www.eür-generator.de/" />
-  <meta property="twitter:title" content="EÜR Generator - Einnahmen-Überschuss-Rechnung für ELSTER" />
-  <meta property="twitter:description" content="Kostenloser EÜR Generator für Kleinunternehmer und Selbstständige. Erstellen Sie Ihre EÜR aus Kontist & Holvi CSV-Exporten für ELSTER." />
-  <meta property="twitter:image" content="https://www.eür-generator.de/og-image.png" />
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.eür-generator.de/">
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://www.eür-generator.de/" />
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://umami.torsten-linnecke.de" crossorigin>
+    <link rel="dns-prefetch" href="https://kontist.com">
+    <link rel="dns-prefetch" href="https://holvi.com">
 
-  <!-- Preconnect for Performance -->
-  <link rel="preconnect" href="https://umami.torsten-linnecke.de" crossorigin />
-  <link rel="dns-prefetch" href="https://kontist.com" />
-  <link rel="dns-prefetch" href="https://holvi.com" />
+    <!-- Preload Critical Fonts -->
+    <link
+      rel="preload"
+      href="/fonts/instrument/Instrument-Sans-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    >
+    <link
+      rel="preload"
+      href="/fonts/instrument/Instrument-Serif-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    >
 
-  <!-- Preload Critical Fonts -->
-  <link rel="preload" href="/fonts/instrument/Instrument-Sans-Variable.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/instrument/Instrument-Serif-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json" />
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="EÜR Generator">
 
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#2563eb" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="EÜR Generator" />
+    <!-- Analytics -->
+    <script
+      defer
+      src="https://umami.torsten-linnecke.de/script.js"
+      data-website-id="df4f9950-9fa4-4da1-b426-e5d324fdfe81"
+    ></script>
 
-  <!-- Analytics -->
-  <script defer src="https://umami.torsten-linnecke.de/script.js" data-website-id="df4f9950-9fa4-4da1-b426-e5d324fdfe81"></script>
-
-  <!-- Structured Data - JSON-LD -->
-  <script type="application/ld+json">
+    <!-- Structured Data - JSON-LD -->
+    <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -107,15 +155,17 @@
     ]
   }
   </script>
-</head>
+  </head>
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
 
-  <!-- Ko-fi Support Widget - Load after DOM is ready -->
-  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-  <script>
+    <!-- Ko-fi Support Widget - Load after DOM is ready -->
+    <script
+      src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"
+    ></script>
+    <script>
     kofiWidgetOverlay.draw('torstenlinnecke', {
       'type': 'floating-chat',
       'floating-chat.donateButton.text': 'Unterstützen',
@@ -123,6 +173,5 @@
       'floating-chat.donateButton.text-color': '#f8fafc'
     });
   </script>
-</body>
-
+  </body>
 </html>

@@ -1,12 +1,12 @@
 // Quick integration test to verify the data flow
 
 import {
-	calculateEuer,
-	populateAllElsterFields,
+  calculateEuer,
+  populateAllElsterFields,
 } from "./src/utils/euerCalculations.js";
 import {
-	categorizeTransaction,
-	parseKontistCSV,
+  categorizeTransaction,
+  parseKontistCSV,
 } from "./src/utils/transactionUtils.js";
 
 // Test data
@@ -17,50 +17,50 @@ const csvData = `Buchungsdatum;Empfänger;Verwendungszweck;Betrag;Transaktionsty
 console.log("🧪 Testing integration workflow...");
 
 try {
-	// 1. Parse CSV
-	const transactions = parseKontistCSV(csvData);
-	console.log(
-		"✅ CSV parsing successful:",
-		transactions.length,
-		"transactions",
-	);
+  // 1. Parse CSV
+  const transactions = parseKontistCSV(csvData);
+  console.log(
+    "✅ CSV parsing successful:",
+    transactions.length,
+    "transactions"
+  );
 
-	// 2. Auto-categorize
-	transactions.forEach((t) => {
-		t.euerCategory = categorizeTransaction(t);
-	});
+  // 2. Auto-categorize
+  transactions.forEach((t) => {
+    t.euerCategory = categorizeTransaction(t);
+  });
 
-	// 3. Create categories mapping
-	const categories = {};
-	transactions.forEach((t) => {
-		categories[t.id] = t.euerCategory || "";
-	});
+  // 3. Create categories mapping
+  const categories = {};
+  transactions.forEach((t) => {
+    categories[t.id] = t.euerCategory || "";
+  });
 
-	// 4. Calculate EÜR
-	const euerResult = calculateEuer(transactions, categories, false);
-	console.log("✅ EÜR calculation successful");
-	console.log(
-		"   Income total:",
-		Object.values(euerResult.income).reduce((a, b) => a + b, 0),
-	);
-	console.log(
-		"   Expense total:",
-		Object.values(euerResult.expenses).reduce((a, b) => a + b, 0),
-	);
+  // 4. Calculate EÜR
+  const euerResult = calculateEuer(transactions, categories, false);
+  console.log("✅ EÜR calculation successful");
+  console.log(
+    "   Income total:",
+    Object.values(euerResult.income).reduce((a, b) => a + b, 0)
+  );
+  console.log(
+    "   Expense total:",
+    Object.values(euerResult.expenses).reduce((a, b) => a + b, 0)
+  );
 
-	// 5. Populate ELSTER fields
-	const { fieldValues } = populateAllElsterFields(
-		transactions,
-		categories,
-		false,
-	);
-	console.log(
-		"✅ ELSTER field population successful:",
-		fieldValues.length,
-		"fields",
-	);
+  // 5. Populate ELSTER fields
+  const { fieldValues } = populateAllElsterFields(
+    transactions,
+    categories,
+    false
+  );
+  console.log(
+    "✅ ELSTER field population successful:",
+    fieldValues.length,
+    "fields"
+  );
 
-	console.log("🎉 Integration test PASSED - All systems working!");
+  console.log("🎉 Integration test PASSED - All systems working!");
 } catch (error) {
-	console.error("❌ Integration test FAILED:", error.message);
+  console.error("❌ Integration test FAILED:", error.message);
 }

@@ -13,48 +13,48 @@ import { PAGINATION } from "../../../utils/constants";
  * const currentItems = pagination.currentItems
  */
 export function usePagination(items: Transaction[]) {
-	const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
-	// Calculate current page items
-	const currentItems = useMemo(() => {
-		const start = (currentPage - 1) * PAGINATION.TRANSACTIONS_PER_PAGE;
-		const end = start + PAGINATION.TRANSACTIONS_PER_PAGE;
-		return items.slice(start, end);
-	}, [items, currentPage]);
+  // Calculate current page items
+  const currentItems = useMemo(() => {
+    const start = (currentPage - 1) * PAGINATION.TRANSACTIONS_PER_PAGE;
+    const end = start + PAGINATION.TRANSACTIONS_PER_PAGE;
+    return items.slice(start, end);
+  }, [items, currentPage]);
 
-	// Calculate pagination metadata
-	const totalPages = Math.ceil(items.length / PAGINATION.TRANSACTIONS_PER_PAGE);
-	const indexOfLastItem = currentPage * PAGINATION.TRANSACTIONS_PER_PAGE;
-	const indexOfFirstItem = indexOfLastItem - PAGINATION.TRANSACTIONS_PER_PAGE;
+  // Calculate pagination metadata
+  const totalPages = Math.ceil(items.length / PAGINATION.TRANSACTIONS_PER_PAGE);
+  const indexOfLastItem = currentPage * PAGINATION.TRANSACTIONS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - PAGINATION.TRANSACTIONS_PER_PAGE;
 
-	// Navigation functions
-	const goToPage = (page: number) => {
-		setCurrentPage(Math.max(1, Math.min(page, totalPages)));
-	};
+  // Navigation functions
+  const goToPage = (page: number) => {
+    setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+  };
 
-	const nextPage = () => {
-		setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-	};
+  const nextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
 
-	const prevPage = () => {
-		setCurrentPage((prev) => Math.max(prev - 1, 1));
-	};
+  const prevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
 
-	// Reset to first page when items change
-	const resetToFirstPage = () => {
-		setCurrentPage(1);
-	};
+  // Reset to first page when items change
+  const resetToFirstPage = () => {
+    setCurrentPage(1);
+  };
 
-	return {
-		currentPage,
-		totalPages,
-		itemsPerPage: PAGINATION.TRANSACTIONS_PER_PAGE,
-		currentItems,
-		indexOfFirstItem,
-		indexOfLastItem,
-		goToPage,
-		nextPage,
-		prevPage,
-		resetToFirstPage,
-	};
+  return {
+    currentPage,
+    totalPages,
+    itemsPerPage: PAGINATION.TRANSACTIONS_PER_PAGE,
+    currentItems,
+    indexOfFirstItem,
+    indexOfLastItem,
+    goToPage,
+    nextPage,
+    prevPage,
+    resetToFirstPage,
+  };
 }

@@ -1,564 +1,564 @@
 {
-	"master": {
-		"tasks": [
-			{
-				"id": 1,
-				"title": "Initialize SPA Project with Vite, React, and Tailwind CSS",
-				"description": "Set up the foundational client-side project structure for the EÜR Report Generator Single-Page Application (SPA).",
-				"details": "Use Vite to scaffold a new React project. Integrate Tailwind CSS for styling as per the 'Logical Dependency Chain' foundation step. Establish the basic folder structure for components, logic (engines), and data models (`RawTransaction`, `NormalizedTransaction`, `EuerReport`).",
-				"testStrategy": "Verify that the development server runs successfully and that a basic component with Tailwind CSS classes renders correctly in the browser.",
-				"priority": "high",
-				"dependencies": [],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 2,
-				"title": "Build Static UI Components for Upload and Report Display",
-				"description": "Create the static, non-functional React components for the main application interface based on the specified user flow.",
-				"details": "Implement a single-page layout as per the 'UI/UX Considerations'. Create a file input component with a clear call-to-action for CSV upload. Build a placeholder report display component with static labels matching the official EÜR form terminology.",
-				"testStrategy": "Visual verification of components in the app or a tool like Storybook. Ensure the layout is clean, minimal, and follows the single-page design principle.",
-				"priority": "high",
-				"dependencies": [1],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 3,
-				"title": "Implement CSV Parser and Data Normalization Logic",
-				"description": "Develop the client-side logic to parse uploaded CSV files from Kontist and Holvi and transform them into a standardized internal format.",
-				"details": "Use a client-side parsing library. Implement distinct adapters for Kontist and Holvi formats to handle potential future changes. The parser must identify the source bank and convert each row into the `NormalizedTransaction` data model.",
-				"testStrategy": "Unit test the parsing and normalization logic with sample Kontist and Holvi CSV files. Assert that the output array of `NormalizedTransaction` objects is correct for both formats.",
-				"priority": "high",
-				"dependencies": [1],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 4,
-				"title": "Develop SKR Categorization Engine",
-				"description": "Create the core engine to automatically assign an official SKR accounting category to each transaction.",
-				"details": "Build a function that takes a `NormalizedTransaction` and a ruleset. The engine will use keyword and pattern matching on the transaction description to map it to an SKR03/SKR04 category. The ruleset will be loaded from a JSON file as specified in the Appendix.",
-				"testStrategy": "Write extensive unit tests. For a given transaction description and ruleset, assert that the correct SKR category is returned. Test edge cases and transactions that should remain uncategorized.",
-				"priority": "high",
-				"dependencies": [3],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 5,
-				"title": "Develop EÜR Calculation Engine",
-				"description": "Create the logic to calculate final EÜR financial figures from the set of categorized transactions.",
-				"details": "Build a function that takes an array of categorized transactions. It will iterate through them, summing up income and expenses into buckets corresponding to the EÜR form fields. The output should match the `EuerReport` data model, calculating total income, expenses, and final profit/loss.",
-				"testStrategy": "Unit test the calculation engine with various sets of categorized transactions. Verify that total income, total expenses, profit/loss, and category-specific totals are calculated correctly.",
-				"priority": "high",
-				"dependencies": [4],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 6,
-				"title": "Integrate Components for End-to-End Flow",
-				"description": "Connect the UI, parser, and engines to create the complete, functional user workflow from file upload to final calculation and export.",
-				"status": "done",
-				"dependencies": [2, 5],
-				"priority": "high",
-				"details": "Wire the file upload component (Task 2) to trigger the CSV parser (Task 3). Pass the normalized transactions to the categorization engine (Task 4) and then to the calculation engine (Task 5). The final `EuerReport` object should be stored in the application's state, making it available for the report display (Task 7) and ELSTER export.",
-				"testStrategy": "Manual end-to-end testing. Upload a test CSV and verify using browser dev tools that the application state is correctly updated with the final report data. Implement and test a loading indicator during processing.",
-				"subtasks": [
-					{
-						"id": 1,
-						"title": "Connect File Upload UI to CSV Parser",
-						"description": "Wire the file input component to trigger the CSV parsing logic upon file selection.",
-						"status": "done",
-						"dependencies": [],
-						"details": "Implement an `onChange` handler for the file input from Task 2. Use the FileReader API to read the selected file's content and pass it to the CSV parser function from Task 3. Handle potential file reading errors.",
-						"testStrategy": "Manually upload a file and use console logs or a debugger to confirm the parser function is called with the file content."
-					},
-					{
-						"id": 2,
-						"title": "Chain Parser Output to Categorization Engine",
-						"description": "Pass the normalized transactions from the parser to the categorization engine.",
-						"status": "done",
-						"dependencies": [1],
-						"details": "Once the parser successfully returns an array of `NormalizedTransaction` objects, pass this array as input to the categorization engine (Task 4). This will enrich each transaction object with an EÜR category.",
-						"testStrategy": "After parsing, inspect the data being passed to the categorization engine to ensure it's the correct array of normalized transactions."
-					},
-					{
-						"id": 3,
-						"title": "Feed Categorized Data into Calculation Engine",
-						"description": "Use the output of the categorization engine to run the final EÜR calculations.",
-						"status": "done",
-						"dependencies": [2],
-						"details": "Take the array of categorized transactions and pass it to the EÜR calculation engine (Task 5). The engine will process this data and return the final `EuerReport` object.",
-						"testStrategy": "Verify that the calculation engine receives the categorized transactions and that its output is a structured `EuerReport` object."
-					},
-					{
-						"id": 4,
-						"title": "Store Final Report in Application State",
-						"description": "Update the global application state with the generated `EuerReport` and processing status.",
-						"status": "done",
-						"dependencies": [3],
-						"details": "Implement state management logic (e.g., React Context). On successful calculation, update the state with the `EuerReport` object. Implement a loading state that is active from file selection until the calculation is complete. Handle and store any errors that occur during the process.",
-						"testStrategy": "Use React DevTools to inspect the application state. Verify the loading state is set during processing and that the final state contains the correct `EuerReport` object or an error message."
-					},
-					{
-						"id": 5,
-						"title": "Implement ELSTER Data Export Function",
-						"description": "Create a function to export the calculated EÜR report data into a downloadable format.",
-						"status": "done",
-						"dependencies": [4],
-						"details": "Add a button to the UI that becomes active after a report is generated. On click, this button should trigger a function that formats the `EuerReport` data into a simple, structured format (e.g., a key-value CSV or JSON file) and initiates a browser download.",
-						"testStrategy": "Generate a report, click the export button, and verify that a file is downloaded. Inspect the file's contents to ensure it accurately reflects the data from the `EuerReport` object."
-					}
-				]
-			},
-			{
-				"id": 7,
-				"title": "Populate Report Display with Calculated Data",
-				"description": "Dynamically render the calculated EÜR report in the UI, making it ready for the user to transcribe to ELSTER.",
-				"details": "Modify the report display component (Task 2) to consume the `EuerReport` data from the application state. Display the key calculated values with labels and line numbers that directly correspond to the official EÜR form, as specified in 'ELSTER-mapped Report Display'.",
-				"testStrategy": "Visual and functional testing. Upload a test CSV and verify that the numbers displayed in the UI match the expected calculated totals. Cross-reference the UI labels with the official EÜR form.",
-				"priority": "high",
-				"dependencies": [6],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 8,
-				"title": "Implement Comprehensive Unit Testing for Core Logic",
-				"description": "Fulfill the MVP requirement for unit tests covering the calculation and categorization logic.",
-				"details": "Review and expand the unit tests for the categorization (Task 4) and calculation (Task 5) engines. Ensure high test coverage for these critical components to mitigate the risk of inaccurate financial reporting.",
-				"testStrategy": "Run the full test suite and check coverage reports. Ensure tests cover common freelance income/expense types and edge cases.",
-				"priority": "medium",
-				"dependencies": [5],
-				"status": "done",
-				"subtasks": [
-					{
-						"id": 1,
-						"title": "Review & Document Categorization Engine Test Coverage",
-						"description": "Analyze existing unit tests for the SKR Categorization Engine (Task 4), documenting current test cases, their coverage, and initial areas for expansion.",
-						"dependencies": [],
-						"details": "Utilize code coverage tools to assess current coverage. Document existing test cases for keyword/pattern matching, and uncategorized transactions as per Task 4's original test strategy.\n<info added on 2025-09-04T16:34:04.062Z>\nInitial review in 8.1 found a critical gap: no prior unit tests existed for the categorization engine. While a new suite (`src/test/categoryMappings.test.ts`) was created to validate static category definitions, the dynamic categorization logic remains untested.\n\nThis subtask will address this by adding tests for the core categorization algorithm, focusing on:\n- Keyword/pattern matching logic for assigning categories to transactions.\n- Fallback behavior for uncategorized transactions.\n- Correct category assignment using a variety of transaction descriptions and edge cases.\n- Multi-language keyword support.\n</info added on 2025-09-04T16:34:04.062Z>",
-						"status": "done",
-						"testStrategy": "N/A (This subtask focuses on review and documentation of existing tests)"
-					},
-					{
-						"id": 2,
-						"title": "Expand Categorization Engine Unit Tests",
-						"description": "Develop new unit tests for the SKR Categorization Engine (Task 4) to cover common freelance income/expense types and specific edge cases, ensuring comprehensive coverage.",
-						"dependencies": ["8.1"],
-						"details": "Focus on scenarios not adequately covered by existing tests, including ambiguous descriptions, multiple matching rules, and transactions that should remain uncategorized. Ensure tests align with the parent task's requirement for covering common freelance income/expense types and edge cases.",
-						"status": "done",
-						"testStrategy": "Write new unit tests using various transaction descriptions and rulesets, asserting correct SKR category assignment or non-assignment for identified gaps."
-					},
-					{
-						"id": 3,
-						"title": "Review & Document Calculation Engine Test Coverage",
-						"description": "Analyze existing unit tests for the EÜR Calculation Engine (Task 5), documenting current test cases, their coverage, and initial areas for expansion.",
-						"dependencies": [],
-						"details": "Utilize code coverage tools to assess current coverage. Document existing test cases for various income/expense types, profit/loss calculation, and category-specific totals as per Task 5's original test strategy.",
-						"status": "done",
-						"testStrategy": "N/A (This subtask focuses on review and documentation of existing tests)"
-					},
-					{
-						"id": 4,
-						"title": "Expand Calculation Engine Unit Tests",
-						"description": "Develop new unit tests for the EÜR Calculation Engine (Task 5) using diverse sets of categorized transactions to verify accurate financial figure calculation across various scenarios.",
-						"dependencies": ["8.3"],
-						"details": "Create test data targeting the calculation of total income, total expenses, profit/loss, and category-specific totals under conditions like zero values, mixed types, and large transaction volumes. Ensure tests align with the parent task's requirement for covering common freelance income/expense types and edge cases.",
-						"status": "done",
-						"testStrategy": "Write new unit tests with varied categorized transaction inputs, asserting correct output for `EuerReport` fields."
-					},
-					{
-						"id": 5,
-						"title": "Achieve & Verify High Test Coverage for Core Logic",
-						"description": "Run the full unit test suite for both Categorization (Task 4) and Calculation (Task 5) engines, analyze coverage reports, and ensure high test coverage (e.g., >90% line coverage) for their core logic.",
-						"dependencies": ["8.2", "8.4"],
-						"details": "Use the configured test runner and coverage reporting tools. Address any remaining low-coverage areas by adding targeted tests until the high test coverage requirement is met for both critical components.",
-						"status": "done",
-						"testStrategy": "Run the full test suite and check coverage reports. Ensure the target coverage percentage is met for both the categorization and calculation engines."
-					}
-				]
-			},
-			{
-				"id": 9,
-				"title": "Refine UI/UX and Handle Error States",
-				"description": "Polish the user interface and implement robust handling for potential user errors and edge cases.",
-				"details": "Implement user-friendly error messages for invalid file types (non-CSV), corrupted files, or parsing failures. Add a small info section explaining the client-side privacy model. Ensure the entire experience is intuitive for the non-accountant user persona.",
-				"testStrategy": "Manual testing of error paths: upload a .txt file, a corrupted CSV, or a CSV from an unsupported bank. Ensure clear, helpful feedback is provided to the user.",
-				"priority": "medium",
-				"dependencies": [7],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 10,
-				"title": "Configure Static Site Deployment",
-				"description": "Set up automated deployment to a static web hosting provider to make the MVP publicly accessible.",
-				"details": "Configure a CI/CD pipeline (e.g., using GitHub Actions) to automatically build and deploy the application to a provider like Vercel, Netlify, or GitHub Pages upon pushes to the main branch.",
-				"testStrategy": "Trigger a deployment by pushing a commit. Verify that the deployed site is live and fully functional by performing a complete user flow on the production URL.",
-				"priority": "high",
-				"dependencies": [9],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 11,
-				"title": "Setup SPA Project and Basic UI Shell",
-				"description": "Initialize a client-side Single-Page Application (SPA) and create the main layout with placeholders for the file upload and report display areas.",
-				"details": "Use Vite and Tailwind CSS as specified in the PRD. Create a single-page layout with a clear call-to-action for file upload and an empty placeholder section for the final report display. This task corresponds to the 'Foundation' and 'Static UI' steps in the logical dependency chain.",
-				"testStrategy": "Run the development server and verify the basic layout renders correctly in the browser without errors. The file input and a placeholder for the report should be visible.",
-				"priority": "high",
-				"dependencies": [],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 12,
-				"title": "Define Core Data Models and Static Data",
-				"description": "Create the TypeScript/JavaScript definitions for `RawTransaction`, `NormalizedTransaction`, and `EuerReport`, and set up the static SKR mapping files.",
-				"details": "Define the data structures as specified in the 'Data Models' section of the PRD. Create `src/data/skr03.json` and `src/data/skr04.json` with initial mapping rules for common freelance income/expense categories.",
-				"testStrategy": "Code review to ensure models match the PRD specifications. JSON files should be linted and validated to ensure they are parseable.",
-				"priority": "high",
-				"dependencies": [11],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 13,
-				"title": "Implement CSV Parsing for Kontist & Holvi",
-				"description": "Develop the logic to parse uploaded `.csv` files from Kontist and Holvi, transforming the data into the standardized `NormalizedTransaction` format.",
-				"details": "Use a client-side CSV parsing library (e.g., PapaParse). Implement an adapter layer that detects the source bank (Kontist/Holvi) based on header columns and maps its specific format to the `NormalizedTransaction` model. Handle potential parsing errors gracefully.",
-				"testStrategy": "Unit test the parsing logic with sample CSV files for both banks. Verify that the output is an array of valid `NormalizedTransaction` objects and that edge cases (empty files, malformed rows) are handled.",
-				"priority": "high",
-				"dependencies": [12],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 14,
-				"title": "Build the SKR Categorization Engine",
-				"description": "Create the core engine that assigns an SKR category to each `NormalizedTransaction` based on predefined rules.",
-				"details": "The engine will iterate through an array of `NormalizedTransaction`s. It will use a ruleset based on keywords and patterns in the transaction description to match against the SKR mapping data loaded from the JSON files. Uncategorized items should be handled gracefully as per the PRD's risk mitigation.",
-				"testStrategy": "Write unit tests that pass in various `NormalizedTransaction` objects and assert that the correct SKR category is assigned. Test with common freelance expenses like 'Software', 'Travel', and 'Office Supplies'.",
-				"priority": "high",
-				"dependencies": [12],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 15,
-				"title": "Build the EÜR Calculation Engine",
-				"description": "Create the logic to process the list of categorized transactions and compute the final EÜR report totals.",
-				"details": "The engine will take an array of categorized `NormalizedTransaction`s as input. It will sum up all income and expense lines, grouping them by their assigned SKR category, to produce the final `EuerReport` object containing total income, total expenses, and profit/loss.",
-				"testStrategy": "Unit test the calculation engine with a predefined set of categorized transactions. Verify that total income, total expenses, and profit/loss are calculated correctly. Test with zero transactions and only income/expense transactions.",
-				"priority": "high",
-				"dependencies": [14],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 16,
-				"title": "Create the ELSTER-mapped Report Display",
-				"description": "Build the UI component that takes the final `EuerReport` object and displays the results in a clean, read-only format matching the ELSTER form.",
-				"details": "The component will render the key calculated values (e.g., 'Betriebseinnahmen', 'Wareneinkauf', 'Gewinn/Verlust') with labels and line numbers corresponding to the official EÜR form. This component will replace the placeholder from task 11.",
-				"testStrategy": "Manually test by feeding a mock `EuerReport` object to the component and verifying the display is accurate, clean, and user-friendly. Check that all relevant fields from the report object are displayed.",
-				"priority": "medium",
-				"dependencies": [11],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 17,
-				"title": "Integrate All MVP Components for End-to-End Flow",
-				"description": "Connect the file upload, parsing, categorization, calculation, and display components to create the complete, functional user workflow for the MVP.",
-				"details": "Wire the file input to trigger the CSV parser. Pass the normalized data to the categorization and calculation engines. Feed the final `EuerReport` to the display component. Implement a loading indicator that is shown during processing.",
-				"testStrategy": "Perform end-to-end manual testing: upload a Kontist CSV, verify the loading state, and check that the final report is displayed correctly. Repeat the process for a Holvi CSV.",
-				"priority": "high",
-				"dependencies": [13, 15, 16],
-				"status": "done",
-				"subtasks": [
-					{
-						"id": 1,
-						"title": "Initialize Project Repository and Basic Structure",
-						"description": "Set up the version control repository, define initial project directories (e.g., `src`, `tests`, `docs`), and configure basic build tools and dependency management.",
-						"dependencies": [],
-						"details": "Use Git for version control. Create a `.gitignore` file. Configure `package.json` (for Node.js), `pyproject.toml` (for Python), or `pom.xml` (for Java) for dependency management. Establish a clear folder structure for frontend, backend, and shared components.",
-						"status": "done",
-						"testStrategy": "Verify repository creation and that basic build/install commands (e.g., `npm install`, `pip install -e .`) run without errors. Confirm `.gitignore` is effective."
-					},
-					{
-						"id": 2,
-						"title": "Design Database Schema and Configure ORM",
-						"description": "Define the necessary database tables, relationships, and data types for the application's core entities. Integrate and configure an Object-Relational Mapper (ORM) to interact with the database.",
-						"dependencies": [],
-						"details": "Choose a suitable database (e.g., PostgreSQL, MySQL). Design tables for users, items, orders, etc., including primary keys, foreign keys, and appropriate data types. Use an ORM like SQLAlchemy, Sequelize, or Hibernate. Define ORM models corresponding to the database schema.",
-						"status": "done",
-						"testStrategy": "Write and apply initial database migration scripts to a local development database. Verify that ORM models can connect to the database and perform basic CRUD (Create, Read, Update, Delete) operations on dummy data."
-					},
-					{
-						"id": 3,
-						"title": "Develop Core Backend API Endpoints",
-						"description": "Implement the essential RESTful API endpoints for data manipulation (CRUD operations) based on the defined database schema and ORM models.",
-						"dependencies": [],
-						"details": "Use a chosen backend framework (e.g., Flask, Express, Spring Boot). Implement endpoints for creating, reading, updating, and deleting primary resources (e.g., `/api/items`, `/api/users`). Ensure proper request validation, error handling, and serialization/deserialization of data.",
-						"status": "done",
-						"testStrategy": "Use an API client (e.g., Postman, Insomnia) or write unit/integration tests to verify each endpoint's functionality, HTTP status codes, and response payloads for various scenarios (success, invalid input, resource not found)."
-					},
-					{
-						"id": 4,
-						"title": "Implement Key Frontend UI Components",
-						"description": "Create the main user interface components required for displaying and interacting with the data exposed by the backend API.",
-						"dependencies": [],
-						"details": "Choose a frontend framework (e.g., React, Angular, Vue.js). Develop reusable components such as data display tables/lists, forms for data input, navigation elements, and basic layout components. Focus on static rendering and component structure initially.",
-						"status": "done",
-						"testStrategy": "Visually inspect components in a browser to ensure correct rendering and responsiveness. Use component-level testing frameworks (e.g., Jest, React Testing Library) to verify components render correctly with different props and respond to basic simulated user interactions."
-					},
-					{
-						"id": 5,
-						"title": "Integrate Frontend with Backend API and Implement Data Flow",
-						"description": "Connect the frontend UI components to the backend API endpoints to fetch, display, and submit data. Implement application-wide state management for data flow.",
-						"dependencies": [],
-						"details": "Use `fetch` API or a library like Axios for HTTP requests from the frontend. Implement data fetching on component mount, form submission handling, and real-time updates. Manage application state using a suitable pattern (e.g., Context API, Redux, Vuex, Zustand) to ensure consistent data across components.",
-						"status": "done",
-						"testStrategy": "Perform end-to-end testing by interacting with the UI and verifying that data is correctly fetched from and submitted to the backend. Use browser developer tools to monitor network requests and responses. Test various user flows involving data interaction."
-					},
-					{
-						"id": 6,
-						"title": "Implement User Authentication and Authorization",
-						"description": "Add user authentication (e.g., login, registration, logout) and authorization (e.g., role-based access control) to secure the application's resources and features.",
-						"dependencies": [],
-						"details": "Implement user registration and login endpoints on the backend, using secure password hashing (e.g., bcrypt) and token-based (e.g., JWT) or session-based authentication. Protect API routes based on user roles/permissions. Implement login/logout UI flows, protected routes, and display user-specific content on the frontend.",
-						"status": "done",
-						"testStrategy": "Test login/logout functionality with valid and invalid credentials. Verify that protected API routes are inaccessible without proper authentication/authorization. Test different user roles to ensure correct access levels to features and data. Check for secure storage of tokens/sessions."
-					}
-				]
-			},
-			{
-				"id": 18,
-				"title": "Integrate Polar.sh Payment Modal",
-				"description": "Implement the payment modal that appears when a user clicks on an ELSTER export button or information icon.",
-				"details": "Use the Polar.sh SDK to trigger and display the checkout modal. The modal should offer the option to make a voluntary payment or to skip and continue for free, as described in the user flow.",
-				"testStrategy": "Manually trigger the modal from the UI. Verify the Polar.sh checkout loads correctly within the modal. Test the 'skip' functionality to ensure the user can proceed without paying.",
-				"priority": "medium",
-				"dependencies": [17],
-				"status": "done",
-				"subtasks": [
-					{
-						"id": 1,
-						"title": "Design and Implement Product Database Schema",
-						"description": "Define the database schema for products, categories, and related entities. Set up the database and initial tables.",
-						"dependencies": [],
-						"details": "Use PostgreSQL. Tables: `products` (id, name, description, price, stock, category_id), `categories` (id, name). Ensure proper indexing and foreign key constraints. Create migration scripts.\n<info added on 2025-09-10T07:33:10.471Z>\nWith the `PaymentModal.tsx` component now successfully integrating the Polar.sh SDK on the client side, this backend subtask is unblocked. The goal is to create an API endpoint that will serve the product/donation options from the database to the frontend.\n\n**Implementation Plan:**\n\n1.  **Create API Endpoint:** Implement a new `GET /api/products` endpoint. Following the existing backend structure, this will likely involve adding a new route in the `server/routes/` directory and a corresponding controller function.\n2.  **Database Query:** The controller for this endpoint should query the PostgreSQL `products` table (defined in subtask 18.1) to fetch all available products.\n3.  **Data Structure:** The endpoint should return a JSON array of product objects. Each object should include the necessary fields for the frontend, such as `id`, `name`, `description`, and `price`.\n4.  **Frontend Integration (Next Step):** Once this endpoint is live, the `PaymentModal.tsx` component will be refactored to fetch data from `/api/products` instead of using client-side dynamic values. This will decouple the product offerings from the frontend code.\n</info added on 2025-09-10T07:33:10.471Z>",
-						"status": "done",
-						"testStrategy": "Verify table creation, column types, constraints, and ability to insert/retrieve basic data using SQL queries directly against the database."
-					},
-					{
-						"id": 2,
-						"title": "Implement Product Listing API Endpoint",
-						"description": "Create an API endpoint to retrieve a list of all products, with optional filtering and pagination.",
-						"dependencies": [],
-						"details": "Endpoint: `/api/products`. Support query parameters for `category_id`, `min_price`, `max_price`, `page`, `limit`. Use a RESTful approach, returning JSON.",
-						"status": "done",
-						"testStrategy": "Unit tests for data retrieval logic. Integration tests for the API endpoint using HTTP requests, checking various filter combinations, pagination, and empty results."
-					},
-					{
-						"id": 3,
-						"title": "Implement Single Product Details API Endpoint",
-						"description": "Create an API endpoint to retrieve details for a specific product by its ID.",
-						"dependencies": [],
-						"details": "Endpoint: `/api/products/{id}`. Handle cases where the product ID does not exist (return 404 Not Found). Include category name in the response.",
-						"status": "done",
-						"testStrategy": "Unit tests for fetching by ID. Integration tests for the API endpoint, checking valid IDs, non-existent IDs, and ensuring correct data structure and status codes."
-					},
-					{
-						"id": 4,
-						"title": "Implement Product Creation API Endpoint",
-						"description": "Create an API endpoint to allow authenticated users to add new products to the catalog.",
-						"dependencies": [],
-						"details": "Endpoint: `/api/products` (POST request). Request body should include `name`, `description`, `price`, `stock`, `category_id`. Implement input validation (e.g., price > 0, stock >= 0, category_id exists). Return 201 Created with the new product's details.",
-						"status": "done",
-						"testStrategy": "Unit tests for validation logic. Integration tests for the API endpoint, sending valid and invalid product data, verifying successful creation, and checking error responses for invalid inputs."
-					}
-				]
-			},
-			{
-				"id": 19,
-				"title": "Manage Payment Flow and Add Secondary CTA",
-				"description": "Implement logic to handle payment success/failure and add a subtle call-to-action for later contributions in the export view.",
-				"details": "Use callbacks or promises from the Polar.sh SDK to detect payment completion. Display a simple confirmation message on success. Add a non-intrusive 'Support this tool' button in the final report view that re-opens the payment modal.",
-				"testStrategy": "Use Polar.sh test mode to simulate a successful payment and verify the confirmation UI appears. Verify the secondary CTA is present and correctly triggers the payment modal again.",
-				"priority": "medium",
-				"dependencies": [18],
-				"status": "done",
-				"subtasks": [
-					{
-						"id": 1,
-						"title": "Design and Implement Database Schema",
-						"description": "Define the database schema for core entities (e.g., users, products, orders) and set up the initial database environment.",
-						"dependencies": [],
-						"details": "Create SQL DDL scripts for tables like `users` (id, name, email, password_hash), `products` (id, name, description, price, stock), and `orders` (id, user_id, order_date, total_amount). Use PostgreSQL for the database. Ensure proper indexing for foreign keys and frequently queried columns.",
-						"status": "done",
-						"testStrategy": "Verify table creation and schema integrity using a database client. Insert sample data to confirm data types and constraints are enforced correctly."
-					},
-					{
-						"id": 2,
-						"title": "Develop User Authentication and Authorization Module",
-						"description": "Implement user registration, login, and token-based authentication (e.g., JWT). Include basic role-based authorization.",
-						"dependencies": [],
-						"details": "Create API endpoints for `/register` (POST), `/login` (POST), and `/profile` (GET, protected). Use bcrypt for password hashing. Implement JWT generation on login and validation for protected routes. Define roles (e.g., 'user', 'admin') and enforce access control on specific endpoints.",
-						"status": "done",
-						"testStrategy": "Test user registration with valid/invalid data. Verify successful login and JWT generation. Test access to protected routes with valid/invalid/missing tokens. Confirm authorization rules are applied correctly for different user roles."
-					},
-					{
-						"id": 3,
-						"title": "Implement Product Catalog Management API",
-						"description": "Develop CRUD (Create, Read, Update, Delete) API endpoints for managing product information.",
-						"dependencies": [],
-						"details": "Create RESTful endpoints: `/products` (GET all, POST new), `/products/{id}` (GET by ID, PUT/PATCH update, DELETE). Implement input validation for product data (name, price, stock). Ensure only authenticated and authorized users (e.g., 'admin' role) can create, update, or delete products.",
-						"status": "done",
-						"testStrategy": "Use Postman or cURL to test all CRUD operations. Verify correct HTTP status codes (200, 201, 204, 400, 401, 403, 404). Test edge cases like invalid product IDs, missing required fields, and unauthorized access attempts."
-					},
-					{
-						"id": 4,
-						"title": "Set Up API Documentation and Deployment Configuration",
-						"description": "Generate comprehensive API documentation and configure basic deployment settings for the application.",
-						"dependencies": [],
-						"details": "Use OpenAPI/Swagger to document all implemented API endpoints, including request/response schemas, authentication requirements, and error codes. Create a `Dockerfile` for containerizing the application and a basic `docker-compose.yml` for local development and testing environment setup.",
-						"status": "done",
-						"testStrategy": "Verify that the generated API documentation is accurate, complete, and accessible. Build the Docker image and run the application in a container to ensure it starts correctly and all endpoints are reachable from within the containerized environment."
-					}
-				]
-			},
-			{
-				"id": 20,
-				"title": "Deploy MVP to Static Hosting",
-				"description": "Configure and deploy the completed client-side application to a static web host like Vercel, Netlify, or GitHub Pages.",
-				"details": "Set up a build pipeline for the SPA. Configure the chosen hosting provider to serve the static files from the `dist` directory. Ensure environment variables for Polar.sh (if any) are set up correctly.",
-				"testStrategy": "Access the live URL and perform a final smoke test of the entire user flow, including file upload and the payment modal, to ensure it works correctly in a production environment.",
-				"priority": "low",
-				"dependencies": [17, 19],
-				"status": "done",
-				"subtasks": []
-			},
-			{
-				"id": 21,
-				"title": "Research and Implement Compliant Payment Integration",
-				"description": "Replace the current Polar.sh integration with a payment solution that complies with German regulations, avoiding the 'voluntary support' classification, and using appropriate terminology.",
-				"details": "This task involves a multi-phase approach to replace the existing Polar.sh payment integration with a legally compliant alternative for the German market.\n\n**Phase 1: Research & Legal Clarification**\n*   Consult with legal counsel (if available) or thoroughly research German tax and commercial law (e.g., § 3 Abs. 9 UStG for services, § 10 Abs. 1 UStG for taxable base) regarding the distinction between 'voluntary support' (Spende) and 'payment for service' (Leistungsentgelt) for digital tools. Identify key characteristics that differentiate a donation from a service fee in the German context.\n*   Research alternative payment providers (e.g., Stripe, Paddle, PayPal Business, Mollie) suitable for the German market. Evaluate providers based on ease of integration, transaction fees, compliance features (e.g., VAT handling, Impressum requirements), and user experience.\n*   Define a clear payment model (e.g., fixed price for ELSTER export access, tiered pricing, or a 'pay-what-you-want' model explicitly framed as a purchase for the service).\n\n**Phase 2: Design & Terminology**\n*   Based on legal research, update all user-facing text related to payment (buttons, modal titles, descriptions, success messages) to use compliant terminology. Examples: 'ELSTER-Export freischalten' (Unlock ELSTER Export), 'Zugang erwerben' (Acquire Access), 'Preis wählen' (Choose Price) instead of 'Spenden' or 'Freiwillige Unterstützung'.\n*   Design the new payment modal/flow (likely modifying `src/components/PaymentModal.jsx` or similar) to clearly present the service being paid for, ensuring the UI communicates that a service is being provided in exchange for payment.\n\n**Phase 3: Implementation**\n*   **Remove Polar.sh:** Uninstall `@polar-sh/sdk` from `package.json`. Remove all related imports and calls from `src/components/PaymentModal.jsx`, `src/hooks/usePayment.js`, and any other files identified during codebase analysis that interact with Polar.sh.\n*   **Integrate New Provider:** Install the SDK/library for the chosen payment provider.\n*   **Refactor Payment Logic:**\n    *   Modify `src/components/PaymentModal.jsx` to integrate the new payment provider's checkout/modal functionality.\n    *   Update `src/hooks/usePayment.js` (or create a new equivalent) to encapsulate the new provider's API calls for initiating payments, handling success/failure callbacks, and managing payment state.\n    *   Ensure the payment initiation (e.g., from the ELSTER export button in `src/components/ReportDisplay.jsx`) correctly triggers the new, compliant payment flow.\n*   **Handle Payment Outcomes:** Implement robust logic to handle payment success, failure, and cancellation. This might involve listening to client-side callbacks or, if applicable, integrating with server-side webhooks for validation. Update the UI to reflect these states (e.g., confirmation message on success, clear error message on failure).\n*   **Secondary CTA:** Adjust the 'Support this tool' button (from Task 19, likely in `src/components/ReportDisplay.jsx`) to reflect the new terminology and trigger the new, compliant payment flow.\n\n**Phase 4: Legal & UI Review**\n*   Conduct a thorough internal review of the new payment flow, UI, and all associated texts to ensure alignment with the legal research and compliant terminology.",
-				"testStrategy": "To verify the correct implementation and functionality:\n*   **Unit Tests:** If the chosen payment provider offers a test mode or mock API, write unit tests for the payment initiation and callback handling logic within `src/hooks/usePayment.js`.\n*   **Integration Tests (Sandbox/Test Mode):**\n    *   Use the chosen payment provider's sandbox/test environment to simulate successful payments, failed payments (e.g., invalid card, insufficient funds), and user cancellations.\n    *   Verify that the payment modal appears with the correct, compliant terminology and clearly presents the service being paid for.\n    *   Confirm that successful payments lead to the expected outcome (e.g., ELSTER export enabled, confirmation message displayed).\n    *   Verify that failed payments or cancellations are handled gracefully with appropriate user feedback.\n    *   Test the secondary CTA (e.g., in `src/components/ReportDisplay.jsx`) to ensure it correctly re-initiates the new, compliant payment flow.\n*   **Legal Review:** Have the implemented solution and all user-facing texts reviewed by a legal expert specializing in German commercial law to ensure full compliance with regulations.",
-				"status": "done",
-				"dependencies": [18, 19, 2, 9, 17],
-				"priority": "medium",
-				"subtasks": [
-					{
-						"id": 1,
-						"title": "Decommission Polar.sh Integration and Prepare for New Provider",
-						"description": "Remove all traces of the existing Polar.sh payment integration from the codebase. This includes uninstalling the SDK, deleting related imports, and removing any Polar.sh specific API calls or UI components. This step prepares the codebase for the integration of a new, compliant payment provider.",
-						"dependencies": [],
-						"details": "Uninstall `@polar-sh/sdk` from `package.json`. Globally search for `Polar.sh` and `@polar-sh/sdk` to identify all affected files. Remove all imports and direct calls to Polar.sh SDK methods from `src/components/PaymentModal.jsx`, `src/hooks/usePayment.js`, and any other identified files. Clean up any Polar.sh specific state management or UI elements.\n<info added on 2025-09-10T12:38:25.026Z>\nBased on the successful completion of the previous subtask, the following implementation details should be added to guide the integration of the new payment provider:\n\n**Implementation Plan:**\n\n1.  **Provider SDK Installation & Configuration:**\n    *   Install the chosen payment provider's client-side SDK (e.g., `npm install @stripe/stripe-js @stripe/react-stripe-js` for Stripe).\n    *   Add the required public API key to your environment variables file (`.env.local`). Follow the project's convention, for example: `VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...`.\n\n2.  **Refactor Core Payment Hook (`src/hooks/usePayment.ts`):**\n    *   This file will contain the primary integration logic.\n    *   Import the necessary functions from the newly installed SDK.\n    *   Initialize the provider's client using the public key from your environment variables.\n    *   Modify the `handlePayment` function to be `async`. It should now orchestrate the checkout flow:\n        *   **a. Create Session (Backend Call):** Make a `fetch` request to a new or existing backend endpoint (e.g., a serverless function) that securely creates a payment session with the provider's API. This backend component is responsible for defining the price and other sensitive details.\n        *   **b. Redirect to Checkout:** On a successful response from your backend, use the session ID returned to redirect the user to the provider's hosted checkout page (e.g., using `stripe.redirectToCheckout({ sessionId })`).\n    *   Enhance the hook's state management to include `isLoading`, `error`, and `isSuccess` states to provide feedback during the API call.\n\n3.  **Update Payment UI (`src/components/PaymentModal.tsx`):**\n    *   If the provider requires a context wrapper (e.g., Stripe's `<Elements>`), wrap the payment form or button within it, passing the initialized provider client. This may need to be done at a higher level in the component tree, like `App.tsx`, to ensure the client is loaded once.\n    *   Connect the UI to the new states from the `usePayment` hook. Disable the payment button and show a spinner when `isLoading` is true.\n    *   Display appropriate success or error messages within the modal based on the `isSuccess` and `error` states.\n</info added on 2025-09-10T12:38:25.026Z>",
-						"status": "done",
-						"testStrategy": "Verify that the application builds and runs without errors related to missing Polar.sh modules or functions. Manually check that no Polar.sh related UI elements or payment flows are present."
-					},
-					{
-						"id": 2,
-						"title": "Integrate New Payment Provider SDK and Refactor Core Payment Logic",
-						"description": "Install the SDK for the chosen compliant payment provider and refactor the core payment logic. This involves encapsulating the new provider's API calls for initiating payments, handling initial responses, and managing the payment state within a dedicated hook or service.",
-						"dependencies": ["21.1"],
-						"details": "Install the SDK/library for the selected payment provider (e.g., Stripe, Paddle). Modify `src/hooks/usePayment.js` (or create a new equivalent, e.g., `src/hooks/useCompliantPayment.js`) to encapsulate the new provider's API calls. Implement functions for initiating a payment session or checkout, passing necessary parameters (e.g., amount, description of service). Manage the loading and error states related to payment initiation.\n<info added on 2025-09-10T12:50:38.020Z>\n**UPDATED APPROACH:**\n\nBased on a revised strategy, this subtask will now focus on re-implementing the existing Polar.sh integration (`@polar-sh/sdk v0.34.16`) to function as a compliant \"Pay-What-You-Want Purchase\" system, instead of replacing the provider.\n\nThe core logic within `src/hooks/usePayment.js` must be refactored. The payment initiation function will be updated to:\n1.  Accept a gross amount from the UI.\n2.  Internally calculate the net amount and the corresponding 19% German VAT.\n3.  Call the Polar.sh SDK's API, passing parameters that clearly structure the transaction as a service purchase with a flexible price, not a donation.\n4.  Manage loading, error, and success states appropriate for a purchase transaction.\n\nThis update focuses on the backend logic within the hook. All corresponding UI modifications (e.g., changing \"Spende\" to \"Kauf\", input validation) will be addressed in the next subtask, 21.3.\n</info added on 2025-09-10T12:50:38.020Z>\n<info added on 2025-09-10T12:54:20.079Z>\n<info added on 2025-09-11T09:00:00.000Z>\n**COMPLETION NOTE:**\n\nThe refactoring of the Polar.sh integration is complete, successfully transforming it into a compliant \"Pay-What-You-Want Purchase\" system.\n\n**Implementation Summary:**\n- **Core Logic:** The `handlePurchase(grossAmount)` function was implemented in `src/hooks/usePayment.js`. It now accepts a gross amount, internally calculates the net value and 19% German VAT, and passes this breakdown as metadata (`net:X.XX,vat:Y.YY,service:elster_export`) to the Polar.sh API.\n- **Purchase Flow:** The payment modal now presents the transaction as a \"purchase\" to unlock the \"ELSTER-Export\". It includes preset price options (2€, 5€, 10€) and a validated custom amount input field that provides a live VAT breakdown.\n- **Compliance:** All terminology within the payment flow has been updated from \"donation\" to \"purchase\". The success redirect URL was changed from `?payment=success` to `?purchase=success` to reflect the nature of the transaction.\n\nThis subtask successfully implemented the core purchase logic and updated the immediate payment interface. The next subtask (21.3) will address updating other UI elements, such as in `FieldGroups.tsx`, to trigger this new compliant flow.\n</info>\n</info added on 2025-09-10T12:54:20.079Z>",
-						"status": "done",
-						"testStrategy": "Unit test the new payment hook/service with mock data or the provider's test mode. Verify that payment initiation functions correctly return expected states (e.g., loading, success, error) and that the correct API calls are made."
-					},
-					{
-						"id": 3,
-						"title": "Refactor Payment Modal UI with Compliant Terminology",
-						"description": "Update the user interface of the payment modal (`src/components/PaymentModal.jsx`) to integrate the new payment provider's checkout or embedded UI. Crucially, all user-facing text within the modal must be updated to use compliant German terminology, clearly framing the transaction as a payment for a service.",
-						"dependencies": ["21.2"],
-						"details": "Modify `src/components/PaymentModal.jsx` to display the new payment provider's checkout form, embedded modal, or redirect logic. Update all text elements (titles, descriptions, buttons, labels) within the modal to reflect compliant terminology (e.g., 'ELSTER-Export freischalten', 'Zugang erwerben', 'Preis wählen') instead of 'Spenden' or 'Freiwillige Unterstützung'. Ensure the UI clearly communicates that a service (ELSTER export access) is being provided in exchange for payment.\n<info added on 2025-09-10T13:00:22.329Z>\n**Subtask Completion Summary:**\n\nThis subtask is marked as complete as all required UI and terminology changes in `src/components/PaymentModal.tsx` were implemented ahead of schedule during the work on subtask 21.2.\n\n**Verification Details:**\n\n*   **Compliant Terminology:** All user-facing text has been updated to frame the transaction as a service purchase, removing all references to \"donations\" or \"support.\"\n    *   Title changed from \"Unterstützen Sie das Projekt\" to \"ELSTER-Export freischalten\".\n    *   Price selection text changed from \"Freiwillige Unterstützung\" to \"Preis wählen\".\n    *   Success message updated to \"Kauf erfolgreich!\".\n*   **Technical Integration:**\n    *   The modal correctly triggers the `handlePurchase()` function.\n    *   Real-time VAT calculation for custom amounts is functional.\n    *   The custom price input is validated for amounts between 1€ and 999€.\n*   **Codebase Verification:**\n    *   A search of the entire codebase confirms no remaining \"donation\" or \"Spende\" terminology.\n    *   The application builds successfully and runs without errors on the development server.\n\nThe `PaymentModal` component is now fully compliant. The next step is Subtask 21.4, which involves updating the CTA triggers in `src/components/FieldGroups.tsx` to open this new modal.\n</info added on 2025-09-10T13:00:22.329Z>",
-						"status": "done",
-						"testStrategy": "Manually test the payment modal's appearance and functionality. Verify that all text elements use the new, compliant terminology. Ensure the modal correctly interacts with the new payment logic from Subtask 21.2."
-					},
-					{
-						"id": 4,
-						"title": "Update ELSTER Export and Secondary CTA Triggers",
-						"description": "Adjust the existing ELSTER export button and the 'Support this tool' secondary call-to-action (CTA) in `src/components/ReportDisplay.jsx` to correctly trigger the new, compliant payment flow. This includes updating their labels to reflect the new terminology.",
-						"dependencies": ["21.3"],
-						"details": "Locate the ELSTER export button in `src/components/ReportDisplay.jsx` and modify its `onClick` handler to call the new payment initiation function from `src/hooks/usePayment.js` (or equivalent). Update the text label of the ELSTER export button to compliant terminology (e.g., 'ELSTER-Export freischalten'). Locate the 'Support this tool' button (from Task 19) in `src/components/ReportDisplay.jsx`. Update its label to compliant terminology (e.g., 'Zugang erwerben' or 'Service erwerben') and ensure it also triggers the new payment flow.\n<info added on 2025-09-10T13:04:46.293Z>\n**Implementation Note:**\nThe UI text and button labels were updated in `src/components/FieldGroups.tsx` to align with compliant terminology, framing the transaction as a service purchase.\n\n- The section header was changed from \"ELSTER Export\" to \"ELSTER Export-Zugang\".\n- The button labels for \"EÜR Bericht\" and \"PDF Bericht\" were updated to \"ELSTER-Export freischalten\" and \"PDF-Export freischalten\" respectively.\n- These buttons correctly utilize the existing `handleExportClick` handler, which was confirmed to trigger the new compliant `PaymentModal`.\n\nThe secondary CTA was also updated:\n- The prompt was changed from \"Hat Ihnen dieses Tool geholfen?\" to \"War dieser Export hilfreich?\".\n- The button label was changed from \"Tool unterstützen\" to \"Zugang erwerben\".\n- This button correctly triggers the payment flow via the `handleSecondaryCTA` handler.\n\nAll changes successfully remove any \"support\" or \"donation\" language from the user flow, ensuring the UI is consistent with the new purchase-focused payment integration.\n</info added on 2025-09-10T13:04:46.293Z>",
-						"status": "done",
-						"testStrategy": "Manually test both the ELSTER export button and the secondary CTA in `src/components/ReportDisplay.jsx`. Verify that clicking them correctly opens the new payment modal (from Subtask 21.3) and that their labels are updated."
-					},
-					{
-						"id": 5,
-						"title": "Implement Robust Payment Outcome Handling and UI Feedback",
-						"description": "Develop comprehensive logic to handle the various outcomes of a payment transaction (success, failure, cancellation). This includes updating the application's state and providing clear, user-friendly feedback in the UI based on the payment result.",
-						"dependencies": ["21.3", "21.4"],
-						"details": "Extend `src/hooks/usePayment.js` (or equivalent) to process callbacks or responses from the payment provider indicating transaction success, failure, or cancellation. Implement logic to update the application's state (e.g., `isPaymentSuccessful`, `paymentError`) based on these outcomes. Modify `src/components/PaymentModal.jsx` and potentially `src/components/ReportDisplay.jsx` to display appropriate messages to the user (e.g., 'Payment successful! Your ELSTER export is now available.', 'Payment failed. Please try again.', 'Payment cancelled.'). Ensure that successful payment unlocks the ELSTER export functionality.",
-						"status": "done",
-						"testStrategy": "Use the payment provider's test mode to simulate successful payments, failed payments, and cancelled payments. Verify that the UI correctly reflects each state with appropriate messages and that the ELSTER export functionality is unlocked upon successful payment."
-					}
-				]
-			},
-			{
-				"id": 22,
-				"title": "Remove ELSTER Export File Functionality",
-				"description": "Remove the CSV and JSON file export features and associated UI elements, as they do not provide a valid import format for the ELSTER software.",
-				"status": "done",
-				"dependencies": [16, 18, 19],
-				"priority": "medium",
-				"details": "Based on an updated codebase analysis, the export functionality is located in `src/components/FieldGroups.tsx`, `src/components/EuerGenerator.tsx`, and `src/utils/exportUtils.ts`.\n\n1.  **Modify UI Component:** In `src/components/FieldGroups.tsx`, remove the `Button` components for 'Export CSV' and 'Export JSON' (previously located around lines 158 and 168).\n2.  **Remove Event Handler:** In `src/components/EuerGenerator.tsx`, remove the `handleExportClick` function. This function was passed as a prop to `FieldGroups` and was responsible for triggering the download.\n3.  **Remove Utility Functions:** In `src/utils/exportUtils.ts`, delete the `downloadElsterCSV` and `downloadElsterJSON` functions (previously on lines 95-134).\n4.  **Clean Up Imports:** Remove the import statements for `downloadElsterCSV` and `downloadElsterJSON` from `src/components/EuerGenerator.tsx`.\n5.  **Update Tests:** In `src/utils/exportUtils.test.ts`, remove the test suites (`describe` blocks) that correspond to the deleted `downloadElsterCSV` and `downloadElsterJSON` functions.\n6.  **Review Payment Logic:** The `handleExportClick` function in `EuerGenerator.tsx` likely contained the payment modal trigger. Review this component to ensure no orphaned calls to the payment hook remain. This cleanup is a prerequisite for Task 23, which will re-implement the payment gate.",
-				"testStrategy": "1.  **UI Verification:** Run the application and generate a report. On the results screen, confirm that the 'Export CSV' and 'Export JSON' buttons, previously located within the results section managed by `FieldGroups.tsx`, are no longer visible.\n2.  **Functional Verification:** Verify that the main report data still displays correctly and that the removal of the export buttons and their handlers has not introduced any side effects to the report generation or display logic in `EuerGenerator.tsx`.\n3.  **Code Review:** Confirm that `downloadElsterCSV` and `downloadElsterJSON` have been removed from `src/utils/exportUtils.ts`. Verify that the corresponding buttons are gone from `src/components/FieldGroups.tsx`, the `handleExportClick` handler is removed from `src/components/EuerGenerator.tsx`, and all related imports are cleaned up. Also, check that the associated tests have been removed from `src/utils/exportUtils.test.ts`.\n4.  **DevTools Check:** Check the browser's developer console for any errors related to missing functions or variables after the changes.",
-				"subtasks": []
-			},
-			{
-				"id": 23,
-				"title": "Implement Gated Access to ELSTER View via Payment Modal",
-				"description": "Replace the previous direct export functionality by gating access to the ELSTER report view (Task 16) behind the existing Polar.sh payment modal (Task 18).",
-				"status": "done",
-				"dependencies": [16, 18, 22],
-				"priority": "medium",
-				"details": "This task involves modifying the main application component, `EuerGenerator.tsx`, to gate access to the ELSTER view behind a payment modal. The current implementation switches views directly; this will be updated to a conditional flow.\n\n1.  **Refactor State Management in `EuerGenerator.tsx`:** Introduce two new state variables: `isElsterAccessGranted` (boolean, initialized to `false`) to track if the user has paid or skipped, and `isPaymentModalOpen` (boolean, initialized to `false`) to control the modal's visibility.\n2.  **Update View Switcher Logic:** In `EuerGenerator.tsx`, locate the component that handles switching the `currentView` state to `'elster'` (likely a `Tabs` or `SegmentedControl`). Modify its `onChange` or `onClick` handler.\n    *   If `isElsterAccessGranted` is `true`, it should set `currentView = 'elster'` as normal.\n    *   If `isElsterAccessGranted` is `false`, it should not change the view but instead set `isPaymentModalOpen = true`.\n3.  **Integrate `PaymentModal` in `EuerGenerator.tsx`:** Render the `<PaymentModal />` component within `EuerGenerator.tsx`. Its visibility should be controlled by the `isPaymentModalOpen` state. The `onClose` handler should set `isPaymentModalOpen` to `false`.\n4.  **Implement Modal Callbacks:** Configure the `onSuccess` and `onSkip` props for the `<PaymentModal />`. Both of these callback functions should perform the following actions:\n    *   Set `isElsterAccessGranted` to `true`.\n    *   Set `currentView` to `'elster'` to display the report.\n    *   Set `isPaymentModalOpen` to `false` to close the modal.\n5.  **Remove Redundant Logic from `FieldGroups.tsx`:** The codebase analysis shows that `FieldGroups.tsx` currently contains an instance of the `PaymentModal`. This component and its associated triggering logic should be removed from `FieldGroups.tsx`, as the gating responsibility is now handled by its parent, `EuerGenerator.tsx`.",
-				"testStrategy": "1.  **Initial State & Modal Trigger:** After uploading a CSV, confirm the 'transactions' view is active. Click the tab/button to switch to the 'ELSTER' view. Verify that the view does not change, and the Polar.sh payment modal opens instead.\n2.  **Skip Flow:** Within the modal, click the 'Skip' or 'Continue for free' link. Verify the modal closes, the application view switches to 'elster', and the `FieldGroups` component is rendered.\n3.  **State Persistence:** After gaining access, switch back to the 'transactions' view. Click the 'ELSTER' tab again. Verify that the view switches directly to the 'elster' report without re-triggering the payment modal.\n4.  **Payment Flow (Simulation):** On a fresh page load, trigger the modal. Use the Polar.sh SDK's test mode to simulate a successful payment. Verify the modal closes and the 'elster' view is displayed.\n5.  **Code Cleanup:** Review the final code for `src/components/FieldGroups.tsx` and confirm that the `PaymentModal` component and its state management logic have been successfully removed.",
-				"subtasks": []
-			},
-			{
-				"id": 24,
-				"title": "Simplify Card-Based UI in Transaction and Report Views",
-				"description": "Based on codebase analysis, the application heavily uses a generic Card component for displaying data. This task re-focuses the original 'simplification' goal away from a non-existent landing page and towards key data-heavy areas: the transaction list and the final EÜR report view. The objective is to move from a 'card-per-item' design to a more streamlined, list-based or table-based presentation to improve data density and user readability.",
-				"status": "done",
-				"dependencies": [],
-				"priority": "medium",
-				"details": "The initial analysis pointed to a marketing page, but this is a tax application. The goal of simplification should be applied to the core UI where `Card` components are used extensively.\n\n1. **Analyze `Card` Component Usage:** Examine the base card component, likely located at `src/components/ui/Card.tsx`. Use Grep to find its primary usages in data-dense components like `src/components/TransactionList.tsx` and `src/components/ReportView.tsx`.\n2. **Refactor Transaction List:** In `src/components/TransactionList.tsx`, replace the current implementation where each transaction is wrapped in its own `<Card>`. Implement a more traditional table layout for desktop (using `<table>`, `<thead>`, `<tbody>`) and a simplified list for mobile. This will make the list more scannable.\n3. **Simplify Report View Grouping:** In `src/components/ReportView.tsx`, the cards used to group ELSTER fields should be made less visually dominant. Reduce or remove `box-shadow` and heavy borders. Use simple headers and horizontal rules (`<hr>` or `border-top`) to create separation instead, making the report feel more like a single document.\n4. **Introduce Style Variants (Optional):** To avoid breaking changes, consider modifying `src/components/ui/Card.tsx` to accept a `variant` prop (e.g., `variant='flat'` or `variant='subtle'`). This would allow applying the simplified styles in `ReportView.tsx` without affecting other parts of the UI that still benefit from the standard card design.\n5. **Ensure Readability and Separation:** Ensure sufficient padding and margin are used to maintain clear separation between items in the new list/table layouts and between major sections in the report view.",
-				"testStrategy": "1. **Visual Verification:** Navigate to the transaction list and the final report screen. Confirm that the 'one card per transaction' layout has been replaced by a denser list/table. Verify that the report sections are separated more subtly.\n2. **Responsiveness Check:** Using browser developer tools, check the `TransactionList` and `ReportView` components on desktop, tablet, and mobile screen sizes. Ensure the layout is optimized for each and no content is cut off or hard to read.\n3. **Accessibility Audit:** Run a Lighthouse accessibility audit. Ensure the new transaction list uses appropriate semantic HTML (`<table>` for tabular data) and that the report view maintains a logical heading structure for screen readers.\n4. **Data Integrity Check:** After the UI refactor, upload a CSV and carefully verify that all transaction data (date, description, amount, category) and all calculated report figures are still displayed correctly and have not been inadvertently hidden or removed.",
-				"subtasks": []
-			},
-			{
-				"id": 25,
-				"title": "Verify and Refine Report View Row Alignment",
-				"description": "The initial task was to left-align report rows, assuming they were centered. Codebase analysis reveals the alignment is more nuanced: labels are generally left-aligned and amounts are right-aligned, which follows standard data table conventions. This task is updated to verify this alignment is consistently applied in `src/components/FieldGroups.tsx` and to correct any inconsistencies to improve readability.",
-				"status": "done",
-				"dependencies": [7],
-				"priority": "medium",
-				"details": "Based on codebase analysis, the report data is rendered by the `src/components/FieldGroups.tsx` component, which implements the display described in Task 16. The original assumption of center-alignment was incorrect.\n\nThe current implementation uses a flexbox layout (`flex items-center`) for rows. Individual columns are handled as follows:\n- Field numbers: Left-aligned.\n- Field labels: Left-aligned (`flex-1 px-4`).\n- Amounts: Right-aligned (`text-right`).\n\nThis alignment is generally correct. The task is to confirm this pattern is applied universally and fix any deviations.\n\n1. **Locate Target Component:** Open `src/components/FieldGroups.tsx`.\n2. **Review Row Structure:** Examine the JSX and Tailwind CSS classes for the `div` that renders each report row.\n3. **Verify Alignment:** Confirm that descriptive text (field numbers, labels) is left-aligned and numerical values (amounts) are right-aligned. This is a standard UI pattern for tables with numerical data.\n4. **Correct Inconsistencies:** If any row or element deviates from this pattern, adjust its Tailwind CSS classes to enforce the correct alignment (e.g., ensure amounts use `text-right`).",
-				"testStrategy": "1. **UI Verification:** Run the application and navigate to the final report screen (as implemented in Task 7 and gated by Task 23).\n2. **Alignment Check:** Visually confirm that all descriptive text (field numbers, labels) is left-aligned and all numerical data (amounts) is right-aligned within their respective columns.\n3. **Consistency Check:** Ensure this alignment pattern is consistent across all rows and sections of the report (e.g., 'Betriebseinnahmen', 'Betriebsausgaben').\n4. **Responsiveness Check:** Use browser developer tools to view the report on various screen sizes (mobile, tablet, desktop) and confirm the alignment is maintained and does not negatively impact the layout.",
-				"subtasks": []
-			},
-			{
-				"id": 26,
-				"title": "Relocate Settings to a Bar Above CSV Upload Section",
-				"description": "Move the 'Kleinunternehmer' and 'Kontenrahmen' settings from the top-right of the page into a dedicated settings bar directly above the CSV upload area to improve user experience.",
-				"details": "The goal is to improve UX by co-locating settings with the action they affect. This involves creating a new component for the settings and repositioning it within the main generator component.\n\n1.  **Create a New `SettingsBar.tsx` Component:**\n    *   Create a new file: `src/components/SettingsBar.tsx`.\n    *   This component will encapsulate the UI for the settings. It should accept props for the current values and the state update functions (e.g., `isKleinunternehmer`, `onKleinunternehmerChange`, `accountFramework`, `onFrameworkChange`).\n    *   Inside `SettingsBar.tsx`, use existing UI components (likely from `src/components/ui/`) such as `Switch` for the 'Kleinunternehmer-Regelung' and a `Select` or `RadioGroup` for the 'Kontenrahmen' (SKR03/SKR04).\n    *   Style the component as a distinct bar. Use a `div` with appropriate TailwindCSS classes like `flex items-center justify-between p-4 mb-4 border rounded-lg bg-slate-50`.\n\n2.  **Refactor `EuerGenerator.tsx`:**\n    *   Open the main application component at `src/components/EuerGenerator.tsx`.\n    *   Locate the JSX elements that currently render the settings controls (likely a `div` positioned in the top-right).\n    *   Remove these elements from their current location.\n    *   Import the new `SettingsBar` component.\n    *   In the render logic of `EuerGenerator.tsx`, find the conditional block that renders the upload view (e.g., `{currentView === 'upload' && ...}`).\n    *   Inside this block, render the `<SettingsBar />` component directly above the `<CsvUpload />` component.\n    *   Pass the relevant state variables (e.g., `isKleinunternehmer`, `accountFramework`) and their setter functions from `EuerGenerator.tsx` as props to the `<SettingsBar />`.",
-				"testStrategy": "1.  **UI Placement Verification:** Run the application and view the initial upload screen. Confirm that a new settings bar containing the 'Kleinunternehmer' and 'Kontenrahmen' options appears directly above the CSV upload area.\n2.  **Old UI Removal:** Verify that the settings controls are no longer visible in their previous position (top-right of the page layout).\n3.  **Functional Test:** Interact with the controls in the new `SettingsBar`. Toggle the switch and change the select option. Ensure the UI updates correctly.\n4.  **State Propagation:** After changing the settings, upload a CSV file and proceed to the final report view. Verify that the calculations in the report correctly reflect the settings chosen (e.g., VAT handling for Kleinunternehmer, correct account mapping for the selected Kontenrahmen).\n5.  **Conditional Visibility:** Navigate to the 'Transactions' and 'Report' views after uploading a file. Confirm that the `SettingsBar` is no longer visible, as it should only be displayed on the 'upload' view.",
-				"status": "done",
-				"dependencies": [],
-				"priority": "medium",
-				"subtasks": []
-			}
-		],
-		"metadata": {
-			"created": "2025-09-04T07:57:30.681Z",
-			"updated": "2025-10-07T10:35:02.103Z",
-			"description": "Tasks for master context"
-		}
-	}
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize SPA Project with Vite, React, and Tailwind CSS",
+        "description": "Set up the foundational client-side project structure for the EÜR Report Generator Single-Page Application (SPA).",
+        "details": "Use Vite to scaffold a new React project. Integrate Tailwind CSS for styling as per the 'Logical Dependency Chain' foundation step. Establish the basic folder structure for components, logic (engines), and data models (`RawTransaction`, `NormalizedTransaction`, `EuerReport`).",
+        "testStrategy": "Verify that the development server runs successfully and that a basic component with Tailwind CSS classes renders correctly in the browser.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Build Static UI Components for Upload and Report Display",
+        "description": "Create the static, non-functional React components for the main application interface based on the specified user flow.",
+        "details": "Implement a single-page layout as per the 'UI/UX Considerations'. Create a file input component with a clear call-to-action for CSV upload. Build a placeholder report display component with static labels matching the official EÜR form terminology.",
+        "testStrategy": "Visual verification of components in the app or a tool like Storybook. Ensure the layout is clean, minimal, and follows the single-page design principle.",
+        "priority": "high",
+        "dependencies": [1],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Implement CSV Parser and Data Normalization Logic",
+        "description": "Develop the client-side logic to parse uploaded CSV files from Kontist and Holvi and transform them into a standardized internal format.",
+        "details": "Use a client-side parsing library. Implement distinct adapters for Kontist and Holvi formats to handle potential future changes. The parser must identify the source bank and convert each row into the `NormalizedTransaction` data model.",
+        "testStrategy": "Unit test the parsing and normalization logic with sample Kontist and Holvi CSV files. Assert that the output array of `NormalizedTransaction` objects is correct for both formats.",
+        "priority": "high",
+        "dependencies": [1],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Develop SKR Categorization Engine",
+        "description": "Create the core engine to automatically assign an official SKR accounting category to each transaction.",
+        "details": "Build a function that takes a `NormalizedTransaction` and a ruleset. The engine will use keyword and pattern matching on the transaction description to map it to an SKR03/SKR04 category. The ruleset will be loaded from a JSON file as specified in the Appendix.",
+        "testStrategy": "Write extensive unit tests. For a given transaction description and ruleset, assert that the correct SKR category is returned. Test edge cases and transactions that should remain uncategorized.",
+        "priority": "high",
+        "dependencies": [3],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Develop EÜR Calculation Engine",
+        "description": "Create the logic to calculate final EÜR financial figures from the set of categorized transactions.",
+        "details": "Build a function that takes an array of categorized transactions. It will iterate through them, summing up income and expenses into buckets corresponding to the EÜR form fields. The output should match the `EuerReport` data model, calculating total income, expenses, and final profit/loss.",
+        "testStrategy": "Unit test the calculation engine with various sets of categorized transactions. Verify that total income, total expenses, profit/loss, and category-specific totals are calculated correctly.",
+        "priority": "high",
+        "dependencies": [4],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Integrate Components for End-to-End Flow",
+        "description": "Connect the UI, parser, and engines to create the complete, functional user workflow from file upload to final calculation and export.",
+        "status": "done",
+        "dependencies": [2, 5],
+        "priority": "high",
+        "details": "Wire the file upload component (Task 2) to trigger the CSV parser (Task 3). Pass the normalized transactions to the categorization engine (Task 4) and then to the calculation engine (Task 5). The final `EuerReport` object should be stored in the application's state, making it available for the report display (Task 7) and ELSTER export.",
+        "testStrategy": "Manual end-to-end testing. Upload a test CSV and verify using browser dev tools that the application state is correctly updated with the final report data. Implement and test a loading indicator during processing.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Connect File Upload UI to CSV Parser",
+            "description": "Wire the file input component to trigger the CSV parsing logic upon file selection.",
+            "status": "done",
+            "dependencies": [],
+            "details": "Implement an `onChange` handler for the file input from Task 2. Use the FileReader API to read the selected file's content and pass it to the CSV parser function from Task 3. Handle potential file reading errors.",
+            "testStrategy": "Manually upload a file and use console logs or a debugger to confirm the parser function is called with the file content."
+          },
+          {
+            "id": 2,
+            "title": "Chain Parser Output to Categorization Engine",
+            "description": "Pass the normalized transactions from the parser to the categorization engine.",
+            "status": "done",
+            "dependencies": [1],
+            "details": "Once the parser successfully returns an array of `NormalizedTransaction` objects, pass this array as input to the categorization engine (Task 4). This will enrich each transaction object with an EÜR category.",
+            "testStrategy": "After parsing, inspect the data being passed to the categorization engine to ensure it's the correct array of normalized transactions."
+          },
+          {
+            "id": 3,
+            "title": "Feed Categorized Data into Calculation Engine",
+            "description": "Use the output of the categorization engine to run the final EÜR calculations.",
+            "status": "done",
+            "dependencies": [2],
+            "details": "Take the array of categorized transactions and pass it to the EÜR calculation engine (Task 5). The engine will process this data and return the final `EuerReport` object.",
+            "testStrategy": "Verify that the calculation engine receives the categorized transactions and that its output is a structured `EuerReport` object."
+          },
+          {
+            "id": 4,
+            "title": "Store Final Report in Application State",
+            "description": "Update the global application state with the generated `EuerReport` and processing status.",
+            "status": "done",
+            "dependencies": [3],
+            "details": "Implement state management logic (e.g., React Context). On successful calculation, update the state with the `EuerReport` object. Implement a loading state that is active from file selection until the calculation is complete. Handle and store any errors that occur during the process.",
+            "testStrategy": "Use React DevTools to inspect the application state. Verify the loading state is set during processing and that the final state contains the correct `EuerReport` object or an error message."
+          },
+          {
+            "id": 5,
+            "title": "Implement ELSTER Data Export Function",
+            "description": "Create a function to export the calculated EÜR report data into a downloadable format.",
+            "status": "done",
+            "dependencies": [4],
+            "details": "Add a button to the UI that becomes active after a report is generated. On click, this button should trigger a function that formats the `EuerReport` data into a simple, structured format (e.g., a key-value CSV or JSON file) and initiates a browser download.",
+            "testStrategy": "Generate a report, click the export button, and verify that a file is downloaded. Inspect the file's contents to ensure it accurately reflects the data from the `EuerReport` object."
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Populate Report Display with Calculated Data",
+        "description": "Dynamically render the calculated EÜR report in the UI, making it ready for the user to transcribe to ELSTER.",
+        "details": "Modify the report display component (Task 2) to consume the `EuerReport` data from the application state. Display the key calculated values with labels and line numbers that directly correspond to the official EÜR form, as specified in 'ELSTER-mapped Report Display'.",
+        "testStrategy": "Visual and functional testing. Upload a test CSV and verify that the numbers displayed in the UI match the expected calculated totals. Cross-reference the UI labels with the official EÜR form.",
+        "priority": "high",
+        "dependencies": [6],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Comprehensive Unit Testing for Core Logic",
+        "description": "Fulfill the MVP requirement for unit tests covering the calculation and categorization logic.",
+        "details": "Review and expand the unit tests for the categorization (Task 4) and calculation (Task 5) engines. Ensure high test coverage for these critical components to mitigate the risk of inaccurate financial reporting.",
+        "testStrategy": "Run the full test suite and check coverage reports. Ensure tests cover common freelance income/expense types and edge cases.",
+        "priority": "medium",
+        "dependencies": [5],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Review & Document Categorization Engine Test Coverage",
+            "description": "Analyze existing unit tests for the SKR Categorization Engine (Task 4), documenting current test cases, their coverage, and initial areas for expansion.",
+            "dependencies": [],
+            "details": "Utilize code coverage tools to assess current coverage. Document existing test cases for keyword/pattern matching, and uncategorized transactions as per Task 4's original test strategy.\n<info added on 2025-09-04T16:34:04.062Z>\nInitial review in 8.1 found a critical gap: no prior unit tests existed for the categorization engine. While a new suite (`src/test/categoryMappings.test.ts`) was created to validate static category definitions, the dynamic categorization logic remains untested.\n\nThis subtask will address this by adding tests for the core categorization algorithm, focusing on:\n- Keyword/pattern matching logic for assigning categories to transactions.\n- Fallback behavior for uncategorized transactions.\n- Correct category assignment using a variety of transaction descriptions and edge cases.\n- Multi-language keyword support.\n</info added on 2025-09-04T16:34:04.062Z>",
+            "status": "done",
+            "testStrategy": "N/A (This subtask focuses on review and documentation of existing tests)"
+          },
+          {
+            "id": 2,
+            "title": "Expand Categorization Engine Unit Tests",
+            "description": "Develop new unit tests for the SKR Categorization Engine (Task 4) to cover common freelance income/expense types and specific edge cases, ensuring comprehensive coverage.",
+            "dependencies": ["8.1"],
+            "details": "Focus on scenarios not adequately covered by existing tests, including ambiguous descriptions, multiple matching rules, and transactions that should remain uncategorized. Ensure tests align with the parent task's requirement for covering common freelance income/expense types and edge cases.",
+            "status": "done",
+            "testStrategy": "Write new unit tests using various transaction descriptions and rulesets, asserting correct SKR category assignment or non-assignment for identified gaps."
+          },
+          {
+            "id": 3,
+            "title": "Review & Document Calculation Engine Test Coverage",
+            "description": "Analyze existing unit tests for the EÜR Calculation Engine (Task 5), documenting current test cases, their coverage, and initial areas for expansion.",
+            "dependencies": [],
+            "details": "Utilize code coverage tools to assess current coverage. Document existing test cases for various income/expense types, profit/loss calculation, and category-specific totals as per Task 5's original test strategy.",
+            "status": "done",
+            "testStrategy": "N/A (This subtask focuses on review and documentation of existing tests)"
+          },
+          {
+            "id": 4,
+            "title": "Expand Calculation Engine Unit Tests",
+            "description": "Develop new unit tests for the EÜR Calculation Engine (Task 5) using diverse sets of categorized transactions to verify accurate financial figure calculation across various scenarios.",
+            "dependencies": ["8.3"],
+            "details": "Create test data targeting the calculation of total income, total expenses, profit/loss, and category-specific totals under conditions like zero values, mixed types, and large transaction volumes. Ensure tests align with the parent task's requirement for covering common freelance income/expense types and edge cases.",
+            "status": "done",
+            "testStrategy": "Write new unit tests with varied categorized transaction inputs, asserting correct output for `EuerReport` fields."
+          },
+          {
+            "id": 5,
+            "title": "Achieve & Verify High Test Coverage for Core Logic",
+            "description": "Run the full unit test suite for both Categorization (Task 4) and Calculation (Task 5) engines, analyze coverage reports, and ensure high test coverage (e.g., >90% line coverage) for their core logic.",
+            "dependencies": ["8.2", "8.4"],
+            "details": "Use the configured test runner and coverage reporting tools. Address any remaining low-coverage areas by adding targeted tests until the high test coverage requirement is met for both critical components.",
+            "status": "done",
+            "testStrategy": "Run the full test suite and check coverage reports. Ensure the target coverage percentage is met for both the categorization and calculation engines."
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Refine UI/UX and Handle Error States",
+        "description": "Polish the user interface and implement robust handling for potential user errors and edge cases.",
+        "details": "Implement user-friendly error messages for invalid file types (non-CSV), corrupted files, or parsing failures. Add a small info section explaining the client-side privacy model. Ensure the entire experience is intuitive for the non-accountant user persona.",
+        "testStrategy": "Manual testing of error paths: upload a .txt file, a corrupted CSV, or a CSV from an unsupported bank. Ensure clear, helpful feedback is provided to the user.",
+        "priority": "medium",
+        "dependencies": [7],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Configure Static Site Deployment",
+        "description": "Set up automated deployment to a static web hosting provider to make the MVP publicly accessible.",
+        "details": "Configure a CI/CD pipeline (e.g., using GitHub Actions) to automatically build and deploy the application to a provider like Vercel, Netlify, or GitHub Pages upon pushes to the main branch.",
+        "testStrategy": "Trigger a deployment by pushing a commit. Verify that the deployed site is live and fully functional by performing a complete user flow on the production URL.",
+        "priority": "high",
+        "dependencies": [9],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Setup SPA Project and Basic UI Shell",
+        "description": "Initialize a client-side Single-Page Application (SPA) and create the main layout with placeholders for the file upload and report display areas.",
+        "details": "Use Vite and Tailwind CSS as specified in the PRD. Create a single-page layout with a clear call-to-action for file upload and an empty placeholder section for the final report display. This task corresponds to the 'Foundation' and 'Static UI' steps in the logical dependency chain.",
+        "testStrategy": "Run the development server and verify the basic layout renders correctly in the browser without errors. The file input and a placeholder for the report should be visible.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Define Core Data Models and Static Data",
+        "description": "Create the TypeScript/JavaScript definitions for `RawTransaction`, `NormalizedTransaction`, and `EuerReport`, and set up the static SKR mapping files.",
+        "details": "Define the data structures as specified in the 'Data Models' section of the PRD. Create `src/data/skr03.json` and `src/data/skr04.json` with initial mapping rules for common freelance income/expense categories.",
+        "testStrategy": "Code review to ensure models match the PRD specifications. JSON files should be linted and validated to ensure they are parseable.",
+        "priority": "high",
+        "dependencies": [11],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Implement CSV Parsing for Kontist & Holvi",
+        "description": "Develop the logic to parse uploaded `.csv` files from Kontist and Holvi, transforming the data into the standardized `NormalizedTransaction` format.",
+        "details": "Use a client-side CSV parsing library (e.g., PapaParse). Implement an adapter layer that detects the source bank (Kontist/Holvi) based on header columns and maps its specific format to the `NormalizedTransaction` model. Handle potential parsing errors gracefully.",
+        "testStrategy": "Unit test the parsing logic with sample CSV files for both banks. Verify that the output is an array of valid `NormalizedTransaction` objects and that edge cases (empty files, malformed rows) are handled.",
+        "priority": "high",
+        "dependencies": [12],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Build the SKR Categorization Engine",
+        "description": "Create the core engine that assigns an SKR category to each `NormalizedTransaction` based on predefined rules.",
+        "details": "The engine will iterate through an array of `NormalizedTransaction`s. It will use a ruleset based on keywords and patterns in the transaction description to match against the SKR mapping data loaded from the JSON files. Uncategorized items should be handled gracefully as per the PRD's risk mitigation.",
+        "testStrategy": "Write unit tests that pass in various `NormalizedTransaction` objects and assert that the correct SKR category is assigned. Test with common freelance expenses like 'Software', 'Travel', and 'Office Supplies'.",
+        "priority": "high",
+        "dependencies": [12],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Build the EÜR Calculation Engine",
+        "description": "Create the logic to process the list of categorized transactions and compute the final EÜR report totals.",
+        "details": "The engine will take an array of categorized `NormalizedTransaction`s as input. It will sum up all income and expense lines, grouping them by their assigned SKR category, to produce the final `EuerReport` object containing total income, total expenses, and profit/loss.",
+        "testStrategy": "Unit test the calculation engine with a predefined set of categorized transactions. Verify that total income, total expenses, and profit/loss are calculated correctly. Test with zero transactions and only income/expense transactions.",
+        "priority": "high",
+        "dependencies": [14],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Create the ELSTER-mapped Report Display",
+        "description": "Build the UI component that takes the final `EuerReport` object and displays the results in a clean, read-only format matching the ELSTER form.",
+        "details": "The component will render the key calculated values (e.g., 'Betriebseinnahmen', 'Wareneinkauf', 'Gewinn/Verlust') with labels and line numbers corresponding to the official EÜR form. This component will replace the placeholder from task 11.",
+        "testStrategy": "Manually test by feeding a mock `EuerReport` object to the component and verifying the display is accurate, clean, and user-friendly. Check that all relevant fields from the report object are displayed.",
+        "priority": "medium",
+        "dependencies": [11],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Integrate All MVP Components for End-to-End Flow",
+        "description": "Connect the file upload, parsing, categorization, calculation, and display components to create the complete, functional user workflow for the MVP.",
+        "details": "Wire the file input to trigger the CSV parser. Pass the normalized data to the categorization and calculation engines. Feed the final `EuerReport` to the display component. Implement a loading indicator that is shown during processing.",
+        "testStrategy": "Perform end-to-end manual testing: upload a Kontist CSV, verify the loading state, and check that the final report is displayed correctly. Repeat the process for a Holvi CSV.",
+        "priority": "high",
+        "dependencies": [13, 15, 16],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Project Repository and Basic Structure",
+            "description": "Set up the version control repository, define initial project directories (e.g., `src`, `tests`, `docs`), and configure basic build tools and dependency management.",
+            "dependencies": [],
+            "details": "Use Git for version control. Create a `.gitignore` file. Configure `package.json` (for Node.js), `pyproject.toml` (for Python), or `pom.xml` (for Java) for dependency management. Establish a clear folder structure for frontend, backend, and shared components.",
+            "status": "done",
+            "testStrategy": "Verify repository creation and that basic build/install commands (e.g., `npm install`, `pip install -e .`) run without errors. Confirm `.gitignore` is effective."
+          },
+          {
+            "id": 2,
+            "title": "Design Database Schema and Configure ORM",
+            "description": "Define the necessary database tables, relationships, and data types for the application's core entities. Integrate and configure an Object-Relational Mapper (ORM) to interact with the database.",
+            "dependencies": [],
+            "details": "Choose a suitable database (e.g., PostgreSQL, MySQL). Design tables for users, items, orders, etc., including primary keys, foreign keys, and appropriate data types. Use an ORM like SQLAlchemy, Sequelize, or Hibernate. Define ORM models corresponding to the database schema.",
+            "status": "done",
+            "testStrategy": "Write and apply initial database migration scripts to a local development database. Verify that ORM models can connect to the database and perform basic CRUD (Create, Read, Update, Delete) operations on dummy data."
+          },
+          {
+            "id": 3,
+            "title": "Develop Core Backend API Endpoints",
+            "description": "Implement the essential RESTful API endpoints for data manipulation (CRUD operations) based on the defined database schema and ORM models.",
+            "dependencies": [],
+            "details": "Use a chosen backend framework (e.g., Flask, Express, Spring Boot). Implement endpoints for creating, reading, updating, and deleting primary resources (e.g., `/api/items`, `/api/users`). Ensure proper request validation, error handling, and serialization/deserialization of data.",
+            "status": "done",
+            "testStrategy": "Use an API client (e.g., Postman, Insomnia) or write unit/integration tests to verify each endpoint's functionality, HTTP status codes, and response payloads for various scenarios (success, invalid input, resource not found)."
+          },
+          {
+            "id": 4,
+            "title": "Implement Key Frontend UI Components",
+            "description": "Create the main user interface components required for displaying and interacting with the data exposed by the backend API.",
+            "dependencies": [],
+            "details": "Choose a frontend framework (e.g., React, Angular, Vue.js). Develop reusable components such as data display tables/lists, forms for data input, navigation elements, and basic layout components. Focus on static rendering and component structure initially.",
+            "status": "done",
+            "testStrategy": "Visually inspect components in a browser to ensure correct rendering and responsiveness. Use component-level testing frameworks (e.g., Jest, React Testing Library) to verify components render correctly with different props and respond to basic simulated user interactions."
+          },
+          {
+            "id": 5,
+            "title": "Integrate Frontend with Backend API and Implement Data Flow",
+            "description": "Connect the frontend UI components to the backend API endpoints to fetch, display, and submit data. Implement application-wide state management for data flow.",
+            "dependencies": [],
+            "details": "Use `fetch` API or a library like Axios for HTTP requests from the frontend. Implement data fetching on component mount, form submission handling, and real-time updates. Manage application state using a suitable pattern (e.g., Context API, Redux, Vuex, Zustand) to ensure consistent data across components.",
+            "status": "done",
+            "testStrategy": "Perform end-to-end testing by interacting with the UI and verifying that data is correctly fetched from and submitted to the backend. Use browser developer tools to monitor network requests and responses. Test various user flows involving data interaction."
+          },
+          {
+            "id": 6,
+            "title": "Implement User Authentication and Authorization",
+            "description": "Add user authentication (e.g., login, registration, logout) and authorization (e.g., role-based access control) to secure the application's resources and features.",
+            "dependencies": [],
+            "details": "Implement user registration and login endpoints on the backend, using secure password hashing (e.g., bcrypt) and token-based (e.g., JWT) or session-based authentication. Protect API routes based on user roles/permissions. Implement login/logout UI flows, protected routes, and display user-specific content on the frontend.",
+            "status": "done",
+            "testStrategy": "Test login/logout functionality with valid and invalid credentials. Verify that protected API routes are inaccessible without proper authentication/authorization. Test different user roles to ensure correct access levels to features and data. Check for secure storage of tokens/sessions."
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "title": "Integrate Polar.sh Payment Modal",
+        "description": "Implement the payment modal that appears when a user clicks on an ELSTER export button or information icon.",
+        "details": "Use the Polar.sh SDK to trigger and display the checkout modal. The modal should offer the option to make a voluntary payment or to skip and continue for free, as described in the user flow.",
+        "testStrategy": "Manually trigger the modal from the UI. Verify the Polar.sh checkout loads correctly within the modal. Test the 'skip' functionality to ensure the user can proceed without paying.",
+        "priority": "medium",
+        "dependencies": [17],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and Implement Product Database Schema",
+            "description": "Define the database schema for products, categories, and related entities. Set up the database and initial tables.",
+            "dependencies": [],
+            "details": "Use PostgreSQL. Tables: `products` (id, name, description, price, stock, category_id), `categories` (id, name). Ensure proper indexing and foreign key constraints. Create migration scripts.\n<info added on 2025-09-10T07:33:10.471Z>\nWith the `PaymentModal.tsx` component now successfully integrating the Polar.sh SDK on the client side, this backend subtask is unblocked. The goal is to create an API endpoint that will serve the product/donation options from the database to the frontend.\n\n**Implementation Plan:**\n\n1.  **Create API Endpoint:** Implement a new `GET /api/products` endpoint. Following the existing backend structure, this will likely involve adding a new route in the `server/routes/` directory and a corresponding controller function.\n2.  **Database Query:** The controller for this endpoint should query the PostgreSQL `products` table (defined in subtask 18.1) to fetch all available products.\n3.  **Data Structure:** The endpoint should return a JSON array of product objects. Each object should include the necessary fields for the frontend, such as `id`, `name`, `description`, and `price`.\n4.  **Frontend Integration (Next Step):** Once this endpoint is live, the `PaymentModal.tsx` component will be refactored to fetch data from `/api/products` instead of using client-side dynamic values. This will decouple the product offerings from the frontend code.\n</info added on 2025-09-10T07:33:10.471Z>",
+            "status": "done",
+            "testStrategy": "Verify table creation, column types, constraints, and ability to insert/retrieve basic data using SQL queries directly against the database."
+          },
+          {
+            "id": 2,
+            "title": "Implement Product Listing API Endpoint",
+            "description": "Create an API endpoint to retrieve a list of all products, with optional filtering and pagination.",
+            "dependencies": [],
+            "details": "Endpoint: `/api/products`. Support query parameters for `category_id`, `min_price`, `max_price`, `page`, `limit`. Use a RESTful approach, returning JSON.",
+            "status": "done",
+            "testStrategy": "Unit tests for data retrieval logic. Integration tests for the API endpoint using HTTP requests, checking various filter combinations, pagination, and empty results."
+          },
+          {
+            "id": 3,
+            "title": "Implement Single Product Details API Endpoint",
+            "description": "Create an API endpoint to retrieve details for a specific product by its ID.",
+            "dependencies": [],
+            "details": "Endpoint: `/api/products/{id}`. Handle cases where the product ID does not exist (return 404 Not Found). Include category name in the response.",
+            "status": "done",
+            "testStrategy": "Unit tests for fetching by ID. Integration tests for the API endpoint, checking valid IDs, non-existent IDs, and ensuring correct data structure and status codes."
+          },
+          {
+            "id": 4,
+            "title": "Implement Product Creation API Endpoint",
+            "description": "Create an API endpoint to allow authenticated users to add new products to the catalog.",
+            "dependencies": [],
+            "details": "Endpoint: `/api/products` (POST request). Request body should include `name`, `description`, `price`, `stock`, `category_id`. Implement input validation (e.g., price > 0, stock >= 0, category_id exists). Return 201 Created with the new product's details.",
+            "status": "done",
+            "testStrategy": "Unit tests for validation logic. Integration tests for the API endpoint, sending valid and invalid product data, verifying successful creation, and checking error responses for invalid inputs."
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "title": "Manage Payment Flow and Add Secondary CTA",
+        "description": "Implement logic to handle payment success/failure and add a subtle call-to-action for later contributions in the export view.",
+        "details": "Use callbacks or promises from the Polar.sh SDK to detect payment completion. Display a simple confirmation message on success. Add a non-intrusive 'Support this tool' button in the final report view that re-opens the payment modal.",
+        "testStrategy": "Use Polar.sh test mode to simulate a successful payment and verify the confirmation UI appears. Verify the secondary CTA is present and correctly triggers the payment modal again.",
+        "priority": "medium",
+        "dependencies": [18],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and Implement Database Schema",
+            "description": "Define the database schema for core entities (e.g., users, products, orders) and set up the initial database environment.",
+            "dependencies": [],
+            "details": "Create SQL DDL scripts for tables like `users` (id, name, email, password_hash), `products` (id, name, description, price, stock), and `orders` (id, user_id, order_date, total_amount). Use PostgreSQL for the database. Ensure proper indexing for foreign keys and frequently queried columns.",
+            "status": "done",
+            "testStrategy": "Verify table creation and schema integrity using a database client. Insert sample data to confirm data types and constraints are enforced correctly."
+          },
+          {
+            "id": 2,
+            "title": "Develop User Authentication and Authorization Module",
+            "description": "Implement user registration, login, and token-based authentication (e.g., JWT). Include basic role-based authorization.",
+            "dependencies": [],
+            "details": "Create API endpoints for `/register` (POST), `/login` (POST), and `/profile` (GET, protected). Use bcrypt for password hashing. Implement JWT generation on login and validation for protected routes. Define roles (e.g., 'user', 'admin') and enforce access control on specific endpoints.",
+            "status": "done",
+            "testStrategy": "Test user registration with valid/invalid data. Verify successful login and JWT generation. Test access to protected routes with valid/invalid/missing tokens. Confirm authorization rules are applied correctly for different user roles."
+          },
+          {
+            "id": 3,
+            "title": "Implement Product Catalog Management API",
+            "description": "Develop CRUD (Create, Read, Update, Delete) API endpoints for managing product information.",
+            "dependencies": [],
+            "details": "Create RESTful endpoints: `/products` (GET all, POST new), `/products/{id}` (GET by ID, PUT/PATCH update, DELETE). Implement input validation for product data (name, price, stock). Ensure only authenticated and authorized users (e.g., 'admin' role) can create, update, or delete products.",
+            "status": "done",
+            "testStrategy": "Use Postman or cURL to test all CRUD operations. Verify correct HTTP status codes (200, 201, 204, 400, 401, 403, 404). Test edge cases like invalid product IDs, missing required fields, and unauthorized access attempts."
+          },
+          {
+            "id": 4,
+            "title": "Set Up API Documentation and Deployment Configuration",
+            "description": "Generate comprehensive API documentation and configure basic deployment settings for the application.",
+            "dependencies": [],
+            "details": "Use OpenAPI/Swagger to document all implemented API endpoints, including request/response schemas, authentication requirements, and error codes. Create a `Dockerfile` for containerizing the application and a basic `docker-compose.yml` for local development and testing environment setup.",
+            "status": "done",
+            "testStrategy": "Verify that the generated API documentation is accurate, complete, and accessible. Build the Docker image and run the application in a container to ensure it starts correctly and all endpoints are reachable from within the containerized environment."
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "title": "Deploy MVP to Static Hosting",
+        "description": "Configure and deploy the completed client-side application to a static web host like Vercel, Netlify, or GitHub Pages.",
+        "details": "Set up a build pipeline for the SPA. Configure the chosen hosting provider to serve the static files from the `dist` directory. Ensure environment variables for Polar.sh (if any) are set up correctly.",
+        "testStrategy": "Access the live URL and perform a final smoke test of the entire user flow, including file upload and the payment modal, to ensure it works correctly in a production environment.",
+        "priority": "low",
+        "dependencies": [17, 19],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Research and Implement Compliant Payment Integration",
+        "description": "Replace the current Polar.sh integration with a payment solution that complies with German regulations, avoiding the 'voluntary support' classification, and using appropriate terminology.",
+        "details": "This task involves a multi-phase approach to replace the existing Polar.sh payment integration with a legally compliant alternative for the German market.\n\n**Phase 1: Research & Legal Clarification**\n*   Consult with legal counsel (if available) or thoroughly research German tax and commercial law (e.g., § 3 Abs. 9 UStG for services, § 10 Abs. 1 UStG for taxable base) regarding the distinction between 'voluntary support' (Spende) and 'payment for service' (Leistungsentgelt) for digital tools. Identify key characteristics that differentiate a donation from a service fee in the German context.\n*   Research alternative payment providers (e.g., Stripe, Paddle, PayPal Business, Mollie) suitable for the German market. Evaluate providers based on ease of integration, transaction fees, compliance features (e.g., VAT handling, Impressum requirements), and user experience.\n*   Define a clear payment model (e.g., fixed price for ELSTER export access, tiered pricing, or a 'pay-what-you-want' model explicitly framed as a purchase for the service).\n\n**Phase 2: Design & Terminology**\n*   Based on legal research, update all user-facing text related to payment (buttons, modal titles, descriptions, success messages) to use compliant terminology. Examples: 'ELSTER-Export freischalten' (Unlock ELSTER Export), 'Zugang erwerben' (Acquire Access), 'Preis wählen' (Choose Price) instead of 'Spenden' or 'Freiwillige Unterstützung'.\n*   Design the new payment modal/flow (likely modifying `src/components/PaymentModal.jsx` or similar) to clearly present the service being paid for, ensuring the UI communicates that a service is being provided in exchange for payment.\n\n**Phase 3: Implementation**\n*   **Remove Polar.sh:** Uninstall `@polar-sh/sdk` from `package.json`. Remove all related imports and calls from `src/components/PaymentModal.jsx`, `src/hooks/usePayment.js`, and any other files identified during codebase analysis that interact with Polar.sh.\n*   **Integrate New Provider:** Install the SDK/library for the chosen payment provider.\n*   **Refactor Payment Logic:**\n    *   Modify `src/components/PaymentModal.jsx` to integrate the new payment provider's checkout/modal functionality.\n    *   Update `src/hooks/usePayment.js` (or create a new equivalent) to encapsulate the new provider's API calls for initiating payments, handling success/failure callbacks, and managing payment state.\n    *   Ensure the payment initiation (e.g., from the ELSTER export button in `src/components/ReportDisplay.jsx`) correctly triggers the new, compliant payment flow.\n*   **Handle Payment Outcomes:** Implement robust logic to handle payment success, failure, and cancellation. This might involve listening to client-side callbacks or, if applicable, integrating with server-side webhooks for validation. Update the UI to reflect these states (e.g., confirmation message on success, clear error message on failure).\n*   **Secondary CTA:** Adjust the 'Support this tool' button (from Task 19, likely in `src/components/ReportDisplay.jsx`) to reflect the new terminology and trigger the new, compliant payment flow.\n\n**Phase 4: Legal & UI Review**\n*   Conduct a thorough internal review of the new payment flow, UI, and all associated texts to ensure alignment with the legal research and compliant terminology.",
+        "testStrategy": "To verify the correct implementation and functionality:\n*   **Unit Tests:** If the chosen payment provider offers a test mode or mock API, write unit tests for the payment initiation and callback handling logic within `src/hooks/usePayment.js`.\n*   **Integration Tests (Sandbox/Test Mode):**\n    *   Use the chosen payment provider's sandbox/test environment to simulate successful payments, failed payments (e.g., invalid card, insufficient funds), and user cancellations.\n    *   Verify that the payment modal appears with the correct, compliant terminology and clearly presents the service being paid for.\n    *   Confirm that successful payments lead to the expected outcome (e.g., ELSTER export enabled, confirmation message displayed).\n    *   Verify that failed payments or cancellations are handled gracefully with appropriate user feedback.\n    *   Test the secondary CTA (e.g., in `src/components/ReportDisplay.jsx`) to ensure it correctly re-initiates the new, compliant payment flow.\n*   **Legal Review:** Have the implemented solution and all user-facing texts reviewed by a legal expert specializing in German commercial law to ensure full compliance with regulations.",
+        "status": "done",
+        "dependencies": [18, 19, 2, 9, 17],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Decommission Polar.sh Integration and Prepare for New Provider",
+            "description": "Remove all traces of the existing Polar.sh payment integration from the codebase. This includes uninstalling the SDK, deleting related imports, and removing any Polar.sh specific API calls or UI components. This step prepares the codebase for the integration of a new, compliant payment provider.",
+            "dependencies": [],
+            "details": "Uninstall `@polar-sh/sdk` from `package.json`. Globally search for `Polar.sh` and `@polar-sh/sdk` to identify all affected files. Remove all imports and direct calls to Polar.sh SDK methods from `src/components/PaymentModal.jsx`, `src/hooks/usePayment.js`, and any other identified files. Clean up any Polar.sh specific state management or UI elements.\n<info added on 2025-09-10T12:38:25.026Z>\nBased on the successful completion of the previous subtask, the following implementation details should be added to guide the integration of the new payment provider:\n\n**Implementation Plan:**\n\n1.  **Provider SDK Installation & Configuration:**\n    *   Install the chosen payment provider's client-side SDK (e.g., `npm install @stripe/stripe-js @stripe/react-stripe-js` for Stripe).\n    *   Add the required public API key to your environment variables file (`.env.local`). Follow the project's convention, for example: `VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...`.\n\n2.  **Refactor Core Payment Hook (`src/hooks/usePayment.ts`):**\n    *   This file will contain the primary integration logic.\n    *   Import the necessary functions from the newly installed SDK.\n    *   Initialize the provider's client using the public key from your environment variables.\n    *   Modify the `handlePayment` function to be `async`. It should now orchestrate the checkout flow:\n        *   **a. Create Session (Backend Call):** Make a `fetch` request to a new or existing backend endpoint (e.g., a serverless function) that securely creates a payment session with the provider's API. This backend component is responsible for defining the price and other sensitive details.\n        *   **b. Redirect to Checkout:** On a successful response from your backend, use the session ID returned to redirect the user to the provider's hosted checkout page (e.g., using `stripe.redirectToCheckout({ sessionId })`).\n    *   Enhance the hook's state management to include `isLoading`, `error`, and `isSuccess` states to provide feedback during the API call.\n\n3.  **Update Payment UI (`src/components/PaymentModal.tsx`):**\n    *   If the provider requires a context wrapper (e.g., Stripe's `<Elements>`), wrap the payment form or button within it, passing the initialized provider client. This may need to be done at a higher level in the component tree, like `App.tsx`, to ensure the client is loaded once.\n    *   Connect the UI to the new states from the `usePayment` hook. Disable the payment button and show a spinner when `isLoading` is true.\n    *   Display appropriate success or error messages within the modal based on the `isSuccess` and `error` states.\n</info added on 2025-09-10T12:38:25.026Z>",
+            "status": "done",
+            "testStrategy": "Verify that the application builds and runs without errors related to missing Polar.sh modules or functions. Manually check that no Polar.sh related UI elements or payment flows are present."
+          },
+          {
+            "id": 2,
+            "title": "Integrate New Payment Provider SDK and Refactor Core Payment Logic",
+            "description": "Install the SDK for the chosen compliant payment provider and refactor the core payment logic. This involves encapsulating the new provider's API calls for initiating payments, handling initial responses, and managing the payment state within a dedicated hook or service.",
+            "dependencies": ["21.1"],
+            "details": "Install the SDK/library for the selected payment provider (e.g., Stripe, Paddle). Modify `src/hooks/usePayment.js` (or create a new equivalent, e.g., `src/hooks/useCompliantPayment.js`) to encapsulate the new provider's API calls. Implement functions for initiating a payment session or checkout, passing necessary parameters (e.g., amount, description of service). Manage the loading and error states related to payment initiation.\n<info added on 2025-09-10T12:50:38.020Z>\n**UPDATED APPROACH:**\n\nBased on a revised strategy, this subtask will now focus on re-implementing the existing Polar.sh integration (`@polar-sh/sdk v0.34.16`) to function as a compliant \"Pay-What-You-Want Purchase\" system, instead of replacing the provider.\n\nThe core logic within `src/hooks/usePayment.js` must be refactored. The payment initiation function will be updated to:\n1.  Accept a gross amount from the UI.\n2.  Internally calculate the net amount and the corresponding 19% German VAT.\n3.  Call the Polar.sh SDK's API, passing parameters that clearly structure the transaction as a service purchase with a flexible price, not a donation.\n4.  Manage loading, error, and success states appropriate for a purchase transaction.\n\nThis update focuses on the backend logic within the hook. All corresponding UI modifications (e.g., changing \"Spende\" to \"Kauf\", input validation) will be addressed in the next subtask, 21.3.\n</info added on 2025-09-10T12:50:38.020Z>\n<info added on 2025-09-10T12:54:20.079Z>\n<info added on 2025-09-11T09:00:00.000Z>\n**COMPLETION NOTE:**\n\nThe refactoring of the Polar.sh integration is complete, successfully transforming it into a compliant \"Pay-What-You-Want Purchase\" system.\n\n**Implementation Summary:**\n- **Core Logic:** The `handlePurchase(grossAmount)` function was implemented in `src/hooks/usePayment.js`. It now accepts a gross amount, internally calculates the net value and 19% German VAT, and passes this breakdown as metadata (`net:X.XX,vat:Y.YY,service:elster_export`) to the Polar.sh API.\n- **Purchase Flow:** The payment modal now presents the transaction as a \"purchase\" to unlock the \"ELSTER-Export\". It includes preset price options (2€, 5€, 10€) and a validated custom amount input field that provides a live VAT breakdown.\n- **Compliance:** All terminology within the payment flow has been updated from \"donation\" to \"purchase\". The success redirect URL was changed from `?payment=success` to `?purchase=success` to reflect the nature of the transaction.\n\nThis subtask successfully implemented the core purchase logic and updated the immediate payment interface. The next subtask (21.3) will address updating other UI elements, such as in `FieldGroups.tsx`, to trigger this new compliant flow.\n</info>\n</info added on 2025-09-10T12:54:20.079Z>",
+            "status": "done",
+            "testStrategy": "Unit test the new payment hook/service with mock data or the provider's test mode. Verify that payment initiation functions correctly return expected states (e.g., loading, success, error) and that the correct API calls are made."
+          },
+          {
+            "id": 3,
+            "title": "Refactor Payment Modal UI with Compliant Terminology",
+            "description": "Update the user interface of the payment modal (`src/components/PaymentModal.jsx`) to integrate the new payment provider's checkout or embedded UI. Crucially, all user-facing text within the modal must be updated to use compliant German terminology, clearly framing the transaction as a payment for a service.",
+            "dependencies": ["21.2"],
+            "details": "Modify `src/components/PaymentModal.jsx` to display the new payment provider's checkout form, embedded modal, or redirect logic. Update all text elements (titles, descriptions, buttons, labels) within the modal to reflect compliant terminology (e.g., 'ELSTER-Export freischalten', 'Zugang erwerben', 'Preis wählen') instead of 'Spenden' or 'Freiwillige Unterstützung'. Ensure the UI clearly communicates that a service (ELSTER export access) is being provided in exchange for payment.\n<info added on 2025-09-10T13:00:22.329Z>\n**Subtask Completion Summary:**\n\nThis subtask is marked as complete as all required UI and terminology changes in `src/components/PaymentModal.tsx` were implemented ahead of schedule during the work on subtask 21.2.\n\n**Verification Details:**\n\n*   **Compliant Terminology:** All user-facing text has been updated to frame the transaction as a service purchase, removing all references to \"donations\" or \"support.\"\n    *   Title changed from \"Unterstützen Sie das Projekt\" to \"ELSTER-Export freischalten\".\n    *   Price selection text changed from \"Freiwillige Unterstützung\" to \"Preis wählen\".\n    *   Success message updated to \"Kauf erfolgreich!\".\n*   **Technical Integration:**\n    *   The modal correctly triggers the `handlePurchase()` function.\n    *   Real-time VAT calculation for custom amounts is functional.\n    *   The custom price input is validated for amounts between 1€ and 999€.\n*   **Codebase Verification:**\n    *   A search of the entire codebase confirms no remaining \"donation\" or \"Spende\" terminology.\n    *   The application builds successfully and runs without errors on the development server.\n\nThe `PaymentModal` component is now fully compliant. The next step is Subtask 21.4, which involves updating the CTA triggers in `src/components/FieldGroups.tsx` to open this new modal.\n</info added on 2025-09-10T13:00:22.329Z>",
+            "status": "done",
+            "testStrategy": "Manually test the payment modal's appearance and functionality. Verify that all text elements use the new, compliant terminology. Ensure the modal correctly interacts with the new payment logic from Subtask 21.2."
+          },
+          {
+            "id": 4,
+            "title": "Update ELSTER Export and Secondary CTA Triggers",
+            "description": "Adjust the existing ELSTER export button and the 'Support this tool' secondary call-to-action (CTA) in `src/components/ReportDisplay.jsx` to correctly trigger the new, compliant payment flow. This includes updating their labels to reflect the new terminology.",
+            "dependencies": ["21.3"],
+            "details": "Locate the ELSTER export button in `src/components/ReportDisplay.jsx` and modify its `onClick` handler to call the new payment initiation function from `src/hooks/usePayment.js` (or equivalent). Update the text label of the ELSTER export button to compliant terminology (e.g., 'ELSTER-Export freischalten'). Locate the 'Support this tool' button (from Task 19) in `src/components/ReportDisplay.jsx`. Update its label to compliant terminology (e.g., 'Zugang erwerben' or 'Service erwerben') and ensure it also triggers the new payment flow.\n<info added on 2025-09-10T13:04:46.293Z>\n**Implementation Note:**\nThe UI text and button labels were updated in `src/components/FieldGroups.tsx` to align with compliant terminology, framing the transaction as a service purchase.\n\n- The section header was changed from \"ELSTER Export\" to \"ELSTER Export-Zugang\".\n- The button labels for \"EÜR Bericht\" and \"PDF Bericht\" were updated to \"ELSTER-Export freischalten\" and \"PDF-Export freischalten\" respectively.\n- These buttons correctly utilize the existing `handleExportClick` handler, which was confirmed to trigger the new compliant `PaymentModal`.\n\nThe secondary CTA was also updated:\n- The prompt was changed from \"Hat Ihnen dieses Tool geholfen?\" to \"War dieser Export hilfreich?\".\n- The button label was changed from \"Tool unterstützen\" to \"Zugang erwerben\".\n- This button correctly triggers the payment flow via the `handleSecondaryCTA` handler.\n\nAll changes successfully remove any \"support\" or \"donation\" language from the user flow, ensuring the UI is consistent with the new purchase-focused payment integration.\n</info added on 2025-09-10T13:04:46.293Z>",
+            "status": "done",
+            "testStrategy": "Manually test both the ELSTER export button and the secondary CTA in `src/components/ReportDisplay.jsx`. Verify that clicking them correctly opens the new payment modal (from Subtask 21.3) and that their labels are updated."
+          },
+          {
+            "id": 5,
+            "title": "Implement Robust Payment Outcome Handling and UI Feedback",
+            "description": "Develop comprehensive logic to handle the various outcomes of a payment transaction (success, failure, cancellation). This includes updating the application's state and providing clear, user-friendly feedback in the UI based on the payment result.",
+            "dependencies": ["21.3", "21.4"],
+            "details": "Extend `src/hooks/usePayment.js` (or equivalent) to process callbacks or responses from the payment provider indicating transaction success, failure, or cancellation. Implement logic to update the application's state (e.g., `isPaymentSuccessful`, `paymentError`) based on these outcomes. Modify `src/components/PaymentModal.jsx` and potentially `src/components/ReportDisplay.jsx` to display appropriate messages to the user (e.g., 'Payment successful! Your ELSTER export is now available.', 'Payment failed. Please try again.', 'Payment cancelled.'). Ensure that successful payment unlocks the ELSTER export functionality.",
+            "status": "done",
+            "testStrategy": "Use the payment provider's test mode to simulate successful payments, failed payments, and cancelled payments. Verify that the UI correctly reflects each state with appropriate messages and that the ELSTER export functionality is unlocked upon successful payment."
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "Remove ELSTER Export File Functionality",
+        "description": "Remove the CSV and JSON file export features and associated UI elements, as they do not provide a valid import format for the ELSTER software.",
+        "status": "done",
+        "dependencies": [16, 18, 19],
+        "priority": "medium",
+        "details": "Based on an updated codebase analysis, the export functionality is located in `src/components/FieldGroups.tsx`, `src/components/EuerGenerator.tsx`, and `src/utils/exportUtils.ts`.\n\n1.  **Modify UI Component:** In `src/components/FieldGroups.tsx`, remove the `Button` components for 'Export CSV' and 'Export JSON' (previously located around lines 158 and 168).\n2.  **Remove Event Handler:** In `src/components/EuerGenerator.tsx`, remove the `handleExportClick` function. This function was passed as a prop to `FieldGroups` and was responsible for triggering the download.\n3.  **Remove Utility Functions:** In `src/utils/exportUtils.ts`, delete the `downloadElsterCSV` and `downloadElsterJSON` functions (previously on lines 95-134).\n4.  **Clean Up Imports:** Remove the import statements for `downloadElsterCSV` and `downloadElsterJSON` from `src/components/EuerGenerator.tsx`.\n5.  **Update Tests:** In `src/utils/exportUtils.test.ts`, remove the test suites (`describe` blocks) that correspond to the deleted `downloadElsterCSV` and `downloadElsterJSON` functions.\n6.  **Review Payment Logic:** The `handleExportClick` function in `EuerGenerator.tsx` likely contained the payment modal trigger. Review this component to ensure no orphaned calls to the payment hook remain. This cleanup is a prerequisite for Task 23, which will re-implement the payment gate.",
+        "testStrategy": "1.  **UI Verification:** Run the application and generate a report. On the results screen, confirm that the 'Export CSV' and 'Export JSON' buttons, previously located within the results section managed by `FieldGroups.tsx`, are no longer visible.\n2.  **Functional Verification:** Verify that the main report data still displays correctly and that the removal of the export buttons and their handlers has not introduced any side effects to the report generation or display logic in `EuerGenerator.tsx`.\n3.  **Code Review:** Confirm that `downloadElsterCSV` and `downloadElsterJSON` have been removed from `src/utils/exportUtils.ts`. Verify that the corresponding buttons are gone from `src/components/FieldGroups.tsx`, the `handleExportClick` handler is removed from `src/components/EuerGenerator.tsx`, and all related imports are cleaned up. Also, check that the associated tests have been removed from `src/utils/exportUtils.test.ts`.\n4.  **DevTools Check:** Check the browser's developer console for any errors related to missing functions or variables after the changes.",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Implement Gated Access to ELSTER View via Payment Modal",
+        "description": "Replace the previous direct export functionality by gating access to the ELSTER report view (Task 16) behind the existing Polar.sh payment modal (Task 18).",
+        "status": "done",
+        "dependencies": [16, 18, 22],
+        "priority": "medium",
+        "details": "This task involves modifying the main application component, `EuerGenerator.tsx`, to gate access to the ELSTER view behind a payment modal. The current implementation switches views directly; this will be updated to a conditional flow.\n\n1.  **Refactor State Management in `EuerGenerator.tsx`:** Introduce two new state variables: `isElsterAccessGranted` (boolean, initialized to `false`) to track if the user has paid or skipped, and `isPaymentModalOpen` (boolean, initialized to `false`) to control the modal's visibility.\n2.  **Update View Switcher Logic:** In `EuerGenerator.tsx`, locate the component that handles switching the `currentView` state to `'elster'` (likely a `Tabs` or `SegmentedControl`). Modify its `onChange` or `onClick` handler.\n    *   If `isElsterAccessGranted` is `true`, it should set `currentView = 'elster'` as normal.\n    *   If `isElsterAccessGranted` is `false`, it should not change the view but instead set `isPaymentModalOpen = true`.\n3.  **Integrate `PaymentModal` in `EuerGenerator.tsx`:** Render the `<PaymentModal />` component within `EuerGenerator.tsx`. Its visibility should be controlled by the `isPaymentModalOpen` state. The `onClose` handler should set `isPaymentModalOpen` to `false`.\n4.  **Implement Modal Callbacks:** Configure the `onSuccess` and `onSkip` props for the `<PaymentModal />`. Both of these callback functions should perform the following actions:\n    *   Set `isElsterAccessGranted` to `true`.\n    *   Set `currentView` to `'elster'` to display the report.\n    *   Set `isPaymentModalOpen` to `false` to close the modal.\n5.  **Remove Redundant Logic from `FieldGroups.tsx`:** The codebase analysis shows that `FieldGroups.tsx` currently contains an instance of the `PaymentModal`. This component and its associated triggering logic should be removed from `FieldGroups.tsx`, as the gating responsibility is now handled by its parent, `EuerGenerator.tsx`.",
+        "testStrategy": "1.  **Initial State & Modal Trigger:** After uploading a CSV, confirm the 'transactions' view is active. Click the tab/button to switch to the 'ELSTER' view. Verify that the view does not change, and the Polar.sh payment modal opens instead.\n2.  **Skip Flow:** Within the modal, click the 'Skip' or 'Continue for free' link. Verify the modal closes, the application view switches to 'elster', and the `FieldGroups` component is rendered.\n3.  **State Persistence:** After gaining access, switch back to the 'transactions' view. Click the 'ELSTER' tab again. Verify that the view switches directly to the 'elster' report without re-triggering the payment modal.\n4.  **Payment Flow (Simulation):** On a fresh page load, trigger the modal. Use the Polar.sh SDK's test mode to simulate a successful payment. Verify the modal closes and the 'elster' view is displayed.\n5.  **Code Cleanup:** Review the final code for `src/components/FieldGroups.tsx` and confirm that the `PaymentModal` component and its state management logic have been successfully removed.",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Simplify Card-Based UI in Transaction and Report Views",
+        "description": "Based on codebase analysis, the application heavily uses a generic Card component for displaying data. This task re-focuses the original 'simplification' goal away from a non-existent landing page and towards key data-heavy areas: the transaction list and the final EÜR report view. The objective is to move from a 'card-per-item' design to a more streamlined, list-based or table-based presentation to improve data density and user readability.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "The initial analysis pointed to a marketing page, but this is a tax application. The goal of simplification should be applied to the core UI where `Card` components are used extensively.\n\n1. **Analyze `Card` Component Usage:** Examine the base card component, likely located at `src/components/ui/Card.tsx`. Use Grep to find its primary usages in data-dense components like `src/components/TransactionList.tsx` and `src/components/ReportView.tsx`.\n2. **Refactor Transaction List:** In `src/components/TransactionList.tsx`, replace the current implementation where each transaction is wrapped in its own `<Card>`. Implement a more traditional table layout for desktop (using `<table>`, `<thead>`, `<tbody>`) and a simplified list for mobile. This will make the list more scannable.\n3. **Simplify Report View Grouping:** In `src/components/ReportView.tsx`, the cards used to group ELSTER fields should be made less visually dominant. Reduce or remove `box-shadow` and heavy borders. Use simple headers and horizontal rules (`<hr>` or `border-top`) to create separation instead, making the report feel more like a single document.\n4. **Introduce Style Variants (Optional):** To avoid breaking changes, consider modifying `src/components/ui/Card.tsx` to accept a `variant` prop (e.g., `variant='flat'` or `variant='subtle'`). This would allow applying the simplified styles in `ReportView.tsx` without affecting other parts of the UI that still benefit from the standard card design.\n5. **Ensure Readability and Separation:** Ensure sufficient padding and margin are used to maintain clear separation between items in the new list/table layouts and between major sections in the report view.",
+        "testStrategy": "1. **Visual Verification:** Navigate to the transaction list and the final report screen. Confirm that the 'one card per transaction' layout has been replaced by a denser list/table. Verify that the report sections are separated more subtly.\n2. **Responsiveness Check:** Using browser developer tools, check the `TransactionList` and `ReportView` components on desktop, tablet, and mobile screen sizes. Ensure the layout is optimized for each and no content is cut off or hard to read.\n3. **Accessibility Audit:** Run a Lighthouse accessibility audit. Ensure the new transaction list uses appropriate semantic HTML (`<table>` for tabular data) and that the report view maintains a logical heading structure for screen readers.\n4. **Data Integrity Check:** After the UI refactor, upload a CSV and carefully verify that all transaction data (date, description, amount, category) and all calculated report figures are still displayed correctly and have not been inadvertently hidden or removed.",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Verify and Refine Report View Row Alignment",
+        "description": "The initial task was to left-align report rows, assuming they were centered. Codebase analysis reveals the alignment is more nuanced: labels are generally left-aligned and amounts are right-aligned, which follows standard data table conventions. This task is updated to verify this alignment is consistently applied in `src/components/FieldGroups.tsx` and to correct any inconsistencies to improve readability.",
+        "status": "done",
+        "dependencies": [7],
+        "priority": "medium",
+        "details": "Based on codebase analysis, the report data is rendered by the `src/components/FieldGroups.tsx` component, which implements the display described in Task 16. The original assumption of center-alignment was incorrect.\n\nThe current implementation uses a flexbox layout (`flex items-center`) for rows. Individual columns are handled as follows:\n- Field numbers: Left-aligned.\n- Field labels: Left-aligned (`flex-1 px-4`).\n- Amounts: Right-aligned (`text-right`).\n\nThis alignment is generally correct. The task is to confirm this pattern is applied universally and fix any deviations.\n\n1. **Locate Target Component:** Open `src/components/FieldGroups.tsx`.\n2. **Review Row Structure:** Examine the JSX and Tailwind CSS classes for the `div` that renders each report row.\n3. **Verify Alignment:** Confirm that descriptive text (field numbers, labels) is left-aligned and numerical values (amounts) are right-aligned. This is a standard UI pattern for tables with numerical data.\n4. **Correct Inconsistencies:** If any row or element deviates from this pattern, adjust its Tailwind CSS classes to enforce the correct alignment (e.g., ensure amounts use `text-right`).",
+        "testStrategy": "1. **UI Verification:** Run the application and navigate to the final report screen (as implemented in Task 7 and gated by Task 23).\n2. **Alignment Check:** Visually confirm that all descriptive text (field numbers, labels) is left-aligned and all numerical data (amounts) is right-aligned within their respective columns.\n3. **Consistency Check:** Ensure this alignment pattern is consistent across all rows and sections of the report (e.g., 'Betriebseinnahmen', 'Betriebsausgaben').\n4. **Responsiveness Check:** Use browser developer tools to view the report on various screen sizes (mobile, tablet, desktop) and confirm the alignment is maintained and does not negatively impact the layout.",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Relocate Settings to a Bar Above CSV Upload Section",
+        "description": "Move the 'Kleinunternehmer' and 'Kontenrahmen' settings from the top-right of the page into a dedicated settings bar directly above the CSV upload area to improve user experience.",
+        "details": "The goal is to improve UX by co-locating settings with the action they affect. This involves creating a new component for the settings and repositioning it within the main generator component.\n\n1.  **Create a New `SettingsBar.tsx` Component:**\n    *   Create a new file: `src/components/SettingsBar.tsx`.\n    *   This component will encapsulate the UI for the settings. It should accept props for the current values and the state update functions (e.g., `isKleinunternehmer`, `onKleinunternehmerChange`, `accountFramework`, `onFrameworkChange`).\n    *   Inside `SettingsBar.tsx`, use existing UI components (likely from `src/components/ui/`) such as `Switch` for the 'Kleinunternehmer-Regelung' and a `Select` or `RadioGroup` for the 'Kontenrahmen' (SKR03/SKR04).\n    *   Style the component as a distinct bar. Use a `div` with appropriate TailwindCSS classes like `flex items-center justify-between p-4 mb-4 border rounded-lg bg-slate-50`.\n\n2.  **Refactor `EuerGenerator.tsx`:**\n    *   Open the main application component at `src/components/EuerGenerator.tsx`.\n    *   Locate the JSX elements that currently render the settings controls (likely a `div` positioned in the top-right).\n    *   Remove these elements from their current location.\n    *   Import the new `SettingsBar` component.\n    *   In the render logic of `EuerGenerator.tsx`, find the conditional block that renders the upload view (e.g., `{currentView === 'upload' && ...}`).\n    *   Inside this block, render the `<SettingsBar />` component directly above the `<CsvUpload />` component.\n    *   Pass the relevant state variables (e.g., `isKleinunternehmer`, `accountFramework`) and their setter functions from `EuerGenerator.tsx` as props to the `<SettingsBar />`.",
+        "testStrategy": "1.  **UI Placement Verification:** Run the application and view the initial upload screen. Confirm that a new settings bar containing the 'Kleinunternehmer' and 'Kontenrahmen' options appears directly above the CSV upload area.\n2.  **Old UI Removal:** Verify that the settings controls are no longer visible in their previous position (top-right of the page layout).\n3.  **Functional Test:** Interact with the controls in the new `SettingsBar`. Toggle the switch and change the select option. Ensure the UI updates correctly.\n4.  **State Propagation:** After changing the settings, upload a CSV file and proceed to the final report view. Verify that the calculations in the report correctly reflect the settings chosen (e.g., VAT handling for Kleinunternehmer, correct account mapping for the selected Kontenrahmen).\n5.  **Conditional Visibility:** Navigate to the 'Transactions' and 'Report' views after uploading a file. Confirm that the `SettingsBar` is no longer visible, as it should only be displayed on the 'upload' view.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-04T07:57:30.681Z",
+      "updated": "2025-10-07T10:35:02.103Z",
+      "description": "Tasks for master context"
+    }
+  }
 }

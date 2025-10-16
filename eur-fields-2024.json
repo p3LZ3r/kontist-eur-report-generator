@@ -1,451 +1,451 @@
 {
-	"Allgemeine Angaben": [
-		{
-			"nr": "1",
-			"name": "Name",
-			"beschreibung": "Name des Steuerpflichtigen bzw. der Gesellschaft/Gemeinschaft/Körperschaft"
-		},
-		{
-			"nr": "2",
-			"name": "Vorname",
-			"beschreibung": "Vorname"
-		},
-		{
-			"nr": "2",
-			"name": "Straße und Hausnummer",
-			"beschreibung": "Straße und Hausnummer"
-		},
-		{
-			"nr": "2",
-			"name": "Postleitzahl",
-			"beschreibung": "Postleitzahl"
-		},
-		{
-			"nr": "2",
-			"name": "Ort",
-			"beschreibung": "Ort"
-		},
-		{
-			"nr": "4",
-			"name": "abweichender Beginn",
-			"beschreibung": "Beginn (TT.MM; Wirtschaftsjahr abweichend vom Kalenderjahr)"
-		},
-		{
-			"nr": "4",
-			"name": "abweichendes Ende",
-			"beschreibung": "Ende (TT.MM.JJJJ)"
-		},
-		{
-			"nr": "5",
-			"name": "Wirtschafts-Identifikationsnummer",
-			"beschreibung": "Wirtschafts-Identifikationsnummer"
-		},
-		{
-			"nr": "6",
-			"name": "Art des Betriebs",
-			"beschreibung": "Art des Betriebs bzw. der Tätigkeit (Schwerpunkt)"
-		},
-		{
-			"nr": "7",
-			"name": "Rechtsform",
-			"beschreibung": "Rechtsform des Betriebs"
-		},
-		{
-			"nr": "8",
-			"name": "Einkunftsart",
-			"beschreibung": "Einkunftsart"
-		},
-		{
-			"nr": "9",
-			"name": "Betriebsinhaber",
-			"beschreibung": "Betriebsinhaber"
-		},
-		{
-			"nr": "10",
-			"name": "Beendigung des Betriebs",
-			"beschreibung": "Wurde im Kalenderjahr/Wirtschaftsjahr der Betrieb beendet?"
-		}
-	],
-	"Mitwirkung": [
-		{
-			"nr": "107a",
-			"name": "Mitwirkung Steuerberater",
-			"beschreibung": "Mitwirkung eines Angehörigen der steuerberatenden Berufe"
-		},
-		{
-			"nr": "107b",
-			"name": "Name",
-			"beschreibung": "Name des Beraters"
-		},
-		{
-			"nr": "107b",
-			"name": "Vorname",
-			"beschreibung": "Vorname des Beraters"
-		},
-		{
-			"nr": "107b",
-			"name": "Adresse",
-			"beschreibung": "Adresse des Beraters"
-		},
-		{
-			"nr": "107b",
-			"name": "Wohnort",
-			"beschreibung": "Wohnort des Beraters"
-		},
-		{
-			"nr": "107b",
-			"name": "Telefon",
-			"beschreibung": "Telefonnummer"
-		},
-		{
-			"nr": "107b",
-			"name": "Mandantennummer",
-			"beschreibung": "Mandantennummer beim Steuerberater"
-		},
-		{
-			"nr": "107b",
-			"name": "Bearbeiterkennzeichen",
-			"beschreibung": "Bearbeiterkennzeichen"
-		}
-	],
-	"Betriebseinnahmen": [
-		{
-			"nr": "12",
-			"name": "Kleinunternehmer-Einnahmen",
-			"beschreibung": "Einnahmen nach § 19 Abs. 1 UStG"
-		},
-		{
-			"nr": "13",
-			"name": "Nicht steuerbare Umsätze/§19 Abs.3",
-			"beschreibung": "Nicht steuerbare Umsätze und Umsätze nach § 19 Abs. 3 UStG"
-		},
-		{
-			"nr": "14",
-			"name": "Einnahmen Land- und Forstwirt",
-			"beschreibung": "Betriebseinnahmen als Land- und Forstwirt (§ 24 UStG)"
-		},
-		{
-			"nr": "15",
-			"name": "Umsatzsteuerpflichtige Einnahmen",
-			"beschreibung": "Umsatzsteuerpflichtige Betriebseinnahmen"
-		},
-		{
-			"nr": "16",
-			"name": "Steuerfreie/nicht steuerbare Einnahmen",
-			"beschreibung": "Steuerfreie, nicht steuerbare Betriebseinnahmen"
-		},
-		{
-			"nr": "17",
-			"name": "Vereinnahmte Umsatzsteuer",
-			"beschreibung": "Vereinnahmte Umsatzsteuer und auf Wertabgaben"
-		},
-		{
-			"nr": "18",
-			"name": "Erstattete/verrechnete Umsatzsteuer",
-			"beschreibung": "Vom Finanzamt erstattete oder verrechnete Umsatzsteuer"
-		},
-		{
-			"nr": "19",
-			"name": "Anlagevermögen veräußert/entnommen",
-			"beschreibung": "Veräußerung oder Entnahme von Anlagevermögen"
-		},
-		{
-			"nr": "20",
-			"name": "Private Kfz-Nutzung",
-			"beschreibung": "Private Kfz-Nutzung"
-		},
-		{
-			"nr": "21",
-			"name": "Sonstige Sach-, Nutzungs-, Leistungsentnahmen",
-			"beschreibung": "Sonstige Entnahmen"
-		},
-		{
-			"nr": "22",
-			"name": "Auflösung von Rücklagen",
-			"beschreibung": "Übertrag aus Rücklagenauflösung"
-		},
-		{
-			"nr": "23",
-			"name": "Summe der Einnahmen",
-			"beschreibung": "Summe der Betriebseinnahmen"
-		}
-	],
-	"Betriebsausgaben": [
-		{
-			"nr": "24",
-			"name": "Pauschale Berufsgruppe",
-			"beschreibung": "Betriebsausgabenpauschale für bestimmte Berufsgruppen"
-		},
-		{
-			"nr": "25",
-			"name": "Bebauungskostenrichtbetrag Weinbau",
-			"beschreibung": "Sachlicher Bebauungskostenrichtbetrag Weinbaubetriebe"
-		},
-		{
-			"nr": "26",
-			"name": "Pauschale Forstwirte",
-			"beschreibung": "Betriebsausgabenpauschale für Forstwirte"
-		},
-		{
-			"nr": "27",
-			"name": "Waren/Rohstoffe/Hilfsstoffe",
-			"beschreibung": "Waren, Rohstoffe und Hilfsstoffe inkl. Nebenkosten"
-		},
-		{
-			"nr": "29",
-			"name": "Bezogene Fremdleistungen",
-			"beschreibung": "Bezogene Fremdleistungen"
-		},
-		{
-			"nr": "30",
-			"name": "Ausgaben Personal",
-			"beschreibung": "Ausgaben für eigenes Personal"
-		},
-		{
-			"nr": "31-34",
-			"name": "AfA",
-			"beschreibung": "Absetzung für Abnutzung (AfA) und Überträge"
-		},
-		{
-			"nr": "35",
-			"name": "Herabsetzungsbetrag §7g",
-			"beschreibung": "Herabsetzungsbeträge §7g EStG"
-		},
-		{
-			"nr": "36",
-			"name": "Geringwertige Wirtschaftsgüter",
-			"beschreibung": "Aufwendungen für GWG"
-		},
-		{
-			"nr": "37",
-			"name": "Sammelpostenauflösung",
-			"beschreibung": "Auflösung Sammelposten nach §6 Abs. 2a EStG"
-		},
-		{
-			"nr": "38",
-			"name": "Restbuchwerte ausgeschiedener Anlagegüter",
-			"beschreibung": "Restbuchwerte ausgeschiedener Anlagegüter"
-		},
-		{
-			"nr": "39-42",
-			"name": "Raumkosten/Grundstücksaufwendungen",
-			"beschreibung": "Raumkosten und Grundstücksaufwendungen"
-		},
-		{
-			"nr": "43-54",
-			"name": "Sonstige Betriebsausgaben",
-			"beschreibung": "Sonstige unbeschränkt abziehbare Betriebsausgaben"
-		},
-		{
-			"nr": "55",
-			"name": "Schuldzinsen Anlagegüter",
-			"beschreibung": "Schuldzinsen für Anlagegüter-Finanzierung"
-		},
-		{
-			"nr": "56",
-			"name": "Übrige Schuldzinsen",
-			"beschreibung": "Übrige Schuldzinsen"
-		},
-		{
-			"nr": "57",
-			"name": "Vorsteuerbeträge",
-			"beschreibung": "Gezahlte, abziehbare Vorsteuerbeträge"
-		},
-		{
-			"nr": "58",
-			"name": "Gezahlte Umsatzsteuer",
-			"beschreibung": "An das Finanzamt gezahlte/verrechnete Umsatzsteuer"
-		},
-		{
-			"nr": "59",
-			"name": "Rücklagen/Ausgleichsposten",
-			"beschreibung": "Rücklagen, stille Reserven, Ausgleichsposten"
-		},
-		{
-			"nr": "60",
-			"name": "Übrige Betriebsausgaben",
-			"beschreibung": "Übrige unbeschränkt abziehbare Betriebsausgaben"
-		},
-		{
-			"nr": "62-67",
-			"name": "Beschränkt abziehbare Betriebsausgaben",
-			"beschreibung": "Geschenke, Bewirtung, Verpflegungsmehraufwand, Arbeitszimmer"
-		},
-		{
-			"nr": "68-73",
-			"name": "Kfz-/Fahrtkosten",
-			"beschreibung": "Kosten für Fahrzeuge, Fahrtkosten"
-		},
-		{
-			"nr": "74",
-			"name": "Nicht abziehbare Kosten",
-			"beschreibung": "Nicht abziehbare Beträge"
-		},
-		{
-			"nr": "75",
-			"name": "Summe der Ausgaben",
-			"beschreibung": "Summe der Betriebsausgaben"
-		},
-		{
-			"nr": "66",
-			"name": "Tagespauschale häusliche Wohnung",
-			"beschreibung": "Tagespauschale für Tätigkeit in häuslicher Wohnung"
-		}
-	],
-	"Gewinnermittlung": [
-		{
-			"nr": "76",
-			"name": "Summe der Betriebseinnahmen",
-			"beschreibung": "Übertrag aus Betriebseinnahmen"
-		},
-		{
-			"nr": "77",
-			"name": "Summe der Betriebsausgaben",
-			"beschreibung": "Übertrag aus Betriebsausgaben"
-		},
-		{
-			"nr": "78",
-			"name": "Abzüglich steuerfreie Einnahmen §3 Nr.26ff EStG",
-			"beschreibung": "steuerfreie Einnahmen nach §3 Nr.26, 26a, 26b EStG"
-		},
-		{
-			"nr": "79",
-			"name": "Abzüglich steuerfreie Einnahmen §3 EStG",
-			"beschreibung": "steuerfreie Einnahmen nach §3 EStG"
-		},
-		{
-			"nr": "80",
-			"name": "Abzüglich steuerfreie Einnahmen §3a",
-			"beschreibung": "steuerfreie Einnahmen nach §3a EStG"
-		},
-		{
-			"nr": "81",
-			"name": "Zuzüglich nicht abziehbare Betriebsausgaben §3 Nr.26ff EStG",
-			"beschreibung": "nicht abziehbare Betriebsausgaben nach §3 Nr.26, 26a, 26b EStG"
-		},
-		{
-			"nr": "82",
-			"name": "Zuzüglich nicht abziehbare Betriebsausgaben §3c Abs.1",
-			"beschreibung": "nicht abziehbare Betriebsausgaben nach §3c Abs.1 EStG"
-		},
-		{
-			"nr": "83",
-			"name": "Zuzüglich nicht abziehbare Betriebsausgaben §3c Abs.4",
-			"beschreibung": "nicht abziehbare Betriebsausgaben nach §3c Abs.4 EStG"
-		},
-		{
-			"nr": "84-86",
-			"name": "Investitionsabzugsbeträge Hinzurechnung §7g",
-			"beschreibung": "Hinzurechnung aus 2021–2023"
-		},
-		{
-			"nr": "87",
-			"name": "Gewinnzuschlag §6c",
-			"beschreibung": "Gewinnzuschlag nach §6c i.V.m. §6b EStG"
-		},
-		{
-			"nr": "88",
-			"name": "Investitionsabzugsbeträge Abzug §7g",
-			"beschreibung": "Abzug Investitionsabzugsbeträge nach §7g EStG"
-		},
-		{
-			"nr": "89",
-			"name": "Hinzurechnung/Abrechnung GW-Ermittlungsart-Wechsel",
-			"beschreibung": "Abrechnung/Hinzurechnung bei Wechsel der Gewinnermittlungsart"
-		},
-		{
-			"nr": "91",
-			"name": "Beteiligungen Ergebnissanteile",
-			"beschreibung": "Ergebnisanteile aus Beteiligungen an Personengesellschaften"
-		},
-		{
-			"nr": "92",
-			"name": "Korrigierter Gewinn/Verlust",
-			"beschreibung": "Korrigierter Gewinn/Verlust"
-		},
-		{
-			"nr": "93",
-			"name": "Steuerbefreite Investment-Erträge",
-			"beschreibung": "Beträge mit Steuerbefreiungen nach Investmentsteuergesetz"
-		},
-		{
-			"nr": "94",
-			"name": "Teileinkünfteverfahren/§8b KStG",
-			"beschreibung": "Beträge für das Teileinkünfteverfahren"
-		},
-		{
-			"nr": "95",
-			"name": "Steuerpflichtiger Gewinn/Verlust vor §4 Abs.4a",
-			"beschreibung": "Ergebnis vor Anwendung des §4 Abs.4a EStG"
-		},
-		{
-			"nr": "96",
-			"name": "Hinzurechnungsbetrag §4 Abs.4a EStG",
-			"beschreibung": "Hinzurechnungsbetrag §4 Abs.4a EStG"
-		},
-		{
-			"nr": "97",
-			"name": "Steuerpflichtiger Gewinn/Verlust",
-			"beschreibung": "Endbetrag"
-		},
-		{
-			"nr": "98",
-			"name": "Anzusetzender steuerpflichtiger Gewinn/Verlust",
-			"beschreibung": "nur für Personengesellschaften mit §4 Abs.4a EStG"
-		}
-	],
-	"Rücklagen, stille Reserven und Ausgleichsposten": [
-		{
-			"nr": "99",
-			"name": "Rücklagen nach §6c/§6b EStG",
-			"beschreibung": "Rücklagen nach §6c i.V.m. §6b EStG"
-		},
-		{
-			"nr": "100",
-			"name": "Übertragung stiller Reserven",
-			"beschreibung": "Übertragung von stillen Reserven"
-		},
-		{
-			"nr": "101",
-			"name": "Ausgleichsposten §4g EStG",
-			"beschreibung": "Ausgleichsposten nach §4g EStG"
-		},
-		{
-			"nr": "102",
-			"name": "Gesamtsumme Rücklagen/Bildungen",
-			"beschreibung": "Summe der gebildeten Rücklagen/Reserven"
-		},
-		{
-			"nr": "103",
-			"name": "Auflösung Rücklagen §6c/§6b",
-			"beschreibung": "Auflösung Rücklagen"
-		},
-		{
-			"nr": "104",
-			"name": "Auflösung Ausgleichsposten §4g",
-			"beschreibung": "Auflösung Ausgleichsposten"
-		},
-		{
-			"nr": "105",
-			"name": "Gesamtsumme Auflösungen",
-			"beschreibung": "Summe der aufgelösten Rücklagen/Ausgleichsposten"
-		},
-		{
-			"nr": "105",
-			"name": "Erläuterungen",
-			"beschreibung": "Freitext für Erläuterungen"
-		}
-	],
-	"Entnahmen und Einlagen": [
-		{
-			"nr": "106",
-			"name": "Entnahmen (Sach-, Leistungs-, Nutzungsentnahmen)",
-			"beschreibung": "Einträge: Bezeichnung, Betrag"
-		},
-		{
-			"nr": "107",
-			"name": "Einlagen (Sach-, Leistungs-, Nutzungseinlagen)",
-			"beschreibung": "Einträge: Bezeichnung, Betrag"
-		}
-	]
+  "Allgemeine Angaben": [
+    {
+      "nr": "1",
+      "name": "Name",
+      "beschreibung": "Name des Steuerpflichtigen bzw. der Gesellschaft/Gemeinschaft/Körperschaft"
+    },
+    {
+      "nr": "2",
+      "name": "Vorname",
+      "beschreibung": "Vorname"
+    },
+    {
+      "nr": "2",
+      "name": "Straße und Hausnummer",
+      "beschreibung": "Straße und Hausnummer"
+    },
+    {
+      "nr": "2",
+      "name": "Postleitzahl",
+      "beschreibung": "Postleitzahl"
+    },
+    {
+      "nr": "2",
+      "name": "Ort",
+      "beschreibung": "Ort"
+    },
+    {
+      "nr": "4",
+      "name": "abweichender Beginn",
+      "beschreibung": "Beginn (TT.MM; Wirtschaftsjahr abweichend vom Kalenderjahr)"
+    },
+    {
+      "nr": "4",
+      "name": "abweichendes Ende",
+      "beschreibung": "Ende (TT.MM.JJJJ)"
+    },
+    {
+      "nr": "5",
+      "name": "Wirtschafts-Identifikationsnummer",
+      "beschreibung": "Wirtschafts-Identifikationsnummer"
+    },
+    {
+      "nr": "6",
+      "name": "Art des Betriebs",
+      "beschreibung": "Art des Betriebs bzw. der Tätigkeit (Schwerpunkt)"
+    },
+    {
+      "nr": "7",
+      "name": "Rechtsform",
+      "beschreibung": "Rechtsform des Betriebs"
+    },
+    {
+      "nr": "8",
+      "name": "Einkunftsart",
+      "beschreibung": "Einkunftsart"
+    },
+    {
+      "nr": "9",
+      "name": "Betriebsinhaber",
+      "beschreibung": "Betriebsinhaber"
+    },
+    {
+      "nr": "10",
+      "name": "Beendigung des Betriebs",
+      "beschreibung": "Wurde im Kalenderjahr/Wirtschaftsjahr der Betrieb beendet?"
+    }
+  ],
+  "Mitwirkung": [
+    {
+      "nr": "107a",
+      "name": "Mitwirkung Steuerberater",
+      "beschreibung": "Mitwirkung eines Angehörigen der steuerberatenden Berufe"
+    },
+    {
+      "nr": "107b",
+      "name": "Name",
+      "beschreibung": "Name des Beraters"
+    },
+    {
+      "nr": "107b",
+      "name": "Vorname",
+      "beschreibung": "Vorname des Beraters"
+    },
+    {
+      "nr": "107b",
+      "name": "Adresse",
+      "beschreibung": "Adresse des Beraters"
+    },
+    {
+      "nr": "107b",
+      "name": "Wohnort",
+      "beschreibung": "Wohnort des Beraters"
+    },
+    {
+      "nr": "107b",
+      "name": "Telefon",
+      "beschreibung": "Telefonnummer"
+    },
+    {
+      "nr": "107b",
+      "name": "Mandantennummer",
+      "beschreibung": "Mandantennummer beim Steuerberater"
+    },
+    {
+      "nr": "107b",
+      "name": "Bearbeiterkennzeichen",
+      "beschreibung": "Bearbeiterkennzeichen"
+    }
+  ],
+  "Betriebseinnahmen": [
+    {
+      "nr": "12",
+      "name": "Kleinunternehmer-Einnahmen",
+      "beschreibung": "Einnahmen nach § 19 Abs. 1 UStG"
+    },
+    {
+      "nr": "13",
+      "name": "Nicht steuerbare Umsätze/§19 Abs.3",
+      "beschreibung": "Nicht steuerbare Umsätze und Umsätze nach § 19 Abs. 3 UStG"
+    },
+    {
+      "nr": "14",
+      "name": "Einnahmen Land- und Forstwirt",
+      "beschreibung": "Betriebseinnahmen als Land- und Forstwirt (§ 24 UStG)"
+    },
+    {
+      "nr": "15",
+      "name": "Umsatzsteuerpflichtige Einnahmen",
+      "beschreibung": "Umsatzsteuerpflichtige Betriebseinnahmen"
+    },
+    {
+      "nr": "16",
+      "name": "Steuerfreie/nicht steuerbare Einnahmen",
+      "beschreibung": "Steuerfreie, nicht steuerbare Betriebseinnahmen"
+    },
+    {
+      "nr": "17",
+      "name": "Vereinnahmte Umsatzsteuer",
+      "beschreibung": "Vereinnahmte Umsatzsteuer und auf Wertabgaben"
+    },
+    {
+      "nr": "18",
+      "name": "Erstattete/verrechnete Umsatzsteuer",
+      "beschreibung": "Vom Finanzamt erstattete oder verrechnete Umsatzsteuer"
+    },
+    {
+      "nr": "19",
+      "name": "Anlagevermögen veräußert/entnommen",
+      "beschreibung": "Veräußerung oder Entnahme von Anlagevermögen"
+    },
+    {
+      "nr": "20",
+      "name": "Private Kfz-Nutzung",
+      "beschreibung": "Private Kfz-Nutzung"
+    },
+    {
+      "nr": "21",
+      "name": "Sonstige Sach-, Nutzungs-, Leistungsentnahmen",
+      "beschreibung": "Sonstige Entnahmen"
+    },
+    {
+      "nr": "22",
+      "name": "Auflösung von Rücklagen",
+      "beschreibung": "Übertrag aus Rücklagenauflösung"
+    },
+    {
+      "nr": "23",
+      "name": "Summe der Einnahmen",
+      "beschreibung": "Summe der Betriebseinnahmen"
+    }
+  ],
+  "Betriebsausgaben": [
+    {
+      "nr": "24",
+      "name": "Pauschale Berufsgruppe",
+      "beschreibung": "Betriebsausgabenpauschale für bestimmte Berufsgruppen"
+    },
+    {
+      "nr": "25",
+      "name": "Bebauungskostenrichtbetrag Weinbau",
+      "beschreibung": "Sachlicher Bebauungskostenrichtbetrag Weinbaubetriebe"
+    },
+    {
+      "nr": "26",
+      "name": "Pauschale Forstwirte",
+      "beschreibung": "Betriebsausgabenpauschale für Forstwirte"
+    },
+    {
+      "nr": "27",
+      "name": "Waren/Rohstoffe/Hilfsstoffe",
+      "beschreibung": "Waren, Rohstoffe und Hilfsstoffe inkl. Nebenkosten"
+    },
+    {
+      "nr": "29",
+      "name": "Bezogene Fremdleistungen",
+      "beschreibung": "Bezogene Fremdleistungen"
+    },
+    {
+      "nr": "30",
+      "name": "Ausgaben Personal",
+      "beschreibung": "Ausgaben für eigenes Personal"
+    },
+    {
+      "nr": "31-34",
+      "name": "AfA",
+      "beschreibung": "Absetzung für Abnutzung (AfA) und Überträge"
+    },
+    {
+      "nr": "35",
+      "name": "Herabsetzungsbetrag §7g",
+      "beschreibung": "Herabsetzungsbeträge §7g EStG"
+    },
+    {
+      "nr": "36",
+      "name": "Geringwertige Wirtschaftsgüter",
+      "beschreibung": "Aufwendungen für GWG"
+    },
+    {
+      "nr": "37",
+      "name": "Sammelpostenauflösung",
+      "beschreibung": "Auflösung Sammelposten nach §6 Abs. 2a EStG"
+    },
+    {
+      "nr": "38",
+      "name": "Restbuchwerte ausgeschiedener Anlagegüter",
+      "beschreibung": "Restbuchwerte ausgeschiedener Anlagegüter"
+    },
+    {
+      "nr": "39-42",
+      "name": "Raumkosten/Grundstücksaufwendungen",
+      "beschreibung": "Raumkosten und Grundstücksaufwendungen"
+    },
+    {
+      "nr": "43-54",
+      "name": "Sonstige Betriebsausgaben",
+      "beschreibung": "Sonstige unbeschränkt abziehbare Betriebsausgaben"
+    },
+    {
+      "nr": "55",
+      "name": "Schuldzinsen Anlagegüter",
+      "beschreibung": "Schuldzinsen für Anlagegüter-Finanzierung"
+    },
+    {
+      "nr": "56",
+      "name": "Übrige Schuldzinsen",
+      "beschreibung": "Übrige Schuldzinsen"
+    },
+    {
+      "nr": "57",
+      "name": "Vorsteuerbeträge",
+      "beschreibung": "Gezahlte, abziehbare Vorsteuerbeträge"
+    },
+    {
+      "nr": "58",
+      "name": "Gezahlte Umsatzsteuer",
+      "beschreibung": "An das Finanzamt gezahlte/verrechnete Umsatzsteuer"
+    },
+    {
+      "nr": "59",
+      "name": "Rücklagen/Ausgleichsposten",
+      "beschreibung": "Rücklagen, stille Reserven, Ausgleichsposten"
+    },
+    {
+      "nr": "60",
+      "name": "Übrige Betriebsausgaben",
+      "beschreibung": "Übrige unbeschränkt abziehbare Betriebsausgaben"
+    },
+    {
+      "nr": "62-67",
+      "name": "Beschränkt abziehbare Betriebsausgaben",
+      "beschreibung": "Geschenke, Bewirtung, Verpflegungsmehraufwand, Arbeitszimmer"
+    },
+    {
+      "nr": "68-73",
+      "name": "Kfz-/Fahrtkosten",
+      "beschreibung": "Kosten für Fahrzeuge, Fahrtkosten"
+    },
+    {
+      "nr": "74",
+      "name": "Nicht abziehbare Kosten",
+      "beschreibung": "Nicht abziehbare Beträge"
+    },
+    {
+      "nr": "75",
+      "name": "Summe der Ausgaben",
+      "beschreibung": "Summe der Betriebsausgaben"
+    },
+    {
+      "nr": "66",
+      "name": "Tagespauschale häusliche Wohnung",
+      "beschreibung": "Tagespauschale für Tätigkeit in häuslicher Wohnung"
+    }
+  ],
+  "Gewinnermittlung": [
+    {
+      "nr": "76",
+      "name": "Summe der Betriebseinnahmen",
+      "beschreibung": "Übertrag aus Betriebseinnahmen"
+    },
+    {
+      "nr": "77",
+      "name": "Summe der Betriebsausgaben",
+      "beschreibung": "Übertrag aus Betriebsausgaben"
+    },
+    {
+      "nr": "78",
+      "name": "Abzüglich steuerfreie Einnahmen §3 Nr.26ff EStG",
+      "beschreibung": "steuerfreie Einnahmen nach §3 Nr.26, 26a, 26b EStG"
+    },
+    {
+      "nr": "79",
+      "name": "Abzüglich steuerfreie Einnahmen §3 EStG",
+      "beschreibung": "steuerfreie Einnahmen nach §3 EStG"
+    },
+    {
+      "nr": "80",
+      "name": "Abzüglich steuerfreie Einnahmen §3a",
+      "beschreibung": "steuerfreie Einnahmen nach §3a EStG"
+    },
+    {
+      "nr": "81",
+      "name": "Zuzüglich nicht abziehbare Betriebsausgaben §3 Nr.26ff EStG",
+      "beschreibung": "nicht abziehbare Betriebsausgaben nach §3 Nr.26, 26a, 26b EStG"
+    },
+    {
+      "nr": "82",
+      "name": "Zuzüglich nicht abziehbare Betriebsausgaben §3c Abs.1",
+      "beschreibung": "nicht abziehbare Betriebsausgaben nach §3c Abs.1 EStG"
+    },
+    {
+      "nr": "83",
+      "name": "Zuzüglich nicht abziehbare Betriebsausgaben §3c Abs.4",
+      "beschreibung": "nicht abziehbare Betriebsausgaben nach §3c Abs.4 EStG"
+    },
+    {
+      "nr": "84-86",
+      "name": "Investitionsabzugsbeträge Hinzurechnung §7g",
+      "beschreibung": "Hinzurechnung aus 2021–2023"
+    },
+    {
+      "nr": "87",
+      "name": "Gewinnzuschlag §6c",
+      "beschreibung": "Gewinnzuschlag nach §6c i.V.m. §6b EStG"
+    },
+    {
+      "nr": "88",
+      "name": "Investitionsabzugsbeträge Abzug §7g",
+      "beschreibung": "Abzug Investitionsabzugsbeträge nach §7g EStG"
+    },
+    {
+      "nr": "89",
+      "name": "Hinzurechnung/Abrechnung GW-Ermittlungsart-Wechsel",
+      "beschreibung": "Abrechnung/Hinzurechnung bei Wechsel der Gewinnermittlungsart"
+    },
+    {
+      "nr": "91",
+      "name": "Beteiligungen Ergebnissanteile",
+      "beschreibung": "Ergebnisanteile aus Beteiligungen an Personengesellschaften"
+    },
+    {
+      "nr": "92",
+      "name": "Korrigierter Gewinn/Verlust",
+      "beschreibung": "Korrigierter Gewinn/Verlust"
+    },
+    {
+      "nr": "93",
+      "name": "Steuerbefreite Investment-Erträge",
+      "beschreibung": "Beträge mit Steuerbefreiungen nach Investmentsteuergesetz"
+    },
+    {
+      "nr": "94",
+      "name": "Teileinkünfteverfahren/§8b KStG",
+      "beschreibung": "Beträge für das Teileinkünfteverfahren"
+    },
+    {
+      "nr": "95",
+      "name": "Steuerpflichtiger Gewinn/Verlust vor §4 Abs.4a",
+      "beschreibung": "Ergebnis vor Anwendung des §4 Abs.4a EStG"
+    },
+    {
+      "nr": "96",
+      "name": "Hinzurechnungsbetrag §4 Abs.4a EStG",
+      "beschreibung": "Hinzurechnungsbetrag §4 Abs.4a EStG"
+    },
+    {
+      "nr": "97",
+      "name": "Steuerpflichtiger Gewinn/Verlust",
+      "beschreibung": "Endbetrag"
+    },
+    {
+      "nr": "98",
+      "name": "Anzusetzender steuerpflichtiger Gewinn/Verlust",
+      "beschreibung": "nur für Personengesellschaften mit §4 Abs.4a EStG"
+    }
+  ],
+  "Rücklagen, stille Reserven und Ausgleichsposten": [
+    {
+      "nr": "99",
+      "name": "Rücklagen nach §6c/§6b EStG",
+      "beschreibung": "Rücklagen nach §6c i.V.m. §6b EStG"
+    },
+    {
+      "nr": "100",
+      "name": "Übertragung stiller Reserven",
+      "beschreibung": "Übertragung von stillen Reserven"
+    },
+    {
+      "nr": "101",
+      "name": "Ausgleichsposten §4g EStG",
+      "beschreibung": "Ausgleichsposten nach §4g EStG"
+    },
+    {
+      "nr": "102",
+      "name": "Gesamtsumme Rücklagen/Bildungen",
+      "beschreibung": "Summe der gebildeten Rücklagen/Reserven"
+    },
+    {
+      "nr": "103",
+      "name": "Auflösung Rücklagen §6c/§6b",
+      "beschreibung": "Auflösung Rücklagen"
+    },
+    {
+      "nr": "104",
+      "name": "Auflösung Ausgleichsposten §4g",
+      "beschreibung": "Auflösung Ausgleichsposten"
+    },
+    {
+      "nr": "105",
+      "name": "Gesamtsumme Auflösungen",
+      "beschreibung": "Summe der aufgelösten Rücklagen/Ausgleichsposten"
+    },
+    {
+      "nr": "105",
+      "name": "Erläuterungen",
+      "beschreibung": "Freitext für Erläuterungen"
+    }
+  ],
+  "Entnahmen und Einlagen": [
+    {
+      "nr": "106",
+      "name": "Entnahmen (Sach-, Leistungs-, Nutzungsentnahmen)",
+      "beschreibung": "Einträge: Bezeichnung, Betrag"
+    },
+    {
+      "nr": "107",
+      "name": "Einlagen (Sach-, Leistungs-, Nutzungseinlagen)",
+      "beschreibung": "Einträge: Bezeichnung, Betrag"
+    }
+  ]
 }

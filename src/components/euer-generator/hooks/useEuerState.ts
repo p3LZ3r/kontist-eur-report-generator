@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Transaction } from "../../../types";
-import {
-	getCategoriesForSkr,
-	skr04Categories,
-} from "../../../utils/categoryMappings";
+import { getCategoriesForSkr } from "../../../utils/categoryMappings";
 import { calculateEuer } from "../../../utils/euerCalculations";
 import { prepareGuidanceData } from "../../../utils/guidanceUtils";
 
@@ -21,144 +18,135 @@ type ViewType = "transactions" | "elster" | "impressum" | "datenschutz";
  * state.updateCategory(transactionId, categoryKey)
  */
 export function useEuerState() {
-	const [transactions, setTransactions] = useState<Transaction[]>([]);
-	const [categories, setCategories] = useState<Record<number, string>>({});
-	const [bankType, setBankType] = useState<string | null>(null);
-	const [isKleinunternehmer, setIsKleinunternehmer] = useState(false);
-	const [currentSkr, setCurrentSkr] = useState<SkrType>("SKR04");
-	const [skrCategories, setSkrCategories] =
-		useState<
-			Record<
-				string,
-				{
-					code: string;
-					name: string;
-					type: string;
-					vat: number;
-					elsterField?: string;
-				}
-			>
-		>(skr04Categories);
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [isDemoMode, setIsDemoMode] = useState(false);
-	const [currentView, setCurrentView] = useState<ViewType>("transactions");
-	const [currentSection, setCurrentSection] = useState("income");
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [categories, setCategories] = useState<Record<number, string>>({});
+  const [bankType, setBankType] = useState<string | null>(null);
+  const [isKleinunternehmer, setIsKleinunternehmer] = useState(false);
+  const [currentSkr, setCurrentSkr] = useState<SkrType>("SKR04");
+  const [skrCategories, setSkrCategories] = useState<
+    Record<
+      string,
+      {
+        code: string;
+        name: string;
+        type: string;
+        vat: number;
+        elsterField?: string;
+      }
+    >
+  >({});
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isDemoMode, setIsDemoMode] = useState(false);
+  const [currentView, setCurrentView] = useState<ViewType>("transactions");
+  const [currentSection, setCurrentSection] = useState("income");
 
-	// Load SKR categories dynamically when SKR type changes
-	useEffect(() => {
-		const loadCategories = async () => {
-			// IMPORTANT: Always use hardcoded skr04Categories as primary source
-			// The JSON files use different key formats (numeric codes) that don't match
-			// the semantic keys (e.g., 'income_services_19') used throughout the app
-			if (currentSkr === "SKR04") {
-				setSkrCategories(skr04Categories);
-				return;
-			}
+  // Load SKR categories dynamically when SKR type changes
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const loadedCategories = await getCategoriesForSkr(currentSkr);
+        setSkrCategories(loadedCategories);
+        setErrorMessage(null);
+      } catch (error) {
+        const errorMsg = `Fehler beim Laden der ${currentSkr} Kategorien. Bitte überprüfen Sie, dass die Datei /data/${currentSkr.toLowerCase()}.json verfügbar ist.`;
+        console.error(errorMsg, error);
+        setErrorMessage(errorMsg);
+      }
+    };
 
-			// For other SKR types, try loading from JSON but fall back to SKR04
-			try {
-				const loadedCategories = await getCategoriesForSkr(currentSkr);
-				setSkrCategories(loadedCategories);
-			} catch (error) {
-				console.warn(
-					`Failed to load ${currentSkr} categories, using SKR04 fallback:`,
-					error,
-				);
-				setSkrCategories(skr04Categories);
-			}
-		};
+    loadCategories();
+  }, [currentSkr]);
 
-		loadCategories();
-	}, [currentSkr]);
+  // Memoized category lists for performance
+  const incomeCategories = useMemo(
+    () =>
+      Object.entries(skrCategories)
+        .filter(([, cat]) => cat.type === "income")
+        .sort((a, b) => a[1].name.localeCompare(b[1].name)),
+    [skrCategories]
+  );
 
-	// Memoized category lists for performance
-	const incomeCategories = useMemo(
-		() =>
-			Object.entries(skrCategories)
-				.filter(([, cat]) => cat.type === "income")
-				.sort((a, b) => a[1].name.localeCompare(b[1].name)),
-		[skrCategories],
-	);
+  const expenseCategories = useMemo(
+    () =>
+      Object.entries(skrCategories)
+        .filter(([, cat]) => cat.type === "expense" || cat.type === "private")
+        .sort((a, b) => a[1].name.localeCompare(b[1].name)),
+    [skrCategories]
+  );
 
-	const expenseCategories = useMemo(
-		() =>
-			Object.entries(skrCategories)
-				.filter(([, cat]) => cat.type === "expense" || cat.type === "private")
-				.sort((a, b) => a[1].name.localeCompare(b[1].name)),
-		[skrCategories],
-	);
+  // EÜR calculation memoized
+  const euerCalculation = useMemo(
+    () =>
+      calculateEuer(
+        transactions,
+        categories,
+        isKleinunternehmer,
+        skrCategories
+      ),
+    [transactions, categories, isKleinunternehmer, skrCategories]
+  );
 
-	// EÜR calculation memoized
-	const euerCalculation = useMemo(() => {
-		return calculateEuer(
-			transactions,
-			categories,
-			isKleinunternehmer,
-			skrCategories,
-		);
-	}, [transactions, categories, isKleinunternehmer, skrCategories]);
+  // Guidance system data memoized
+  const guidanceData = useMemo(() => {
+    if (transactions.length === 0) return null;
+    return prepareGuidanceData(
+      transactions,
+      categories,
+      isKleinunternehmer,
+      euerCalculation
+    );
+  }, [transactions, categories, isKleinunternehmer, euerCalculation]);
 
-	// Guidance system data memoized
-	const guidanceData = useMemo(() => {
-		if (transactions.length === 0) return null;
-		return prepareGuidanceData(
-			transactions,
-			categories,
-			isKleinunternehmer,
-			euerCalculation,
-		);
-	}, [transactions, categories, isKleinunternehmer, euerCalculation]);
+  // Optimized callback to prevent unnecessary re-renders
+  const updateCategory = useCallback(
+    (transactionId: number, categoryKey: string) => {
+      setCategories((prev) => ({
+        ...prev,
+        [transactionId]: categoryKey,
+      }));
+    },
+    []
+  );
 
-	// Optimized callback to prevent unnecessary re-renders
-	const updateCategory = useCallback(
-		(transactionId: number, categoryKey: string) => {
-			setCategories((prev) => ({
-				...prev,
-				[transactionId]: categoryKey,
-			}));
-		},
-		[],
-	);
+  // Reset all state
+  const resetState = useCallback(() => {
+    setTransactions([]);
+    setCategories({});
+    setBankType(null);
+    setIsDemoMode(false);
+    setErrorMessage(null);
+  }, []);
 
-	// Reset all state
-	const resetState = useCallback(() => {
-		setTransactions([]);
-		setCategories({});
-		setBankType(null);
-		setIsDemoMode(false);
-		setErrorMessage(null);
-	}, []);
-
-	return {
-		// State
-		transactions,
-		categories,
-		bankType,
-		isKleinunternehmer,
-		currentSkr,
-		skrCategories,
-		errorMessage,
-		isDemoMode,
-		currentView,
-		currentSection,
-		// Setters
-		setTransactions,
-		setCategories,
-		setBankType,
-		setIsKleinunternehmer,
-		setCurrentSkr,
-		setSkrCategories,
-		setErrorMessage,
-		setIsDemoMode,
-		setCurrentView,
-		setCurrentSection,
-		// Computed values
-		incomeCategories,
-		expenseCategories,
-		euerCalculation,
-		guidanceData,
-		// Utility functions
-		updateCategory,
-		resetState,
-	};
+  return {
+    // State
+    transactions,
+    categories,
+    bankType,
+    isKleinunternehmer,
+    currentSkr,
+    skrCategories,
+    errorMessage,
+    isDemoMode,
+    currentView,
+    currentSection,
+    // Setters
+    setTransactions,
+    setCategories,
+    setBankType,
+    setIsKleinunternehmer,
+    setCurrentSkr,
+    setSkrCategories,
+    setErrorMessage,
+    setIsDemoMode,
+    setCurrentView,
+    setCurrentSection,
+    // Computed values
+    incomeCategories,
+    expenseCategories,
+    euerCalculation,
+    guidanceData,
+    // Utility functions
+    updateCategory,
+    resetState,
+  };
 }

@@ -2,8 +2,8 @@ import { Github } from "lucide-react";
 import { memo } from "react";
 
 interface FooterProps {
-	onImpressumClick: () => void;
-	onDatenschutzClick: () => void;
+  onImpressumClick: () => void;
+  onDatenschutzClick: () => void;
 }
 
 /**
@@ -13,42 +13,40 @@ interface FooterProps {
  * @param props.onDatenschutzClick - Handler for Datenschutz link click
  */
 export const Footer = memo(
-	({ onImpressumClick, onDatenschutzClick }: FooterProps) => {
-		return (
-			<footer className="mt-12 pt-8 border-t border-border">
-				<div className="flex flex-wrap justify-between items-center gap-4 text-sm text-muted-foreground">
-					<div className="flex gap-4">
-						<button
-							type="button"
-							onClick={onImpressumClick}
-							className="hover:text-foreground transition-colors underline-offset-4 hover:underline cursor-pointer"
-						>
-							Impressum
-						</button>
-						<button
-							type="button"
-							onClick={onDatenschutzClick}
-							className="hover:text-foreground transition-colors underline-offset-4 hover:underline cursor-pointer"
-						>
-							Datenschutz
-						</button>
-					</div>
-					<a
-						href="https://github.com/torstendngh/kontist-eur-report-generator"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="hover:text-foreground transition-colors underline-offset-4 hover:underline inline-flex items-center gap-1"
-					>
-						<Github size={14} />
-						GitHub
-					</a>
-					<span className="text-xs">
-						© {new Date().getFullYear()} Torsten Linnecke
-					</span>
-				</div>
-			</footer>
-		);
-	},
+  ({ onImpressumClick, onDatenschutzClick }: FooterProps) => (
+    <footer className="mt-12 border-border border-t pt-8">
+      <div className="flex flex-wrap items-center justify-between gap-4 text-muted-foreground text-sm">
+        <div className="flex gap-4">
+          <button
+            className="cursor-pointer underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            onClick={onImpressumClick}
+            type="button"
+          >
+            Impressum
+          </button>
+          <button
+            className="cursor-pointer underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            onClick={onDatenschutzClick}
+            type="button"
+          >
+            Datenschutz
+          </button>
+        </div>
+        <a
+          className="inline-flex items-center gap-1 underline-offset-4 transition-colors hover:text-foreground hover:underline"
+          href="https://github.com/torstendngh/kontist-eur-report-generator"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Github size={14} />
+          GitHub
+        </a>
+        <span className="text-xs">
+          © {new Date().getFullYear()} Torsten Linnecke
+        </span>
+      </div>
+    </footer>
+  )
 );
 
 Footer.displayName = "Footer";

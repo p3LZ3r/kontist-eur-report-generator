@@ -1,21 +1,21 @@
 {
-	"meta": {
-		"generatedAt": "2025-09-10T12:23:19.644Z",
-		"tasksAnalyzed": 1,
-		"totalTasks": 25,
-		"analysisCount": 1,
-		"thresholdScore": 5,
-		"projectName": "Taskmaster",
-		"usedResearch": true
-	},
-	"complexityAnalysis": [
-		{
-			"taskId": 21,
-			"taskTitle": "Research and Implement Compliant Payment Integration",
-			"complexityScore": 8,
-			"recommendedSubtasks": 7,
-			"expansionPrompt": "Break down Task 21 into the following subtasks: 1. Conduct legal research and define compliant payment model. 2. Design and update UI/UX with compliant terminology. 3. Remove Polar.sh integration. 4. Integrate new payment provider SDK and refactor payment logic. 5. Implement robust payment outcome handling and UI updates. 6. Adjust secondary CTA for compliant flow. 7. Conduct internal legal and UI review.",
-			"reasoning": "The codebase analysis reveals that the existing payment integration with Polar.sh is well-encapsulated within `src/components/PaymentModal.jsx` and `src/hooks/usePayment.js`. The `package.json` confirms the `@polar-sh/sdk` dependency. `src/EuerGenerator.tsx` gates ELSTER access via the payment modal, and `src/components/ReportDisplay.jsx` likely contains the ELSTER export button and potentially the 'Support this tool' CTA. This task is complex due to several factors:\n\n1.  **External Dependency Replacement:** It requires completely replacing an existing external payment provider (Polar.sh) with a new one. This involves uninstalling the old SDK, installing a new one, and adapting to a new API, which can have different integration patterns (e.g., client-side vs. server-side components, webhooks).\n2.  **Significant Refactoring:** The core payment logic in `usePayment.js` and the UI in `PaymentModal.jsx` will need substantial refactoring, not just minor tweaks. This includes handling new payment states, error messages, and success flows specific to the chosen provider.\n3.  **Legal & UX Compliance:** A critical aspect is the legal research and ensuring all user-facing text and the payment flow itself comply with German regulations. This isn't just a coding task; it requires careful design and wording, impacting multiple UI components.\n4.  **UI/UX Changes:** Beyond just the payment modal, other parts of the application (e.g., `ReportDisplay.jsx`) will need terminology updates and potentially flow adjustments for the ELSTER export button and the secondary CTA.\n5.  **Testing:** Thorough testing in a sandbox environment for the new provider is crucial, covering success, failure, and cancellation scenarios.\n\nWhile the existing structure provides clear points of modification, the scope of changes, the external integration, and the legal compliance aspect elevate its complexity. The task is broken down into 7 subtasks to cover research, design, implementation (broken into smaller, manageable parts), and review, reflecting the multi-faceted nature of the work."
-		}
-	]
+  "meta": {
+    "generatedAt": "2025-09-10T12:23:19.644Z",
+    "tasksAnalyzed": 1,
+    "totalTasks": 25,
+    "analysisCount": 1,
+    "thresholdScore": 5,
+    "projectName": "Taskmaster",
+    "usedResearch": true
+  },
+  "complexityAnalysis": [
+    {
+      "taskId": 21,
+      "taskTitle": "Research and Implement Compliant Payment Integration",
+      "complexityScore": 8,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Break down Task 21 into the following subtasks: 1. Conduct legal research and define compliant payment model. 2. Design and update UI/UX with compliant terminology. 3. Remove Polar.sh integration. 4. Integrate new payment provider SDK and refactor payment logic. 5. Implement robust payment outcome handling and UI updates. 6. Adjust secondary CTA for compliant flow. 7. Conduct internal legal and UI review.",
+      "reasoning": "The codebase analysis reveals that the existing payment integration with Polar.sh is well-encapsulated within `src/components/PaymentModal.jsx` and `src/hooks/usePayment.js`. The `package.json` confirms the `@polar-sh/sdk` dependency. `src/EuerGenerator.tsx` gates ELSTER access via the payment modal, and `src/components/ReportDisplay.jsx` likely contains the ELSTER export button and potentially the 'Support this tool' CTA. This task is complex due to several factors:\n\n1.  **External Dependency Replacement:** It requires completely replacing an existing external payment provider (Polar.sh) with a new one. This involves uninstalling the old SDK, installing a new one, and adapting to a new API, which can have different integration patterns (e.g., client-side vs. server-side components, webhooks).\n2.  **Significant Refactoring:** The core payment logic in `usePayment.js` and the UI in `PaymentModal.jsx` will need substantial refactoring, not just minor tweaks. This includes handling new payment states, error messages, and success flows specific to the chosen provider.\n3.  **Legal & UX Compliance:** A critical aspect is the legal research and ensuring all user-facing text and the payment flow itself comply with German regulations. This isn't just a coding task; it requires careful design and wording, impacting multiple UI components.\n4.  **UI/UX Changes:** Beyond just the payment modal, other parts of the application (e.g., `ReportDisplay.jsx`) will need terminology updates and potentially flow adjustments for the ELSTER export button and the secondary CTA.\n5.  **Testing:** Thorough testing in a sandbox environment for the new provider is crucial, covering success, failure, and cancellation scenarios.\n\nWhile the existing structure provides clear points of modification, the scope of changes, the external integration, and the legal compliance aspect elevate its complexity. The task is broken down into 7 subtasks to cover research, design, implementation (broken into smaller, manageable parts), and review, reflecting the multi-faceted nature of the work."
+    }
+  ]
 }

@@ -16,50 +16,50 @@ import { categorizeTransaction } from "../../../utils/transactionUtils";
  * }
  */
 export function useDemoData() {
-	const [isProcessingFile, setIsProcessingFile] = useState(false);
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isProcessingFile, setIsProcessingFile] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-	const loadDemo = useCallback((): {
-		transactions: Transaction[];
-		categories: Record<number, string>;
-	} | null => {
-		setIsProcessingFile(true);
-		setErrorMessage(null);
+  const loadDemo = useCallback((): {
+    transactions: Transaction[];
+    categories: Record<number, string>;
+  } | null => {
+    setIsProcessingFile(true);
+    setErrorMessage(null);
 
-		try {
-			// Load demo transactions
-			const demoTransactions = loadDemoData();
+    try {
+      // Load demo transactions
+      const demoTransactions = loadDemoData();
 
-			// Categorize all demo transactions
-			demoTransactions.forEach((t) => {
-				t.euerCategory = categorizeTransaction(t);
-			});
+      // Categorize all demo transactions
+      demoTransactions.forEach((t) => {
+        t.euerCategory = categorizeTransaction(t);
+      });
 
-			// Set auto-categories
-			const autoCategories: Record<number, string> = {};
-			demoTransactions.forEach((t) => {
-				autoCategories[t.id] = t.euerCategory || "";
-			});
+      // Set auto-categories
+      const autoCategories: Record<number, string> = {};
+      demoTransactions.forEach((t) => {
+        autoCategories[t.id] = t.euerCategory || "";
+      });
 
-			return {
-				transactions: demoTransactions,
-				categories: autoCategories,
-			};
-		} catch (error) {
-			let errorMsg = "Fehler beim Laden der Demo-Daten.";
-			if (error instanceof Error) {
-				errorMsg = error.message;
-			}
-			setErrorMessage(errorMsg);
-			return null;
-		} finally {
-			setIsProcessingFile(false);
-		}
-	}, []);
+      return {
+        transactions: demoTransactions,
+        categories: autoCategories,
+      };
+    } catch (error) {
+      let errorMsg = "Fehler beim Laden der Demo-Daten.";
+      if (error instanceof Error) {
+        errorMsg = error.message;
+      }
+      setErrorMessage(errorMsg);
+      return null;
+    } finally {
+      setIsProcessingFile(false);
+    }
+  }, []);
 
-	return {
-		loadDemo,
-		isLoading: isProcessingFile,
-		error: errorMessage,
-	};
+  return {
+    loadDemo,
+    isLoading: isProcessingFile,
+    error: errorMessage,
+  };
 }
