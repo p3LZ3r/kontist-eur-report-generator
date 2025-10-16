@@ -75,9 +75,5 @@
     "deny": [],
     "ask": []
   },
-  "enabledMcpjsonServers": [
-    "task-master-ai",
-    "playwright",
-    "context7"
-  ]
+  "enabledMcpjsonServers": ["task-master-ai", "playwright", "context7"]
 }

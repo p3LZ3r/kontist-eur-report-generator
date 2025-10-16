@@ -1,11 +1,12 @@
 import { memo } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
 
 interface HeroSectionProps {
   currentSkr: "SKR03" | "SKR04" | "SKR49";
 }
 
 /**
- * HeroSection displays the marketing hero with Kontist and Holvi logos.
+ * HeroSection displays the marketing hero with app icon, Kontist and Holvi logos.
  * This is a pure presentational component with no internal state.
  *
  * @param props.currentSkr - Current SKR standard being used
@@ -13,6 +14,11 @@ interface HeroSectionProps {
 export const HeroSection = memo(({ currentSkr }: HeroSectionProps) => (
   <div className="animate-fade-in py-12">
     <div className="flex-1">
+      {/* iOS 26-style App Icon */}
+      <div className="mb-8 flex justify-start">
+        <AppIcon size="xl" />
+      </div>
+
       <h1 className="mb-4 text-left text-5xl text-foreground leading-tight">
         ELSTER EÜR Generator für{" "}
         <a
