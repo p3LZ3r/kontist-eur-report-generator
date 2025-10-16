@@ -14,36 +14,36 @@ const csvData = `Buchungsdatum;Empfänger;Verwendungszweck;Betrag;Transaktionsty
 2024-01-15;Kundenaufrag GmbH;Beratungsleistung;"2.380,00";Zahlungseingang
 2024-01-20;Büromaterial AG;Büroausstattung;"-89,25";Kartenzahlung`;
 
-console.log("🧪 Testing integration workflow...");
+// Test logging helper (console is acceptable in test files)
+// biome-ignore lint/suspicious/noConsole: Test output
+const log = console.log;
+
+log("🧪 Testing integration workflow...");
 
 try {
   // 1. Parse CSV
   const transactions = parseKontistCSV(csvData);
-  console.log(
-    "✅ CSV parsing successful:",
-    transactions.length,
-    "transactions"
-  );
+  log("✅ CSV parsing successful:", transactions.length, "transactions");
 
   // 2. Auto-categorize
-  transactions.forEach((t) => {
+  for (const t of transactions) {
     t.euerCategory = categorizeTransaction(t);
-  });
+  }
 
   // 3. Create categories mapping
   const categories = {};
-  transactions.forEach((t) => {
+  for (const t of transactions) {
     categories[t.id] = t.euerCategory || "";
-  });
+  }
 
   // 4. Calculate EÜR
   const euerResult = calculateEuer(transactions, categories, false);
-  console.log("✅ EÜR calculation successful");
-  console.log(
+  log("✅ EÜR calculation successful");
+  log(
     "   Income total:",
     Object.values(euerResult.income).reduce((a, b) => a + b, 0)
   );
-  console.log(
+  log(
     "   Expense total:",
     Object.values(euerResult.expenses).reduce((a, b) => a + b, 0)
   );
@@ -54,13 +54,10 @@ try {
     categories,
     false
   );
-  console.log(
-    "✅ ELSTER field population successful:",
-    fieldValues.length,
-    "fields"
-  );
+  log("✅ ELSTER field population successful:", fieldValues.length, "fields");
 
-  console.log("🎉 Integration test PASSED - All systems working!");
+  log("🎉 Integration test PASSED - All systems working!");
 } catch (error) {
+  // biome-ignore lint/suspicious/noConsole: Error logging in tests
   console.error("❌ Integration test FAILED:", error.message);
 }
