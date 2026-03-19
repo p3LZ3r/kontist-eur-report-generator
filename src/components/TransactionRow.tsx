@@ -130,3 +130,4 @@ const TransactionRow = React.memo<TransactionRowProps>(
 TransactionRow.displayName = "TransactionRow";
 
 export default TransactionRow;
+

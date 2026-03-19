@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import type { ElsterFieldValue, EuerCalculation, Transaction } from "../types";
 import {
   calculateEuer,

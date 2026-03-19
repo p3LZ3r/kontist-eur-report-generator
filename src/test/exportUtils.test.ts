@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import type { Transaction } from "../types";
 import { populateAllElsterFields } from "../utils/euerCalculations";
 import { validateElsterData } from "../utils/exportUtils";

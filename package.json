@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "vp dev",
+    "build": "tsc -b && vp build",
     "lint": "ultracite check .",
     "format": "ultracite fix .",
     "format:check": "ultracite check .",
-    "preview": "vite preview",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
+    "preview": "vp preview",
+    "test": "vp test",
+    "test:ui": "vp test --ui",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
@@ -33,15 +33,15 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.6",
     "@playwright/test": "^1.55.0",
-    "@tailwindcss/vite": "^4.1.12",
+    "@tailwindcss/vite": "^4.2.2",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "^5.0.0",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "^4.1.0",
     "autoprefixer": "^10.4.21",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.6",
@@ -50,7 +50,8 @@
     "to-ico": "^1.1.5",
     "typescript": "~5.8.3",
     "ultracite": "^5.6.4",
-    "vite": "^7.1.2",
-    "vitest": "^3.2.4"
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plus": "^0.1.12",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
   }
 }

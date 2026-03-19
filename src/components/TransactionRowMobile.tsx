@@ -139,3 +139,4 @@ const TransactionRowMobile = React.memo<TransactionRowMobileProps>(
 TransactionRowMobile.displayName = "TransactionRowMobile";
 
 export default TransactionRowMobile;
+
