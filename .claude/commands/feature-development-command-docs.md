@@ -10,11 +10,13 @@ Use this workflow when working on **feature-development-command-docs** in `konti
 
 ## Goal
 
-Adds or updates feature development documentation for kontist-eur-report-generator commands.
+Adds or updates documentation for feature development commands related to the kontist-eur-report-generator ECC bundle.
 
 ## Common Files
 
 - `.claude/commands/feature-development.md`
+- `.claude/commands/feature-development-command-docs.md`
+- `.claude/commands/feature-development-core-and-ui.md`
 
 ## Suggested Sequence
 
@@ -26,6 +28,8 @@ Adds or updates feature development documentation for kontist-eur-report-generat
 ## Typical Commit Signals
 
 - Add or update .claude/commands/feature-development.md
+- Optionally add .claude/commands/feature-development-command-docs.md
+- Optionally add .claude/commands/feature-development-core-and-ui.md
 
 ## Notes
 
