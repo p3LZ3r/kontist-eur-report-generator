@@ -15,8 +15,8 @@ Standard feature implementation workflow
 ## Common Files
 
 - `src/components/*`
-- `src/utils/*`
-- `src/*`
+- `src/components/ui/*`
+- `src/test/*`
 - `**/*.test.*`
 
 ## Suggested Sequence
