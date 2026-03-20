@@ -12,18 +12,14 @@ import { HeroSection } from "./HeroSection";
 import { useDemoData } from "./hooks/useDemoData";
 import { useEuerState } from "./hooks/useEuerState";
 import { useFileUpload } from "./hooks/useFileUpload";
-import { usePagination } from "./hooks/usePagination";
 import { PrivacyInfoSection } from "./PrivacyInfoSection";
 import { TransactionList } from "./TransactionList";
 
 const EuerGenerator = () => {
-  // Custom hooks for state management
   const state = useEuerState();
   const fileUpload = useFileUpload();
   const demoData = useDemoData();
-  const pagination = usePagination(state.transactions);
 
-  // File upload handler
   const handleFileUpload = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
@@ -34,7 +30,6 @@ const EuerGenerator = () => {
         state.setTransactions(result.transactions);
         state.setCategories(result.categories);
         state.setBankType(result.bankType);
-        pagination.resetToFirstPage();
         state.setIsDemoMode(false);
       }
 
@@ -44,26 +39,23 @@ const EuerGenerator = () => {
 
       event.target.value = "";
     },
-    [fileUpload, state, pagination],
+    [fileUpload, state],
   );
 
-  // Demo data handler
   const handleDemoLoad = useCallback(() => {
     const result = demoData.loadDemo(state.currentSkr);
     if (result) {
       state.setTransactions(result.transactions);
       state.setCategories(result.categories);
       state.setBankType("kontist");
-      pagination.resetToFirstPage();
       state.setIsDemoMode(true);
     }
 
     if (demoData.error) {
       state.setErrorMessage(demoData.error);
     }
-  }, [demoData, state, pagination]);
+  }, [demoData, state]);
 
-  // Reset handler
   const resetAndUploadNew = useCallback(() => {
     const confirmReset = window.confirm(
       "Achtung: Alle aktuellen Transaktionen und manuellen Kategorisierungen gehen verloren.\n\nMöchten Sie wirklich eine neue CSV-Datei hochladen?",
@@ -71,14 +63,12 @@ const EuerGenerator = () => {
 
     if (confirmReset) {
       state.resetState();
-      pagination.resetToFirstPage();
-      // Reset file input
       const fileInput = document.getElementById("csvUpload") as HTMLInputElement;
       if (fileInput) {
         fileInput.value = "";
       }
     }
-  }, [state, pagination]);
+  }, [state]);
 
   // Navigation handlers
   const handleNavigateToElster = useCallback(() => {
@@ -223,21 +213,15 @@ const EuerGenerator = () => {
             <TransactionList
               bankType={state.bankType}
               categories={state.categories}
-              currentPage={pagination.currentPage}
               currentSkr={state.currentSkr}
-              currentTransactions={pagination.currentItems}
               expenseCategories={state.expenseCategories}
               incomeCategories={state.incomeCategories}
-              indexOfFirstTransaction={pagination.indexOfFirstItem}
-              indexOfLastTransaction={pagination.indexOfLastItem}
               isDemoMode={state.isDemoMode}
               isKleinunternehmer={state.isKleinunternehmer}
               onCategoryChange={state.updateCategory}
               onNavigateToElster={handleNavigateToElster}
-              onPageChange={pagination.goToPage}
               onResetAndUploadNew={resetAndUploadNew}
               skrCategories={state.skrCategories}
-              totalPages={pagination.totalPages}
               transactions={state.transactions}
             />
           )}
