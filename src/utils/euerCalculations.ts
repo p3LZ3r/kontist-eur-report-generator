@@ -1,5 +1,5 @@
 import type { ElsterFieldValue, EuerCalculation, Transaction } from "../types";
-import { elsterMapping, skr04Categories } from "./categoryMappings";
+import { elsterMapping, skr04Categories, skrCodeToSemanticKey } from "./categoryMappings";
 import { ELSTER_FIELDS } from "./constants";
 
 // EÜR berechnen mit/ohne USt
@@ -105,9 +105,9 @@ export const calculateEuer = (
       }
       result.privateTransactionDetails[categoryKey].push(transaction);
 
-      if (categoryKey === "private_withdrawal") {
+      if (categoryKey === "1900") {
         result.privateWithdrawals += grossAmount;
-      } else if (categoryKey === "private_deposit") {
+      } else if (categoryKey === "1800") {
         result.privateDeposits += grossAmount;
       }
     }
@@ -132,11 +132,10 @@ export const generateElsterOverview = (
     };
   } = {};
 
-  // Add transaction-based income and expense fields
-  Object.entries(euerCalculation.income).forEach(([key, amount]) => {
-    const elsterInfo = elsterMapping[key];
-    const category = skr04Categories[key];
-    if (elsterInfo && category) {
+  const addCategoryToSummary = (key: string, amount: number, category: { name: string }) => {
+    const semanticKey = skrCodeToSemanticKey(key) || key;
+    const elsterInfo = elsterMapping[semanticKey];
+    if (elsterInfo) {
       if (!elsterSummary[elsterInfo.elsterField]) {
         elsterSummary[elsterInfo.elsterField] = {
           amount: 0,
@@ -150,24 +149,19 @@ export const generateElsterOverview = (
         amount,
       });
     }
+  };
+
+  Object.entries(euerCalculation.income).forEach(([key, amount]) => {
+    const category = skr04Categories[key];
+    if (category) {
+      addCategoryToSummary(key, amount, category);
+    }
   });
 
   Object.entries(euerCalculation.expenses).forEach(([key, amount]) => {
-    const elsterInfo = elsterMapping[key];
     const category = skr04Categories[key];
-    if (elsterInfo && category) {
-      if (!elsterSummary[elsterInfo.elsterField]) {
-        elsterSummary[elsterInfo.elsterField] = {
-          amount: 0,
-          label: elsterInfo.label,
-          categories: [],
-        };
-      }
-      elsterSummary[elsterInfo.elsterField].amount += amount;
-      elsterSummary[elsterInfo.elsterField].categories.push({
-        name: category.name,
-        amount,
-      });
+    if (category) {
+      addCategoryToSummary(key, amount, category);
     }
   });
 

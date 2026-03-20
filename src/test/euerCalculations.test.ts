@@ -10,52 +10,52 @@ import {
   validateMandatoryFields,
 } from "../utils/euerCalculations";
 
-// Mock categoryMappings with realistic SKR04 categories
+// Mock categoryMappings with realistic SKR04 categories (using SKR codes as keys)
 vi.mock("../utils/categoryMappings", () => ({
   skr04Categories: {
-    income_services_19: {
-      name: "Erlöse aus Dienstleistungen 19% USt",
+    "4000": {
+      name: "Umsatzerlöse 19%",
       type: "income",
-      code: "8400",
+      code: "4000",
       vat: 19,
     },
-    income_services_7: {
-      name: "Erlöse aus Dienstleistungen 7% USt",
+    "4300": {
+      name: "Umsatzerlöse 7% USt",
       type: "income",
-      code: "8300",
+      code: "4300",
       vat: 7,
     },
-    income_services_0: {
+    "4110": {
       name: "Steuerfreie Erlöse",
       type: "income",
-      code: "8125",
+      code: "4110",
       vat: 0,
     },
-    expense_office_supplies: {
+    "6815": {
       name: "Büromaterial",
       type: "expense",
       code: "6815",
       vat: 19,
     },
-    expense_freelancer: {
-      name: "Fremdleistungen (Subunternehmer)",
+    "5900": {
+      name: "Fremdleistungen",
       type: "expense",
-      code: "6300",
+      code: "5900",
       vat: 19,
     },
-    expense_rent_business: {
+    "6310": {
       name: "Mieten Geschäftsräume",
       type: "expense",
-      code: "7000",
+      code: "6310",
       vat: 19,
     },
-    private_withdrawal: {
-      name: "Privatentnahmen (nicht EÜR-relevant)",
+    "1900": {
+      name: "Privatentnahmen",
       type: "private",
-      code: "1890",
+      code: "1900",
       vat: 0,
     },
-    private_deposit: {
+    "1800": {
       name: "Privateinlagen",
       type: "private",
       code: "1800",
@@ -76,8 +76,21 @@ vi.mock("../utils/categoryMappings", () => ({
       label: "Steuerfreie und nicht steuerbare Umsätze",
     },
     expense_freelancer: { elsterField: "29", label: "Fremdleistungen" },
-    expense_office_supplies: { elsterField: "32", label: "Raumkosten" },
-    expense_rent_business: { elsterField: "31", label: "Mieten" },
+    expense_office_supplies: { elsterField: "37", label: "Sonstige Ausgaben" },
+    expense_rent_business: { elsterField: "34", label: "Mieten" },
+  },
+  skrCodeToSemanticKey: (code: string) => {
+    const mapping: Record<string, string> = {
+      "4000": "income_services_19",
+      "4300": "income_services_7",
+      "4110": "income_services_0",
+      "6815": "expense_office_supplies",
+      "5900": "expense_freelancer",
+      "6310": "expense_rent_business",
+      "1900": "private_withdrawal",
+      "1800": "private_deposit",
+    };
+    return mapping[code];
   },
 }));
 
@@ -180,38 +193,35 @@ describe("calculateEuer", () => {
           dateField: "2024-01-01",
           counterpartyField: "Customer A",
           purposeField: "Invoice #001",
-          BetragNumeric: 119.0, // 100 net + 19 VAT
-          euerCategory: "income_services_19",
+          BetragNumeric: 119.0,
+          euerCategory: "4000",
         },
         {
           id: 2,
           dateField: "2024-01-02",
           counterpartyField: "Supplier B",
           purposeField: "Office supplies",
-          BetragNumeric: -59.5, // 50 net + 9.50 VAT
-          euerCategory: "expense_office_supplies",
+          BetragNumeric: -59.5,
+          euerCategory: "6815",
         },
       ];
 
       const categories = {
-        1: "income_services_19",
-        2: "expense_office_supplies",
+        1: "4000",
+        2: "6815",
       };
       const result = calculateEuer(transactions, categories, false);
 
-      // Check net amounts (VAT separated)
       expect(result.totalIncome).toBeCloseTo(100, 2);
       expect(result.totalExpenses).toBeCloseTo(50, 2);
       expect(result.profit).toBeCloseTo(50, 2);
 
-      // Check VAT amounts
       expect(result.vatOwed).toBeCloseTo(19, 2);
       expect(result.vatPaid).toBeCloseTo(9.5, 2);
       expect(result.vatBalance).toBeCloseTo(9.5, 2);
 
-      // Check transaction details are collected
-      expect(result.incomeTransactions.income_services_19).toHaveLength(1);
-      expect(result.expenseTransactions.expense_office_supplies).toHaveLength(1);
+      expect(result.incomeTransactions["4000"]).toHaveLength(1);
+      expect(result.expenseTransactions["6815"]).toHaveLength(1);
     });
 
     it("should handle multiple transactions with different VAT rates", () => {
@@ -222,7 +232,7 @@ describe("calculateEuer", () => {
           counterpartyField: "Customer A",
           purposeField: "Services 19%",
           BetragNumeric: 119.0,
-          euerCategory: "income_services_19",
+          euerCategory: "4000",
         },
         {
           id: 2,
@@ -230,7 +240,7 @@ describe("calculateEuer", () => {
           counterpartyField: "Customer B",
           purposeField: "Services 7%",
           BetragNumeric: 107.0,
-          euerCategory: "income_services_7",
+          euerCategory: "4300",
         },
         {
           id: 3,
@@ -238,22 +248,19 @@ describe("calculateEuer", () => {
           counterpartyField: "Customer C",
           purposeField: "Tax-free services",
           BetragNumeric: 100.0,
-          euerCategory: "income_services_0",
+          euerCategory: "4110",
         },
       ];
 
       const categories = {
-        1: "income_services_19",
-        2: "income_services_7",
-        3: "income_services_0",
+        1: "4000",
+        2: "4300",
+        3: "4110",
       };
 
       const result = calculateEuer(transactions, categories, false);
 
-      // Total income: 100 + 100 + 100 = 300 (net)
       expect(result.totalIncome).toBeCloseTo(300, 2);
-
-      // VAT owed: 19 + 7 + 0 = 26
       expect(result.vatOwed).toBeCloseTo(26, 2);
     });
 
@@ -264,15 +271,14 @@ describe("calculateEuer", () => {
           dateField: "2024-01-01",
           counterpartyField: "Customer",
           purposeField: "Refund",
-          BetragNumeric: -119.0, // Negative income (refund)
-          euerCategory: "income_services_19",
+          BetragNumeric: -119.0,
+          euerCategory: "4000",
         },
       ];
 
-      const categories = { 1: "income_services_19" };
+      const categories = { 1: "4000" };
       const result = calculateEuer(transactions, categories, false);
 
-      // Negative amounts should be treated as absolute values
       expect(result.totalIncome).toBeCloseTo(100, 2);
       expect(result.vatOwed).toBeCloseTo(19, 2);
     });
@@ -287,7 +293,7 @@ describe("calculateEuer", () => {
           counterpartyField: "Customer A",
           purposeField: "Sale",
           BetragNumeric: 119.0,
-          euerCategory: "income_services_19",
+          euerCategory: "4000",
         },
         {
           id: 2,
@@ -295,22 +301,20 @@ describe("calculateEuer", () => {
           counterpartyField: "Supplier B",
           purposeField: "Purchase",
           BetragNumeric: -59.5,
-          euerCategory: "expense_office_supplies",
+          euerCategory: "6815",
         },
       ];
 
       const categories = {
-        1: "income_services_19",
-        2: "expense_office_supplies",
+        1: "4000",
+        2: "6815",
       };
       const result = calculateEuer(transactions, categories, true);
 
-      // Gross amounts (no VAT separation)
       expect(result.totalIncome).toBe(119.0);
       expect(result.totalExpenses).toBe(59.5);
       expect(result.profit).toBe(59.5);
 
-      // No VAT for Kleinunternehmer
       expect(result.vatOwed).toBe(0);
       expect(result.vatPaid).toBe(0);
       expect(result.vatBalance).toBe(0);
@@ -326,18 +330,18 @@ describe("calculateEuer", () => {
           counterpartyField: "Owner",
           purposeField: "Private withdrawal",
           BetragNumeric: -500.0,
-          euerCategory: "private_withdrawal",
+          euerCategory: "1900",
         },
       ];
 
-      const categories = { 1: "private_withdrawal" };
+      const categories = { 1: "1900" };
       const result = calculateEuer(transactions, categories, false);
 
       expect(result.privateWithdrawals).toBe(500.0);
       expect(result.totalIncome).toBe(0);
       expect(result.totalExpenses).toBe(0);
       expect(result.profit).toBe(0);
-      expect(result.privateTransactionDetails.private_withdrawal).toHaveLength(1);
+      expect(result.privateTransactionDetails["1900"]).toHaveLength(1);
     });
 
     it("should handle private deposits correctly", () => {
@@ -348,11 +352,11 @@ describe("calculateEuer", () => {
           counterpartyField: "Owner",
           purposeField: "Private deposit",
           BetragNumeric: 1000.0,
-          euerCategory: "private_deposit",
+          euerCategory: "1800",
         },
       ];
 
-      const categories = { 1: "private_deposit" };
+      const categories = { 1: "1800" };
       const result = calculateEuer(transactions, categories, false);
 
       expect(result.privateDeposits).toBe(1000.0);
@@ -380,14 +384,13 @@ describe("calculateEuer", () => {
           counterpartyField: "Test",
           purposeField: "Test",
           BetragNumeric: 100,
-          euerCategory: "nonexistent_category",
+          euerCategory: "9999",
         },
       ];
 
-      const categories = { 1: "nonexistent_category" };
+      const categories = { 1: "9999" };
       const result = calculateEuer(transactions, categories, false);
 
-      // Should skip invalid categories
       expect(result.totalIncome).toBe(0);
       expect(result.totalExpenses).toBe(0);
     });
@@ -400,11 +403,10 @@ describe("calculateEuer", () => {
           counterpartyField: "Test",
           purposeField: "Test",
           BetragNumeric: 100,
-          // No euerCategory field
         },
       ];
 
-      const categories = {}; // No mapping
+      const categories = {};
       const result = calculateEuer(transactions, categories, false);
 
       expect(result.totalIncome).toBe(0);
@@ -419,11 +421,11 @@ describe("calculateEuer", () => {
           counterpartyField: "Test",
           purposeField: "Test",
           BetragNumeric: 0,
-          euerCategory: "income_services_19",
+          euerCategory: "4000",
         },
       ];
 
-      const categories = { 1: "income_services_19" };
+      const categories = { 1: "4000" };
       const result = calculateEuer(transactions, categories, false);
 
       expect(result.totalIncome).toBe(0);
@@ -658,10 +660,10 @@ describe("generateElsterOverview", () => {
   it("should generate overview from EÜR calculation", () => {
     const euerCalculation: EuerCalculation = {
       income: {
-        income_services_19: 1000,
+        "4000": 1000,
       },
       expenses: {
-        expense_freelancer: 500,
+        "5900": 500,
       },
       privateTransactions: {},
       totalIncome: 1000,
@@ -679,19 +681,15 @@ describe("generateElsterOverview", () => {
 
     const overview = generateElsterOverview(euerCalculation, false);
 
-    // Should have field 15 (income)
     expect(overview["15"]).toBeDefined();
     expect(overview["15"].amount).toBe(1000);
 
-    // Should have field 29 (freelancer expenses)
     expect(overview["29"]).toBeDefined();
     expect(overview["29"].amount).toBe(500);
 
-    // Should have field 17 (VAT owed) for regular business
     expect(overview["17"]).toBeDefined();
     expect(overview["17"].amount).toBe(190);
 
-    // Should have field 92 (profit)
     expect(overview["92"]).toBeDefined();
     expect(overview["92"].amount).toBe(500);
   });
@@ -699,7 +697,7 @@ describe("generateElsterOverview", () => {
   it("should not include VAT fields for Kleinunternehmer", () => {
     const euerCalculation: EuerCalculation = {
       income: {
-        income_services_19: 1000,
+        "4000": 1000,
       },
       expenses: {},
       privateTransactions: {},
@@ -718,11 +716,9 @@ describe("generateElsterOverview", () => {
 
     const overview = generateElsterOverview(euerCalculation, true);
 
-    // Should not have VAT fields
     expect(overview["17"]).toBeUndefined();
     expect(overview["57"]).toBeUndefined();
 
-    // Should still have profit field
     expect(overview["92"]).toBeDefined();
     expect(overview["92"].amount).toBe(1000);
   });
@@ -732,10 +728,10 @@ describe("populateElsterFieldsFromCalculation", () => {
   it("should populate fields from EÜR calculation", () => {
     const euerCalculation: EuerCalculation = {
       income: {
-        income_services_19: 1000,
+        "4000": 1000,
       },
       expenses: {
-        expense_freelancer: 500,
+        "5900": 500,
       },
       privateTransactions: {},
       totalIncome: 1000,
@@ -755,19 +751,15 @@ describe("populateElsterFieldsFromCalculation", () => {
 
     expect(result.fieldValues.length).toBeGreaterThan(0);
 
-    // Check field 17 (VAT owed)
     const vatField = result.fieldValues.find((f) => f.field === "17");
     expect(vatField?.value).toBe(190);
 
-    // Check field 57 (VAT paid)
     const vatPaidField = result.fieldValues.find((f) => f.field === "57");
     expect(vatPaidField?.value).toBe(95);
 
-    // Check field 92 (profit)
     const profitField = result.fieldValues.find((f) => f.field === "92");
     expect(profitField?.value).toBe(500);
 
-    // Check field 23 (total income)
     const totalIncomeField = result.fieldValues.find((f) => f.field === "23");
     expect(totalIncomeField?.value).toBe(1000);
   });
@@ -775,7 +767,7 @@ describe("populateElsterFieldsFromCalculation", () => {
   it("should not populate VAT fields for Kleinunternehmer", () => {
     const euerCalculation: EuerCalculation = {
       income: {
-        income_services_19: 1000,
+        "4000": 1000,
       },
       expenses: {},
       privateTransactions: {},
@@ -794,7 +786,6 @@ describe("populateElsterFieldsFromCalculation", () => {
 
     const result = populateElsterFieldsFromCalculation(euerCalculation, true);
 
-    // VAT fields should be 0 for Kleinunternehmer
     const vatField = result.fieldValues.find((f) => f.field === "17");
     expect(vatField?.value).toBe(0);
 
@@ -812,21 +803,19 @@ describe("populateAllElsterFields", () => {
         counterpartyField: "Customer A",
         purposeField: "Invoice",
         BetragNumeric: 119.0,
-        euerCategory: "income_services_19",
+        euerCategory: "4000",
       },
     ];
 
-    const categories = { 1: "income_services_19" };
+    const categories = { 1: "4000" };
     const result = populateAllElsterFields(transactions, categories, false);
 
     expect(result.fieldValues.length).toBeGreaterThan(0);
 
-    // Check that VAT fields are populated
     const vatField = result.fieldValues.find((f) => f.field === "17");
     expect(vatField).toBeDefined();
     expect(vatField?.value).toBeCloseTo(19, 2);
 
-    // Check profit field
     const profitField = result.fieldValues.find((f) => f.field === "92");
     expect(profitField).toBeDefined();
     expect(profitField?.value).toBeCloseTo(100, 2);
@@ -837,7 +826,6 @@ describe("populateAllElsterFields", () => {
 
     expect(result.fieldValues.length).toBeGreaterThan(0);
 
-    // All fields should exist but with 0 values
     const profitField = result.fieldValues.find((f) => f.field === "92");
     expect(profitField?.value).toBe(0);
   });

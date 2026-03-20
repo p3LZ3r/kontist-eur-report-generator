@@ -1,7 +1,8 @@
 import React from "react";
 import type { Transaction } from "../types";
 import { formatAmount, formatDate } from "../utils/formatters";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { CategorySelect } from "./CategorySelect";
+import { FREQUENT_INCOME_CATEGORIES, FREQUENT_EXPENSE_CATEGORIES } from "../utils/categoryMappings";
 
 interface TransactionRowMobileProps {
   transaction: Transaction;
@@ -58,13 +59,12 @@ const TransactionRowMobile = React.memo<TransactionRowMobileProps>(
     const isPrivate = category?.type === "private";
     const isIncome = transaction.BetragNumeric > 0;
 
-    // Pre-calculate formatted values for performance
     const formattedDate = formatDate(transaction.dateField);
     const formattedAmount = formatAmount(transaction.BetragNumeric);
     const amountColorClass = isIncome ? "text-income" : isPrivate ? "text-private" : "text-expense";
 
-    // Pre-calculate category options based on transaction type
     const categoryOptions = isIncome ? incomeCategories : expenseCategories;
+    const frequentCategories = isIncome ? FREQUENT_INCOME_CATEGORIES : FREQUENT_EXPENSE_CATEGORIES;
 
     return (
       <li className={`animate-fade-in px-2 py-4 ${isPrivate ? "bg-private/5" : ""}`}>
@@ -89,25 +89,13 @@ const TransactionRowMobile = React.memo<TransactionRowMobileProps>(
           <label className="text-foreground text-sm" htmlFor={`category-${transaction.id}`}>
             {currentSkr}-Konto:
           </label>
-          <Select
-            aria-label={`${currentSkr}-Konto für Transaktion ${transaction.id} auswählen`}
-            onValueChange={(value) => onCategoryChange(transaction.id, value)}
+          <CategorySelect
             value={categoryKey || undefined}
-          >
-            <SelectTrigger
-              className={`focus-ring w-full cursor-pointer hover:cursor-pointer data-[state=open]:ring-2 data-[state=open]:ring-ring ${isPrivate ? "border-private/30 bg-private/5" : ""}`}
-              id={`category-${transaction.id}`}
-            >
-              <SelectValue placeholder="Konto wählen..." />
-            </SelectTrigger>
-            <SelectContent className="max-h-60 overflow-y-auto">
-              {categoryOptions.map(([key, category]) => (
-                <SelectItem key={key} value={key}>
-                  {category.code} - {category.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            onChange={(value) => onCategoryChange(transaction.id, value)}
+            categories={categoryOptions}
+            frequentCategories={frequentCategories}
+            placeholder="Konto wählen..."
+          />
         </div>
       </li>
     );

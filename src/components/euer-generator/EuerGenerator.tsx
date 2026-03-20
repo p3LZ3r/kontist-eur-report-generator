@@ -29,7 +29,7 @@ const EuerGenerator = () => {
       const file = event.target.files?.[0];
       if (!file) return;
 
-      const result = await fileUpload.handleFileUpload(file);
+      const result = await fileUpload.handleFileUpload(file, state.currentSkr);
       if (result) {
         state.setTransactions(result.transactions);
         state.setCategories(result.categories);
@@ -38,12 +38,10 @@ const EuerGenerator = () => {
         state.setIsDemoMode(false);
       }
 
-      // Set error message if there was one
       if (fileUpload.error) {
         state.setErrorMessage(fileUpload.error);
       }
 
-      // Reset file input to allow re-uploading the same file
       event.target.value = "";
     },
     [fileUpload, state, pagination],
@@ -51,7 +49,7 @@ const EuerGenerator = () => {
 
   // Demo data handler
   const handleDemoLoad = useCallback(() => {
-    const result = demoData.loadDemo();
+    const result = demoData.loadDemo(state.currentSkr);
     if (result) {
       state.setTransactions(result.transactions);
       state.setCategories(result.categories);
@@ -60,7 +58,6 @@ const EuerGenerator = () => {
       state.setIsDemoMode(true);
     }
 
-    // Set error message if there was one
     if (demoData.error) {
       state.setErrorMessage(demoData.error);
     }

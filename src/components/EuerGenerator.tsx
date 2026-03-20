@@ -628,97 +628,99 @@ const EuerGenerator = () => {
           {/* Transaktionsübersicht mit Pagination */}
           {currentView === "transactions" && (
             <Card className="animate-fade-in">
-              <CardContent className="p-6">
-                <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <h2 className="flex items-center gap-2 text-2xl text-foreground">
-                    Transaktionen kategorisieren
-                  </h2>
+              <CardContent className="p-0">
+                <div className="border-b border-border p-6">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <h2 className="flex items-center gap-2 text-2xl text-foreground">
+                      Transaktionen kategorisieren
+                    </h2>
 
-                  <div className="flex flex-1 flex-wrap justify-center gap-2">
-                    <div className="rounded-full border border-green-200 bg-green-100 px-3 py-1 text-green-800">
-                      <span className="font-medium text-xs">
-                        {bankType === "kontist" ? "Kontist" : "Holvi"} CSV erkannt
-                      </span>
-                    </div>
-                    {isDemoMode && (
-                      <div className="rounded-full border border-orange-200 bg-orange-100 px-3 py-1 text-orange-800">
-                        <span className="font-medium text-xs">Demo-Modus</span>
+                    <div className="flex flex-1 flex-wrap justify-center gap-2">
+                      <div className="rounded-full border border-green-200 bg-green-100 px-3 py-1 text-green-800">
+                        <span className="font-medium text-xs">
+                          {bankType === "kontist" ? "Kontist" : "Holvi"} CSV erkannt
+                        </span>
                       </div>
-                    )}
-                    <div className="rounded-full border border-blue-200 bg-blue-100 px-3 py-1 text-blue-800">
-                      <span className="font-medium text-xs">{currentSkr}</span>
+                      {isDemoMode && (
+                        <div className="rounded-full border border-orange-200 bg-orange-100 px-3 py-1 text-orange-800">
+                          <span className="font-medium text-xs">Demo-Modus</span>
+                        </div>
+                      )}
+                      <div className="rounded-full border border-blue-200 bg-blue-100 px-3 py-1 text-blue-800">
+                        <span className="font-medium text-xs">{currentSkr}</span>
+                      </div>
+                      <div className="rounded-full border border-purple-200 bg-purple-100 px-3 py-1 text-purple-800">
+                        <span className="font-medium text-xs">
+                          {isKleinunternehmer ? "Kleinunternehmer §19 UStG" : "Regelbesteuerung"}
+                        </span>
+                      </div>
                     </div>
-                    <div className="rounded-full border border-purple-200 bg-purple-100 px-3 py-1 text-purple-800">
-                      <span className="font-medium text-xs">
-                        {isKleinunternehmer ? "Kleinunternehmer §19 UStG" : "Regelbesteuerung"}
-                      </span>
-                    </div>
-                  </div>
 
-                  <Button
-                    className="focus-ring flex items-center gap-2 text-muted-foreground hover:text-foreground"
-                    onClick={resetAndUploadNew}
-                    size="sm"
-                    title="Neue CSV-Datei hochladen (aktueller Fortschritt geht verloren)"
-                    variant="outline"
-                  >
-                    <RotateCcw aria-hidden="true" size={16} />
-                    Neue Datei
-                  </Button>
-                </div>
-
-                {/* Pagination Controls */}
-                <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="text-muted-foreground text-sm">
-                    Zeige {indexOfFirstTransaction + 1}-
-                    {Math.min(indexOfLastTransaction, transactions.length)} von{" "}
-                    {transactions.length}
-                  </div>
-                  <div className="flex items-center gap-2">
                     <Button
-                      className="focus-ring flex items-center gap-1"
-                      disabled={currentPage === 1}
-                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      className="focus-ring flex items-center gap-2 text-muted-foreground hover:text-foreground"
+                      onClick={resetAndUploadNew}
                       size="sm"
+                      title="Neue CSV-Datei hochladen (aktueller Fortschritt geht verloren)"
                       variant="outline"
                     >
-                      <ChevronLeft aria-hidden="true" size={16} />
-                      Zurück
+                      <RotateCcw aria-hidden="true" size={16} />
+                      Neue Datei
                     </Button>
-                    <div className="flex h-8 items-center rounded-md border bg-muted px-3 py-1.5 text-muted-foreground text-sm">
-                      {currentPage} / {totalPages}
+                  </div>
+
+                  {/* Pagination Controls */}
+                  <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="text-muted-foreground text-sm">
+                      Zeige {indexOfFirstTransaction + 1}-
+                      {Math.min(indexOfLastTransaction, transactions.length)} von{" "}
+                      {transactions.length}
                     </div>
-                    <Button
-                      className="focus-ring flex items-center gap-1"
-                      disabled={currentPage === totalPages}
-                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                      size="sm"
-                      variant="outline"
-                    >
-                      Weiter
-                      <ChevronRight aria-hidden="true" size={16} />
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        className="focus-ring flex items-center gap-1"
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        size="sm"
+                        variant="outline"
+                      >
+                        <ChevronLeft aria-hidden="true" size={16} />
+                        Zurück
+                      </Button>
+                      <div className="flex h-8 items-center rounded-md border bg-muted px-3 py-1.5 text-muted-foreground text-sm">
+                        {currentPage} / {totalPages}
+                      </div>
+                      <Button
+                        className="focus-ring flex items-center gap-1"
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        size="sm"
+                        variant="outline"
+                      >
+                        Weiter
+                        <ChevronRight aria-hidden="true" size={16} />
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
-                {/* Desktop Table View */}
+                {/* Desktop Table View - Full Width */}
                 <div className="hidden overflow-x-auto sm:block">
-                  <table className="w-full min-w-full border-collapse text-sm">
+                  <table className="w-full border-collapse text-sm">
                     <thead>
                       <tr className="border-border border-b bg-muted/50">
-                        <th className="w-24 p-3 text-left font-normal text-muted-foreground">
+                        <th className="w-24 whitespace-nowrap p-3 text-left font-normal text-muted-foreground">
                           Datum
                         </th>
-                        <th className="w-1/5 min-w-32 p-3 text-left font-normal text-muted-foreground">
+                        <th className="min-w-[200px] p-3 text-left font-normal text-muted-foreground">
                           Gegenpartei
                         </th>
-                        <th className="w-20 p-3 text-right font-normal text-muted-foreground">
+                        <th className="w-24 whitespace-nowrap p-3 text-right font-normal text-muted-foreground">
                           Betrag
                         </th>
-                        <th className="w-1/4 min-w-40 p-3 text-left font-normal text-muted-foreground">
+                        <th className="min-w-[250px] p-3 text-left font-normal text-muted-foreground">
                           Verwendungszweck
                         </th>
-                        <th className="w-1/3 min-w-48 p-3 text-left font-normal text-muted-foreground">
+                        <th className="min-w-[320px] p-3 text-left font-normal text-muted-foreground">
                           {currentSkr}-Konto
                         </th>
                       </tr>
@@ -769,49 +771,51 @@ const EuerGenerator = () => {
                 </div>
 
                 {/* Pagination Controls unten */}
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="text-center text-muted-foreground text-sm sm:text-left">
-                    Zeige {indexOfFirstTransaction + 1}-
-                    {Math.min(indexOfLastTransaction, transactions.length)} von{" "}
-                    {transactions.length}
-                  </div>
-                  <div className="flex items-center justify-center gap-2">
-                    <Button
-                      className="focus-ring flex items-center gap-1"
-                      disabled={currentPage === 1}
-                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                      size="sm"
-                      variant="outline"
-                    >
-                      <ChevronLeft aria-hidden="true" size={16} />
-                      Zurück
-                    </Button>
-                    <div className="flex h-8 items-center rounded-md border bg-muted px-3 py-1.5 text-muted-foreground text-sm">
-                      {currentPage} / {totalPages}
+                <div className="border-t border-border p-6">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="text-center text-muted-foreground text-sm sm:text-left">
+                      Zeige {indexOfFirstTransaction + 1}-
+                      {Math.min(indexOfLastTransaction, transactions.length)} von{" "}
+                      {transactions.length}
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <Button
+                        className="focus-ring flex items-center gap-1"
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        size="sm"
+                        variant="outline"
+                      >
+                        <ChevronLeft aria-hidden="true" size={16} />
+                        Zurück
+                      </Button>
+                      <div className="flex h-8 items-center rounded-md border bg-muted px-3 py-1.5 text-muted-foreground text-sm">
+                        {currentPage} / {totalPages}
+                      </div>
+                      <Button
+                        className="focus-ring flex items-center gap-1"
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        size="sm"
+                        variant="outline"
+                      >
+                        Weiter
+                        <ChevronRight aria-hidden="true" size={16} />
+                      </Button>
                     </div>
                     <Button
-                      className="focus-ring flex items-center gap-1"
-                      disabled={currentPage === totalPages}
-                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                      className="focus-ring flex items-center gap-2"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        setTimeout(() => setCurrentView("elster"), 300);
+                      }}
                       size="sm"
-                      variant="outline"
+                      variant="default"
                     >
-                      Weiter
-                      <ChevronRight aria-hidden="true" size={16} />
+                      <ChevronLeft aria-hidden="true" className="rotate-90" size={16} />
+                      Zu den Elsterfeldern
                     </Button>
                   </div>
-                  <Button
-                    className="focus-ring flex items-center gap-2"
-                    onClick={() => {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                      setTimeout(() => setCurrentView("elster"), 300);
-                    }}
-                    size="sm"
-                    variant="default"
-                  >
-                    <ChevronLeft aria-hidden="true" className="rotate-90" size={16} />
-                    Zu den Elsterfeldern
-                  </Button>
                 </div>
               </CardContent>
             </Card>

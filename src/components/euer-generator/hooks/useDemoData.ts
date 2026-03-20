@@ -1,7 +1,10 @@
 import { useCallback, useState } from "react";
 import type { Transaction } from "../../../types";
+import { semanticKeyToSkrCode } from "../../../utils/categoryMappings";
 import { loadDemoData } from "../../../utils/demoUtils";
 import { categorizeTransaction } from "../../../utils/transactionUtils";
+
+type SkrType = "SKR03" | "SKR04" | "SKR49";
 
 /**
  * useDemoData handles loading and processing of demo transaction data.
@@ -10,7 +13,7 @@ import { categorizeTransaction } from "../../../utils/transactionUtils";
  *
  * @example
  * const { loadDemo, isLoading, error } = useDemoData()
- * const result = loadDemo()
+ * const result = loadDemo("SKR04")
  * if (result) {
  *   const { transactions, categories } = result
  * }
@@ -19,43 +22,43 @@ export function useDemoData() {
   const [isProcessingFile, setIsProcessingFile] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const loadDemo = useCallback((): {
-    transactions: Transaction[];
-    categories: Record<number, string>;
-  } | null => {
-    setIsProcessingFile(true);
-    setErrorMessage(null);
+  const loadDemo = useCallback(
+    (currentSkr: SkrType): {
+      transactions: Transaction[];
+      categories: Record<number, string>;
+    } | null => {
+      setIsProcessingFile(true);
+      setErrorMessage(null);
 
-    try {
-      // Load demo transactions
-      const demoTransactions = loadDemoData();
+      try {
+        const demoTransactions = loadDemoData();
 
-      // Categorize all demo transactions
-      demoTransactions.forEach((t) => {
-        t.euerCategory = categorizeTransaction(t);
-      });
+        // Categorize transactions and translate semantic keys to SKR codes
+        const autoCategories: Record<number, string> = {};
+        demoTransactions.forEach((t) => {
+          const semanticKey = categorizeTransaction(t);
+          t.euerCategory = semanticKey;
+          // Translate semantic key to SKR code for storage
+          autoCategories[t.id] = semanticKeyToSkrCode(semanticKey, currentSkr);
+        });
 
-      // Set auto-categories
-      const autoCategories: Record<number, string> = {};
-      demoTransactions.forEach((t) => {
-        autoCategories[t.id] = t.euerCategory || "";
-      });
-
-      return {
-        transactions: demoTransactions,
-        categories: autoCategories,
-      };
-    } catch (error) {
-      let errorMsg = "Fehler beim Laden der Demo-Daten.";
-      if (error instanceof Error) {
-        errorMsg = error.message;
+        return {
+          transactions: demoTransactions,
+          categories: autoCategories,
+        };
+      } catch (error) {
+        let errorMsg = "Fehler beim Laden der Demo-Daten.";
+        if (error instanceof Error) {
+          errorMsg = error.message;
+        }
+        setErrorMessage(errorMsg);
+        return null;
+      } finally {
+        setIsProcessingFile(false);
       }
-      setErrorMessage(errorMsg);
-      return null;
-    } finally {
-      setIsProcessingFile(false);
-    }
-  }, []);
+    },
+    [],
+  );
 
   return {
     loadDemo,

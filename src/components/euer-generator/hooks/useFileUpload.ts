@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import type { Transaction } from "../../../types";
+import { semanticKeyToSkrCode } from "../../../utils/categoryMappings";
 import { validateCSVContent } from "../../../utils/sanitization";
 import {
   categorizeTransaction,
@@ -7,6 +8,8 @@ import {
   parseHolviCSV,
   parseKontistCSV,
 } from "../../../utils/transactionUtils";
+
+type SkrType = "SKR03" | "SKR04" | "SKR49";
 
 /**
  * useFileUpload manages CSV file upload, parsing, and validation for
@@ -16,10 +19,10 @@ import {
  *
  * @example
  * const { handleFileUpload, isLoading, error, clearError } = useFileUpload()
- * const result = await handleFileUpload(file)
+ * const result = await handleFileUpload(file, "SKR04")
  * if (result) {
  *   // Handle success
- *   const { transactions, bankType } = result
+ *   const { transactions, bankType, categories } = result
  * }
  */
 export function useFileUpload() {
@@ -29,6 +32,7 @@ export function useFileUpload() {
   const handleFileUpload = useCallback(
     async (
       file: File,
+      currentSkr: SkrType,
     ): Promise<{
       transactions: Transaction[];
       bankType: string;
@@ -38,18 +42,15 @@ export function useFileUpload() {
       setErrorMessage(null);
 
       try {
-        // Validate file type
         if (!file.name.toLowerCase().endsWith(".csv") && file.type !== "text/csv") {
           throw new Error("Ungültiger Dateityp. Bitte laden Sie eine CSV-Datei (.csv) hoch.");
         }
 
-        // Validate file size (max 10MB)
-        const maxSize = 10 * 1024 * 1024; // 10MB
+        const maxSize = 10 * 1024 * 1024;
         if (file.size > maxSize) {
           throw new Error("Datei ist zu groß. Maximale Dateigröße: 10MB.");
         }
 
-        // Validate file is not empty
         if (file.size === 0) {
           throw new Error(
             "Die hochgeladene Datei ist leer. Bitte wählen Sie eine gültige CSV-Datei.",
@@ -63,12 +64,10 @@ export function useFileUpload() {
           throw new Error("Fehler beim Lesen der Datei. Die Datei könnte beschädigt sein.");
         }
 
-        // Validate file content is not empty
         if (text.trim().length === 0) {
           throw new Error("Die CSV-Datei ist leer oder enthält keine gültigen Daten.");
         }
 
-        // Validate CSV structure (basic check for commas/semicolons)
         const lines = text.split("\n").filter((line) => line.trim().length > 0);
         if (lines.length < 2) {
           throw new Error(
@@ -76,7 +75,6 @@ export function useFileUpload() {
           );
         }
 
-        // Validate CSV content for security issues
         validateCSVContent(text);
 
         const detectedBankType = detectBankFormat(text);
@@ -93,22 +91,19 @@ export function useFileUpload() {
           );
         }
 
-        // Validate that transactions were successfully parsed
         if (!parsedTransactions || parsedTransactions.length === 0) {
           throw new Error(
             "Keine Transaktionen in der CSV-Datei gefunden. Bitte überprüfen Sie, ob die Datei Transaktionsdaten enthält.",
           );
         }
 
-        // EÜR-Kategorien zuweisen (alle Transaktionen, auch Privatentnahmen)
-        parsedTransactions.forEach((t) => {
-          t.euerCategory = categorizeTransaction(t);
-        });
-
-        // Automatische Kategorisierung
+        // Categorize transactions and translate semantic keys to SKR codes
         const autoCategories: Record<number, string> = {};
         parsedTransactions.forEach((t) => {
-          autoCategories[t.id] = t.euerCategory || "";
+          const semanticKey = categorizeTransaction(t);
+          t.euerCategory = semanticKey;
+          // Translate semantic key to SKR code for storage
+          autoCategories[t.id] = semanticKeyToSkrCode(semanticKey, currentSkr);
         });
 
         return {

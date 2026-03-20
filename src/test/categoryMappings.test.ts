@@ -1,15 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { elsterMapping, getCategoriesForSkr, skr04Categories } from "../utils/categoryMappings";
+import { elsterMapping, getCategoriesForSkr, skr04Categories, skrCodeToSemanticKey } from "../utils/categoryMappings";
 
 describe("Category Mappings - SKR Categorization Engine", () => {
   describe("getCategoriesForSkr", () => {
     beforeEach(() => {
-      // Clear any previous fetch mocks
       vi.resetAllMocks();
     });
 
     it("should return SKR04 categories by default", async () => {
-      // Mock fetch failure to trigger fallback
       global.fetch = vi.fn().mockRejectedValue(new Error("Test environment - no fetch"));
 
       const categories = await getCategoriesForSkr("SKR04");
@@ -17,14 +15,12 @@ describe("Category Mappings - SKR Categorization Engine", () => {
       expect(categories).toBeDefined();
       expect(Object.keys(categories).length).toBeGreaterThan(0);
 
-      // Verify it contains expected SKR04 categories
-      expect(categories.income_services_19).toBeDefined();
-      expect(categories.expense_office_supplies).toBeDefined();
-      expect(categories.expense_travel_domestic).toBeDefined();
+      expect(categories["4000"]).toBeDefined();
+      expect(categories["6815"]).toBeDefined();
+      expect(categories["6650"]).toBeDefined();
     });
 
     it("should handle SKR03 categories", async () => {
-      // Mock fetch for SKR03 data - should return ARRAY format
       global.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () =>
@@ -42,14 +38,12 @@ describe("Category Mappings - SKR Categorization Engine", () => {
       const categories = await getCategoriesForSkr("SKR03");
 
       expect(categories).toBeDefined();
-      // Check by SKR code since that's the key
       expect(categories["8400"]).toBeDefined();
       expect(categories["8400"].name).toBe("Fertigerzeugnisse");
       expect(categories["8400"].type).toBe("income");
     });
 
     it("should handle SKR49 categories for freelancers", async () => {
-      // Mock fetch for SKR49 data - should return ARRAY format
       global.fetch = vi.fn().mockResolvedValue({
         ok: true,
         json: () =>
@@ -72,7 +66,6 @@ describe("Category Mappings - SKR Categorization Engine", () => {
       const categories = await getCategoriesForSkr("SKR49");
 
       expect(categories).toBeDefined();
-      // Check by SKR code
       expect(categories["8590"]).toBeDefined();
       expect(categories["8590"].name).toBe("Beratungsleistungen");
       expect(categories["6805"]).toBeDefined();
@@ -80,72 +73,70 @@ describe("Category Mappings - SKR Categorization Engine", () => {
     });
 
     it("should fallback to SKR04 when fetch fails", async () => {
-      // Mock failed fetch
       global.fetch = vi.fn().mockRejectedValue(new Error("Network error"));
 
       const categories = await getCategoriesForSkr("SKR03");
 
-      // Should fallback to hardcoded SKR04
       expect(categories).toEqual(skr04Categories);
     });
   });
 
   describe("SKR04 Default Categories", () => {
     it("should contain essential income categories with correct VAT rates", () => {
-      expect(skr04Categories.income_services_19).toEqual({
-        name: "Erlöse aus Dienstleistungen 19% USt",
+      expect(skr04Categories["4000"]).toEqual({
+        name: "Umsatzerlöse",
         type: "income",
-        code: "8400",
+        code: "4000",
         vat: 19,
       });
 
-      expect(skr04Categories.income_services_7).toEqual({
-        name: "Erlöse aus Dienstleistungen 7% USt",
+      expect(skr04Categories["4300"]).toEqual({
+        name: "Umsatzerlöse 7% USt",
         type: "income",
-        code: "8300",
+        code: "4300",
         vat: 7,
       });
 
-      expect(skr04Categories.income_services_0).toEqual({
-        name: "Steuerfreie Erlöse",
+      expect(skr04Categories["4110"]).toEqual({
+        name: "Sonstige steuerfreie Umsätze",
         type: "income",
-        code: "8125",
+        code: "4110",
         vat: 0,
       });
     });
 
     it("should contain essential expense categories", () => {
-      expect(skr04Categories.expense_wages).toEqual({
+      expect(skr04Categories["6000"]).toEqual({
         name: "Löhne und Gehälter",
         type: "expense",
         code: "6000",
         vat: 0,
       });
 
-      expect(skr04Categories.expense_freelancer).toEqual({
-        name: "Fremdleistungen (Subunternehmer)",
+      expect(skr04Categories["5900"]).toEqual({
+        name: "Fremdleistungen",
         type: "expense",
-        code: "6300",
+        code: "5900",
         vat: 19,
       });
 
-      expect(skr04Categories.expense_rent_business).toEqual({
-        name: "Mieten Geschäftsräume",
+      expect(skr04Categories["6310"]).toEqual({
+        name: "Miete",
         type: "expense",
-        code: "7000",
+        code: "6310",
         vat: 19,
       });
     });
 
     it("should contain private transaction categories", () => {
-      expect(skr04Categories.private_withdrawal).toEqual({
-        name: "Privatentnahmen (nicht EÜR-relevant)",
+      expect(skr04Categories["1900"]).toEqual({
+        name: "Privatentnahmen",
         type: "private",
-        code: "1890",
+        code: "1900",
         vat: 0,
       });
 
-      expect(skr04Categories.private_deposit).toEqual({
+      expect(skr04Categories["1800"]).toEqual({
         name: "Privateinlagen",
         type: "private",
         code: "1800",
@@ -156,13 +147,11 @@ describe("Category Mappings - SKR Categorization Engine", () => {
 
   describe("ELSTER Mapping", () => {
     it("should map income categories to correct ELSTER fields", () => {
-      // VAT-liable services should map to field 15 (netto)
       expect(elsterMapping.income_services_19).toEqual({
         elsterField: "15",
         label: "Umsatzsteuerpflichtige Umsätze (netto)",
       });
 
-      // VAT-free services should map to field 16
       expect(elsterMapping.income_services_0).toEqual({
         elsterField: "16",
         label: "Steuerfreie und nicht steuerbare Umsätze",
@@ -170,13 +159,11 @@ describe("Category Mappings - SKR Categorization Engine", () => {
     });
 
     it("should map expense categories to correct ELSTER fields", () => {
-      // Freelancer costs should map to field 29 (Fremdleistungen)
       expect(elsterMapping.expense_freelancer).toEqual({
         elsterField: "29",
         label: "Fremdleistungen",
       });
 
-      // Personnel costs should map to field 30
       expect(elsterMapping.expense_wages).toEqual({
         elsterField: "30",
         label: "Personalkosten",
@@ -189,6 +176,20 @@ describe("Category Mappings - SKR Categorization Engine", () => {
     });
   });
 
+  describe("SKR Code to Semantic Key Mapping", () => {
+    it("should map SKR codes to semantic keys for ELSTER lookup", () => {
+      expect(skrCodeToSemanticKey("4000")).toBe("income_services_19");
+      expect(skrCodeToSemanticKey("4300")).toBe("income_services_7");
+      expect(skrCodeToSemanticKey("6000")).toBe("expense_wages");
+      expect(skrCodeToSemanticKey("5900")).toBe("expense_freelancer");
+      expect(skrCodeToSemanticKey("1900")).toBe("private_withdrawal");
+    });
+
+    it("should return undefined for unknown SKR codes", () => {
+      expect(skrCodeToSemanticKey("9999")).toBeUndefined();
+    });
+  });
+
   describe("Category Edge Cases", () => {
     it("should handle categories with different VAT rates correctly", () => {
       const vatRates = Object.values(skr04Categories).map((cat) => cat.vat);
@@ -197,12 +198,11 @@ describe("Category Mappings - SKR Categorization Engine", () => {
       expect(uniqueVatRates).toContain(0);
       expect(uniqueVatRates).toContain(7);
       expect(uniqueVatRates).toContain(19);
-      expect(uniqueVatRates.length).toBe(3);
     });
 
-    it('should ensure all income categories have type "income"', () => {
-      const incomeCategories = Object.entries(skr04Categories).filter(([key]) =>
-        key.startsWith("income_"),
+    it('should ensure income categories (4xxx) have type "income"', () => {
+      const incomeCategories = Object.entries(skr04Categories).filter(([code]) =>
+        code.startsWith("4"),
       );
 
       incomeCategories.forEach(([, category]) => {
@@ -210,22 +210,19 @@ describe("Category Mappings - SKR Categorization Engine", () => {
       });
     });
 
-    it('should ensure all expense categories have type "expense"', () => {
+    it('should ensure expense categories (5xxx-7xxx) have type "expense"', () => {
       const expenseCategories = Object.entries(skr04Categories).filter(
-        ([key]) => key.startsWith("expense_") && !key.includes("tax_free_income"),
+        ([code]) => code.startsWith("5") || code.startsWith("6") || code.startsWith("7"),
       );
 
       expenseCategories.forEach(([, category]) => {
         expect(category.type).toBe("expense");
       });
-
-      // Special case: tax-free income is categorized as income even though prefixed with expense_
-      expect(skr04Categories.expense_tax_free_income.type).toBe("income");
     });
 
-    it('should ensure all private categories have type "private" and VAT 0', () => {
-      const privateCategories = Object.entries(skr04Categories).filter(([key]) =>
-        key.startsWith("private_"),
+    it('should ensure private categories have type "private" and VAT 0', () => {
+      const privateCategories = Object.entries(skr04Categories).filter(
+        ([, cat]) => cat.type === "private",
       );
 
       privateCategories.forEach(([, category]) => {
@@ -236,26 +233,18 @@ describe("Category Mappings - SKR Categorization Engine", () => {
   });
 
   describe("ELSTER Field Mapping Completeness", () => {
-    it("should have ELSTER mappings for all business-relevant categories", () => {
-      const businessCategories = Object.entries(skr04Categories).filter(
-        ([, cat]) => cat.type === "income" || cat.type === "expense",
-      );
+    it("should have ELSTER mappings for essential categories", () => {
+      const essentialSemanticKeys = [
+        "income_services_19",
+        "income_services_7",
+        "expense_wages",
+        "expense_freelancer",
+        "expense_rent_business",
+      ];
 
-      const mappedCategories = Object.keys(elsterMapping);
-
-      businessCategories.forEach(([key, category]) => {
-        // Not all categories need ELSTER mapping (some are internal),
-        // but major ones should have mappings
-        if (key.includes("income_") || key.includes("expense_")) {
-          const hasMapping = mappedCategories.includes(key);
-          if (!hasMapping) {
-            console.warn(`Category ${key} (${category.name}) has no ELSTER mapping`);
-          }
-        }
+      essentialSemanticKeys.forEach((key) => {
+        expect(elsterMapping[key]).toBeDefined();
       });
-
-      // At minimum, should have mappings for major categories
-      expect(mappedCategories.length).toBeGreaterThan(10);
     });
 
     it("should map to valid ELSTER field numbers", () => {
@@ -264,7 +253,7 @@ describe("Category Mappings - SKR Categorization Engine", () => {
         "15",
         "16",
         "19",
-        "20", // Income fields
+        "20",
         "27",
         "29",
         "30",
@@ -274,7 +263,7 @@ describe("Category Mappings - SKR Categorization Engine", () => {
         "34",
         "35",
         "36",
-        "37", // Basic expense fields
+        "37",
         "44",
         "55",
         "56",
@@ -282,14 +271,14 @@ describe("Category Mappings - SKR Categorization Engine", () => {
         "63",
         "64",
         "65",
-        "66", // Specific expense fields
+        "66",
         "78",
         "79",
         "80",
         "81",
         "84",
         "85",
-        "91", // Special calculation fields
+        "91",
       ];
 
       Object.values(elsterMapping).forEach((mapping) => {
