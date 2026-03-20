@@ -55,10 +55,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
   };
 
   // Berechne Gesamtsummen
-  const grossTotal = transactions.reduce(
-    (sum, t) => sum + Math.abs(t.BetragNumeric),
-    0
-  );
+  const grossTotal = transactions.reduce((sum, t) => sum + Math.abs(t.BetragNumeric), 0);
   let netTotal = grossTotal;
   let vatTotal = 0;
   let hasVat = false;
@@ -71,8 +68,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
     vatTotal = 0;
 
     transactions.forEach((transaction) => {
-      const categoryKey =
-        categories[transaction.id] || transaction.euerCategory;
+      const categoryKey = categories[transaction.id] || transaction.euerCategory;
       if (!categoryKey) return;
 
       const category = skrCategories[categoryKey];
@@ -152,7 +148,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
           )}
         </div>
       </td>
-    </tr>
+    </tr>,
   );
 
   // Transaction detail rows
@@ -168,10 +164,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
           </div>
         </td>
         <td className="px-2 py-1 text-left">
-          <div
-            className="truncate text-foreground text-xs"
-            title={transaction.counterpartyField}
-          >
+          <div className="truncate text-foreground text-xs" title={transaction.counterpartyField}>
             {transaction.counterpartyField}
           </div>
           {transaction.purposeField && (
@@ -194,7 +187,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = ({
             {formatCurrency(transaction.BetragNumeric)}
           </span>
         </td>
-      </tr>
+      </tr>,
     );
   });
 

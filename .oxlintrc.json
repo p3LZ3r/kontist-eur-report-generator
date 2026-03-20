@@ -1,0 +1,4 @@
+{
+  "ignorePatterns": ["dist/**", "node_modules/**", "*.min.js"],
+  "plugins": ["typescript", "react", "jsx-a11y"]
+}

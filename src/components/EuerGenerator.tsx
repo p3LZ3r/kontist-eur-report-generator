@@ -16,10 +16,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Transaction } from "../types";
-import {
-  getCategoriesForSkr,
-  skr04Categories,
-} from "../utils/categoryMappings";
+import { getCategoriesForSkr, skr04Categories } from "../utils/categoryMappings";
 import { PAGINATION } from "../utils/constants";
 import { loadDemoData } from "../utils/demoUtils";
 import { calculateEuer } from "../utils/euerCalculations";
@@ -49,22 +46,19 @@ const EuerGenerator = () => {
   const [bankType, setBankType] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isKleinunternehmer, setIsKleinunternehmer] = useState(false);
-  const [currentSkr, setCurrentSkr] = useState<"SKR03" | "SKR04" | "SKR49">(
-    "SKR04"
-  );
-  const [skrCategories, setSkrCategories] =
-    useState<
-      Record<
-        string,
-        {
-          code: string;
-          name: string;
-          type: string;
-          vat: number;
-          elsterField?: string;
-        }
-      >
-    >(skr04Categories);
+  const [currentSkr, setCurrentSkr] = useState<"SKR03" | "SKR04" | "SKR49">("SKR04");
+  const [skrCategories, setSkrCategories] = useState<
+    Record<
+      string,
+      {
+        code: string;
+        name: string;
+        type: string;
+        vat: number;
+        elsterField?: string;
+      }
+    >
+  >(skr04Categories);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [isProcessingFile, setIsProcessingFile] = useState(false);
@@ -82,10 +76,7 @@ const EuerGenerator = () => {
         const loadedCategories = await getCategoriesForSkr(currentSkr);
         setSkrCategories(loadedCategories);
       } catch (error) {
-        console.warn(
-          `Failed to load ${currentSkr} categories, using fallback:`,
-          error
-        );
+        console.warn(`Failed to load ${currentSkr} categories, using fallback:`, error);
         setSkrCategories(skr04Categories);
       }
     };
@@ -94,119 +85,107 @@ const EuerGenerator = () => {
   }, [currentSkr]);
 
   // CSV-Datei einlesen
-  const handleFileUpload = useCallback(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
+  const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-      setIsProcessingFile(true);
-      setErrorMessage(null);
+    setIsProcessingFile(true);
+    setErrorMessage(null);
 
-      try {
-        // Validate file type
-        if (
-          !file.name.toLowerCase().endsWith(".csv") &&
-          file.type !== "text/csv"
-        ) {
-          throw new Error(
-            "Ungültiger Dateityp. Bitte laden Sie eine CSV-Datei (.csv) hoch."
-          );
-        }
-
-        // Validate file size (max 10MB)
-        const maxSize = 10 * 1024 * 1024; // 10MB
-        if (file.size > maxSize) {
-          throw new Error("Datei ist zu groß. Maximale Dateigröße: 10MB.");
-        }
-
-        // Validate file is not empty
-        if (file.size === 0) {
-          throw new Error(
-            "Die hochgeladene Datei ist leer. Bitte wählen Sie eine gültige CSV-Datei."
-          );
-        }
-
-        let text: string;
-        try {
-          text = await file.text();
-        } catch {
-          throw new Error(
-            "Fehler beim Lesen der Datei. Die Datei könnte beschädigt sein."
-          );
-        }
-
-        // Validate file content is not empty
-        if (text.trim().length === 0) {
-          throw new Error(
-            "Die CSV-Datei ist leer oder enthält keine gültigen Daten."
-          );
-        }
-
-        // Validate CSV structure (basic check for commas/semicolons)
-        const lines = text.split("\n").filter((line) => line.trim().length > 0);
-        if (lines.length < 2) {
-          throw new Error(
-            "Die CSV-Datei enthält zu wenig Daten. Mindestens eine Kopfzeile und eine Datenzeile sind erforderlich."
-          );
-        }
-
-        // Validate CSV content for security issues
-        validateCSVContent(text);
-
-        const detectedBankType = detectBankFormat(text);
-        setBankType(detectedBankType);
-
-        let parsedTransactions: Transaction[];
-
-        if (detectedBankType === "kontist") {
-          parsedTransactions = parseKontistCSV(text);
-        } else if (detectedBankType === "holvi") {
-          parsedTransactions = parseHolviCSV(text);
-        } else {
-          throw new Error(
-            "Unbekanntes CSV-Format. Unterstützt werden nur Kontist und Holvi Exporte. Bitte stellen Sie sicher, dass Sie die CSV-Datei direkt aus Ihrem Banking-Portal exportiert haben."
-          );
-        }
-
-        // Validate that transactions were successfully parsed
-        if (!parsedTransactions || parsedTransactions.length === 0) {
-          throw new Error(
-            "Keine Transaktionen in der CSV-Datei gefunden. Bitte überprüfen Sie, ob die Datei Transaktionsdaten enthält."
-          );
-        }
-
-        // EÜR-Kategorien zuweisen (alle Transaktionen, auch Privatentnahmen)
-        parsedTransactions.forEach((t) => {
-          t.euerCategory = categorizeTransaction(t);
-        });
-
-        setTransactions(parsedTransactions);
-
-        // Automatische Kategorisierung
-        const autoCategories: Record<number, string> = {};
-        parsedTransactions.forEach((t) => {
-          autoCategories[t.id] = t.euerCategory || "";
-        });
-        setCategories(autoCategories);
-        setCurrentPage(1); // Zurück zur ersten Seite
-      } catch (error) {
-        let errorMsg = "Unbekannter Fehler beim Verarbeiten der Datei.";
-
-        if (error instanceof Error) {
-          errorMsg = error.message;
-        } else if (typeof error === "string") {
-          errorMsg = error;
-        }
-
-        setErrorMessage(errorMsg);
-      } finally {
-        setIsProcessingFile(false);
-        // Reset file input to allow re-uploading the same file
-        event.target.value = "";
+    try {
+      // Validate file type
+      if (!file.name.toLowerCase().endsWith(".csv") && file.type !== "text/csv") {
+        throw new Error("Ungültiger Dateityp. Bitte laden Sie eine CSV-Datei (.csv) hoch.");
       }
-    },
-    []
-  );
+
+      // Validate file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      if (file.size > maxSize) {
+        throw new Error("Datei ist zu groß. Maximale Dateigröße: 10MB.");
+      }
+
+      // Validate file is not empty
+      if (file.size === 0) {
+        throw new Error(
+          "Die hochgeladene Datei ist leer. Bitte wählen Sie eine gültige CSV-Datei.",
+        );
+      }
+
+      let text: string;
+      try {
+        text = await file.text();
+      } catch {
+        throw new Error("Fehler beim Lesen der Datei. Die Datei könnte beschädigt sein.");
+      }
+
+      // Validate file content is not empty
+      if (text.trim().length === 0) {
+        throw new Error("Die CSV-Datei ist leer oder enthält keine gültigen Daten.");
+      }
+
+      // Validate CSV structure (basic check for commas/semicolons)
+      const lines = text.split("\n").filter((line) => line.trim().length > 0);
+      if (lines.length < 2) {
+        throw new Error(
+          "Die CSV-Datei enthält zu wenig Daten. Mindestens eine Kopfzeile und eine Datenzeile sind erforderlich.",
+        );
+      }
+
+      // Validate CSV content for security issues
+      validateCSVContent(text);
+
+      const detectedBankType = detectBankFormat(text);
+      setBankType(detectedBankType);
+
+      let parsedTransactions: Transaction[];
+
+      if (detectedBankType === "kontist") {
+        parsedTransactions = parseKontistCSV(text);
+      } else if (detectedBankType === "holvi") {
+        parsedTransactions = parseHolviCSV(text);
+      } else {
+        throw new Error(
+          "Unbekanntes CSV-Format. Unterstützt werden nur Kontist und Holvi Exporte. Bitte stellen Sie sicher, dass Sie die CSV-Datei direkt aus Ihrem Banking-Portal exportiert haben.",
+        );
+      }
+
+      // Validate that transactions were successfully parsed
+      if (!parsedTransactions || parsedTransactions.length === 0) {
+        throw new Error(
+          "Keine Transaktionen in der CSV-Datei gefunden. Bitte überprüfen Sie, ob die Datei Transaktionsdaten enthält.",
+        );
+      }
+
+      // EÜR-Kategorien zuweisen (alle Transaktionen, auch Privatentnahmen)
+      parsedTransactions.forEach((t) => {
+        t.euerCategory = categorizeTransaction(t);
+      });
+
+      setTransactions(parsedTransactions);
+
+      // Automatische Kategorisierung
+      const autoCategories: Record<number, string> = {};
+      parsedTransactions.forEach((t) => {
+        autoCategories[t.id] = t.euerCategory || "";
+      });
+      setCategories(autoCategories);
+      setCurrentPage(1); // Zurück zur ersten Seite
+    } catch (error) {
+      let errorMsg = "Unbekannter Fehler beim Verarbeiten der Datei.";
+
+      if (error instanceof Error) {
+        errorMsg = error.message;
+      } else if (typeof error === "string") {
+        errorMsg = error;
+      }
+
+      setErrorMessage(errorMsg);
+    } finally {
+      setIsProcessingFile(false);
+      // Reset file input to allow re-uploading the same file
+      event.target.value = "";
+    }
+  }, []);
 
   // Demo-Daten laden
   const handleDemoLoad = useCallback(() => {
@@ -249,7 +228,7 @@ const EuerGenerator = () => {
   // Alle Daten zurücksetzen und neue Datei hochladen
   const resetAndUploadNew = useCallback(() => {
     const confirmReset = window.confirm(
-      "Achtung: Alle aktuellen Transaktionen und manuellen Kategorisierungen gehen verloren.\n\nMöchten Sie wirklich eine neue CSV-Datei hochladen?"
+      "Achtung: Alle aktuellen Transaktionen und manuellen Kategorisierungen gehen verloren.\n\nMöchten Sie wirklich eine neue CSV-Datei hochladen?",
     );
 
     if (confirmReset) {
@@ -261,9 +240,7 @@ const EuerGenerator = () => {
       // setShowGuidance(false);
       setErrorMessage(null);
       // Reset file input
-      const fileInput = document.getElementById(
-        "csvUpload"
-      ) as HTMLInputElement;
+      const fileInput = document.getElementById("csvUpload") as HTMLInputElement;
       if (fileInput) {
         fileInput.value = "";
       }
@@ -276,7 +253,7 @@ const EuerGenerator = () => {
       Object.entries(skrCategories)
         .filter(([, cat]) => cat.type === "income")
         .sort((a, b) => a[1].name.localeCompare(b[1].name)),
-    [skrCategories]
+    [skrCategories],
   );
 
   const expenseCategories = useMemo(
@@ -284,7 +261,7 @@ const EuerGenerator = () => {
       Object.entries(skrCategories)
         .filter(([, cat]) => cat.type === "expense" || cat.type === "private")
         .sort((a, b) => a[1].name.localeCompare(b[1].name)),
-    [skrCategories]
+    [skrCategories],
   );
 
   // Memoized current transactions
@@ -295,34 +272,22 @@ const EuerGenerator = () => {
   }, [transactions, currentPage]);
 
   // Optimized callback to prevent unnecessary re-renders
-  const updateCategory = useCallback(
-    (transactionId: number, categoryKey: string) => {
-      setCategories((prev) => ({
-        ...prev,
-        [transactionId]: categoryKey,
-      }));
-    },
-    []
-  );
+  const updateCategory = useCallback((transactionId: number, categoryKey: string) => {
+    setCategories((prev) => ({
+      ...prev,
+      [transactionId]: categoryKey,
+    }));
+  }, []);
 
   // Pagination-Berechnungen
   const indexOfLastTransaction = currentPage * PAGINATION.TRANSACTIONS_PER_PAGE;
-  const indexOfFirstTransaction =
-    indexOfLastTransaction - PAGINATION.TRANSACTIONS_PER_PAGE;
-  const totalPages = Math.ceil(
-    transactions.length / PAGINATION.TRANSACTIONS_PER_PAGE
-  );
+  const indexOfFirstTransaction = indexOfLastTransaction - PAGINATION.TRANSACTIONS_PER_PAGE;
+  const totalPages = Math.ceil(transactions.length / PAGINATION.TRANSACTIONS_PER_PAGE);
 
   // EÜR berechnen mit/ohne USt (used by guidance system for field calculations)
   const euerCalculation = useMemo(
-    () =>
-      calculateEuer(
-        transactions,
-        categories,
-        isKleinunternehmer,
-        skrCategories
-      ),
-    [transactions, categories, isKleinunternehmer, skrCategories]
+    () => calculateEuer(transactions, categories, isKleinunternehmer, skrCategories),
+    [transactions, categories, isKleinunternehmer, skrCategories],
   );
 
   // Elster Übersicht generieren - enhanced with complete field set
@@ -333,12 +298,7 @@ const EuerGenerator = () => {
   // Guidance system data - use pre-computed euerCalculation
   const guidanceData = useMemo(() => {
     if (transactions.length === 0) return null;
-    return prepareGuidanceData(
-      transactions,
-      categories,
-      isKleinunternehmer,
-      euerCalculation
-    );
+    return prepareGuidanceData(transactions, categories, isKleinunternehmer, euerCalculation);
   }, [transactions, categories, isKleinunternehmer, euerCalculation]);
 
   // Guidance system callbacks
@@ -384,25 +344,15 @@ const EuerGenerator = () => {
               <div className="font-semibold text-destructive">
                 Fehler beim Verarbeiten der Datei
               </div>
-              <div className="text-destructive/90 text-sm leading-relaxed">
-                {errorMessage}
-              </div>
+              <div className="text-destructive/90 text-sm leading-relaxed">{errorMessage}</div>
 
               {/* Help section for common issues */}
               <div className="rounded-md border border-border/30 bg-background/50 p-3">
-                <div className="mb-2 text-foreground/70 text-xs">
-                  Häufige Lösungsansätze:
-                </div>
+                <div className="mb-2 text-foreground/70 text-xs">Häufige Lösungsansätze:</div>
                 <ul className="space-y-1 text-muted-foreground text-xs">
-                  <li>
-                    • Stellen Sie sicher, dass die Datei eine .csv-Datei ist
-                  </li>
-                  <li>
-                    • Exportieren Sie die CSV direkt aus Kontist oder Holvi
-                  </li>
-                  <li>
-                    • Überprüfen Sie, ob die Datei Transaktionsdaten enthält
-                  </li>
+                  <li>• Stellen Sie sicher, dass die Datei eine .csv-Datei ist</li>
+                  <li>• Exportieren Sie die CSV direkt aus Kontist oder Holvi</li>
+                  <li>• Überprüfen Sie, ob die Datei Transaktionsdaten enthält</li>
                   <li>• Maximale Dateigröße: 10MB</li>
                 </ul>
               </div>
@@ -458,11 +408,11 @@ const EuerGenerator = () => {
             Automatische Kategorisierung und ELSTER-konforme EÜR-Berechnung
           </p>
           <p className="max-w-3xl text-left text-muted-foreground leading-relaxed">
-            Laden Sie Ihre CSV-Exporte von Kontist oder Holvi hoch und erhalten
-            Sie automatisch kategorisierte Transaktionen nach {currentSkr}
+            Laden Sie Ihre CSV-Exporte von Kontist oder Holvi hoch und erhalten Sie automatisch
+            kategorisierte Transaktionen nach {currentSkr}
             -Standard. Das Tool erstellt ELSTER-konforme Übersichten für Ihre
-            Einnahmen-Überschuss-Rechnung und unterstützt sowohl
-            Kleinunternehmer als auch umsatzsteuerpflichtige Unternehmen.
+            Einnahmen-Überschuss-Rechnung und unterstützt sowohl Kleinunternehmer als auch
+            umsatzsteuerpflichtige Unternehmen.
           </p>
         </div>
       </div>
@@ -489,17 +439,15 @@ const EuerGenerator = () => {
                 </div>
                 <h3 className="mb-2 text-foreground">1. CSV-Datei hochladen</h3>
                 <p className="text-muted-foreground text-sm">
-                  Exportieren Sie Ihre Transaktionen aus Kontist oder Holvi als
-                  CSV-Datei und laden Sie diese hier hoch.
+                  Exportieren Sie Ihre Transaktionen aus Kontist oder Holvi als CSV-Datei und laden
+                  Sie diese hier hoch.
                 </p>
               </div>
               <div className="rounded-lg border border-muted-foreground/25 bg-muted/20 p-4 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-primary">
                   <FileText aria-hidden="true" size={32} />
                 </div>
-                <h3 className="mb-2 text-foreground">
-                  2. Kategorien überprüfen
-                </h3>
+                <h3 className="mb-2 text-foreground">2. Kategorien überprüfen</h3>
                 <p className="text-muted-foreground text-sm">
                   Prüfen und korrigieren Sie die automatische {currentSkr}
                   -Kategorisierung Ihrer Transaktionen.
@@ -511,8 +459,8 @@ const EuerGenerator = () => {
                 </div>
                 <h3 className="mb-2 text-foreground">3. ELSTER-Export</h3>
                 <p className="text-muted-foreground text-sm">
-                  Nutzen Sie die ELSTER-Übersicht für eine einfache Übertragung
-                  in Ihre Steuererklärung.
+                  Nutzen Sie die ELSTER-Übersicht für eine einfache Übertragung in Ihre
+                  Steuererklärung.
                 </p>
               </div>
             </div>
@@ -520,27 +468,18 @@ const EuerGenerator = () => {
               {isProcessingFile ? (
                 <>
                   <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
-                  <h3 className="mb-2 text-foreground text-lg">
-                    CSV-Datei wird verarbeitet...
-                  </h3>
+                  <h3 className="mb-2 text-foreground text-lg">CSV-Datei wird verarbeitet...</h3>
                   <p className="text-muted-foreground">
                     Transaktionen werden analysiert und kategorisiert.
                   </p>
                 </>
               ) : (
                 <>
-                  <Upload
-                    aria-hidden="true"
-                    className="mx-auto mb-4 text-primary"
-                    size={32}
-                  />
-                  <h3 className="mb-2 text-foreground">
-                    Bank-Export hochladen
-                  </h3>
+                  <Upload aria-hidden="true" className="mx-auto mb-4 text-primary" size={32} />
+                  <h3 className="mb-2 text-foreground">Bank-Export hochladen</h3>
                   <p className="mx-auto mb-6 max-w-md text-muted-foreground">
-                    Laden Sie Ihre Kontist oder Holvi CSV-Datei hoch, um
-                    automatisch Transaktionen zu kategorisieren und Ihre EÜR zu
-                    erstellen.
+                    Laden Sie Ihre Kontist oder Holvi CSV-Datei hoch, um automatisch Transaktionen
+                    zu kategorisieren und Ihre EÜR zu erstellen.
                   </p>
                   <input
                     accept=".csv"
@@ -551,12 +490,7 @@ const EuerGenerator = () => {
                     onChange={handleFileUpload}
                     type="file"
                   />
-                  <Button
-                    asChild
-                    className="focus-ring"
-                    disabled={isProcessingFile}
-                    size="lg"
-                  >
+                  <Button asChild className="focus-ring" disabled={isProcessingFile} size="lg">
                     <label className="cursor-pointer" htmlFor="csvUpload">
                       <Upload aria-hidden="true" className="mr-2" size={18} />
                       CSV-Datei auswählen
@@ -621,9 +555,7 @@ const EuerGenerator = () => {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-primary">
                 <Cpu aria-hidden="true" size={32} />
               </div>
-              <h3 className="mb-2 font-medium text-foreground">
-                Lokale Verarbeitung
-              </h3>
+              <h3 className="mb-2 font-medium text-foreground">Lokale Verarbeitung</h3>
               <p className="text-muted-foreground text-sm">
                 Alle Berechnungen erfolgen in Ihrem Browser
               </p>
@@ -633,9 +565,7 @@ const EuerGenerator = () => {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-primary">
                 <ShieldOff aria-hidden="true" size={32} />
               </div>
-              <h3 className="mb-2 font-medium text-foreground">
-                Keine Datenübertragung
-              </h3>
+              <h3 className="mb-2 font-medium text-foreground">Keine Datenübertragung</h3>
               <p className="text-muted-foreground text-sm">
                 CSV-Inhalte verlassen nie Ihren Computer
               </p>
@@ -645,9 +575,7 @@ const EuerGenerator = () => {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-primary">
                 <Database aria-hidden="true" size={32} />
               </div>
-              <h3 className="mb-2 font-medium text-foreground">
-                Keine Speicherung
-              </h3>
+              <h3 className="mb-2 font-medium text-foreground">Keine Speicherung</h3>
               <p className="text-muted-foreground text-sm">
                 Daten werden nicht dauerhaft gespeichert
               </p>
@@ -709,8 +637,7 @@ const EuerGenerator = () => {
                   <div className="flex flex-1 flex-wrap justify-center gap-2">
                     <div className="rounded-full border border-green-200 bg-green-100 px-3 py-1 text-green-800">
                       <span className="font-medium text-xs">
-                        {bankType === "kontist" ? "Kontist" : "Holvi"} CSV
-                        erkannt
+                        {bankType === "kontist" ? "Kontist" : "Holvi"} CSV erkannt
                       </span>
                     </div>
                     {isDemoMode && (
@@ -723,9 +650,7 @@ const EuerGenerator = () => {
                     </div>
                     <div className="rounded-full border border-purple-200 bg-purple-100 px-3 py-1 text-purple-800">
                       <span className="font-medium text-xs">
-                        {isKleinunternehmer
-                          ? "Kleinunternehmer §19 UStG"
-                          : "Regelbesteuerung"}
+                        {isKleinunternehmer ? "Kleinunternehmer §19 UStG" : "Regelbesteuerung"}
                       </span>
                     </div>
                   </div>
@@ -753,9 +678,7 @@ const EuerGenerator = () => {
                     <Button
                       className="focus-ring flex items-center gap-1"
                       disabled={currentPage === 1}
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
-                      }
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                       size="sm"
                       variant="outline"
                     >
@@ -768,9 +691,7 @@ const EuerGenerator = () => {
                     <Button
                       className="focus-ring flex items-center gap-1"
                       disabled={currentPage === totalPages}
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                      }
+                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                       size="sm"
                       variant="outline"
                     >
@@ -805,9 +726,7 @@ const EuerGenerator = () => {
                     <tbody>
                       {currentTransactions.map((transaction) => {
                         const categoryKey =
-                          categories[transaction.id] ||
-                          transaction.euerCategory ||
-                          "";
+                          categories[transaction.id] || transaction.euerCategory || "";
 
                         return (
                           <TransactionRow
@@ -831,9 +750,7 @@ const EuerGenerator = () => {
                   <ul className="divide-y divide-border">
                     {currentTransactions.map((transaction) => {
                       const categoryKey =
-                        categories[transaction.id] ||
-                        transaction.euerCategory ||
-                        "";
+                        categories[transaction.id] || transaction.euerCategory || "";
 
                       return (
                         <TransactionRowMobile
@@ -862,9 +779,7 @@ const EuerGenerator = () => {
                     <Button
                       className="focus-ring flex items-center gap-1"
                       disabled={currentPage === 1}
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
-                      }
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                       size="sm"
                       variant="outline"
                     >
@@ -877,9 +792,7 @@ const EuerGenerator = () => {
                     <Button
                       className="focus-ring flex items-center gap-1"
                       disabled={currentPage === totalPages}
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                      }
+                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                       size="sm"
                       variant="outline"
                     >
@@ -896,11 +809,7 @@ const EuerGenerator = () => {
                     size="sm"
                     variant="default"
                   >
-                    <ChevronLeft
-                      aria-hidden="true"
-                      className="rotate-90"
-                      size={16}
-                    />
+                    <ChevronLeft aria-hidden="true" className="rotate-90" size={16} />
                     Zu den Elsterfeldern
                   </Button>
                 </div>
@@ -934,15 +843,10 @@ const EuerGenerator = () => {
                         categories={categories}
                         currentSkr={currentSkr}
                         groups={guidanceData.groups.filter((group) => {
-                          if (currentSection === "income")
-                            return group.category === "income";
-                          if (currentSection === "expenses")
-                            return group.category === "expense";
+                          if (currentSection === "income") return group.category === "income";
+                          if (currentSection === "expenses") return group.category === "expense";
                           if (currentSection === "profit")
-                            return (
-                              group.category === "total" ||
-                              group.category === "tax"
-                            );
+                            return group.category === "total" || group.category === "tax";
                           return group.category === "income";
                         })}
                         isKleinunternehmer={isKleinunternehmer}
@@ -992,9 +896,7 @@ const EuerGenerator = () => {
             <Github size={14} />
             GitHub
           </a>
-          <span className="text-xs">
-            © {new Date().getFullYear()} Torsten Linnecke
-          </span>
+          <span className="text-xs">© {new Date().getFullYear()} Torsten Linnecke</span>
         </div>
       </footer>
     </div>

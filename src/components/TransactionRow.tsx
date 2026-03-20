@@ -1,13 +1,7 @@
 import React from "react";
 import type { Transaction } from "../types";
 import { formatAmount, formatDate } from "../utils/formatters";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface TransactionRowProps {
   transaction: Transaction;
@@ -67,19 +61,13 @@ const TransactionRow = React.memo<TransactionRowProps>(
     // Pre-calculate formatted values for performance
     const formattedDate = formatDate(transaction.dateField);
     const formattedAmount = formatAmount(transaction.BetragNumeric);
-    const amountColorClass = isIncome
-      ? "text-income"
-      : isPrivate
-        ? "text-private"
-        : "text-expense";
+    const amountColorClass = isIncome ? "text-income" : isPrivate ? "text-private" : "text-expense";
 
     // Pre-calculate category options based on transaction type
     const categoryOptions = isIncome ? incomeCategories : expenseCategories;
 
     return (
-      <tr
-        className={`border-border border-b ${isPrivate ? "bg-private/5" : ""}`}
-      >
+      <tr className={`border-border border-b ${isPrivate ? "bg-private/5" : ""}`}>
         <td className="whitespace-nowrap p-3 text-left text-center font-mono text-foreground text-sm">
           {formattedDate}
         </td>
@@ -87,13 +75,9 @@ const TransactionRow = React.memo<TransactionRowProps>(
           className="max-w-0 truncate p-3 text-left text-foreground"
           title={transaction.counterpartyField}
         >
-          <div className="truncate text-sm">
-            {transaction.counterpartyField}
-          </div>
+          <div className="truncate text-sm">{transaction.counterpartyField}</div>
         </td>
-        <td
-          className={`whitespace-nowrap p-3 text-right font-mono text-sm ${amountColorClass}`}
-        >
+        <td className={`whitespace-nowrap p-3 text-right font-mono text-sm ${amountColorClass}`}>
           {formattedAmount} €
         </td>
         <td
@@ -124,7 +108,7 @@ const TransactionRow = React.memo<TransactionRowProps>(
         </td>
       </tr>
     );
-  }
+  },
 );
 
 TransactionRow.displayName = "TransactionRow";

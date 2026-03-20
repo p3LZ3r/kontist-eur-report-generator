@@ -1,9 +1,4 @@
-import type {
-  ElsterFieldValue,
-  EuerCalculation,
-  KontenrahmenType,
-  Transaction,
-} from "../types";
+import type { ElsterFieldValue, EuerCalculation, KontenrahmenType, Transaction } from "../types";
 import { populateAllElsterFields } from "./euerCalculations";
 import { generateReport as generateReportFromGenerator } from "./reportGenerator";
 
@@ -12,7 +7,7 @@ export const generateReport = (
   selectedKontenrahmen: KontenrahmenType,
   bankType: string | null,
   isKleinunternehmer: boolean,
-  transactions: Transaction[]
+  transactions: Transaction[],
 ): string => {
   // Use default company info for report generation
   const defaultCompanyInfo = {
@@ -28,7 +23,7 @@ export const generateReport = (
     selectedKontenrahmen,
     bankType,
     isKleinunternehmer,
-    transactions
+    transactions,
   );
 };
 
@@ -36,7 +31,7 @@ export const downloadReport = (
   reportContent: string,
   currentYear: number,
   selectedKontenrahmen: KontenrahmenType,
-  isKleinunternehmer: boolean
+  isKleinunternehmer: boolean,
 ): void => {
   const blob = new Blob([reportContent], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
@@ -51,7 +46,7 @@ export const downloadReport = (
 export const validateElsterData = (
   transactions: Transaction[],
   categories: { [key: number]: string },
-  isKleinunternehmer: boolean
+  isKleinunternehmer: boolean,
 ): {
   isValid: boolean;
   missingFields: string[];
@@ -60,7 +55,7 @@ export const validateElsterData = (
   const { fieldValues, validation } = populateAllElsterFields(
     transactions,
     categories,
-    isKleinunternehmer
+    isKleinunternehmer,
   );
   return {
     isValid: validation.isValid,

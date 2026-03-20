@@ -42,10 +42,7 @@
     "code": "0010-0049",
     "sort-code": 9999,
     "description": "Immaterielle Verm\u00f6gensgegenst\u00e4nde",
-    "categories": [
-      "0010-0249 ANLAGEVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0010-0249 ANLAGEVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0010-0249 ANLAGEVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -403,10 +400,7 @@
     "code": "0050-0249",
     "sort-code": 9999,
     "description": "Sachanlagen",
-    "categories": [
-      "0010-0249 ANLAGEVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0010-0249 ANLAGEVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0010-0249 ANLAGEVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -1858,10 +1852,7 @@
     "code": "0630",
     "sort-code": 630,
     "description": "Geleistete Anzahlungen auf Vorr\u00e4te",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -1874,10 +1865,7 @@
     "code": "0600-0629",
     "sort-code": 9999,
     "description": "Vorr\u00e4te",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -2011,10 +1999,7 @@
     "code": "0634",
     "sort-code": 634,
     "description": "Erhaltene Anzahlungen auf Bestellungen",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -2028,10 +2013,7 @@
     "code": "0640",
     "sort-code": 640,
     "description": "Eingeforderte ausstehende Einlagen auf das gezeichnete Kapital",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -2045,10 +2027,7 @@
     "code": "0641",
     "sort-code": 641,
     "description": "Eingeforderte Nachsch\u00fcsse",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -2062,10 +2041,7 @@
     "code": "0650-0899",
     "sort-code": 9999,
     "description": "Forderungen, sonstige Verm\u00f6gensgegenst\u00e4nde",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -5749,10 +5725,7 @@
     "code": "0900-0919",
     "sort-code": 9999,
     "description": "Wertpapiere",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -5865,10 +5838,7 @@
     "code": "0920-0960",
     "sort-code": 9999,
     "description": "Barkassen & Bankkonten",
-    "categories": [
-      "0600-0989 UMLAUFVERM\u00d6GEN",
-      "0 aktive Verm\u00f6gensposten"
-    ],
+    "categories": ["0600-0989 UMLAUFVERM\u00d6GEN", "0 aktive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "0 aktive Verm\u00f6gensposten > 0600-0989 UMLAUFVERM\u00d6GEN",
     "hierarchicalCategories.lvl0": "0 aktive Verm\u00f6gensposten",
@@ -6214,10 +6184,7 @@
     "code": "1200",
     "sort-code": 1200,
     "description": "R\u00fcckstellungen f\u00fcr Pensionen und \u00e4hnliche Verpflichtungen",
-    "categories": [
-      "1200-1229 R\u00dcCKSTELLUNGEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1200-1229 R\u00dcCKSTELLUNGEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1200-1229 R\u00dcCKSTELLUNGEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6230,10 +6197,7 @@
     "code": "1210",
     "sort-code": 1210,
     "description": "Steuerr\u00fcckstellungen",
-    "categories": [
-      "1200-1229 R\u00dcCKSTELLUNGEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1200-1229 R\u00dcCKSTELLUNGEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1200-1229 R\u00dcCKSTELLUNGEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6246,10 +6210,7 @@
     "code": "1220",
     "sort-code": 1220,
     "description": "Sonstige R\u00fcckstellungen",
-    "categories": [
-      "1200-1229 R\u00dcCKSTELLUNGEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1200-1229 R\u00dcCKSTELLUNGEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1200-1229 R\u00dcCKSTELLUNGEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6276,10 +6237,7 @@
     "code": "1230",
     "sort-code": 1230,
     "description": "Bewilligungen",
-    "categories": [
-      "1230+1235 F\u00d6RDERUNGSVERPFLICHTUNGEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1230+1235 F\u00d6RDERUNGSVERPFLICHTUNGEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1230+1235 F\u00d6RDERUNGSVERPFLICHTUNGEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6293,10 +6251,7 @@
     "code": "1235",
     "sort-code": 1235,
     "description": "R\u00fcckg\u00e4ngig gemachte Bewilligungen",
-    "categories": [
-      "1230+1235 F\u00d6RDERUNGSVERPFLICHTUNGEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1230+1235 F\u00d6RDERUNGSVERPFLICHTUNGEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1230+1235 F\u00d6RDERUNGSVERPFLICHTUNGEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6323,10 +6278,7 @@
     "code": "1320",
     "sort-code": 1320,
     "description": "VERALTET!",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6341,10 +6293,7 @@
     "code": "1330",
     "sort-code": 1330,
     "description": "Erhaltene Anzahlungen auf Bestellungen",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6411,10 +6360,7 @@
     "code": "1350",
     "sort-code": 1350,
     "description": "Verbindlichkeiten aus Wechseln",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6485,10 +6431,7 @@
     "code": "1360",
     "sort-code": 1360,
     "description": "Verbindlichkeiten oder Forderungen gegen(\u00fcber) verbundene(n) Unternehmen",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6633,10 +6576,7 @@
     "code": "1370",
     "sort-code": 1370,
     "description": "Verbindlichkeiten oder Forderungen gegen\u00fcber Unternehmen, mit denen ein Beteiligungsverh\u00e4ltnis besteht",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6781,10 +6721,7 @@
     "code": "1380",
     "sort-code": 1380,
     "description": "Verbindlichkeiten f\u00fcr satzungsgem\u00e4\u00dfe Leistungen",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6797,10 +6734,7 @@
     "code": "1385",
     "sort-code": 1385,
     "description": "Verbindlichkeiten aus erteilten Zusagen",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6814,10 +6748,7 @@
     "code": "1390",
     "sort-code": 1390,
     "description": "Verbindlichkeiten aus nicht zweckentsprechend verwendeten Mitteln",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -6830,10 +6761,7 @@
     "code": "1300-1318",
     "sort-code": 9999,
     "description": "Anleihen",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -7003,10 +6931,7 @@
     "code": "1335-1349",
     "sort-code": 9999,
     "description": "Verbindlichkeiten aus Lieferungen und Leistungen oder sonstige Verm\u00f6gensgegenst\u00e4nde",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -7314,10 +7239,7 @@
     "code": "1395",
     "sort-code": 1395,
     "description": "Verbindlichkeiten aus bedingt r\u00fcckzahlungspflichtigen Spenden",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -7330,10 +7252,7 @@
     "code": "1500",
     "sort-code": 1500,
     "description": "Verbindlichkeiten gegen\u00fcber Kreditinstituten oder Kasse, Bank",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -7518,10 +7437,7 @@
     "code": "1600-1989",
     "sort-code": 9999,
     "description": "Sonstige Verbindlichkeiten oder sonstige Verm\u00f6gensgegenst\u00e4nde",
-    "categories": [
-      "1300-1989 VERBINDLICHKEITEN",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1300-1989 VERBINDLICHKEITEN", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1300-1989 VERBINDLICHKEITEN",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -10236,10 +10152,7 @@
     "code": "1000-1079",
     "sort-code": 9999,
     "description": "Gewinnr\u00fccklagen",
-    "categories": [
-      "1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1000-1179 VERM\u00d6GEN / EIGENKAPITAL", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -11451,10 +11364,7 @@
     "code": "1080-1090",
     "sort-code": 9999,
     "description": "Ergebnisvortr\u00e4ge",
-    "categories": [
-      "1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1000-1179 VERM\u00d6GEN / EIGENKAPITAL", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -11614,10 +11524,7 @@
     "code": "1140-1144",
     "sort-code": 9999,
     "description": "Gezeichnetes Kapital einsxhlie\u00dflich nicth eingeforderter ausstehender Einlagen",
-    "categories": [
-      "1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1000-1179 VERM\u00d6GEN / EIGENKAPITAL", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -11670,10 +11577,7 @@
     "code": "1145-1149",
     "sort-code": 9999,
     "description": "Kapitalr\u00fccklagen und Nachschusskapital",
-    "categories": [
-      "1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1000-1179 VERM\u00d6GEN / EIGENKAPITAL", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -11726,10 +11630,7 @@
     "code": "1150-1159",
     "sort-code": 9999,
     "description": "Gewinnr\u00fccklagen",
-    "categories": [
-      "1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1000-1179 VERM\u00d6GEN / EIGENKAPITAL", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -11821,10 +11722,7 @@
     "code": "1160+1170",
     "sort-code": 9999,
     "description": "Jahres\u00fcberschuss oder Jahresfehlbetrag",
-    "categories": [
-      "1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1000-1179 VERM\u00d6GEN / EIGENKAPITAL", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -11876,10 +11774,7 @@
     "code": "1100-1125",
     "sort-code": 9999,
     "description": "Stiftungsverm\u00f6gen",
-    "categories": [
-      "1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
-      "1 passive Verm\u00f6gensposten"
-    ],
+    "categories": ["1000-1179 VERM\u00d6GEN / EIGENKAPITAL", "1 passive Verm\u00f6gensposten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "1 passive Verm\u00f6gensposten > 1000-1179 VERM\u00d6GEN / EIGENKAPITAL",
     "hierarchicalCategories.lvl0": "1 passive Verm\u00f6gensposten",
@@ -12177,11 +12072,7 @@
     "code": "2301",
     "sort-code": 2301,
     "description": "Zusch\u00fcsse von Verb\u00e4nden",
-    "categories": [
-      "2300 Zusch\u00fcsse",
-      "2000 EINNAHMEN",
-      "2 Erfolgskonten ideeller Bereich"
-    ],
+    "categories": ["2300 Zusch\u00fcsse", "2000 EINNAHMEN", "2 Erfolgskonten ideeller Bereich"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "2 Erfolgskonten ideeller Bereich > 2000 EINNAHMEN > 2300 Zusch\u00fcsse",
     "hierarchicalCategories.lvl1": "2 Erfolgskonten ideeller Bereich > 2000 EINNAHMEN",
@@ -12195,11 +12086,7 @@
     "code": "2302",
     "sort-code": 2302,
     "description": "Zusch\u00fcsse von Beh\u00f6rden",
-    "categories": [
-      "2300 Zusch\u00fcsse",
-      "2000 EINNAHMEN",
-      "2 Erfolgskonten ideeller Bereich"
-    ],
+    "categories": ["2300 Zusch\u00fcsse", "2000 EINNAHMEN", "2 Erfolgskonten ideeller Bereich"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "2 Erfolgskonten ideeller Bereich > 2000 EINNAHMEN > 2300 Zusch\u00fcsse",
     "hierarchicalCategories.lvl1": "2 Erfolgskonten ideeller Bereich > 2000 EINNAHMEN",
@@ -12213,11 +12100,7 @@
     "code": "2303",
     "sort-code": 2303,
     "description": "Sonstige Zusch\u00fcsse",
-    "categories": [
-      "2300 Zusch\u00fcsse",
-      "2000 EINNAHMEN",
-      "2 Erfolgskonten ideeller Bereich"
-    ],
+    "categories": ["2300 Zusch\u00fcsse", "2000 EINNAHMEN", "2 Erfolgskonten ideeller Bereich"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "2 Erfolgskonten ideeller Bereich > 2000 EINNAHMEN > 2300 Zusch\u00fcsse",
     "hierarchicalCategories.lvl1": "2 Erfolgskonten ideeller Bereich > 2000 EINNAHMEN",
@@ -17381,10 +17264,7 @@
     "code": "9000",
     "sort-code": 9000,
     "description": "Saldenvortr\u00e4ge Sachkonten",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17417,10 +17297,7 @@
     "code": "9008",
     "sort-code": 9008,
     "description": "Saldenvortr\u00e4ge Debitoren",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17434,10 +17311,7 @@
     "code": "9009",
     "sort-code": 9009,
     "description": "Saldenvortr\u00e4ge Kreditoren",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17451,10 +17325,7 @@
     "code": "9060",
     "sort-code": 9060,
     "description": "Offene Posten aus 1990",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17469,10 +17340,7 @@
     "code": "9070",
     "sort-code": 9070,
     "description": "Offene Posten aus 2000",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17485,10 +17353,7 @@
     "code": "9071",
     "sort-code": 9071,
     "description": "Offene Posten aus 2001",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17501,10 +17366,7 @@
     "code": "9072",
     "sort-code": 9072,
     "description": "Offene Posten aus 2002",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17517,10 +17379,7 @@
     "code": "9073",
     "sort-code": 9073,
     "description": "Offene Posten aus 2003",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17533,10 +17392,7 @@
     "code": "9074",
     "sort-code": 9074,
     "description": "Offene Posten aus 2004",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17549,10 +17405,7 @@
     "code": "9075",
     "sort-code": 9075,
     "description": "Offene Posten aus 2005",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17565,10 +17418,7 @@
     "code": "9076",
     "sort-code": 9076,
     "description": "Offene Posten aus 2006",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17581,10 +17431,7 @@
     "code": "9077",
     "sort-code": 9077,
     "description": "Offene Posten aus 2007",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17597,10 +17444,7 @@
     "code": "9078",
     "sort-code": 9078,
     "description": "Offene Posten aus 2008",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17613,10 +17457,7 @@
     "code": "9079",
     "sort-code": 9079,
     "description": "Offene Posten aus 2009",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17629,10 +17470,7 @@
     "code": "9091",
     "sort-code": 9091,
     "description": "Offene Posten aus 1991",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17647,10 +17485,7 @@
     "code": "9090",
     "sort-code": 9090,
     "description": "Summenvortragskonto",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17663,10 +17498,7 @@
     "code": "9092",
     "sort-code": 9092,
     "description": "Offene Posten aus 1992",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17681,10 +17513,7 @@
     "code": "9093",
     "sort-code": 9093,
     "description": "Offene Posten aus 1993",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17699,10 +17528,7 @@
     "code": "9094",
     "sort-code": 9094,
     "description": "Offene Posten aus 1994",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17717,10 +17543,7 @@
     "code": "9095",
     "sort-code": 9095,
     "description": "Offene Posten aus 1995",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17735,10 +17558,7 @@
     "code": "9096",
     "sort-code": 9096,
     "description": "Offene Posten aus 1996",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17753,10 +17573,7 @@
     "code": "9097",
     "sort-code": 9097,
     "description": "Offene Posten aus 1997",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17771,10 +17588,7 @@
     "code": "9098",
     "sort-code": 9098,
     "description": "Offene Posten aus 1998",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17789,10 +17603,7 @@
     "code": "9099",
     "sort-code": 9099,
     "description": "Offene Posten aus 1999",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17807,10 +17618,7 @@
     "code": "9240-9249",
     "sort-code": 9999,
     "description": "Statistische Konten f\u00fcr die Kapitalflussrechnung",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -17992,10 +17800,7 @@
     "code": "9080",
     "sort-code": 9080,
     "description": "Offene Posten aus 2010",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18008,10 +17813,7 @@
     "code": "9081",
     "sort-code": 9081,
     "description": "Offene Posten aus 2011",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18024,10 +17826,7 @@
     "code": "9082",
     "sort-code": 9082,
     "description": "Offene Posten aus 2012",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18040,10 +17839,7 @@
     "code": "9083",
     "sort-code": 9083,
     "description": "Offene Posten aus 2013",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18056,10 +17852,7 @@
     "code": "9084",
     "sort-code": 9084,
     "description": "Offene Posten aus 2014",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18072,10 +17865,7 @@
     "code": "9085",
     "sort-code": 9085,
     "description": "Offene Posten aus 2015",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18088,10 +17878,7 @@
     "code": "9086",
     "sort-code": 9086,
     "description": "Offene Posten aus 2016",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18104,10 +17891,7 @@
     "code": "9087",
     "sort-code": 9087,
     "description": "Offene Posten aus 2017",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18121,10 +17905,7 @@
     "code": "9088",
     "sort-code": 9088,
     "description": "Offene Posten aus 2018",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -18138,10 +17919,7 @@
     "code": "9089",
     "sort-code": 9089,
     "description": "Offene Posten aus 2019",
-    "categories": [
-      "9000-9249 STATISTISCHE KONTEN",
-      "9 Statistik- & Vortragskonten"
-    ],
+    "categories": ["9000-9249 STATISTISCHE KONTEN", "9 Statistik- & Vortragskonten"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "9 Statistik- & Vortragskonten > 9000-9249 STATISTISCHE KONTEN",
     "hierarchicalCategories.lvl0": "9 Statistik- & Vortragskonten",
@@ -19182,10 +18960,7 @@
     "code": "4110-4122",
     "sort-code": 9999,
     "description": "Miet- und Pachtertr\u00e4ge (gV)",
-    "categories": [
-      "4000-4399 EINNAHMEN GV",
-      "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"
-    ],
+    "categories": ["4000-4399 EINNAHMEN GV", "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung > 4000-4399 EINNAHMEN GV",
     "hierarchicalCategories.lvl0": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung",
@@ -19293,10 +19068,7 @@
     "code": "4150-4153",
     "sort-code": 9999,
     "description": "Zins- und Kursertr\u00e4ge (gV)",
-    "categories": [
-      "4000-4399 EINNAHMEN GV",
-      "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"
-    ],
+    "categories": ["4000-4399 EINNAHMEN GV", "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung > 4000-4399 EINNAHMEN GV",
     "hierarchicalCategories.lvl0": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung",
@@ -19364,10 +19136,7 @@
     "code": "4200-4203",
     "sort-code": 9999,
     "description": "Ertr\u00e4ge Werbung (gV)",
-    "categories": [
-      "4000-4399 EINNAHMEN GV",
-      "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"
-    ],
+    "categories": ["4000-4399 EINNAHMEN GV", "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung > 4000-4399 EINNAHMEN GV",
     "hierarchicalCategories.lvl0": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung",
@@ -19455,10 +19224,7 @@
     "code": "4000",
     "sort-code": 4000,
     "description": "Sonstige ertragsteuerfreie Einnahmen gemeinn\u00fctziger Vereine (gV)",
-    "categories": [
-      "4000-4399 EINNAHMEN GV",
-      "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"
-    ],
+    "categories": ["4000-4399 EINNAHMEN GV", "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung > 4000-4399 EINNAHMEN GV",
     "hierarchicalCategories.lvl0": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung",
@@ -19650,10 +19416,7 @@
     "code": "4400",
     "sort-code": 4400,
     "description": "Sonstige ertragsteuerpflichtige Einnahmen nicht gemeinn\u00fctziger Vereine (ngV)",
-    "categories": [
-      "4400-4499 EINNAHMEN NGV",
-      "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"
-    ],
+    "categories": ["4400-4499 EINNAHMEN NGV", "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung > 4400-4499 EINNAHMEN NGV",
     "hierarchicalCategories.lvl0": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung",
@@ -19814,10 +19577,7 @@
     "code": "4410-4415",
     "sort-code": 9999,
     "description": "Miet- und Pachtertr\u00e4ge (ngV)",
-    "categories": [
-      "4400-4499 EINNAHMEN NGV",
-      "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"
-    ],
+    "categories": ["4400-4499 EINNAHMEN NGV", "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung > 4400-4499 EINNAHMEN NGV",
     "hierarchicalCategories.lvl0": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung",
@@ -19885,10 +19645,7 @@
     "code": "4420-4443",
     "sort-code": 9999,
     "description": "Zins- und Kursertr\u00e4ge (ngV)",
-    "categories": [
-      "4400-4499 EINNAHMEN NGV",
-      "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"
-    ],
+    "categories": ["4400-4499 EINNAHMEN NGV", "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung > 4400-4499 EINNAHMEN NGV",
     "hierarchicalCategories.lvl0": "4 Erfolgskonten f\u00fcr Verm\u00f6gensverwaltung",
@@ -20964,9 +20721,7 @@
     "code": "5000-5889",
     "sort-code": 9999,
     "description": "ZWECKBETRIEBE SPORT",
-    "categories": [
-      "5 Erfolgskonten f\u00fcr ertragssteuerfreie Zweckbetriebe Sport"
-    ],
+    "categories": ["5 Erfolgskonten f\u00fcr ertragssteuerfreie Zweckbetriebe Sport"],
     "leaf": false,
     "hierarchicalCategories.lvl0": "5 Erfolgskonten f\u00fcr ertragssteuerfreie Zweckbetriebe Sport",
     "notes": "Ertragsteuerfreie Zweckbetriebe sind:\na) Standardfall des \u00a767a Abs. 1 AO, wenn Zweckbetriebsgrenze 45000 EUR (ab 2013) Jahresbruttoeinnahmen nicht \u00fcberschritten wird (bei nachtr\u00e4glichem \u00dcberschreiten vgl. TB 8980)\nb) Optionsfall des \u00a767a Abs. 3 S. 1 AO \u201eunbezahlter Sport\u201c ohne Einnahmebegrenzung",
@@ -25861,9 +25616,7 @@
     "code": "5990-5999",
     "sort-code": 9999,
     "description": "Ergebnisumbuchung nach 8980",
-    "categories": [
-      "5 Erfolgskonten f\u00fcr ertragssteuerfreie Zweckbetriebe Sport"
-    ],
+    "categories": ["5 Erfolgskonten f\u00fcr ertragssteuerfreie Zweckbetriebe Sport"],
     "leaf": false,
     "hierarchicalCategories.lvl0": "5 Erfolgskonten f\u00fcr ertragssteuerfreie Zweckbetriebe Sport",
     "placeholder": true,
@@ -25921,9 +25674,7 @@
     "code": "6000-6989",
     "sort-code": 9999,
     "description": "SONSTIGE ZWECKBETRIEBE",
-    "categories": [
-      "6 Erfolgskonten f\u00fcr andere ertragssteuerfreie Zweckbetriebe"
-    ],
+    "categories": ["6 Erfolgskonten f\u00fcr andere ertragssteuerfreie Zweckbetriebe"],
     "leaf": false,
     "hierarchicalCategories.lvl0": "6 Erfolgskonten f\u00fcr andere ertragssteuerfreie Zweckbetriebe",
     "notes": "Ertragsteuerfreie Zweckbetriebe: \u00a767a Abs. 1 AO, wenn Zweckbetriebsgrenze 45000 EUR (ab 2013) Jahresbruttoeinnahmen nicht \u00fcberschritten wird (bei nachtr\u00e4glichem \u00dcberschreiten vgl. TB 8980)",
@@ -29865,9 +29616,7 @@
     "code": "6990-6999",
     "sort-code": 9999,
     "description": "ERGEBNISUMBUCHUNG NACH 8980",
-    "categories": [
-      "6 Erfolgskonten f\u00fcr andere ertragssteuerfreie Zweckbetriebe"
-    ],
+    "categories": ["6 Erfolgskonten f\u00fcr andere ertragssteuerfreie Zweckbetriebe"],
     "leaf": false,
     "hierarchicalCategories.lvl0": "6 Erfolgskonten f\u00fcr andere ertragssteuerfreie Zweckbetriebe",
     "placeholder": true,
@@ -29925,9 +29674,7 @@
     "code": "7000-7999",
     "sort-code": 9999,
     "description": "GESCH\u00c4FTSBETRIEBE SPORT",
-    "categories": [
-      "7 Erfolgskonten f\u00fcr ertragssteuerpflichtige Gesch\u00e4ftsbetriebe Sport"
-    ],
+    "categories": ["7 Erfolgskonten f\u00fcr ertragssteuerpflichtige Gesch\u00e4ftsbetriebe Sport"],
     "leaf": false,
     "hierarchicalCategories.lvl0": "7 Erfolgskonten f\u00fcr ertragssteuerpflichtige Gesch\u00e4ftsbetriebe Sport",
     "notes": "Ertragsteuerpflichtige Gesch\u00e4ftsbetriebe Sport sind:\na) Standardfall des \u00a767a Abs. 1 S. 1 AO f\u00fcr gV, wenn Zweckbetriebsgrenze 45000 EUR (ab 2013) Jahresbruttoeinnahmen \u00fcberschritten wird\nb) Optionsfall des \u00a767a Abs. 3 S. 2 AO \u201ebezahlter Sport\u201c f\u00fcr gV\nc) Sportliche Veranstaltungen aller Art ngV",

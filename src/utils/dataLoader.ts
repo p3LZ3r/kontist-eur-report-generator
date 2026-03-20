@@ -3,9 +3,7 @@ import type { Account, KontenrahmenData, KontenrahmenType } from "../types";
 // Cache for loaded data
 const dataCache: { [key in KontenrahmenType]?: Account[] } = {};
 
-export async function loadKontenrahmenData(
-  type: KontenrahmenType
-): Promise<Account[]> {
+export async function loadKontenrahmenData(type: KontenrahmenType): Promise<Account[]> {
   if (dataCache[type]) {
     return dataCache[type]!;
   }
@@ -29,9 +27,7 @@ export function createCategoryMapping(accounts: Account[]): KontenrahmenData {
   const mapping: KontenrahmenData = {};
 
   // Find leaf accounts (those that can be used for transactions)
-  const leafAccounts = accounts.filter(
-    (account) => account.leaf && account.code !== -1
-  );
+  const leafAccounts = accounts.filter((account) => account.leaf && account.code !== -1);
 
   leafAccounts.forEach((account) => {
     // Try to match account name to our existing categories
@@ -57,24 +53,18 @@ export function createCategoryMapping(accounts: Account[]): KontenrahmenData {
 }
 
 // Map account names to our existing category keys
-function mapAccountToCategory(
-  accountName: string,
-  accountType: string
-): string | null {
+function mapAccountToCategory(accountName: string, accountType: string): string | null {
   const name = accountName.toLowerCase();
 
   // Income categories
   if (accountType === "Ertrag") {
     if (name.includes("erlös") || name.includes("umsatz")) {
-      if (name.includes("19%") || name.includes("19"))
-        return "income_services_19";
+      if (name.includes("19%") || name.includes("19")) return "income_services_19";
       if (name.includes("7%") || name.includes("7")) return "income_services_7";
-      if (name.includes("steuerfrei") || name.includes("0%"))
-        return "income_services_0";
+      if (name.includes("steuerfrei") || name.includes("0%")) return "income_services_0";
       return "income_services_19";
     }
-    if (name.includes("zinsen") || name.includes("zinserträge"))
-      return "income_interest";
+    if (name.includes("zinsen") || name.includes("zinserträge")) return "income_interest";
     if (name.includes("sonstige erträge")) return "income_other";
   }
 
@@ -85,24 +75,14 @@ function mapAccountToCategory(
       if (name.includes("7%")) return "purchase_goods_7";
       return "purchase_goods_19";
     }
-    if (name.includes("löhne") || name.includes("gehälter"))
-      return "expense_wages";
-    if (
-      name.includes("soziale aufwendungen") ||
-      name.includes("arbeitgeberanteile")
-    )
+    if (name.includes("löhne") || name.includes("gehälter")) return "expense_wages";
+    if (name.includes("soziale aufwendungen") || name.includes("arbeitgeberanteile"))
       return "expense_social_employer";
     if (name.includes("altersversorgung")) return "expense_pension";
-    if (name.includes("mieten") || name.includes("miete"))
-      return "expense_rent_business";
-    if (
-      name.includes("strom") ||
-      name.includes("gas") ||
-      name.includes("wasser")
-    )
+    if (name.includes("mieten") || name.includes("miete")) return "expense_rent_business";
+    if (name.includes("strom") || name.includes("gas") || name.includes("wasser"))
       return "expense_utilities";
-    if (name.includes("telefon") || name.includes("telekom"))
-      return "expense_phone";
+    if (name.includes("telefon") || name.includes("telekom")) return "expense_phone";
     if (name.includes("büromaterial") || name.includes("bürobedarf"))
       return "expense_office_supplies";
     if (name.includes("werbekosten") || name.includes("werbung"))
@@ -110,8 +90,7 @@ function mapAccountToCategory(
     if (name.includes("reisekosten")) return "expense_travel_domestic";
     if (name.includes("bewirtung")) return "expense_meals_business";
     if (name.includes("versicherungen")) return "expense_insurance_business";
-    if (name.includes("beratung") || name.includes("steuerberatung"))
-      return "expense_tax_advisor";
+    if (name.includes("beratung") || name.includes("steuerberatung")) return "expense_tax_advisor";
     if (name.includes("bankgebühren")) return "expense_banking";
     if (name.includes("zinsaufwendungen")) return "expense_interest";
     if (name.includes("gema")) return "expense_licenses";
@@ -119,8 +98,7 @@ function mapAccountToCategory(
 
   // Private categories
   if (accountType === "Eigenkapital") {
-    if (name.includes("privatentnahme") || name.includes("entnahme"))
-      return "private_withdrawal";
+    if (name.includes("privatentnahme") || name.includes("entnahme")) return "private_withdrawal";
     if (name.includes("privateinlagen")) return "private_deposit";
   }
 

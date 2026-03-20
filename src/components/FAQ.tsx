@@ -97,10 +97,7 @@ const FAQ = () => {
         </div>
         <div className="space-y-4">
           {faqData.map((item, index) => (
-            <div
-              className="overflow-hidden rounded-lg border border-border bg-card"
-              key={index}
-            >
+            <div className="overflow-hidden rounded-lg border border-border bg-card" key={index}>
               <button
                 aria-expanded={openIndex === index}
                 className="flex w-full cursor-pointer items-center justify-between p-4 text-left transition-colors hover:bg-muted/50"
@@ -108,15 +105,9 @@ const FAQ = () => {
               >
                 <span className="pr-4 text-foreground">{item.question}</span>
                 {openIndex === index ? (
-                  <ChevronUp
-                    className="flex-shrink-0 text-muted-foreground"
-                    size={20}
-                  />
+                  <ChevronUp className="flex-shrink-0 text-muted-foreground" size={20} />
                 ) : (
-                  <ChevronDown
-                    className="flex-shrink-0 text-muted-foreground"
-                    size={20}
-                  />
+                  <ChevronDown className="flex-shrink-0 text-muted-foreground" size={20} />
                 )}
               </button>
               {openIndex === index && (

@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import type { ElsterFieldValue, EuerCalculation, Transaction } from "../types";
 import {
   calculateEuer,
@@ -211,9 +211,7 @@ describe("calculateEuer", () => {
 
       // Check transaction details are collected
       expect(result.incomeTransactions.income_services_19).toHaveLength(1);
-      expect(result.expenseTransactions.expense_office_supplies).toHaveLength(
-        1
-      );
+      expect(result.expenseTransactions.expense_office_supplies).toHaveLength(1);
     });
 
     it("should handle multiple transactions with different VAT rates", () => {
@@ -339,9 +337,7 @@ describe("calculateEuer", () => {
       expect(result.totalIncome).toBe(0);
       expect(result.totalExpenses).toBe(0);
       expect(result.profit).toBe(0);
-      expect(result.privateTransactionDetails.private_withdrawal).toHaveLength(
-        1
-      );
+      expect(result.privateTransactionDetails.private_withdrawal).toHaveLength(1);
     });
 
     it("should handle private deposits correctly", () => {
@@ -646,7 +642,7 @@ describe("validateMandatoryFields", () => {
 
     expect(result.isValid).toBe(false);
     expect(result.missingFields).toContain(
-      "Mindestens eine Ausgabenkategorie (Waren/Fremdleistungen/Personal/Sonstige)"
+      "Mindestens eine Ausgabenkategorie (Waren/Fremdleistungen/Personal/Sonstige)",
     );
   });
 

@@ -12,24 +12,16 @@ export const PrivacyInfoSection = memo(() => (
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-primary">
           <Cpu aria-hidden="true" size={32} />
         </div>
-        <h3 className="mb-2 font-medium text-foreground">
-          Lokale Verarbeitung
-        </h3>
-        <p className="text-muted-foreground text-sm">
-          Alle Berechnungen erfolgen in Ihrem Browser
-        </p>
+        <h3 className="mb-2 font-medium text-foreground">Lokale Verarbeitung</h3>
+        <p className="text-muted-foreground text-sm">Alle Berechnungen erfolgen in Ihrem Browser</p>
       </div>
 
       <div className="p-6 text-center">
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-primary">
           <ShieldOff aria-hidden="true" size={32} />
         </div>
-        <h3 className="mb-2 font-medium text-foreground">
-          Keine Datenübertragung
-        </h3>
-        <p className="text-muted-foreground text-sm">
-          CSV-Inhalte verlassen nie Ihren Computer
-        </p>
+        <h3 className="mb-2 font-medium text-foreground">Keine Datenübertragung</h3>
+        <p className="text-muted-foreground text-sm">CSV-Inhalte verlassen nie Ihren Computer</p>
       </div>
 
       <div className="p-6 text-center">
@@ -37,9 +29,7 @@ export const PrivacyInfoSection = memo(() => (
           <Database aria-hidden="true" size={32} />
         </div>
         <h3 className="mb-2 font-medium text-foreground">Keine Speicherung</h3>
-        <p className="text-muted-foreground text-sm">
-          Daten werden nicht dauerhaft gespeichert
-        </p>
+        <p className="text-muted-foreground text-sm">Daten werden nicht dauerhaft gespeichert</p>
       </div>
 
       <div className="p-6 text-center">
@@ -47,9 +37,7 @@ export const PrivacyInfoSection = memo(() => (
           <Github aria-hidden="true" size={32} />
         </div>
         <h3 className="mb-2 font-medium text-foreground">Open Source</h3>
-        <p className="text-muted-foreground text-sm">
-          Der gesamte Code ist transparent einsehbar
-        </p>
+        <p className="text-muted-foreground text-sm">Der gesamte Code ist transparent einsehbar</p>
       </div>
     </div>
   </div>

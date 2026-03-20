@@ -55,11 +55,11 @@ export const HeroSection = memo(({ currentSkr }: HeroSectionProps) => (
         Automatische Kategorisierung und ELSTER-konforme EÜR-Berechnung
       </p>
       <p className="max-w-3xl text-left text-muted-foreground leading-relaxed">
-        Laden Sie Ihre CSV-Exporte von Kontist oder Holvi hoch und erhalten Sie
-        automatisch kategorisierte Transaktionen nach {currentSkr}
+        Laden Sie Ihre CSV-Exporte von Kontist oder Holvi hoch und erhalten Sie automatisch
+        kategorisierte Transaktionen nach {currentSkr}
         -Standard. Das Tool erstellt ELSTER-konforme Übersichten für Ihre
-        Einnahmen-Überschuss-Rechnung und unterstützt sowohl Kleinunternehmer
-        als auch umsatzsteuerpflichtige Unternehmen.
+        Einnahmen-Überschuss-Rechnung und unterstützt sowohl Kleinunternehmer als auch
+        umsatzsteuerpflichtige Unternehmen.
       </p>
     </div>
   </div>

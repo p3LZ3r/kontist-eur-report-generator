@@ -1,9 +1,4 @@
-import type {
-  CompanyInfo,
-  EuerCalculation,
-  KontenrahmenType,
-  Transaction,
-} from "../types";
+import type { CompanyInfo, EuerCalculation, KontenrahmenType, Transaction } from "../types";
 import { skr04Categories } from "./categoryMappings";
 
 export const generateReport = (
@@ -12,7 +7,7 @@ export const generateReport = (
   selectedKontenrahmen: KontenrahmenType,
   bankType: string | null,
   isKleinunternehmer: boolean,
-  transactions: Transaction[]
+  transactions: Transaction[],
 ): string => {
   const currentYear = new Date().getFullYear();
   const defaultCompanyInfo = {
@@ -40,7 +35,7 @@ BETRIEBSEINNAHMEN:
 ${Object.entries(euerCalculation.income)
   .map(
     ([key, amount]) =>
-      `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
+      `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`,
   )
   .join("\n")}
 
@@ -51,7 +46,7 @@ BETRIEBSAUSGABEN:
 ${Object.entries(euerCalculation.expenses)
   .map(
     ([key, amount]) =>
-      `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
+      `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`,
   )
   .join("\n")}
 
@@ -92,7 +87,7 @@ PRIVATBEREICH:
 ${Object.entries(euerCalculation.privateTransactions)
   .map(
     ([key, amount]) =>
-      `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`
+      `${skr04Categories[key]?.code || key} - ${skr04Categories[key]?.name || key}: ${amount.toFixed(2)}€`,
   )
   .join("\n")}
 
@@ -116,7 +111,7 @@ export const openReportInNewWindow = (
   isKleinunternehmer: boolean,
   bankType: string | null,
   euerCalculation: EuerCalculation,
-  transactions: Transaction[]
+  transactions: Transaction[],
 ) => {
   const reportContent = generateReport(
     euerCalculation,
@@ -124,7 +119,7 @@ export const openReportInNewWindow = (
     selectedKontenrahmen,
     bankType,
     isKleinunternehmer,
-    transactions
+    transactions,
   );
   const htmlContent = `
         <!DOCTYPE html>

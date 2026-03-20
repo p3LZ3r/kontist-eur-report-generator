@@ -1,9 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import {
-  elsterMapping,
-  getCategoriesForSkr,
-  skr04Categories,
-} from "../utils/categoryMappings";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
+import { elsterMapping, getCategoriesForSkr, skr04Categories } from "../utils/categoryMappings";
 
 describe("Category Mappings - SKR Categorization Engine", () => {
   describe("getCategoriesForSkr", () => {
@@ -14,9 +10,7 @@ describe("Category Mappings - SKR Categorization Engine", () => {
 
     it("should return SKR04 categories by default", async () => {
       // Mock fetch failure to trigger fallback
-      global.fetch = vi
-        .fn()
-        .mockRejectedValue(new Error("Test environment - no fetch"));
+      global.fetch = vi.fn().mockRejectedValue(new Error("Test environment - no fetch"));
 
       const categories = await getCategoriesForSkr("SKR04");
 
@@ -208,7 +202,7 @@ describe("Category Mappings - SKR Categorization Engine", () => {
 
     it('should ensure all income categories have type "income"', () => {
       const incomeCategories = Object.entries(skr04Categories).filter(([key]) =>
-        key.startsWith("income_")
+        key.startsWith("income_"),
       );
 
       incomeCategories.forEach(([, category]) => {
@@ -218,8 +212,7 @@ describe("Category Mappings - SKR Categorization Engine", () => {
 
     it('should ensure all expense categories have type "expense"', () => {
       const expenseCategories = Object.entries(skr04Categories).filter(
-        ([key]) =>
-          key.startsWith("expense_") && !key.includes("tax_free_income")
+        ([key]) => key.startsWith("expense_") && !key.includes("tax_free_income"),
       );
 
       expenseCategories.forEach(([, category]) => {
@@ -231,8 +224,8 @@ describe("Category Mappings - SKR Categorization Engine", () => {
     });
 
     it('should ensure all private categories have type "private" and VAT 0', () => {
-      const privateCategories = Object.entries(skr04Categories).filter(
-        ([key]) => key.startsWith("private_")
+      const privateCategories = Object.entries(skr04Categories).filter(([key]) =>
+        key.startsWith("private_"),
       );
 
       privateCategories.forEach(([, category]) => {
@@ -245,7 +238,7 @@ describe("Category Mappings - SKR Categorization Engine", () => {
   describe("ELSTER Field Mapping Completeness", () => {
     it("should have ELSTER mappings for all business-relevant categories", () => {
       const businessCategories = Object.entries(skr04Categories).filter(
-        ([, cat]) => cat.type === "income" || cat.type === "expense"
+        ([, cat]) => cat.type === "income" || cat.type === "expense",
       );
 
       const mappedCategories = Object.keys(elsterMapping);
@@ -256,9 +249,7 @@ describe("Category Mappings - SKR Categorization Engine", () => {
         if (key.includes("income_") || key.includes("expense_")) {
           const hasMapping = mappedCategories.includes(key);
           if (!hasMapping) {
-            console.warn(
-              `Category ${key} (${category.name}) has no ELSTER mapping`
-            );
+            console.warn(`Category ${key} (${category.name}) has no ELSTER mapping`);
           }
         }
       });

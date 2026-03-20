@@ -372,7 +372,7 @@ export const elsterMapping: ElsterMapping = {
 
 // Function to load categories based on SKR
 export const getCategoriesForSkr = async (
-  skr: "SKR03" | "SKR04" | "SKR49"
+  skr: "SKR03" | "SKR04" | "SKR49",
 ): Promise<Record<string, CategoryInfo>> => {
   try {
     const response = await fetch(`/data/${skr.toLowerCase()}.json`);
@@ -398,8 +398,7 @@ export const getCategoriesForSkr = async (
           // Extract VAT rate from name or set default
           let vat = 19; // Default
           if (item.name.includes("7%")) vat = 7;
-          else if (item.name.includes("0%") || item.name.includes("steuerfrei"))
-            vat = 0;
+          else if (item.name.includes("0%") || item.name.includes("steuerfrei")) vat = 0;
 
           categories[item.code.toString()] = {
             name: item.name,
@@ -408,7 +407,7 @@ export const getCategoriesForSkr = async (
             vat,
           };
         }
-      }
+      },
     );
 
     return categories;
@@ -416,7 +415,7 @@ export const getCategoriesForSkr = async (
     console.error(`Failed to load ${skr} categories:`, error);
     throw new Error(
       `Unable to load SKR categories from /data/${skr.toLowerCase()}.json. ` +
-        "Please ensure the file exists and is accessible."
+        "Please ensure the file exists and is accessible.",
     );
   }
 };

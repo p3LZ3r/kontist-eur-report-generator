@@ -41,9 +41,7 @@ export const getDemoInfo = () => {
     .filter((t) => t.BetragNumeric > 0)
     .reduce((sum, t) => sum + t.BetragNumeric, 0);
   const totalExpenses = Math.abs(
-    transactions
-      .filter((t) => t.BetragNumeric < 0)
-      .reduce((sum, t) => sum + t.BetragNumeric, 0)
+    transactions.filter((t) => t.BetragNumeric < 0).reduce((sum, t) => sum + t.BetragNumeric, 0),
   );
 
   return {

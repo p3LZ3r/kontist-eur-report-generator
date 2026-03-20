@@ -1,24 +1,10 @@
-import {
-  AlertCircle,
-  Calculator,
-  FileText,
-  Info,
-  TrendingUp,
-  X,
-} from "lucide-react";
+import { AlertCircle, Calculator, FileText, Info, TrendingUp, X } from "lucide-react";
 import type React from "react";
 import type { DrillDownData, ElsterFieldValue, Transaction } from "../types";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 
 interface FieldDetailModalProps {
   field?: ElsterFieldValue;
@@ -90,10 +76,7 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                       : "Manuell"}
               </Badge>
               {field.required && (
-                <Badge
-                  className="flex items-center gap-1"
-                  variant="destructive"
-                >
+                <Badge className="flex items-center gap-1" variant="destructive">
                   <AlertCircle size={12} />
                   Pflichtfeld
                 </Badge>
@@ -114,27 +97,19 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="text-muted-foreground text-sm">
-                    Aktueller Wert
-                  </label>
+                  <label className="text-muted-foreground text-sm">Aktueller Wert</label>
                   <div className="mt-1 text-lg">
-                    {field.value
-                      ? formatValue(field.value)
-                      : "Nicht ausgefüllt"}
+                    {field.value ? formatValue(field.value) : "Nicht ausgefüllt"}
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-muted-foreground text-sm">
-                    Feldtyp
-                  </label>
+                  <label className="text-muted-foreground text-sm">Feldtyp</label>
                   <div className="mt-1 capitalize">{field.type}</div>
                 </div>
 
                 <div>
-                  <label className="text-muted-foreground text-sm">
-                    Quelle
-                  </label>
+                  <label className="text-muted-foreground text-sm">Quelle</label>
                   <div className="mt-1 flex items-center gap-2">
                     {getSourceIcon(field.source)}
                     <span>{getSourceDescription(field.source)}</span>
@@ -148,8 +123,7 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                       <span className="font-medium">Pflichtfeld</span>
                     </div>
                     <p className="mt-1 text-red-700 text-sm">
-                      Dieses Feld muss für die Steuererklärung ausgefüllt
-                      werden.
+                      Dieses Feld muss für die Steuererklärung ausgefüllt werden.
                     </p>
                   </div>
                 )}
@@ -164,12 +138,8 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="text-muted-foreground text-sm">
-                      Gesamtbetrag
-                    </label>
-                    <div className="mt-1 text-lg">
-                      {drillDownData.totalAmount.toFixed(2)} €
-                    </div>
+                    <label className="text-muted-foreground text-sm">Gesamtbetrag</label>
+                    <div className="mt-1 text-lg">{drillDownData.totalAmount.toFixed(2)} €</div>
                   </div>
 
                   <div>
@@ -177,42 +147,26 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                       Kategorie-Aufschlüsselung
                     </label>
                     <div className="mt-2 space-y-2">
-                      {Object.entries(drillDownData.categoryBreakdown).map(
-                        ([category, amount]) => (
-                          <div
-                            className="flex justify-between text-sm"
-                            key={category}
-                          >
-                            <span>{category}</span>
-                            <span className="font-medium">
-                              {amount.toFixed(2)} €
-                            </span>
-                          </div>
-                        )
-                      )}
+                      {Object.entries(drillDownData.categoryBreakdown).map(([category, amount]) => (
+                        <div className="flex justify-between text-sm" key={category}>
+                          <span>{category}</span>
+                          <span className="font-medium">{amount.toFixed(2)} €</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
                   {drillDownData.vatBreakdown &&
                     Object.keys(drillDownData.vatBreakdown).length > 0 && (
                       <div>
-                        <label className="text-muted-foreground text-sm">
-                          USt-Aufschlüsselung
-                        </label>
+                        <label className="text-muted-foreground text-sm">USt-Aufschlüsselung</label>
                         <div className="mt-2 space-y-2">
-                          {Object.entries(drillDownData.vatBreakdown).map(
-                            ([rate, amount]) => (
-                              <div
-                                className="flex justify-between text-sm"
-                                key={rate}
-                              >
-                                <span>{rate}% USt</span>
-                                <span className="font-medium">
-                                  {amount.toFixed(2)} €
-                                </span>
-                              </div>
-                            )
-                          )}
+                          {Object.entries(drillDownData.vatBreakdown).map(([rate, amount]) => (
+                            <div className="flex justify-between text-sm" key={rate}>
+                              <span>{rate}% USt</span>
+                              <span className="font-medium">{amount.toFixed(2)} €</span>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     )}
@@ -225,9 +179,7 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
           {transactions.length > 0 && (
             <Card className="mt-6">
               <CardHeader>
-                <CardTitle className="text-lg">
-                  Beitragende Transaktionen
-                </CardTitle>
+                <CardTitle className="text-lg">Beitragende Transaktionen</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="max-h-96 overflow-y-auto">
@@ -252,17 +204,12 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                           </TableCell>
                           <TableCell
                             className={`font-medium ${
-                              transaction.BetragNumeric > 0
-                                ? "text-green-600"
-                                : "text-red-600"
+                              transaction.BetragNumeric > 0 ? "text-green-600" : "text-red-600"
                             }`}
                           >
                             {transaction.BetragNumeric.toFixed(2)} €
                           </TableCell>
-                          <TableCell
-                            className="max-w-xs truncate"
-                            title={transaction.purposeField}
-                          >
+                          <TableCell className="max-w-xs truncate" title={transaction.purposeField}>
                             {transaction.purposeField}
                           </TableCell>
                         </TableRow>
@@ -285,12 +232,9 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="mb-2 font-medium">
-                    Was bedeutet dieses Feld?
-                  </h4>
+                  <h4 className="mb-2 font-medium">Was bedeutet dieses Feld?</h4>
                   <p className="text-muted-foreground text-sm">
-                    Feld {field.field} ({field.label}) ist ein {field.type}-Feld
-                    in Ihrer EÜR.
+                    Feld {field.field} ({field.label}) ist ein {field.type}-Feld in Ihrer EÜR.
                     {field.required
                       ? " Es handelt sich um ein Pflichtfeld, das für die Steuererklärung ausgefüllt werden muss."
                       : " Dieses Feld ist optional."}
@@ -298,9 +242,7 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                 </div>
 
                 <div>
-                  <h4 className="mb-2 font-medium">
-                    Wie wird der Wert bestimmt?
-                  </h4>
+                  <h4 className="mb-2 font-medium">Wie wird der Wert bestimmt?</h4>
                   <p className="text-muted-foreground text-sm">
                     {getSourceDescription(field.source)}
                   </p>
@@ -309,9 +251,8 @@ const FieldDetailModal: React.FC<FieldDetailModalProps> = ({
                 <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
                   <h4 className="mb-2 font-medium text-blue-800">💡 Tipp</h4>
                   <p className="text-blue-700 text-sm">
-                    Überprüfen Sie alle automatisch ausgefüllten Felder auf
-                    Richtigkeit. Bei Abweichungen können Sie die zugrunde
-                    liegenden Transaktionen überarbeiten.
+                    Überprüfen Sie alle automatisch ausgefüllten Felder auf Richtigkeit. Bei
+                    Abweichungen können Sie die zugrunde liegenden Transaktionen überarbeiten.
                   </p>
                 </div>
               </div>

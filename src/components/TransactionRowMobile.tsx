@@ -1,13 +1,7 @@
 import React from "react";
 import type { Transaction } from "../types";
 import { formatAmount, formatDate } from "../utils/formatters";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface TransactionRowMobileProps {
   transaction: Transaction;
@@ -67,34 +61,21 @@ const TransactionRowMobile = React.memo<TransactionRowMobileProps>(
     // Pre-calculate formatted values for performance
     const formattedDate = formatDate(transaction.dateField);
     const formattedAmount = formatAmount(transaction.BetragNumeric);
-    const amountColorClass = isIncome
-      ? "text-income"
-      : isPrivate
-        ? "text-private"
-        : "text-expense";
+    const amountColorClass = isIncome ? "text-income" : isPrivate ? "text-private" : "text-expense";
 
     // Pre-calculate category options based on transaction type
     const categoryOptions = isIncome ? incomeCategories : expenseCategories;
 
     return (
-      <li
-        className={`animate-fade-in px-2 py-4 ${isPrivate ? "bg-private/5" : ""}`}
-      >
+      <li className={`animate-fade-in px-2 py-4 ${isPrivate ? "bg-private/5" : ""}`}>
         <div className="mb-3 flex items-start justify-between">
           <div className="flex-1">
-            <div className="mb-1 font-mono text-muted-foreground text-sm">
-              {formattedDate}
-            </div>
-            <div
-              className="truncate text-foreground"
-              title={transaction.counterpartyField}
-            >
+            <div className="mb-1 font-mono text-muted-foreground text-sm">{formattedDate}</div>
+            <div className="truncate text-foreground" title={transaction.counterpartyField}>
               {transaction.counterpartyField}
             </div>
           </div>
-          <div className={`font-mono text-lg ${amountColorClass}`}>
-            {formattedAmount} €
-          </div>
+          <div className={`font-mono text-lg ${amountColorClass}`}>{formattedAmount} €</div>
         </div>
 
         <div
@@ -105,10 +86,7 @@ const TransactionRowMobile = React.memo<TransactionRowMobileProps>(
         </div>
 
         <div className="space-y-2">
-          <label
-            className="text-foreground text-sm"
-            htmlFor={`category-${transaction.id}`}
-          >
+          <label className="text-foreground text-sm" htmlFor={`category-${transaction.id}`}>
             {currentSkr}-Konto:
           </label>
           <Select
@@ -133,7 +111,7 @@ const TransactionRowMobile = React.memo<TransactionRowMobileProps>(
         </div>
       </li>
     );
-  }
+  },
 );
 
 TransactionRowMobile.displayName = "TransactionRowMobile";

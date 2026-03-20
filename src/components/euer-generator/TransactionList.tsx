@@ -106,9 +106,7 @@ export function TransactionList({
             </div>
             <div className="rounded-full border border-purple-200 bg-purple-100 px-3 py-1 text-purple-800">
               <span className="font-medium text-xs">
-                {isKleinunternehmer
-                  ? "Kleinunternehmer §19 UStG"
-                  : "Regelbesteuerung"}
+                {isKleinunternehmer ? "Kleinunternehmer §19 UStG" : "Regelbesteuerung"}
               </span>
             </div>
           </div>
@@ -129,8 +127,7 @@ export function TransactionList({
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-muted-foreground text-sm">
             Zeige {indexOfFirstTransaction + 1}-
-            {Math.min(indexOfLastTransaction, transactions.length)} von{" "}
-            {transactions.length}
+            {Math.min(indexOfLastTransaction, transactions.length)} von {transactions.length}
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -149,9 +146,7 @@ export function TransactionList({
             <Button
               className="focus-ring flex items-center gap-1"
               disabled={currentPage === totalPages}
-              onClick={() =>
-                onPageChange(Math.min(currentPage + 1, totalPages))
-              }
+              onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
               size="sm"
               variant="outline"
             >
@@ -166,15 +161,11 @@ export function TransactionList({
           <table className="w-full min-w-full border-collapse text-sm">
             <thead>
               <tr className="border-border border-b bg-muted/50">
-                <th className="w-24 p-3 text-left font-normal text-muted-foreground">
-                  Datum
-                </th>
+                <th className="w-24 p-3 text-left font-normal text-muted-foreground">Datum</th>
                 <th className="w-1/5 min-w-32 p-3 text-left font-normal text-muted-foreground">
                   Gegenpartei
                 </th>
-                <th className="w-20 p-3 text-right font-normal text-muted-foreground">
-                  Betrag
-                </th>
+                <th className="w-20 p-3 text-right font-normal text-muted-foreground">Betrag</th>
                 <th className="w-1/4 min-w-40 p-3 text-left font-normal text-muted-foreground">
                   Verwendungszweck
                 </th>
@@ -185,8 +176,7 @@ export function TransactionList({
             </thead>
             <tbody>
               {currentTransactions.map((transaction) => {
-                const categoryKey =
-                  categories[transaction.id] || transaction.euerCategory || "";
+                const categoryKey = categories[transaction.id] || transaction.euerCategory || "";
 
                 return (
                   <TransactionRow
@@ -209,8 +199,7 @@ export function TransactionList({
         <div className="sm:hidden">
           <ul className="divide-y divide-border">
             {currentTransactions.map((transaction) => {
-              const categoryKey =
-                categories[transaction.id] || transaction.euerCategory || "";
+              const categoryKey = categories[transaction.id] || transaction.euerCategory || "";
 
               return (
                 <TransactionRowMobile
@@ -232,8 +221,7 @@ export function TransactionList({
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-center text-muted-foreground text-sm sm:text-left">
             Zeige {indexOfFirstTransaction + 1}-
-            {Math.min(indexOfLastTransaction, transactions.length)} von{" "}
-            {transactions.length}
+            {Math.min(indexOfLastTransaction, transactions.length)} von {transactions.length}
           </div>
           <div className="flex items-center justify-center gap-2">
             <Button
@@ -252,9 +240,7 @@ export function TransactionList({
             <Button
               className="focus-ring flex items-center gap-1"
               disabled={currentPage === totalPages}
-              onClick={() =>
-                onPageChange(Math.min(currentPage + 1, totalPages))
-              }
+              onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
               size="sm"
               variant="outline"
             >

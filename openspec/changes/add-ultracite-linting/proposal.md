@@ -25,25 +25,31 @@ The project currently uses ESLint 9 with TypeScript ESLint for code quality, but
 ## Impact
 
 ### Affected Files
+
 - `package.json` - Remove ESLint deps, add Ultracite, update scripts
 - `eslint.config.js` - **REMOVE** (replaced by Ultracite's zero-config)
 - `.gitignore` - Add Biome cache exclusion
 - `CLAUDE.md` - Update linting command documentation
 
 ### Affected Specs
+
 - `code-quality` (new capability) - Linting and formatting standards
 
 ### Developer Impact
+
 - **Positive:** Faster linting (10-100x faster than ESLint), unified formatting/linting
 - **Neutral:** New CLI commands to learn (`npx ultracite`)
 - **Breaking:** Existing ESLint custom rules must be migrated (none currently)
 
 ### CI/CD Impact
+
 - Linting will be significantly faster in GitHub Actions
 - Potential to remove separate Prettier step if added in future
 
 ### Code Style Changes
+
 Ultracite may reformat existing code to match its opinionated rules:
+
 - 2-space indentation (already matches project)
 - No semicolons (matches modern JS/TS style)
 - Single quotes for strings

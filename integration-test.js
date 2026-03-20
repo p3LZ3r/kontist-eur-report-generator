@@ -1,13 +1,7 @@
 // Quick integration test to verify the data flow
 
-import {
-  calculateEuer,
-  populateAllElsterFields,
-} from "./src/utils/euerCalculations.js";
-import {
-  categorizeTransaction,
-  parseKontistCSV,
-} from "./src/utils/transactionUtils.js";
+import { calculateEuer, populateAllElsterFields } from "./src/utils/euerCalculations.js";
+import { categorizeTransaction, parseKontistCSV } from "./src/utils/transactionUtils.js";
 
 // Test data
 const csvData = `Buchungsdatum;Empfänger;Verwendungszweck;Betrag;Transaktionstyp
@@ -41,19 +35,15 @@ try {
   log("✅ EÜR calculation successful");
   log(
     "   Income total:",
-    Object.values(euerResult.income).reduce((a, b) => a + b, 0)
+    Object.values(euerResult.income).reduce((a, b) => a + b, 0),
   );
   log(
     "   Expense total:",
-    Object.values(euerResult.expenses).reduce((a, b) => a + b, 0)
+    Object.values(euerResult.expenses).reduce((a, b) => a + b, 0),
   );
 
   // 5. Populate ELSTER fields
-  const { fieldValues } = populateAllElsterFields(
-    transactions,
-    categories,
-    false
-  );
+  const { fieldValues } = populateAllElsterFields(transactions, categories, false);
   log("✅ ELSTER field population successful:", fieldValues.length, "fields");
 
   log("🎉 Integration test PASSED - All systems working!");

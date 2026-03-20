@@ -8,10 +8,7 @@ import type {
   Transaction,
 } from "../types";
 import { skr04Categories } from "./categoryMappings";
-import {
-  populateAllElsterFields,
-  populateElsterFieldsFromCalculation,
-} from "./euerCalculations";
+import { populateAllElsterFields, populateElsterFieldsFromCalculation } from "./euerCalculations";
 
 // Create navigation sections - Based on official ELSTER EÜR form structure
 export const createNavigationSections = (): NavigationSection[] => [
@@ -20,20 +17,7 @@ export const createNavigationSections = (): NavigationSection[] => [
     title: "Betriebseinnahmen",
     description: "Einnahmen und Umsatzsteuer",
     icon: "trending-up",
-    fields: [
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-      "19",
-      "20",
-      "21",
-      "22",
-      "23",
-    ],
+    fields: ["12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
     completed: false,
     required: true,
   },
@@ -58,29 +42,19 @@ export const createNavigationSections = (): NavigationSection[] => [
 ];
 
 // Create field groups for display - Matching authentic ELSTER EÜR form structure
-export const createFieldGroups = (
-  fieldValues: ElsterFieldValue[]
-): FieldGroup[] => {
+export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[] => {
   const income = fieldValues
     .filter((f) => f.type === "income")
-    .sort(
-      (a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10)
-    );
+    .sort((a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10));
   const expenses = fieldValues
     .filter((f) => f.type === "expense")
-    .sort(
-      (a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10)
-    );
+    .sort((a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10));
   const vat = fieldValues
     .filter((f) => f.type === "vat" || f.type === "vat_paid")
-    .sort(
-      (a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10)
-    );
+    .sort((a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10));
   const totals = fieldValues
     .filter((f) => f.type === "total" || f.type === "profit_calc")
-    .sort(
-      (a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10)
-    );
+    .sort((a, b) => Number.parseInt(a.field, 10) - Number.parseInt(b.field, 10));
 
   const groups: FieldGroup[] = [];
   if (income.length) {
@@ -130,20 +104,19 @@ export const createFieldGroups = (
 // Calculate progress state
 export const calculateProgressState = (
   sections: NavigationSection[],
-  fieldValues: ElsterFieldValue[]
+  fieldValues: ElsterFieldValue[],
 ): ProgressState => {
   const totalSections = sections.length;
   const completedSections = sections.filter((s) => s.completed).length;
 
   const totalFields = fieldValues.length;
   const completedFields = fieldValues.filter(
-    (f) => f.value !== undefined && f.value !== null && f.value !== ""
+    (f) => f.value !== undefined && f.value !== null && f.value !== "",
   ).length;
 
   const mandatoryFields = fieldValues.filter((f) => f.required).length;
   const completedMandatoryFields = fieldValues.filter(
-    (f) =>
-      f.required && f.value !== undefined && f.value !== null && f.value !== ""
+    (f) => f.required && f.value !== undefined && f.value !== null && f.value !== "",
   ).length;
 
   return {
@@ -160,7 +133,7 @@ export const calculateProgressState = (
 export const generateDrillDownData = (
   field: ElsterFieldValue,
   transactions: Transaction[],
-  categories: { [key: number]: string }
+  categories: { [key: number]: string },
 ): DrillDownData | undefined => {
   if (field.source === "user_data") {
     return; // No drill-down for user data fields
@@ -185,12 +158,10 @@ export const generateDrillDownData = (
       const category = skr04Categories[categoryKey];
       if (category) {
         categoryBreakdown[category.name] =
-          (categoryBreakdown[category.name] || 0) +
-          Math.abs(transaction.BetragNumeric);
+          (categoryBreakdown[category.name] || 0) + Math.abs(transaction.BetragNumeric);
         if (category.vat > 0) {
           vatBreakdown[category.vat] =
-            (vatBreakdown[category.vat] || 0) +
-            Math.abs(transaction.BetragNumeric);
+            (vatBreakdown[category.vat] || 0) + Math.abs(transaction.BetragNumeric);
         }
       }
     }
@@ -199,13 +170,9 @@ export const generateDrillDownData = (
   return {
     field: field.field,
     transactions: relevantTransactions,
-    totalAmount: relevantTransactions.reduce(
-      (sum, t) => sum + Math.abs(t.BetragNumeric),
-      0
-    ),
+    totalAmount: relevantTransactions.reduce((sum, t) => sum + Math.abs(t.BetragNumeric), 0),
     categoryBreakdown,
-    vatBreakdown:
-      Object.keys(vatBreakdown).length > 0 ? vatBreakdown : undefined,
+    vatBreakdown: Object.keys(vatBreakdown).length > 0 ? vatBreakdown : undefined,
   };
 };
 
@@ -214,7 +181,7 @@ export const prepareGuidanceData = (
   transactions: Transaction[],
   categories: { [key: number]: string },
   isKleinunternehmer: boolean,
-  euerCalculation?: EuerCalculation
+  euerCalculation?: EuerCalculation,
 ) => {
   // Get populated fields - use provided calculation to avoid duplication
   const { fieldValues } = euerCalculation
@@ -232,17 +199,14 @@ export const prepareGuidanceData = (
 
   // Update section completion status
   sections.forEach((section) => {
-    const sectionFields = fieldValues.filter((f) =>
-      section.fields.includes(f.field)
-    );
+    const sectionFields = fieldValues.filter((f) => section.fields.includes(f.field));
     const requiredFields = sectionFields.filter((f) => f.required);
     const completedRequiredFields = requiredFields.filter(
-      (f) => f.value !== undefined && f.value !== null && f.value !== ""
+      (f) => f.value !== undefined && f.value !== null && f.value !== "",
     );
 
     section.completed =
-      requiredFields.length > 0 &&
-      completedRequiredFields.length === requiredFields.length;
+      requiredFields.length > 0 && completedRequiredFields.length === requiredFields.length;
   });
 
   return {
@@ -257,7 +221,7 @@ export const prepareGuidanceData = (
 export const getFieldTransactions = (
   field: ElsterFieldValue,
   transactions: Transaction[],
-  categories: { [key: number]: string }
+  categories: { [key: number]: string },
 ): Transaction[] => {
   if (field.source === "user_data") {
     return [];

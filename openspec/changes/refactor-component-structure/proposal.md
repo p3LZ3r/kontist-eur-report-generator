@@ -15,6 +15,7 @@ The `EuerGenerator.tsx` component has grown to **1002 lines**, making it difficu
 9. **Footer with legal links**
 
 This refactoring will improve:
+
 - **Maintainability**: Smaller, focused components are easier to understand and modify
 - **Testability**: Isolated components can be tested independently
 - **Reusability**: Extracted components can be reused in other contexts
@@ -26,6 +27,7 @@ This refactoring will improve:
 ### File Structure Changes
 
 **Create new component directory structure:**
+
 ```
 src/components/
 ├── euer-generator/              # Feature folder
@@ -44,6 +46,7 @@ src/components/
 ```
 
 **Extract logical sections into sub-components:**
+
 1. `HeroSection.tsx` (~54 lines) - Hero with Kontist/Holvi logos
 2. `FileUploadSection.tsx` (~135 lines) - 3-step guide + upload dropzone
 3. `PrivacyInfoSection.tsx` (~50 lines) - Privacy feature cards
@@ -52,6 +55,7 @@ src/components/
 6. `Footer.tsx` (~35 lines) - Legal links and GitHub link
 
 **Extract business logic into custom hooks:**
+
 1. `useFileUpload.ts` - CSV validation, parsing, categorization
 2. `useDemoData.ts` - Demo data loading logic
 3. `useEuerState.ts` - Consolidated state management
@@ -70,25 +74,30 @@ src/components/
 ## Impact
 
 ### Affected Files
+
 - `src/components/EuerGenerator.tsx` - **REFACTOR** into smaller orchestrator
 - **NEW**: 6 new component files in `src/components/euer-generator/`
 - **NEW**: 4 new custom hook files in `src/components/euer-generator/hooks/`
 - `src/App.tsx` - Import path update (if needed)
 
 ### Affected Specs
+
 - `component-organization` (new capability) - Component architecture standards
 
 ### Developer Impact
+
 - **Positive**: Easier to navigate, test, and maintain codebase
 - **Positive**: Better code organization following React best practices
 - **Neutral**: Need to update imports if working on EuerGenerator features
 - **No breaking changes**: External API remains the same
 
 ### Testing Impact
+
 - Existing E2E tests should pass without modification
 - Opportunity to add unit tests for extracted components
 - Custom hooks can be tested in isolation
 
 ### Performance Impact
+
 - **Neutral/Positive**: Same memoization strategy, potentially better re-render isolation
 - No additional network requests or computations
