@@ -131,6 +131,7 @@ Critical business logic for German tax compliance:
 Important: Account codes must match actual SKR04 JSON data in `/public/data/skr04.json`.
 
 Key account mappings:
+
 - **6300** = "sonstige betriebliche Aufwendungen" (catch-all for misc expenses)
 - **6900** = "Verluste aus dem Abgang von Gegenstanden des Anlagevermogens" (NOT a catch-all!)
 - **6540** = "Kfz-Reparaturen"
