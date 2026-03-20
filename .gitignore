@@ -44,3 +44,7 @@ node_modules/
 
 # Biome/Ultracite cache
 .biome 
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db

@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "server",
+  "dolt_database": "kontist_eur",
+  "project_id": "96f71675-7162-4c37-83f1-c5332c68db73"
+}
