@@ -29,7 +29,7 @@ Activate this skill when:
 
 ## Commit Conventions
 
-Follow these commit message conventions based on 82 analyzed commits.
+Follow these commit message conventions based on 93 analyzed commits.
 
 ### Commit Style: Conventional Commits
 
@@ -43,7 +43,7 @@ Follow these commit message conventions based on 82 analyzed commits.
 
 ### Message Guidelines
 
-- Average message length: ~76 characters
+- Average message length: ~78 characters
 - Keep first line concise and descriptive
 - Use imperative mood ("Add feature" not "Added feature")
 
@@ -214,7 +214,7 @@ These workflows were detected from analyzing commit patterns.
 
 Standard feature implementation workflow
 
-**Frequency**: ~23 times per month
+**Frequency**: ~27 times per month
 
 **Steps**:
 1. Add feature implementation
@@ -223,22 +223,22 @@ Standard feature implementation workflow
 
 **Files typically involved**:
 - `src/components/*`
-- `src/utils/*`
-- `src/*`
+- `src/components/ui/*`
+- `src/test/*`
 - `**/*.test.*`
 
 **Example commit sequence**:
 ```
-ui(fields): center field number badge, narrow cell (w-8) and add slight horizontal padding (px-1)
-feat(ui): add Ko-fi support widget and refactor legal page layouts
-feat(ui): add expandable transaction details and improve UI interactions
+feat: enhance CSV handling and sanitization
+Enhance performance tests and mock data setup
+feat(config): remove kilo taskmaster rules and update CSP directives
 ```
 
 ### Refactoring
 
 Code refactoring and cleanup workflow
 
-**Frequency**: ~7 times per month
+**Frequency**: ~5 times per month
 
 **Steps**:
 1. Ensure tests pass before refactor
@@ -250,151 +250,166 @@ Code refactoring and cleanup workflow
 
 **Example commit sequence**:
 ```
-feat(ui): add demo mode and refactor transaction components
-refactor(ui): remove transaction and ELSTER views from EuerGenerator
-feat(elster): enhance field handling and demo data
+feat: enhance CSV handling and sanitization
+Enhance performance tests and mock data setup
+feat(config): remove kilo taskmaster rules and update CSP directives
 ```
 
-### Feature Development Core And Ui
+### Add Or Update Ecc Bundle
 
-Implements or enhances core calculation logic and associated UI components, often including data mapping, utility updates, and test coverage.
+Adds or updates the kontist-eur-report-generator ECC bundle, including agent, skill, and command definitions for Claude and Codex systems.
+
+**Frequency**: ~3 times per month
+
+**Steps**:
+1. Add or update .claude/commands/feature-development-core-and-ui.md
+2. Add or update .claude/commands/feature-development.md
+3. Add or update .claude/commands/refactoring.md
+4. Add or update .claude/identity.json
+5. Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
+6. Add or update .claude/ecc-tools.json
+7. Add or update .codex/agents/docs-researcher.toml
+8. Add or update .codex/agents/reviewer.toml
+9. Add or update .codex/agents/explorer.toml
+10. Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+11. Add or update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
+
+**Files typically involved**:
+- `.claude/commands/feature-development-core-and-ui.md`
+- `.claude/commands/feature-development.md`
+- `.claude/commands/refactoring.md`
+- `.claude/identity.json`
+- `.claude/skills/kontist-eur-report-generator/SKILL.md`
+- `.claude/ecc-tools.json`
+- `.codex/agents/docs-researcher.toml`
+- `.codex/agents/reviewer.toml`
+- `.codex/agents/explorer.toml`
+- `.agents/skills/kontist-eur-report-generator/SKILL.md`
+- `.agents/skills/kontist-eur-report-generator/agents/openai.yaml`
+
+**Example commit sequence**:
+```
+Add or update .claude/commands/feature-development-core-and-ui.md
+Add or update .claude/commands/feature-development.md
+Add or update .claude/commands/refactoring.md
+Add or update .claude/identity.json
+Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
+Add or update .claude/ecc-tools.json
+Add or update .codex/agents/docs-researcher.toml
+Add or update .codex/agents/reviewer.toml
+Add or update .codex/agents/explorer.toml
+Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+Add or update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
+```
+
+### Core Feature Development And Refactor
+
+Implements or refactors major core features, updates calculation engines, UI components, data mappings, and improves test coverage.
 
 **Frequency**: ~2 times per month
 
 **Steps**:
-1. Update or refactor core calculation utilities (e.g., euerCalculations.ts, reportGenerator.ts).
-2. Modify or add UI components (e.g., EuerGenerator.tsx, FieldGroups.tsx, TransactionRow.tsx).
-3. Update or add supporting data files (e.g., skr03.json, skr04.json, demo-transactions.ts).
-4. Update or add tests for new or changed logic (e.g., euerCalculations.test.ts, FieldGroups.test.tsx).
-5. Update configuration or type files as needed (e.g., constants.ts, types/index.ts).
-6. Update dependencies and build configs if required (e.g., package.json, vite.config.ts).
+1. Update core calculation logic in src/utils/euerCalculations.ts and related utils
+2. Update or add UI components in src/components/ and src/components/euer-generator/
+3. Update data mapping files in src/data/ and public/data/
+4. Update or add tests in src/test/
+5. Update configuration files (tsconfig.json, vite.config.ts, tailwind.config.js, etc.)
+6. Update dependencies in package.json and package-lock.json
+7. Update documentation files (AGENTS.md, CLAUDE.md, etc.)
 
 **Files typically involved**:
 - `src/utils/euerCalculations.ts`
-- `src/utils/reportGenerator.ts`
-- `src/components/EuerGenerator.tsx`
-- `src/components/FieldGroups.tsx`
-- `src/components/TransactionRow.tsx`
-- `src/data/skr03.json`
-- `src/data/skr04.json`
-- `src/data/demo-transactions.ts`
-- `src/test/euerCalculations.test.ts`
-- `src/test/FieldGroups.test.tsx`
-- `src/utils/constants.ts`
-- `src/types/index.ts`
-- `package.json`
+- `src/components/`
+- `src/components/euer-generator/`
+- `src/data/`
+- `public/data/`
+- `src/test/`
+- `tsconfig.json`
 - `vite.config.ts`
-
-**Example commit sequence**:
-```
-Update or refactor core calculation utilities (e.g., euerCalculations.ts, reportGenerator.ts).
-Modify or add UI components (e.g., EuerGenerator.tsx, FieldGroups.tsx, TransactionRow.tsx).
-Update or add supporting data files (e.g., skr03.json, skr04.json, demo-transactions.ts).
-Update or add tests for new or changed logic (e.g., euerCalculations.test.ts, FieldGroups.test.tsx).
-Update configuration or type files as needed (e.g., constants.ts, types/index.ts).
-Update dependencies and build configs if required (e.g., package.json, vite.config.ts).
-```
-
-### Ui Component Refinement
-
-Iterative improvement of UI component appearance, layout, and interactivity, often through a series of small, focused commits.
-
-**Frequency**: ~4 times per month
-
-**Steps**:
-1. Edit a specific UI component file (e.g., FieldGroups.tsx) to adjust styling or layout.
-2. Optionally update related components (e.g., NavigationSidebar.tsx) for consistency.
-3. Commit small, descriptive changes (e.g., badge styling, font stack, padding).
-
-**Files typically involved**:
-- `src/components/FieldGroups.tsx`
-- `src/components/NavigationSidebar.tsx`
-
-**Example commit sequence**:
-```
-Edit a specific UI component file (e.g., FieldGroups.tsx) to adjust styling or layout.
-Optionally update related components (e.g., NavigationSidebar.tsx) for consistency.
-Commit small, descriptive changes (e.g., badge styling, font stack, padding).
-```
-
-### Toolchain And Config Upgrade
-
-Upgrade or migrate build tools, linters, or project configuration, often with dependency updates and documentation changes.
-
-**Frequency**: ~1 times per month
-
-**Steps**:
-1. Update package.json and package-lock.json with new dependencies.
-2. Modify or add toolchain config files (e.g., vite.config.ts, biome.jsonc, .oxlintrc.json).
-3. Update documentation to reflect toolchain changes (e.g., README.md, CLAUDE.md).
-4. Optionally refactor scripts or test configs to match new toolchain.
-
-**Files typically involved**:
+- `tailwind.config.js`
 - `package.json`
 - `package-lock.json`
-- `vite.config.ts`
-- `biome.jsonc`
-- `.oxlintrc.json`
-- `.oxfmtrc.json`
-- `README.md`
-- `CLAUDE.md`
-
-**Example commit sequence**:
-```
-Update package.json and package-lock.json with new dependencies.
-Modify or add toolchain config files (e.g., vite.config.ts, biome.jsonc, .oxlintrc.json).
-Update documentation to reflect toolchain changes (e.g., README.md, CLAUDE.md).
-Optionally refactor scripts or test configs to match new toolchain.
-```
-
-### Test Enhancement And Maintenance
-
-Improve or refactor test files and test-related utilities, often optimizing performance or updating for new features.
-
-**Frequency**: ~2 times per month
-
-**Steps**:
-1. Edit or add test files (e.g., performance.test.ts, FieldGroups.test.tsx, euerCalculations.test.ts).
-2. Update test utilities or mock data as needed.
-3. Adjust test configuration files (e.g., vitest.config.ts).
-
-**Files typically involved**:
-- `src/test/performance.test.ts`
-- `src/test/FieldGroups.test.tsx`
-- `src/test/NavigationSidebar.test.tsx`
-- `src/test/euerCalculations.test.ts`
-- `src/test/exportUtils.test.ts`
-- `vitest.config.ts`
-
-**Example commit sequence**:
-```
-Edit or add test files (e.g., performance.test.ts, FieldGroups.test.tsx, euerCalculations.test.ts).
-Update test utilities or mock data as needed.
-Adjust test configuration files (e.g., vitest.config.ts).
-```
-
-### Documentation And Guidelines Update
-
-Update project documentation, coding standards, or agent guidelines for clarity and onboarding.
-
-**Frequency**: ~2 times per month
-
-**Steps**:
-1. Edit or add markdown documentation files (e.g., AGENTS.md, CLAUDE.md, SKILL.md).
-2. Optionally update configuration or identity files (e.g., identity.json).
-
-**Files typically involved**:
 - `AGENTS.md`
 - `CLAUDE.md`
-- `.claude/skills/kontist-eur-report-generator/SKILL.md`
-- `.agents/skills/kontist-eur-report-generator/SKILL.md`
-- `.codex/AGENTS.md`
-- `.claude/identity.json`
 
 **Example commit sequence**:
 ```
-Edit or add markdown documentation files (e.g., AGENTS.md, CLAUDE.md, SKILL.md).
-Optionally update configuration or identity files (e.g., identity.json).
+Update core calculation logic in src/utils/euerCalculations.ts and related utils
+Update or add UI components in src/components/ and src/components/euer-generator/
+Update data mapping files in src/data/ and public/data/
+Update or add tests in src/test/
+Update configuration files (tsconfig.json, vite.config.ts, tailwind.config.js, etc.)
+Update dependencies in package.json and package-lock.json
+Update documentation files (AGENTS.md, CLAUDE.md, etc.)
+```
+
+### Asset And Favicon Update
+
+Adds or updates favicon and image assets, updates HTML metadata, and enhances image generation scripts for branding and PWA compatibility.
+
+**Frequency**: ~2 times per month
+
+**Steps**:
+1. Add or update favicon and image files in public/
+2. Update index.html to reference new icons and metadata
+3. Update or add scripts for image/favicons generation in scripts/
+4. Update or add UI components for app icons (src/components/ui/app-icon.tsx, .md)
+5. Update dependencies in package.json and package-lock.json if needed
+
+**Files typically involved**:
+- `public/favicon-16x16.png`
+- `public/favicon-32x32.png`
+- `public/favicon-48x48.png`
+- `public/favicon.ico`
+- `public/apple-touch-icon.png`
+- `public/icon-192.png`
+- `public/icon-512.png`
+- `public/og-image.png`
+- `index.html`
+- `scripts/generate-favicon.mjs`
+- `scripts/generate-images.mjs`
+- `src/components/ui/app-icon.tsx`
+- `src/components/ui/app-icon.md`
+- `package.json`
+- `package-lock.json`
+
+**Example commit sequence**:
+```
+Add or update favicon and image files in public/
+Update index.html to reference new icons and metadata
+Update or add scripts for image/favicons generation in scripts/
+Update or add UI components for app icons (src/components/ui/app-icon.tsx, .md)
+Update dependencies in package.json and package-lock.json if needed
+```
+
+### Test Suite Enhancement
+
+Enhances or adds tests, updates mock data, and improves test reliability and configuration.
+
+**Frequency**: ~2 times per month
+
+**Steps**:
+1. Update or add test files in src/test/
+2. Update test configuration files (vitest.config.ts, etc.)
+3. Update or add mock data in src/data/ or within test files
+4. Refactor test logic for better reliability or performance
+
+**Files typically involved**:
+- `src/test/FieldGroups.test.tsx`
+- `src/test/NavigationSidebar.test.tsx`
+- `src/test/categoryMappings.test.ts`
+- `src/test/euerCalculations.test.ts`
+- `src/test/exportUtils.test.ts`
+- `src/test/performance.test.ts`
+- `vitest.config.ts`
+- `src/data/`
+
+**Example commit sequence**:
+```
+Update or add test files in src/test/
+Update test configuration files (vitest.config.ts, etc.)
+Update or add mock data in src/data/ or within test files
+Refactor test logic for better reliability or performance
 ```
 
 
