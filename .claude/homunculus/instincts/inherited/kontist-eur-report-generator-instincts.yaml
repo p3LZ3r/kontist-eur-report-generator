@@ -1,0 +1,403 @@
+# Instincts generated from https://github.com/p3LZ3r/kontist-eur-report-generator
+# Generated: 2026-03-20T00:03:53.922Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: kontist-eur-report-generator-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: feat, refactor, ui, chore, fix
+
+## Evidence
+
+- 57 commits analyzed
+- Detected conventional commit pattern
+- Examples: chore: replace Biome/Ultracite with Vite+ Oxlint/Oxfmt, update deps and docs, feat(ui): add app icon to hero section and enhance image generation scripts
+
+---
+id: kontist-eur-report-generator-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Commit Length
+
+## Action
+
+Write moderate-length commit messages (~70 characters)
+
+## Evidence
+
+- Average commit message length: 70 chars
+- Based on 57 commits
+
+---
+id: kontist-eur-report-generator-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Naming Files
+
+## Action
+
+Use camelCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: camelCase
+
+---
+id: kontist-eur-report-generator-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: kontist-eur-report-generator-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Export Style
+
+## Action
+
+Prefer default exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: default
+
+---
+id: kontist-eur-report-generator-arch-type-based
+trigger: "when adding new code"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Arch Type Based
+
+## Action
+
+Place code in the appropriate type folder (components/, services/, utils/, etc.)
+
+## Evidence
+
+- Type-based module organization detected
+- Folders: components, data, lib, test, types
+
+---
+id: kontist-eur-report-generator-test-colocate
+trigger: "when writing tests"
+confidence: 0.85
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Test Colocate
+
+## Action
+
+Place test file next to the source file (e.g., Button.test.tsx next to Button.tsx)
+
+## Evidence
+
+- Colocated test pattern detected
+- Tests live alongside source files
+
+---
+id: kontist-eur-report-generator-test-framework
+trigger: "when writing tests"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Test Framework
+
+## Action
+
+Use playwright as the test framework
+
+## Evidence
+
+- Test framework detected: playwright
+- File pattern: *.test.ts
+
+---
+id: kontist-eur-report-generator-test-naming
+trigger: "when creating a test file"
+confidence: 0.85
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Test Naming
+
+## Action
+
+Name test files using the pattern: *.test.ts
+
+## Evidence
+
+- File pattern: *.test.ts
+- Consistent across test files
+
+---
+id: kontist-eur-report-generator-test-mocking
+trigger: "when mocking dependencies in tests"
+confidence: 0.75
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Test Mocking
+
+## Action
+
+Use vi.mock for mocking
+
+## Evidence
+
+- Mocking pattern detected: vi.mock
+- Consistent across test files
+
+---
+id: kontist-eur-report-generator-test-types
+trigger: "when planning tests for a feature"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Test Types
+
+## Action
+
+Write unit, e2e tests to match project standards
+
+## Evidence
+
+- Test types detected: unit, e2e
+- Coverage config: yes
+
+---
+id: kontist-eur-report-generator-workflow-feature-development
+trigger: "when implementing a new feature"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Workflow Feature Development
+
+## Action
+
+Follow the feature-development workflow:
+1. Add feature implementation
+2. Add tests for feature
+3. Update documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~14x per month
+- Files: src/components/*, src/test/*, src/utils/*
+
+---
+id: kontist-eur-report-generator-workflow-refactoring
+trigger: "when refactoring code"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Workflow Refactoring
+
+## Action
+
+Follow the refactoring workflow:
+1. Ensure tests pass before refactor
+2. Refactor code structure
+3. Verify tests still pass
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~9x per month
+- Files: src/**/*
+
+---
+id: kontist-eur-report-generator-workflow-feature-development-core-and-ui
+trigger: "when doing feature development core and ui"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Workflow Feature Development Core And Ui
+
+## Action
+
+Follow the feature-development-core-and-ui workflow:
+1. Update or refactor calculation utilities (e.g., src/utils/euerCalculations.ts, src/utils/eurFieldsLoader.ts, src/utils/constants.ts)
+2. Update or add UI components (e.g., src/components/EuerGenerator.tsx, src/components/FieldGroups.tsx, src/components/TransactionRow.tsx, src/components/TransactionRowMobile.tsx, src/components/NavigationSidebar.tsx)
+3. Update or add data files (e.g., src/data/demo-transactions.ts, src/data/skr03.json, src/data/skr04.json, src/data/skr49.json)
+4. Update or add type definitions (src/types/index.ts)
+5. Update or add tests (src/test/*.test.tsx, src/test/*.test.ts)
+6. Update dependencies or configuration as needed (package.json, package-lock.json, tsconfig.json)
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: src/utils/euerCalculations.ts, src/utils/eurFieldsLoader.ts, src/utils/constants.ts
+
+---
+id: kontist-eur-report-generator-workflow-ui-component-refactor-or-enhancement
+trigger: "when doing ui component refactor or enhancement"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Workflow Ui Component Refactor Or Enhancement
+
+## Action
+
+Follow the ui-component-refactor-or-enhancement workflow:
+1. Modify or extract UI components (e.g., src/components/FieldGroups.tsx, src/components/NavigationSidebar.tsx, src/components/TransactionRow.tsx, src/components/TransactionRowMobile.tsx)
+2. Adjust or add CSS/styles (src/index.css, tailwind.config.js)
+3. Update related utility files if needed (src/utils/guidanceUtils.ts)
+4. Update or remove related props/types (src/types/index.ts)
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: src/components/FieldGroups.tsx, src/components/NavigationSidebar.tsx, src/components/TransactionRow.tsx
+
+---
+id: kontist-eur-report-generator-workflow-test-enhancement-and-maintenance
+trigger: "when doing test enhancement and maintenance"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Workflow Test Enhancement And Maintenance
+
+## Action
+
+Follow the test-enhancement-and-maintenance workflow:
+1. Update or add test files (src/test/*.test.tsx, src/test/*.test.ts)
+2. Update or mock test data (src/data/demo-transactions.ts, src/data/skr04.json, etc.)
+3. Adjust test configuration (vitest.config.ts)
+4. Refactor test utilities or logging (integration-test.js)
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: src/test/*.test.tsx, src/test/*.test.ts, src/data/demo-transactions.ts
+
+---
+id: kontist-eur-report-generator-workflow-dependency-and-tooling-upgrade
+trigger: "when doing dependency and tooling upgrade"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Workflow Dependency And Tooling Upgrade
+
+## Action
+
+Follow the dependency-and-tooling-upgrade workflow:
+1. Update package.json and package-lock.json
+2. Update or replace tool configuration files (e.g., vite.config.ts, vitest.config.ts, biome.jsonc, .oxlintrc.json, .oxfmtrc.json)
+3. Update related documentation (README.md, AGENTS.md, CLAUDE.md)
+4. Update or remove old config files
+5. Update scripts or integration files as needed
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: package.json, package-lock.json, vite.config.ts
+
+---
+id: kontist-eur-report-generator-workflow-configuration-and-deployment-update
+trigger: "when doing configuration and deployment update"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/p3LZ3r/kontist-eur-report-generator
+---
+
+# Kontist Eur Report Generator Workflow Configuration And Deployment Update
+
+## Action
+
+Follow the configuration-and-deployment-update workflow:
+1. Update deployment config (vercel.json)
+2. Update or add CI/CD workflow files (.github/workflows/*.yml)
+3. Update project or tool settings (.claude/settings.local.json, .taskmaster/config.json, .taskmaster/tasks/tasks.json)
+4. Update documentation if needed (DEPLOYMENT.md)
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: vercel.json, .github/workflows/*.yml, .claude/settings.local.json
+
