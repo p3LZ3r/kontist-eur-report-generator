@@ -225,9 +225,9 @@ describe("Category Mappings - SKR Categorization Engine", () => {
       });
     });
 
-    it('should allow 7xxx accounts to be income or expense', () => {
-      const categories7xxx = Object.entries(skr04Categories).filter(
-        ([code]) => code.startsWith("7"),
+    it("should allow 7xxx accounts to be income or expense", () => {
+      const categories7xxx = Object.entries(skr04Categories).filter(([code]) =>
+        code.startsWith("7"),
       );
 
       categories7xxx.forEach(([, category]) => {
