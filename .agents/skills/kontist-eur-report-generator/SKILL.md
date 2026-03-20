@@ -29,7 +29,7 @@ Activate this skill when:
 
 ## Commit Conventions
 
-Follow these commit message conventions based on 115 analyzed commits.
+Follow these commit message conventions based on 126 analyzed commits.
 
 ### Commit Style: Conventional Commits
 
@@ -43,7 +43,7 @@ Follow these commit message conventions based on 115 analyzed commits.
 
 ### Message Guidelines
 
-- Average message length: ~80 characters
+- Average message length: ~81 characters
 - Keep first line concise and descriptive
 - Use imperative mood ("Add feature" not "Added feature")
 
@@ -51,7 +51,7 @@ Follow these commit message conventions based on 115 analyzed commits.
 *Commit message example*
 
 ```text
-feat: add kontist-eur-report-generator ECC bundle (.claude/commands/add-ecc-bundle.md)
+feat: add kontist-eur-report-generator ECC bundle (.claude/commands/add-or-update-command-md.md)
 ```
 
 *Commit message example*
@@ -81,7 +81,7 @@ ui(fields): center field number badge, narrow cell (w-8) and add slight horizont
 *Commit message example*
 
 ```text
-feat: add kontist-eur-report-generator ECC bundle (.claude/commands/refactoring.md)
+feat: add kontist-eur-report-generator ECC bundle (.claude/commands/add-or-update-ecc-bundle.md)
 ```
 
 *Commit message example*
@@ -224,30 +224,28 @@ Standard feature implementation workflow
 **Example commit sequence**:
 ```
 feat: add kontist-eur-report-generator ECC bundle (.codex/agents/reviewer.toml)
+feat: add kontist-eur-report-generator ECC bundle (.codex/agents/explorer.toml)
 feat: add kontist-eur-report-generator ECC bundle (.codex/agents/docs-researcher.toml)
-feat: add kontist-eur-report-generator ECC bundle (.claude/homunculus/instincts/inherited/kontist-eur-report-generator-instincts.yaml)
 ```
 
 ### Add Or Update Ecc Bundle
 
-Adds or updates an ECC bundle for kontist-eur-report-generator, including commands, skills, identity, and agent configuration files.
+Adds or updates an ECC bundle for the kontist-eur-report-generator, including command documentation, identity, skills, and tool configuration.
 
 **Frequency**: ~4 times per month
 
 **Steps**:
-1. Add or update .claude/commands/*.md files (such as add-ecc-bundle.md, feature-development.md, refactoring.md, feature-development-core-and-ui.md, add-or-update-ecc-bundle.md)
+1. Add or update .claude/commands/add-or-update-ecc-bundle.md
 2. Add or update .claude/identity.json
 3. Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 4. Add or update .claude/ecc-tools.json
 5. Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
 6. Add or update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
-7. Add or update .codex/agents/docs-researcher.toml, .codex/agents/reviewer.toml, .codex/agents/explorer.toml
+7. Add or update .codex/agents/docs-researcher.toml
+8. Add or update .codex/agents/reviewer.toml
+9. Add or update .codex/agents/explorer.toml
 
 **Files typically involved**:
-- `.claude/commands/add-ecc-bundle.md`
-- `.claude/commands/feature-development.md`
-- `.claude/commands/refactoring.md`
-- `.claude/commands/feature-development-core-and-ui.md`
 - `.claude/commands/add-or-update-ecc-bundle.md`
 - `.claude/identity.json`
 - `.claude/skills/kontist-eur-report-generator/SKILL.md`
@@ -260,46 +258,64 @@ Adds or updates an ECC bundle for kontist-eur-report-generator, including comman
 
 **Example commit sequence**:
 ```
-Add or update .claude/commands/*.md files (such as add-ecc-bundle.md, feature-development.md, refactoring.md, feature-development-core-and-ui.md, add-or-update-ecc-bundle.md)
+Add or update .claude/commands/add-or-update-ecc-bundle.md
 Add or update .claude/identity.json
 Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 Add or update .claude/ecc-tools.json
 Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
 Add or update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
-Add or update .codex/agents/docs-researcher.toml, .codex/agents/reviewer.toml, .codex/agents/explorer.toml
+Add or update .codex/agents/docs-researcher.toml
+Add or update .codex/agents/reviewer.toml
+Add or update .codex/agents/explorer.toml
 ```
 
-### Add Or Update Command Md
+### Feature Development Command Docs
 
-Adds or updates a command markdown file under .claude/commands, such as for feature development or refactoring.
+Adds or updates feature development documentation for kontist-eur-report-generator commands.
 
-**Frequency**: ~3 times per month
+**Frequency**: ~4 times per month
 
 **Steps**:
-1. Create or update a .claude/commands/*.md file (e.g., feature-development.md, refactoring.md, feature-development-core-and-ui.md, add-ecc-bundle.md, add-or-update-ecc-bundle.md)
+1. Add or update .claude/commands/feature-development.md
 
 **Files typically involved**:
 - `.claude/commands/feature-development.md`
-- `.claude/commands/refactoring.md`
-- `.claude/commands/feature-development-core-and-ui.md`
-- `.claude/commands/add-ecc-bundle.md`
-- `.claude/commands/add-or-update-ecc-bundle.md`
 
 **Example commit sequence**:
 ```
-Create or update a .claude/commands/*.md file (e.g., feature-development.md, refactoring.md, feature-development-core-and-ui.md, add-ecc-bundle.md, add-or-update-ecc-bundle.md)
+Add or update .claude/commands/feature-development.md
 ```
 
-### Add Or Update Agent Config
+### Add Or Update Skill Docs
 
-Adds or updates agent configuration TOML files for docs-researcher, reviewer, and explorer under .codex/agents.
+Adds or updates SKILL.md documentation for kontist-eur-report-generator in both .claude and .agents directories.
 
-**Frequency**: ~3 times per month
+**Frequency**: ~4 times per month
 
 **Steps**:
-1. Create or update .codex/agents/docs-researcher.toml
-2. Create or update .codex/agents/reviewer.toml
-3. Create or update .codex/agents/explorer.toml
+1. Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
+2. Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+
+**Files typically involved**:
+- `.claude/skills/kontist-eur-report-generator/SKILL.md`
+- `.agents/skills/kontist-eur-report-generator/SKILL.md`
+
+**Example commit sequence**:
+```
+Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
+Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+```
+
+### Update Codex Agents
+
+Adds or updates agent configuration files for docs-researcher, reviewer, and explorer in the .codex/agents directory.
+
+**Frequency**: ~4 times per month
+
+**Steps**:
+1. Add or update .codex/agents/docs-researcher.toml
+2. Add or update .codex/agents/reviewer.toml
+3. Add or update .codex/agents/explorer.toml
 
 **Files typically involved**:
 - `.codex/agents/docs-researcher.toml`
@@ -308,46 +324,26 @@ Adds or updates agent configuration TOML files for docs-researcher, reviewer, an
 
 **Example commit sequence**:
 ```
-Create or update .codex/agents/docs-researcher.toml
-Create or update .codex/agents/reviewer.toml
-Create or update .codex/agents/explorer.toml
-```
-
-### Add Or Update Skill Md
-
-Adds or updates SKILL.md files for the kontist-eur-report-generator skill in both .agents and .claude directories.
-
-**Frequency**: ~3 times per month
-
-**Steps**:
-1. Create or update .agents/skills/kontist-eur-report-generator/SKILL.md
-2. Create or update .claude/skills/kontist-eur-report-generator/SKILL.md
-
-**Files typically involved**:
-- `.agents/skills/kontist-eur-report-generator/SKILL.md`
-- `.claude/skills/kontist-eur-report-generator/SKILL.md`
-
-**Example commit sequence**:
-```
-Create or update .agents/skills/kontist-eur-report-generator/SKILL.md
-Create or update .claude/skills/kontist-eur-report-generator/SKILL.md
+Add or update .codex/agents/docs-researcher.toml
+Add or update .codex/agents/reviewer.toml
+Add or update .codex/agents/explorer.toml
 ```
 
 ### Update Identity Json
 
 Adds or updates the .claude/identity.json file for the kontist-eur-report-generator ECC bundle.
 
-**Frequency**: ~3 times per month
+**Frequency**: ~4 times per month
 
 **Steps**:
-1. Create or update .claude/identity.json
+1. Add or update .claude/identity.json
 
 **Files typically involved**:
 - `.claude/identity.json`
 
 **Example commit sequence**:
 ```
-Create or update .claude/identity.json
+Add or update .claude/identity.json
 ```
 
 
