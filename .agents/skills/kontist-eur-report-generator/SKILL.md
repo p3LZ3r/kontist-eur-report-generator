@@ -29,7 +29,7 @@ Activate this skill when:
 
 ## Commit Conventions
 
-Follow these commit message conventions based on 137 analyzed commits.
+Follow these commit message conventions based on 148 analyzed commits.
 
 ### Commit Style: Conventional Commits
 
@@ -223,8 +223,8 @@ Standard feature implementation workflow
 
 **Example commit sequence**:
 ```
-feat: add kontist-eur-report-generator ECC bundle (.codex/agents/explorer.toml)
 feat: add kontist-eur-report-generator ECC bundle (.codex/agents/reviewer.toml)
+feat: add kontist-eur-report-generator ECC bundle (.codex/agents/explorer.toml)
 feat: add kontist-eur-report-generator ECC bundle (.codex/agents/docs-researcher.toml)
 ```
 
@@ -238,83 +238,51 @@ Adds or updates an ECC bundle for the kontist-eur-report-generator skill, includ
 1. Add or update .claude/commands/add-or-update-ecc-bundle.md
 2. Add or update .claude/identity.json
 3. Add or update .claude/ecc-tools.json
-4. Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
-5. Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
-6. Add or update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
-7. Add or update .codex/agents/docs-researcher.toml
-8. Add or update .codex/agents/reviewer.toml
-9. Add or update .codex/agents/explorer.toml
+4. Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+5. Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
+6. Optionally update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
 
 **Files typically involved**:
 - `.claude/commands/add-or-update-ecc-bundle.md`
 - `.claude/identity.json`
 - `.claude/ecc-tools.json`
-- `.claude/skills/kontist-eur-report-generator/SKILL.md`
 - `.agents/skills/kontist-eur-report-generator/SKILL.md`
+- `.claude/skills/kontist-eur-report-generator/SKILL.md`
 - `.agents/skills/kontist-eur-report-generator/agents/openai.yaml`
-- `.codex/agents/docs-researcher.toml`
-- `.codex/agents/reviewer.toml`
-- `.codex/agents/explorer.toml`
 
 **Example commit sequence**:
 ```
 Add or update .claude/commands/add-or-update-ecc-bundle.md
 Add or update .claude/identity.json
 Add or update .claude/ecc-tools.json
-Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
-Add or update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
-Add or update .codex/agents/docs-researcher.toml
-Add or update .codex/agents/reviewer.toml
-Add or update .codex/agents/explorer.toml
+Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
+Optionally update .agents/skills/kontist-eur-report-generator/agents/openai.yaml
 ```
 
-### Feature Development Command Docs
+### Add Or Update Feature Development Command
 
-Adds or updates documentation for feature development commands related to the kontist-eur-report-generator ECC bundle.
+Adds or updates documentation and implementation for the feature development command related to kontist-eur-report-generator.
 
 **Frequency**: ~3 times per month
 
 **Steps**:
-1. Add or update .claude/commands/feature-development.md
-2. Optionally add .claude/commands/feature-development-command-docs.md
-3. Optionally add .claude/commands/feature-development-core-and-ui.md
+1. Add or update .claude/commands/feature-development-command-docs.md
+2. Add or update .claude/commands/feature-development.md
 
 **Files typically involved**:
-- `.claude/commands/feature-development.md`
 - `.claude/commands/feature-development-command-docs.md`
-- `.claude/commands/feature-development-core-and-ui.md`
+- `.claude/commands/feature-development.md`
 
 **Example commit sequence**:
 ```
+Add or update .claude/commands/feature-development-command-docs.md
 Add or update .claude/commands/feature-development.md
-Optionally add .claude/commands/feature-development-command-docs.md
-Optionally add .claude/commands/feature-development-core-and-ui.md
-```
-
-### Add Or Update Skill Metadata
-
-Adds or updates SKILL.md metadata files for the kontist-eur-report-generator skill in both .agents and .claude directories.
-
-**Frequency**: ~4 times per month
-
-**Steps**:
-1. Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
-2. Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
-
-**Files typically involved**:
-- `.agents/skills/kontist-eur-report-generator/SKILL.md`
-- `.claude/skills/kontist-eur-report-generator/SKILL.md`
-
-**Example commit sequence**:
-```
-Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
-Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 ```
 
 ### Add Or Update Codex Agents
 
-Adds or updates the codex agent configuration files for docs-researcher, reviewer, and explorer.
+Adds or updates agent configuration files for docs-researcher, reviewer, and explorer in the .codex/agents directory.
 
 **Frequency**: ~4 times per month
 
@@ -335,24 +303,24 @@ Add or update .codex/agents/reviewer.toml
 Add or update .codex/agents/explorer.toml
 ```
 
-### Add Or Update Identity And Tools
+### Add Or Update Skill Documentation
 
-Adds or updates the identity and ECC tools configuration for the kontist-eur-report-generator ECC bundle.
+Adds or updates the SKILL.md documentation for the kontist-eur-report-generator skill in both .agents and .claude directories.
 
 **Frequency**: ~4 times per month
 
 **Steps**:
-1. Add or update .claude/identity.json
-2. Add or update .claude/ecc-tools.json
+1. Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+2. Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 
 **Files typically involved**:
-- `.claude/identity.json`
-- `.claude/ecc-tools.json`
+- `.agents/skills/kontist-eur-report-generator/SKILL.md`
+- `.claude/skills/kontist-eur-report-generator/SKILL.md`
 
 **Example commit sequence**:
 ```
-Add or update .claude/identity.json
-Add or update .claude/ecc-tools.json
+Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 ```
 
 
