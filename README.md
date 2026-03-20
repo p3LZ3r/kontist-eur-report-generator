@@ -7,6 +7,7 @@ This React/TypeScript application is a specialized tool for generating EUR (Euro
 **Target Users:** Accountants, financial professionals, and small-to-medium businesses using Kontist banking services who need automated, standards-compliant EUR reporting for tax and accounting purposes.
 
 **Key Features:**
+
 - Transaction data import and processing utilities
 - EUR calculation engine with category mappings
 - Support for multiple SKR standards (03, 04, 49) via structured data files
@@ -19,21 +20,25 @@ This React/TypeScript application is a specialized tool for generating EUR (Euro
 To set up the project locally, follow these steps:
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/your-username/kontist-eur-generator.git
    ```
 
 2. **Navigate to the project directory:**
+
    ```bash
    cd kontist-eur-generator
    ```
 
 3. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 4. **Run the development server:**
+
    ```bash
    npm run dev
    ```
@@ -63,6 +68,7 @@ We welcome contributions to improve the kontist-eur-report-generator project! To
 1. **Fork the repository** on GitHub.
 
 2. **Create a feature branch** from the main branch:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -72,11 +78,13 @@ We welcome contributions to improve the kontist-eur-report-generator project! To
 4. **Test your changes** thoroughly.
 
 5. **Commit your changes** with clear, descriptive commit messages:
+
    ```bash
    git commit -m "Add feature: description of changes"
    ```
 
 6. **Push to your fork:**
+
    ```bash
    git push origin feature/your-feature-name
    ```

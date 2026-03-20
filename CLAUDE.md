@@ -1,14 +1,17 @@
 <!-- OPENSPEC:START -->
+
 # OpenSpec Instructions
 
 These instructions are for AI assistants working in this project.
 
 Always open `@/openspec/AGENTS.md` when the request:
+
 - Mentions planning or proposals (words like proposal, spec, change, plan)
 - Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
 - Sounds ambiguous and you need the authoritative spec before coding
 
 Use `@/openspec/AGENTS.md` to learn:
+
 - How to create and apply change proposals
 - Spec format and conventions
 - Project structure and guidelines
@@ -26,9 +29,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **ALWAYS run the following commands before completing any task:**
 
 Automatically use the IDE's built-in diagnostics tool to check for linting and type errors:
-   - Run `mcp__ide__getDiagnostics` to check all files for diagnostics
-   - Fix any linting or type errors before considering the task complete
-   - Do this for any file you create or modify
+
+- Run `mcp__ide__getDiagnostics` to check all files for diagnostics
+- Fix any linting or type errors before considering the task complete
+- Do this for any file you create or modify
 
 This is a CRITICAL step that must NEVER be skipped when working on any code-related task.
 
@@ -45,6 +49,7 @@ When code examples, setup or configuration steps, or library/API documentation a
 - Emerging best practices in the codebase
 
 # Analysis Process:
+
 - Compare new code with existing rules
 - Identify patterns that should be standardized
 - Look for references to external documentation
@@ -71,7 +76,7 @@ When code examples, setup or configuration steps, or library/API documentation a
   // If you see repeated patterns like:
   const data = await prisma.user.findMany({
     select: { id: true, email: true },
-    where: { status: 'ACTIVE' }
+    where: { status: "ACTIVE" },
   });
 
   // Consider adding to [prisma.mdc](mdc:shipixen/.cursor/rules/prisma.mdc):
@@ -111,6 +116,7 @@ When code examples, setup or configuration steps, or library/API documentation a
 ## Development Commands
 
 ### Core Development
+
 ```bash
 npm run dev          # Start Vite development server at localhost:5173
 npm run build        # Build for production (runs TypeScript compiler and Vite build)
@@ -121,6 +127,7 @@ npm run format:check # Check formatting without modifying files
 ```
 
 ### Testing
+
 ```bash
 npm run test         # Run Vitest unit tests
 npm run test:ui      # Run Vitest with interactive UI
@@ -135,18 +142,21 @@ This is a React/TypeScript application for generating German EÜR (Einnahmen-Üb
 ### Core Domain Logic
 
 **EÜR Calculations** (`src/utils/euerCalculations.ts`)
+
 - Main calculation engine with VAT separation logic
 - Kleinunternehmer vs regular business handling
 - ELSTER field mapping and validation
 - Functions: `calculateEuer()`, `generateElsterOverview()`, `populateAllElsterFields()`
 
-**Category Mappings** (`src/utils/categoryMappings.ts`) 
+**Category Mappings** (`src/utils/categoryMappings.ts`)
+
 - SKR03/SKR04/SKR49 chart of accounts mappings
 - ELSTER field assignments for each category
 - Dynamic category loading from JSON files
 - VAT rate configuration per category
 
 **Transaction Processing** (`src/utils/transactionUtils.ts`)
+
 - CSV parsing for Kontist and Holvi formats
 - Automatic transaction categorization using keyword detection
 - Bank format detection
@@ -154,7 +164,7 @@ This is a React/TypeScript application for generating German EÜR (Einnahmen-Üb
 ### Data Flow Architecture
 
 1. **CSV Upload & Parsing**: CSV files → Transaction objects with automatic categorization
-2. **Category Assignment**: User can override automatic categories via dropdowns  
+2. **Category Assignment**: User can override automatic categories via dropdowns
 3. **EÜR Calculation**: Transactions + categories → EÜR calculation with VAT separation
 4. **ELSTER Export**: EÜR data → Multiple export formats (CSV, JSON, PDF reports)
 
@@ -168,12 +178,14 @@ This is a React/TypeScript application for generating German EÜR (Einnahmen-Üb
 ### UI Architecture
 
 **Main Component**: `EuerGenerator.tsx` - Orchestrates the entire workflow
+
 - File upload and processing
 - Transaction categorization interface with pagination
 - ELSTER guidance system with navigation
 - Multiple export options
 
 **ELSTER Guidance System**:
+
 - `NavigationSidebar.tsx`: Progress tracking and section navigation
 - `FieldGroups.tsx`: Organized display of ELSTER fields
 - `FieldDetailModal.tsx`: Drill-down into transaction details
@@ -181,13 +193,14 @@ This is a React/TypeScript application for generating German EÜR (Einnahmen-Üb
 ### Export Capabilities
 
 - **Legacy Text Export**: Traditional EÜR summary format
-- **ELSTER CSV**: Direct import into ELSTER software  
+- **ELSTER CSV**: Direct import into ELSTER software
 - **ELSTER JSON**: Structured data for integration
 - **Detailed PDF Reports**: Complete transaction listings with calculations
 
 ### SKR Standards Support
 
 The application supports multiple German accounting standards:
+
 - **SKR03**: Industry and trade businesses
 - **SKR04**: Service businesses (default)
 - **SKR49**: Freelancers and professionals
@@ -197,6 +210,7 @@ Categories are loaded dynamically from `/public/data/{skr}.json` files with fall
 ### VAT Handling
 
 Critical business logic for German tax compliance:
+
 - **Kleinunternehmer (§19 UStG)**: No VAT separation, gross amounts used
 - **Regular businesses**: VAT separated using category-specific rates
 - Automatic ELSTER VAT field population (fields 23, 24, 44-46)
@@ -210,18 +224,21 @@ Critical business logic for German tax compliance:
 ## Technology Stack Overview
 
 ### Core Framework & Runtime
+
 - **React 19.1.1** - Latest stable React with concurrent features, improved error boundaries, and new hooks. Excellent choice for modern development.
 - **TypeScript 5.8.3** - Latest TypeScript with improved type inference, better performance, and enhanced developer experience.
 - **Vite 7.1.2** - Ultra-fast build tool with native ES modules, excellent HMR, and optimized production builds.
 
 ### UI & Styling Architecture
+
 - **Tailwind CSS 4.1.12** - Latest major version with improved performance, better IntelliSense, and new features. Excellent for utility-first styling.
 - **@tailwindcss/vite 4.1.12** - Official Vite plugin for optimal Tailwind integration.
 - **tailwindcss-animate 1.0.7** - Animation utilities for smooth UI transitions.
 - **tailwind-merge 3.3.1** - Intelligent Tailwind class merging for dynamic styling.
 
 ### Component System
-- **@radix-ui/react-*** - Comprehensive unstyled component library:
+
+- **@radix-ui/react-\*** - Comprehensive unstyled component library:
   - `react-checkbox 1.3.3` - Accessible checkbox components
   - `react-dialog 1.1.15` - Modal and dialog primitives
   - `react-select 2.2.6` - Advanced select/dropdown components
@@ -231,11 +248,13 @@ Critical business logic for German tax compliance:
 - **clsx 2.1.1** - Lightweight utility for conditionally joining classNames.
 
 ### Development & Build Tools
+
 - **@vitejs/plugin-react 5.0.0** - Official React plugin for Vite with Fast Refresh support.
 - **Autoprefixer 10.4.21** - PostCSS plugin for vendor prefix automation.
 - **PostCSS 8.5.6** - CSS transformation toolkit.
 
 ### Testing Infrastructure
+
 - **Vitest 3.2.4** - Vite-native test runner with Jest compatibility and excellent performance.
 - **@testing-library/react 16.3.0** - React testing utilities following best practices.
 - **@testing-library/jest-dom 6.8.0** - Custom Jest matchers for DOM elements.
@@ -244,9 +263,11 @@ Critical business logic for German tax compliance:
 - **jsdom 26.1.0** - DOM implementation for Node.js testing environment.
 
 ### Code Quality & Linting
+
 - **Ultracite 5.6.2** - Zero-configuration linting and formatting tool built on Biome (Rust-based). Provides 300+ pre-configured rules optimized for React/TypeScript with 10-100x faster performance than ESLint. Unified replacement for ESLint + Prettier.
 
 ### Development Utilities
+
 - **@types/node 24.3.0** - Node.js type definitions.
 - **@types/react 19.1.10** - React type definitions matching the runtime version.
 - **@types/react-dom 19.1.7** - React DOM type definitions.
@@ -255,17 +276,20 @@ Critical business logic for German tax compliance:
 ### Version Analysis & Best Practices
 
 #### ✅ Excellent Version Choices
+
 - **React 19.1.1**: Latest stable with cutting-edge features like concurrent rendering improvements
 - **TypeScript 5.8.3**: Latest with excellent tooling support and performance improvements
 - **Vite 7.1.2**: Latest major version with significant performance improvements
 - **Tailwind CSS 4.1.12**: Latest major version with CSS-first architecture
 
 #### ⚠️ Considerations
+
 - **Radix UI**: All versions are current and stable, excellent for accessibility
 - **Testing Library**: Versions are well-aligned and follow current best practices
 - **ESLint 9.x**: Using the latest major version with flat config (modern approach)
 
 #### 🔧 Recommended Practices
+
 1. **React 19**: Take advantage of concurrent features and improved error boundaries
 2. **TypeScript**: Utilize strict mode for better type safety
 3. **Tailwind 4**: Leverage the new CSS-first architecture for better performance
@@ -273,6 +297,7 @@ Critical business logic for German tax compliance:
 5. **Testing**: Maintain the comprehensive testing setup with unit + E2E coverage
 
 #### 📦 Dependency Management
+
 - All dependencies are pinned to specific versions (good for reproducibility)
 - No major version conflicts detected
 - Development and runtime dependencies are properly separated
@@ -283,6 +308,7 @@ This stack represents a modern, performant, and maintainable architecture suitab
 ## Project Directory Structure & File Organization
 
 ### 📁 Source Directory Overview
+
 ```
 src/
 ├── assets/           # Static assets
@@ -296,6 +322,7 @@ src/
 ```
 
 ### 🎯 Core Application Files
+
 - **`main.tsx`** - Application entry point and React root mounting
 - **`App.tsx`** - Main application wrapper with routing and layout
 - **`App.css`** - Application-specific styles
@@ -305,6 +332,7 @@ src/
 ### 🧩 Components Architecture
 
 #### **Main Application Components** (`/components/`)
+
 - **`EuerGenerator.tsx`** - 🏗️ **CORE COMPONENT** - Main application orchestrator handling:
   - CSV file upload and processing
   - Transaction categorization interface
@@ -317,7 +345,9 @@ src/
 - **`HelpTooltip.tsx`** - Inline help tooltips for form elements
 
 #### **UI Primitives** (`/components/ui/`)
+
 Built on Radix UI for accessibility and customizability:
+
 - **`button.tsx`** - Button component with variants
 - **`card.tsx`** - Card layout components (Card, CardHeader, CardContent)
 - **`select.tsx`** - Dropdown select components
@@ -331,16 +361,19 @@ Built on Radix UI for accessibility and customizability:
 ### 🗂️ Data & Configuration
 
 #### **Static Data** (`/data/`)
+
 - **`skr03.json`** - SKR03 accounting categories (Industry/Trade)
 - **`skr04.json`** - SKR04 accounting categories (Services) - **DEFAULT**
 - **`skr49.json`** - SKR49 accounting categories (Freelancers)
 
 #### **Assets** (`/assets/`)
+
 - _(No assets currently - placeholder directory for future brand assets)_
 
 ### 🔧 Business Logic & Utilities
 
 #### **Core Business Logic** (`/utils/`)
+
 - **`euerCalculations.ts`** - 💰 **CALCULATION ENGINE**
   - Main EÜR calculation logic
   - VAT separation for Kleinunternehmer vs regular businesses
@@ -372,9 +405,11 @@ Built on Radix UI for accessibility and customizability:
   - Fallback handling
 
 #### **Shared Utilities** (`/lib/`)
+
 - **`utils.ts`** - Common utility functions (className merging, etc.)
 
 ### 🧪 Testing Infrastructure (`/test/`)
+
 - **`setup.ts`** - Test environment configuration
 - **`euerCalculations.test.ts`** - Core calculation logic tests
 - **`exportUtils.test.ts`** - Export functionality tests
@@ -383,6 +418,7 @@ Built on Radix UI for accessibility and customizability:
 - **`performance.test.ts`** - Performance and load testing
 
 ### 📝 Type Definitions (`/types/`)
+
 - **`index.ts`** - 🎯 **CENTRAL TYPE DEFINITIONS**
   - `Transaction` - Bank transaction with categorization
   - `EuerCalculation` - Complete EÜR calculation results
@@ -394,6 +430,7 @@ Built on Radix UI for accessibility and customizability:
 ### 🏗️ Architecture Principles
 
 #### **Data Flow**
+
 1. **Input Layer**: CSV upload → `transactionUtils.ts`
 2. **Processing Layer**: Category assignment → `categoryMappings.ts`
 3. **Business Logic**: EÜR calculation → `euerCalculations.ts`
@@ -401,6 +438,7 @@ Built on Radix UI for accessibility and customizability:
 5. **Output Layer**: Export generation → `exportUtils.ts`
 
 #### **Component Hierarchy**
+
 ```
 App.tsx
 └── EuerGenerator.tsx (Main orchestrator)
@@ -411,6 +449,7 @@ App.tsx
 ```
 
 #### **Separation of Concerns**
+
 - **Components**: Pure UI logic and user interaction
 - **Utils**: Business logic and data processing
 - **Types**: Type safety and contracts
@@ -420,5 +459,6 @@ App.tsx
 This structure ensures maintainability, testability, and clear separation between UI, business logic, and data layers.
 
 ## Task Master AI Instructions
+
 **Import Task Master's development workflow commands and guidelines, treat as if import is in the main CLAUDE.md file.**
 @./.taskmaster/CLAUDE.md
