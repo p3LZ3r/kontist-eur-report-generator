@@ -29,7 +29,7 @@ Activate this skill when:
 
 ## Commit Conventions
 
-Follow these commit message conventions based on 57 analyzed commits.
+Follow these commit message conventions based on 71 analyzed commits.
 
 ### Commit Style: Conventional Commits
 
@@ -43,7 +43,7 @@ Follow these commit message conventions based on 57 analyzed commits.
 
 ### Message Guidelines
 
-- Average message length: ~70 characters
+- Average message length: ~74 characters
 - Keep first line concise and descriptive
 - Use imperative mood ("Add feature" not "Added feature")
 
@@ -51,13 +51,13 @@ Follow these commit message conventions based on 57 analyzed commits.
 *Commit message example*
 
 ```text
-chore: replace Biome/Ultracite with Vite+ Oxlint/Oxfmt, update deps and docs
+feat: add kontist-eur-report-generator ECC bundle (.claude/commands/feature-development-core-and-ui.md)
 ```
 
 *Commit message example*
 
 ```text
-feat(ui): add app icon to hero section and enhance image generation scripts
+chore: replace Biome/Ultracite with Vite+ Oxlint/Oxfmt, update deps and docs
 ```
 
 *Commit message example*
@@ -81,19 +81,19 @@ ui(fields): center field number badge, narrow cell (w-8) and add slight horizont
 *Commit message example*
 
 ```text
-chore: migrate to Vite+ toolchain (Vite 8, unified config)
+feat: add kontist-eur-report-generator ECC bundle (.claude/commands/refactoring.md)
 ```
 
 *Commit message example*
 
 ```text
-feat(assets): add favicon support and remove placeholder images
+feat: add kontist-eur-report-generator ECC bundle (.claude/commands/feature-development.md)
 ```
 
 *Commit message example*
 
 ```text
-feat(core): implement major data structure updates and performance enhancements
+feat: add kontist-eur-report-generator ECC bundle (.codex/agents/docs-researcher.toml)
 ```
 
 ## Architecture
@@ -214,7 +214,7 @@ These workflows were detected from analyzing commit patterns.
 
 Standard feature implementation workflow
 
-**Frequency**: ~14 times per month
+**Frequency**: ~20 times per month
 
 **Steps**:
 1. Add feature implementation
@@ -223,15 +223,15 @@ Standard feature implementation workflow
 
 **Files typically involved**:
 - `src/components/*`
+- `src/components/ui/*`
 - `src/test/*`
-- `src/utils/*`
 - `**/*.test.*`
 
 **Example commit sequence**:
 ```
-build(deps): add polar sdk and update taskmaster config
-refactor(ui): simplify UI components and align ELSTER integration
-"Claude PR Assistant workflow"
+feat(payment): implement compliant purchase flow for ELSTER access
+refactor(payment): remove Polar.sh payment integration and gating
+fix: remove unused imports Shield and Info from EuerGenerator.tsx
 ```
 
 ### Refactoring
@@ -250,127 +250,106 @@ Code refactoring and cleanup workflow
 
 **Example commit sequence**:
 ```
-refactor(ui): simplify UI components and align ELSTER integration
-"Claude PR Assistant workflow"
-"Claude Code Review workflow"
+refactor(components): remove help modal functionality
+feat(payment): implement compliant purchase flow for ELSTER access
+refactor(payment): remove Polar.sh payment integration and gating
 ```
 
 ### Feature Development Core And Ui
 
-Implements or enhances core calculation logic and/or UI components, often together, including updates to calculation utilities, UI components, and types. Frequently includes test updates and data file changes.
+Implements new features or major enhancements affecting both core logic and UI components, often with supporting tests and documentation.
 
 **Frequency**: ~2 times per month
 
 **Steps**:
-1. Update or refactor calculation utilities (e.g., src/utils/euerCalculations.ts, src/utils/eurFieldsLoader.ts, src/utils/constants.ts)
-2. Update or add UI components (e.g., src/components/EuerGenerator.tsx, src/components/FieldGroups.tsx, src/components/TransactionRow.tsx, src/components/TransactionRowMobile.tsx, src/components/NavigationSidebar.tsx)
-3. Update or add data files (e.g., src/data/demo-transactions.ts, src/data/skr03.json, src/data/skr04.json, src/data/skr49.json)
-4. Update or add type definitions (src/types/index.ts)
-5. Update or add tests (src/test/*.test.tsx, src/test/*.test.ts)
-6. Update dependencies or configuration as needed (package.json, package-lock.json, tsconfig.json)
+1. Update or add core logic files (e.g., calculation engines, data mappings, utilities)
+2. Update or add UI components (e.g., src/components/*, src/components/ui/*)
+3. Update or add supporting data files (e.g., src/data/*, public/data/*)
+4. Update or add tests (e.g., src/test/*)
+5. Update configuration/build files if needed (e.g., package.json, vite.config.ts)
+6. Optionally update documentation (e.g., AGENTS.md, CLAUDE.md)
 
 **Files typically involved**:
-- `src/utils/euerCalculations.ts`
-- `src/utils/eurFieldsLoader.ts`
-- `src/utils/constants.ts`
-- `src/components/EuerGenerator.tsx`
-- `src/components/FieldGroups.tsx`
-- `src/components/TransactionRow.tsx`
-- `src/components/TransactionRowMobile.tsx`
-- `src/components/NavigationSidebar.tsx`
-- `src/data/demo-transactions.ts`
-- `src/data/skr03.json`
-- `src/data/skr04.json`
-- `src/data/skr49.json`
-- `src/types/index.ts`
+- `src/components/*.tsx`
+- `src/components/ui/*.tsx`
+- `src/data/*.ts`
+- `src/data/*.json`
+- `src/utils/*.ts`
 - `src/test/*.test.tsx`
 - `src/test/*.test.ts`
 - `package.json`
-- `package-lock.json`
-- `tsconfig.json`
+- `vite.config.ts`
+- `AGENTS.md`
+- `CLAUDE.md`
 
 **Example commit sequence**:
 ```
-Update or refactor calculation utilities (e.g., src/utils/euerCalculations.ts, src/utils/eurFieldsLoader.ts, src/utils/constants.ts)
-Update or add UI components (e.g., src/components/EuerGenerator.tsx, src/components/FieldGroups.tsx, src/components/TransactionRow.tsx, src/components/TransactionRowMobile.tsx, src/components/NavigationSidebar.tsx)
-Update or add data files (e.g., src/data/demo-transactions.ts, src/data/skr03.json, src/data/skr04.json, src/data/skr49.json)
-Update or add type definitions (src/types/index.ts)
-Update or add tests (src/test/*.test.tsx, src/test/*.test.ts)
-Update dependencies or configuration as needed (package.json, package-lock.json, tsconfig.json)
+Update or add core logic files (e.g., calculation engines, data mappings, utilities)
+Update or add UI components (e.g., src/components/*, src/components/ui/*)
+Update or add supporting data files (e.g., src/data/*, public/data/*)
+Update or add tests (e.g., src/test/*)
+Update configuration/build files if needed (e.g., package.json, vite.config.ts)
+Optionally update documentation (e.g., AGENTS.md, CLAUDE.md)
 ```
 
 ### Ui Component Refactor Or Enhancement
 
-Refactors, simplifies, or enhances UI components, often focusing on layout, styling, or modularization. May include extraction of components, layout changes, or style tweaks.
+Refactors or enhances UI components for improved layout, styling, or modularity without major changes to business logic.
+
+**Frequency**: ~3 times per month
+
+**Steps**:
+1. Modify one or more UI component files (e.g., src/components/*.tsx, src/components/ui/*.tsx)
+2. Update related utility or style files if necessary (e.g., src/index.css, tailwind.config.js)
+3. Optionally update related documentation or feature description files
+
+**Files typically involved**:
+- `src/components/*.tsx`
+- `src/components/ui/*.tsx`
+- `src/index.css`
+- `tailwind.config.js`
+
+**Example commit sequence**:
+```
+Modify one or more UI component files (e.g., src/components/*.tsx, src/components/ui/*.tsx)
+Update related utility or style files if necessary (e.g., src/index.css, tailwind.config.js)
+Optionally update related documentation or feature description files
+```
+
+### Test Enhancement Or Coverage Increase
+
+Improves or expands test coverage, optimizes test logic, or updates mock data for reliability.
 
 **Frequency**: ~2 times per month
 
 **Steps**:
-1. Modify or extract UI components (e.g., src/components/FieldGroups.tsx, src/components/NavigationSidebar.tsx, src/components/TransactionRow.tsx, src/components/TransactionRowMobile.tsx)
-2. Adjust or add CSS/styles (src/index.css, tailwind.config.js)
-3. Update related utility files if needed (src/utils/guidanceUtils.ts)
-4. Update or remove related props/types (src/types/index.ts)
-
-**Files typically involved**:
-- `src/components/FieldGroups.tsx`
-- `src/components/NavigationSidebar.tsx`
-- `src/components/TransactionRow.tsx`
-- `src/components/TransactionRowMobile.tsx`
-- `src/index.css`
-- `tailwind.config.js`
-- `src/utils/guidanceUtils.ts`
-- `src/types/index.ts`
-
-**Example commit sequence**:
-```
-Modify or extract UI components (e.g., src/components/FieldGroups.tsx, src/components/NavigationSidebar.tsx, src/components/TransactionRow.tsx, src/components/TransactionRowMobile.tsx)
-Adjust or add CSS/styles (src/index.css, tailwind.config.js)
-Update related utility files if needed (src/utils/guidanceUtils.ts)
-Update or remove related props/types (src/types/index.ts)
-```
-
-### Test Enhancement And Maintenance
-
-Improves, refactors, or adds tests for calculation logic, UI, or performance. Often includes updating test data and configuration.
-
-**Frequency**: ~1 times per month
-
-**Steps**:
-1. Update or add test files (src/test/*.test.tsx, src/test/*.test.ts)
-2. Update or mock test data (src/data/demo-transactions.ts, src/data/skr04.json, etc.)
-3. Adjust test configuration (vitest.config.ts)
-4. Refactor test utilities or logging (integration-test.js)
+1. Update or add test files (e.g., src/test/*.test.tsx, src/test/*.test.ts)
+2. Update or add supporting mock data or utility files
+3. Optionally update test configuration (e.g., vitest.config.ts)
 
 **Files typically involved**:
 - `src/test/*.test.tsx`
 - `src/test/*.test.ts`
-- `src/data/demo-transactions.ts`
-- `src/data/skr03.json`
-- `src/data/skr04.json`
-- `src/data/skr49.json`
 - `vitest.config.ts`
-- `integration-test.js`
 
 **Example commit sequence**:
 ```
-Update or add test files (src/test/*.test.tsx, src/test/*.test.ts)
-Update or mock test data (src/data/demo-transactions.ts, src/data/skr04.json, etc.)
-Adjust test configuration (vitest.config.ts)
-Refactor test utilities or logging (integration-test.js)
+Update or add test files (e.g., src/test/*.test.tsx, src/test/*.test.ts)
+Update or add supporting mock data or utility files
+Optionally update test configuration (e.g., vitest.config.ts)
 ```
 
-### Dependency And Tooling Upgrade
+### Dependency And Toolchain Upgrade
 
-Upgrades dependencies, build tools, or code quality tools (e.g., switching from Biome/Ultracite to Vite+Oxlint, updating package.json, updating configs). May include related documentation updates.
+Upgrades build tools, dependencies, or configuration files to newer versions or alternative toolchains.
 
 **Frequency**: ~1 times per month
 
 **Steps**:
 1. Update package.json and package-lock.json
-2. Update or replace tool configuration files (e.g., vite.config.ts, vitest.config.ts, biome.jsonc, .oxlintrc.json, .oxfmtrc.json)
-3. Update related documentation (README.md, AGENTS.md, CLAUDE.md)
-4. Update or remove old config files
-5. Update scripts or integration files as needed
+2. Update or add configuration files for new tools (e.g., vite.config.ts, vitest.config.ts, biome.jsonc, .oxlintrc.json)
+3. Update or refactor scripts or build-related files
+4. Update documentation to reflect new toolchain
 
 **Files typically involved**:
 - `package.json`
@@ -381,44 +360,74 @@ Upgrades dependencies, build tools, or code quality tools (e.g., switching from 
 - `.oxlintrc.json`
 - `.oxfmtrc.json`
 - `README.md`
-- `AGENTS.md`
 - `CLAUDE.md`
 
 **Example commit sequence**:
 ```
 Update package.json and package-lock.json
-Update or replace tool configuration files (e.g., vite.config.ts, vitest.config.ts, biome.jsonc, .oxlintrc.json, .oxfmtrc.json)
-Update related documentation (README.md, AGENTS.md, CLAUDE.md)
-Update or remove old config files
-Update scripts or integration files as needed
+Update or add configuration files for new tools (e.g., vite.config.ts, vitest.config.ts, biome.jsonc, .oxlintrc.json)
+Update or refactor scripts or build-related files
+Update documentation to reflect new toolchain
 ```
 
-### Configuration And Deployment Update
+### Legal And Compliance Pages Update
 
-Updates deployment configuration (e.g., vercel.json), CI/CD workflows, or project settings. May include security headers, routing, or GitHub Actions.
+Adds or updates legal compliance pages (Impressum, Datenschutz, FAQ) and related SEO or manifest files.
 
 **Frequency**: ~1 times per month
 
 **Steps**:
-1. Update deployment config (vercel.json)
-2. Update or add CI/CD workflow files (.github/workflows/*.yml)
-3. Update project or tool settings (.claude/settings.local.json, .taskmaster/config.json, .taskmaster/tasks/tasks.json)
-4. Update documentation if needed (DEPLOYMENT.md)
+1. Add or update legal page components (e.g., src/components/Impressum.tsx, Datenschutz.tsx, FAQ.tsx)
+2. Update index.html with SEO meta tags and analytics
+3. Update manifest and robots.txt/sitemap.xml as needed
+4. Optionally update documentation
 
 **Files typically involved**:
-- `vercel.json`
-- `.github/workflows/*.yml`
-- `.claude/settings.local.json`
-- `.taskmaster/config.json`
-- `.taskmaster/tasks/tasks.json`
-- `DEPLOYMENT.md`
+- `src/components/Impressum.tsx`
+- `src/components/Datenschutz.tsx`
+- `src/components/FAQ.tsx`
+- `index.html`
+- `public/manifest.json`
+- `public/robots.txt`
+- `public/sitemap.xml`
 
 **Example commit sequence**:
 ```
-Update deployment config (vercel.json)
-Update or add CI/CD workflow files (.github/workflows/*.yml)
-Update project or tool settings (.claude/settings.local.json, .taskmaster/config.json, .taskmaster/tasks/tasks.json)
-Update documentation if needed (DEPLOYMENT.md)
+Add or update legal page components (e.g., src/components/Impressum.tsx, Datenschutz.tsx, FAQ.tsx)
+Update index.html with SEO meta tags and analytics
+Update manifest and robots.txt/sitemap.xml as needed
+Optionally update documentation
+```
+
+### Payment Or Access Gating Refactor
+
+Implements, refactors, or removes payment gating logic for premium features (e.g., ELSTER export), including UI and state management updates.
+
+**Frequency**: ~1 times per month
+
+**Steps**:
+1. Add, update, or remove payment modal/component (e.g., PaymentModal.tsx)
+2. Update EuerGenerator and related components to handle payment state and gating
+3. Update or remove export functionality as needed
+4. Update UI components for new access logic
+5. Update dependencies if payment SDKs are added/removed
+
+**Files typically involved**:
+- `src/components/PaymentModal.tsx`
+- `src/components/EuerGenerator.tsx`
+- `src/components/FieldGroups.tsx`
+- `src/components/NavigationSidebar.tsx`
+- `src/components/ui/card.tsx`
+- `src/utils/exportUtils.ts`
+- `package.json`
+
+**Example commit sequence**:
+```
+Add, update, or remove payment modal/component (e.g., PaymentModal.tsx)
+Update EuerGenerator and related components to handle payment state and gating
+Update or remove export functionality as needed
+Update UI components for new access logic
+Update dependencies if payment SDKs are added/removed
 ```
 
 
