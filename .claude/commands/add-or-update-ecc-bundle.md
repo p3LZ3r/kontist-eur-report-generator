@@ -10,16 +10,16 @@ Use this workflow when working on **add-or-update-ecc-bundle** in `kontist-eur-r
 
 ## Goal
 
-Adds or updates an ECC bundle for kontist-eur-report-generator, including commands, skills, identity, and agent configuration files.
+Adds or updates an ECC bundle for the kontist-eur-report-generator, including command documentation, identity, skills, and tool configuration.
 
 ## Common Files
 
-- `.claude/commands/add-ecc-bundle.md`
-- `.claude/commands/feature-development.md`
-- `.claude/commands/refactoring.md`
-- `.claude/commands/feature-development-core-and-ui.md`
 - `.claude/commands/add-or-update-ecc-bundle.md`
 - `.claude/identity.json`
+- `.claude/skills/kontist-eur-report-generator/SKILL.md`
+- `.claude/ecc-tools.json`
+- `.agents/skills/kontist-eur-report-generator/SKILL.md`
+- `.agents/skills/kontist-eur-report-generator/agents/openai.yaml`
 
 ## Suggested Sequence
 
@@ -30,7 +30,7 @@ Adds or updates an ECC bundle for kontist-eur-report-generator, including comman
 
 ## Typical Commit Signals
 
-- Add or update .claude/commands/*.md files (such as add-ecc-bundle.md, feature-development.md, refactoring.md, feature-development-core-and-ui.md, add-or-update-ecc-bundle.md)
+- Add or update .claude/commands/add-or-update-ecc-bundle.md
 - Add or update .claude/identity.json
 - Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 - Add or update .claude/ecc-tools.json
