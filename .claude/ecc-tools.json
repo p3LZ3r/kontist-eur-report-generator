@@ -2,7 +2,7 @@
   "version": "1.3",
   "schemaVersion": "1.0",
   "generatedBy": "ecc-tools",
-  "generatedAt": "2026-03-20T00:05:18.803Z",
+  "generatedAt": "2026-03-20T00:06:07.799Z",
   "repo": "https://github.com/p3LZ3r/kontist-eur-report-generator",
   "profiles": {
     "requested": "full",
@@ -121,7 +121,7 @@
     ".claude/homunculus/instincts/inherited/kontist-eur-report-generator-instincts.yaml",
     ".claude/commands/feature-development.md",
     ".claude/commands/refactoring.md",
-    ".claude/commands/feature-development-core-and-ui.md"
+    ".claude/commands/add-or-update-ecc-bundle.md"
   ],
   "packageFiles": {
     "runtime-core": [
@@ -139,7 +139,7 @@
     "workflow-pack": [
       ".claude/commands/feature-development.md",
       ".claude/commands/refactoring.md",
-      ".claude/commands/feature-development-core-and-ui.md"
+      ".claude/commands/add-or-update-ecc-bundle.md"
     ]
   },
   "moduleFiles": {
@@ -158,7 +158,7 @@
     "workflow-pack": [
       ".claude/commands/feature-development.md",
       ".claude/commands/refactoring.md",
-      ".claude/commands/feature-development-core-and-ui.md"
+      ".claude/commands/add-or-update-ecc-bundle.md"
     ]
   },
   "files": [
@@ -224,8 +224,8 @@
     },
     {
       "moduleId": "workflow-pack",
-      "path": ".claude/commands/feature-development-core-and-ui.md",
-      "description": "Workflow command scaffold for feature-development-core-and-ui."
+      "path": ".claude/commands/add-or-update-ecc-bundle.md",
+      "description": "Workflow command scaffold for add-or-update-ecc-bundle."
     }
   ],
   "workflows": [
@@ -238,8 +238,8 @@
       "path": ".claude/commands/refactoring.md"
     },
     {
-      "command": "feature-development-core-and-ui",
-      "path": ".claude/commands/feature-development-core-and-ui.md"
+      "command": "add-or-update-ecc-bundle",
+      "path": ".claude/commands/add-or-update-ecc-bundle.md"
     }
   ],
   "adapters": {
@@ -249,7 +249,7 @@
       "commandPaths": [
         ".claude/commands/feature-development.md",
         ".claude/commands/refactoring.md",
-        ".claude/commands/feature-development-core-and-ui.md"
+        ".claude/commands/add-or-update-ecc-bundle.md"
       ]
     },
     "codex": {
