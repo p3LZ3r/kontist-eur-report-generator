@@ -10,16 +10,16 @@ Use this workflow when working on **feature-development-core-and-ui** in `kontis
 
 ## Goal
 
-Implements new features or major enhancements affecting both core logic and UI components, often with supporting tests and documentation.
+Implements or enhances core calculation logic and associated UI components, often including data mapping, utility updates, and test coverage.
 
 ## Common Files
 
-- `src/components/*.tsx`
-- `src/components/ui/*.tsx`
-- `src/data/*.ts`
-- `src/data/*.json`
-- `src/utils/*.ts`
-- `src/test/*.test.tsx`
+- `src/utils/euerCalculations.ts`
+- `src/utils/reportGenerator.ts`
+- `src/components/EuerGenerator.tsx`
+- `src/components/FieldGroups.tsx`
+- `src/components/TransactionRow.tsx`
+- `src/data/skr03.json`
 
 ## Suggested Sequence
 
@@ -30,11 +30,11 @@ Implements new features or major enhancements affecting both core logic and UI c
 
 ## Typical Commit Signals
 
-- Update or add core logic files (e.g., calculation engines, data mappings, utilities)
-- Update or add UI components (e.g., src/components/*, src/components/ui/*)
-- Update or add supporting data files (e.g., src/data/*, public/data/*)
-- Update or add tests (e.g., src/test/*)
-- Update configuration/build files if needed (e.g., package.json, vite.config.ts)
+- Update or refactor core calculation utilities (e.g., euerCalculations.ts, reportGenerator.ts).
+- Modify or add UI components (e.g., EuerGenerator.tsx, FieldGroups.tsx, TransactionRow.tsx).
+- Update or add supporting data files (e.g., skr03.json, skr04.json, demo-transactions.ts).
+- Update or add tests for new or changed logic (e.g., euerCalculations.test.ts, FieldGroups.test.tsx).
+- Update configuration or type files as needed (e.g., constants.ts, types/index.ts).
 
 ## Notes
 
