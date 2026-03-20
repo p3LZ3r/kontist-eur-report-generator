@@ -99,6 +99,38 @@ export const ELSTER_FIELDS = {
   "65": { label: "Häusliches Arbeitszimmer", type: "expense", required: false },
   "66": { label: "Homeoffice-Pauschale", type: "expense", required: false },
 
+  // Sum Fields (calculated from transactions)
+  "23": {
+    label: "Summe der Betriebseinnahmen",
+    type: "income",
+    required: false,
+    autoCalculated: true,
+  },
+  "52": {
+    label: "Summe Betriebseinnahmen (Netto)",
+    type: "income",
+    required: false,
+    autoCalculated: true,
+  },
+  "75": {
+    label: "Summe der Betriebsausgaben",
+    type: "expense",
+    required: false,
+    autoCalculated: true,
+  },
+  "76": {
+    label: "Gewinn/Verlust",
+    type: "total",
+    required: false,
+    autoCalculated: true,
+  },
+  "77": {
+    label: "Hinzurechnungen",
+    type: "total",
+    required: false,
+    autoCalculated: true,
+  },
+
   // VAT Paid Fields (57-58)
   "57": { label: "Vorsteuer", type: "vat_paid", required: false },
   "58": { label: "Vorsteuer-Erstattung an das Finanzamt", type: "vat_paid", required: false },
@@ -133,4 +165,10 @@ export const ELSTER_FIELDS = {
   "93": { label: "Hinzurechnungen", type: "total", required: false, autoCalculated: true },
   "94": { label: "Kürzungen", type: "total", required: false, autoCalculated: true },
   "95": { label: "Summe der Einkünfte", type: "total", required: false, autoCalculated: true },
+  "96": {
+    label: "Summe der Einkünfte negativ (= Verlust)",
+    type: "total",
+    required: false,
+    autoCalculated: true,
+  },
 } as const;
