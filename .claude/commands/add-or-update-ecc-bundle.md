@@ -17,8 +17,8 @@ Adds or updates an ECC bundle for the kontist-eur-report-generator skill, includ
 - `.claude/commands/add-or-update-ecc-bundle.md`
 - `.claude/identity.json`
 - `.claude/ecc-tools.json`
-- `.claude/skills/kontist-eur-report-generator/SKILL.md`
 - `.agents/skills/kontist-eur-report-generator/SKILL.md`
+- `.claude/skills/kontist-eur-report-generator/SKILL.md`
 - `.agents/skills/kontist-eur-report-generator/agents/openai.yaml`
 
 ## Suggested Sequence
@@ -33,8 +33,8 @@ Adds or updates an ECC bundle for the kontist-eur-report-generator skill, includ
 - Add or update .claude/commands/add-or-update-ecc-bundle.md
 - Add or update .claude/identity.json
 - Add or update .claude/ecc-tools.json
-- Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 - Add or update .agents/skills/kontist-eur-report-generator/SKILL.md
+- Add or update .claude/skills/kontist-eur-report-generator/SKILL.md
 
 ## Notes
 
