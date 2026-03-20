@@ -14,10 +14,8 @@ Standard feature implementation workflow
 
 ## Common Files
 
-- `src/components/*`
+- `src/components/euer-generator/*`
 - `src/components/ui/*`
-- `src/test/*`
-- `**/*.test.*`
 
 ## Suggested Sequence
 
