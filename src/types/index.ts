@@ -40,6 +40,7 @@ export interface EuerCalculation {
   expenses: { [key: string]: number };
   privateTransactions: { [key: string]: number };
   totalIncome: number;
+  totalIncomeGross: number;
   totalExpenses: number;
   profit: number;
   vatOwed: number;

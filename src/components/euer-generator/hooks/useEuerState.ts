@@ -83,8 +83,14 @@ export function useEuerState() {
   // Guidance system data memoized
   const guidanceData = useMemo(() => {
     if (transactions.length === 0) return null;
-    return prepareGuidanceData(transactions, categories, isKleinunternehmer, euerCalculation);
-  }, [transactions, categories, isKleinunternehmer, euerCalculation]);
+    return prepareGuidanceData(
+      transactions,
+      categories,
+      isKleinunternehmer,
+      skrCategories,
+      euerCalculation,
+    );
+  }, [transactions, categories, isKleinunternehmer, skrCategories, euerCalculation]);
 
   // Optimized callback to prevent unnecessary re-renders
   const updateCategory = useCallback((transactionId: number, categoryKey: string) => {

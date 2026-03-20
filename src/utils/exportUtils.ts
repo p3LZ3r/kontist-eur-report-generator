@@ -42,11 +42,22 @@ export const downloadReport = (
   URL.revokeObjectURL(url);
 };
 
+type SkrCategoryData = {
+  code: string;
+  name: string;
+  type: string;
+  vat: number;
+  elsterField?: string;
+};
+
+type SkrCategories = Record<string, SkrCategoryData>;
+
 // Validate ELSTER data before export
 export const validateElsterData = (
   transactions: Transaction[],
   categories: { [key: number]: string },
   isKleinunternehmer: boolean,
+  skrCategories: SkrCategories,
 ): {
   isValid: boolean;
   missingFields: string[];
@@ -56,6 +67,7 @@ export const validateElsterData = (
     transactions,
     categories,
     isKleinunternehmer,
+    skrCategories,
   );
   return {
     isValid: validation.isValid,

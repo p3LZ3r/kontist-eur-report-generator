@@ -298,8 +298,14 @@ const EuerGenerator = () => {
   // Guidance system data - use pre-computed euerCalculation
   const guidanceData = useMemo(() => {
     if (transactions.length === 0) return null;
-    return prepareGuidanceData(transactions, categories, isKleinunternehmer, euerCalculation);
-  }, [transactions, categories, isKleinunternehmer, euerCalculation]);
+    return prepareGuidanceData(
+      transactions,
+      categories,
+      isKleinunternehmer,
+      skrCategories,
+      euerCalculation,
+    );
+  }, [transactions, categories, isKleinunternehmer, skrCategories, euerCalculation]);
 
   // Guidance system callbacks
   const handleSectionChange = useCallback((sectionId: string) => {

@@ -3,16 +3,13 @@ import type { Transaction } from "../types";
 import { populateAllElsterFields } from "../utils/euerCalculations";
 import { validateElsterData } from "../utils/exportUtils";
 
-// Mock dependencies
 vi.mock("../utils/euerCalculations", () => ({
   populateAllElsterFields: vi.fn(),
 }));
 
-// Mock URL.createObjectURL
 global.URL.createObjectURL = vi.fn(() => "mocked-object-url");
 global.URL.revokeObjectURL = vi.fn();
 
-// Mock DOM methods
 Object.defineProperty(document, "createElement", {
   value: vi.fn(() => ({
     href: "",
@@ -21,6 +18,10 @@ Object.defineProperty(document, "createElement", {
   })),
   writable: true,
 });
+
+const mockSkrCategories = {
+  "4000": { name: "Umsatzerlöse 19%", type: "income" as const, code: "4000", vat: 19 },
+};
 
 describe("validateElsterData", () => {
   it("should return validation results", () => {
@@ -44,7 +45,7 @@ describe("validateElsterData", () => {
       validation: { isValid: true, missingFields: [] },
     });
 
-    const result = validateElsterData(mockTransactions, mockCategories, false);
+    const result = validateElsterData(mockTransactions, mockCategories, false, mockSkrCategories);
 
     expect(result).toHaveProperty("isValid");
     expect(result).toHaveProperty("missingFields");

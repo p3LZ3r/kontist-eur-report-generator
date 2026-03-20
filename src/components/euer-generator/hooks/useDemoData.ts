@@ -23,7 +23,9 @@ export function useDemoData() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const loadDemo = useCallback(
-    (currentSkr: SkrType): {
+    (
+      currentSkr: SkrType,
+    ): {
       transactions: Transaction[];
       categories: Record<number, string>;
     } | null => {

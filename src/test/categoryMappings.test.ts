@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { elsterMapping, getCategoriesForSkr, skr04Categories, skrCodeToSemanticKey } from "../utils/categoryMappings";
+import {
+  elsterMapping,
+  getCategoriesForSkr,
+  skr04Categories,
+  skrCodeToSemanticKey,
+} from "../utils/categoryMappings";
 
 describe("Category Mappings - SKR Categorization Engine", () => {
   describe("getCategoriesForSkr", () => {
@@ -210,13 +215,23 @@ describe("Category Mappings - SKR Categorization Engine", () => {
       });
     });
 
-    it('should ensure expense categories (5xxx-7xxx) have type "expense"', () => {
+    it('should ensure expense categories (5xxx-6xxx) have type "expense"', () => {
       const expenseCategories = Object.entries(skr04Categories).filter(
-        ([code]) => code.startsWith("5") || code.startsWith("6") || code.startsWith("7"),
+        ([code]) => code.startsWith("5") || code.startsWith("6"),
       );
 
       expenseCategories.forEach(([, category]) => {
         expect(category.type).toBe("expense");
+      });
+    });
+
+    it('should allow 7xxx accounts to be income or expense', () => {
+      const categories7xxx = Object.entries(skr04Categories).filter(
+        ([code]) => code.startsWith("7"),
+      );
+
+      categories7xxx.forEach(([, category]) => {
+        expect(["income", "expense"]).toContain(category.type);
       });
     });
 

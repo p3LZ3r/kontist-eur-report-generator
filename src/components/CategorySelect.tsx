@@ -48,9 +48,7 @@ export function CategorySelect({
     if (!search) return categories;
     const searchLower = search.toLowerCase();
     return categories.filter(
-      ([, cat]) =>
-        cat.name.toLowerCase().includes(searchLower) ||
-        cat.code.includes(searchLower),
+      ([, cat]) => cat.name.toLowerCase().includes(searchLower) || cat.code.includes(searchLower),
     );
   }, [categories, search]);
 
@@ -80,17 +78,14 @@ export function CategorySelect({
     [onChange],
   );
 
-  const handleKeyDown = React.useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setOpen(true);
-      } else if (e.key === "Escape") {
-        setOpen(false);
-      }
-    },
-    [],
-  );
+  const handleKeyDown = React.useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setOpen(true);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!open) return;
@@ -131,19 +126,19 @@ export function CategorySelect({
 
       {open && (
         <div className="absolute z-50 mt-1 w-full min-w-[300px] rounded-md border bg-popover shadow-lg">
-          <Command className="rounded-lg" loop={false} filter={(value, search) => {
-            const category = categories.find(([k]) => k === value);
-            if (!category) return 0;
-            const searchLower = search.toLowerCase();
-            if (category[1].code.includes(searchLower)) return 1;
-            if (category[1].name.toLowerCase().includes(searchLower)) return 0.8;
-            return 0;
-          }}>
-            <CommandInput
-              placeholder="Suchen..."
-              value={search}
-              onValueChange={setSearch}
-            />
+          <Command
+            className="rounded-lg"
+            loop={false}
+            filter={(value, search) => {
+              const category = categories.find(([k]) => k === value);
+              if (!category) return 0;
+              const searchLower = search.toLowerCase();
+              if (category[1].code.includes(searchLower)) return 1;
+              if (category[1].name.toLowerCase().includes(searchLower)) return 0.8;
+              return 0;
+            }}
+          >
+            <CommandInput placeholder="Suchen..." value={search} onValueChange={setSearch} />
             <CommandEmpty className="py-6 text-center text-sm">
               Keine Kategorien gefunden.
             </CommandEmpty>

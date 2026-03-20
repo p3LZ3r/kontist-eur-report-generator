@@ -1,44 +1,29 @@
 import type { ElsterFieldValue, EuerCalculation, Transaction } from "../types";
-import { elsterMapping, skr04Categories, skrCodeToSemanticKey } from "./categoryMappings";
 import { ELSTER_FIELDS } from "./constants";
+import { getElsterFieldForSkrCode, getElsterFieldInfo } from "./elsterSkrMapping";
 
-// EÜR berechnen mit/ohne USt
-/**
- * Calculates EÜR (Einnahmen-Überschuss-Rechnung) from categorized transactions.
- *
- * VAT Separation Logic:
- * - Kleinunternehmer: No VAT separation - amounts remain gross
- * - Regular businesses: VAT is separated from gross amounts using category VAT rates
- * - Income: Net amount = gross / (1 + VAT rate), VAT owed = gross - net
- * - Expenses: Net amount = gross / (1 + VAT rate), VAT paid = gross - net
- * - Private transactions: Always gross amounts (no VAT separation)
- *
- * @param transactions - Array of bank transactions
- * @param categories - Transaction category mappings
- * @param isKleinunternehmer - Whether business is Kleinunternehmer
- * @param skrCategories - SKR categories to use for calculation
- * @returns Complete EÜR calculation results
- */
+type SkrCategoryData = {
+  code: string;
+  name: string;
+  type: string;
+  vat: number;
+  elsterField?: string;
+};
+
+type SkrCategories = Record<string, SkrCategoryData>;
+
 export const calculateEuer = (
   transactions: Transaction[],
   categories: { [key: number]: string },
   isKleinunternehmer: boolean,
-  skrCategories: Record<
-    string,
-    {
-      code: string;
-      name: string;
-      type: string;
-      vat: number;
-      elsterField?: string;
-    }
-  > = skr04Categories,
+  skrCategories: SkrCategories,
 ): EuerCalculation => {
   const result: EuerCalculation = {
     income: {},
     expenses: {},
     privateTransactions: {},
     totalIncome: 0,
+    totalIncomeGross: 0,
     totalExpenses: 0,
     profit: 0,
     vatOwed: 0,
@@ -46,21 +31,19 @@ export const calculateEuer = (
     vatBalance: 0,
     privateWithdrawals: 0,
     privateDeposits: 0,
-    // Transaktionsdetails für aufklappbare Bereiche
     incomeTransactions: {},
     expenseTransactions: {},
     privateTransactionDetails: {},
   };
 
-  transactions.forEach((transaction) => {
+  for (const transaction of transactions) {
     const categoryKey = categories[transaction.id] || transaction.euerCategory;
-    if (!categoryKey) return; // Skip if no category key
+    if (!categoryKey) continue;
     const category = skrCategories[categoryKey];
-    if (!category) return; // Skip if category not found
+    if (!category) continue;
 
     const grossAmount = Math.abs(transaction.BetragNumeric);
 
-    // USt-Berechnung nur wenn nicht Kleinunternehmer
     let netAmount = grossAmount;
     let vatAmount = 0;
 
@@ -72,8 +55,8 @@ export const calculateEuer = (
     if (category.type === "income") {
       result.income[categoryKey] = (result.income[categoryKey] || 0) + netAmount;
       result.totalIncome += netAmount;
+      result.totalIncomeGross += grossAmount;
 
-      // Transaktionsdetails sammeln
       if (!result.incomeTransactions[categoryKey]) {
         result.incomeTransactions[categoryKey] = [];
       }
@@ -86,7 +69,6 @@ export const calculateEuer = (
       result.expenses[categoryKey] = (result.expenses[categoryKey] || 0) + netAmount;
       result.totalExpenses += netAmount;
 
-      // Transaktionsdetails sammeln
       if (!result.expenseTransactions[categoryKey]) {
         result.expenseTransactions[categoryKey] = [];
       }
@@ -99,7 +81,6 @@ export const calculateEuer = (
       result.privateTransactions[categoryKey] =
         (result.privateTransactions[categoryKey] || 0) + grossAmount;
 
-      // Transaktionsdetails sammeln
       if (!result.privateTransactionDetails[categoryKey]) {
         result.privateTransactionDetails[categoryKey] = [];
       }
@@ -111,7 +92,7 @@ export const calculateEuer = (
         result.privateDeposits += grossAmount;
       }
     }
-  });
+  }
 
   result.profit = result.totalIncome - result.totalExpenses;
   result.vatBalance = result.vatOwed - result.vatPaid;
@@ -119,57 +100,56 @@ export const calculateEuer = (
   return result;
 };
 
-// Generate Elster summary - enhanced with complete field set
 export const generateElsterOverview = (
   euerCalculation: EuerCalculation,
-  isKleinunternehmer?: boolean,
+  isKleinunternehmer: boolean | undefined,
+  skrCategories: SkrCategories,
 ) => {
   const elsterSummary: {
     [key: string]: {
       amount: number;
       label: string;
-      categories: { name: string; amount: number }[];
+      categories: { name: string; amount: number; skrCode: string }[];
     };
   } = {};
 
-  const addCategoryToSummary = (key: string, amount: number, category: { name: string }) => {
-    const semanticKey = skrCodeToSemanticKey(key) || key;
-    const elsterInfo = elsterMapping[semanticKey];
+  const addCategoryToSummary = (skrCode: string, amount: number, category: SkrCategoryData) => {
+    const elsterField = getElsterFieldForSkrCode(skrCode);
+    const elsterInfo = getElsterFieldInfo(elsterField);
+
     if (elsterInfo) {
-      if (!elsterSummary[elsterInfo.elsterField]) {
-        elsterSummary[elsterInfo.elsterField] = {
+      if (!elsterSummary[elsterField]) {
+        elsterSummary[elsterField] = {
           amount: 0,
           label: elsterInfo.label,
           categories: [],
         };
       }
-      elsterSummary[elsterInfo.elsterField].amount += amount;
-      elsterSummary[elsterInfo.elsterField].categories.push({
+      elsterSummary[elsterField].amount += amount;
+      elsterSummary[elsterField].categories.push({
         name: category.name,
         amount,
+        skrCode,
       });
     }
   };
 
-  Object.entries(euerCalculation.income).forEach(([key, amount]) => {
-    const category = skr04Categories[key];
+  for (const [skrCode, amount] of Object.entries(euerCalculation.income)) {
+    const category = skrCategories[skrCode];
     if (category) {
-      addCategoryToSummary(key, amount, category);
+      addCategoryToSummary(skrCode, amount, category);
     }
-  });
+  }
 
-  Object.entries(euerCalculation.expenses).forEach(([key, amount]) => {
-    const category = skr04Categories[key];
+  for (const [skrCode, amount] of Object.entries(euerCalculation.expenses)) {
+    const category = skrCategories[skrCode];
     if (category) {
-      addCategoryToSummary(key, amount, category);
+      addCategoryToSummary(skrCode, amount, category);
     }
-  });
+  }
 
-  // Add calculated fields if isKleinunternehmer is provided
   if (isKleinunternehmer !== undefined) {
-    // Add VAT fields if not Kleinunternehmer
     if (!isKleinunternehmer) {
-      // Umsatzsteuer (field 17)
       if (!elsterSummary["17"]) {
         elsterSummary["17"] = {
           amount: euerCalculation.vatOwed,
@@ -178,7 +158,6 @@ export const generateElsterOverview = (
         };
       }
 
-      // Vorsteuer (field 57)
       if (!elsterSummary["57"]) {
         elsterSummary["57"] = {
           amount: euerCalculation.vatPaid,
@@ -188,8 +167,6 @@ export const generateElsterOverview = (
       }
     }
 
-    // Add total fields
-    // Gewinn/Verlust (field 92)
     if (!elsterSummary["92"]) {
       elsterSummary["92"] = {
         amount: euerCalculation.profit,
@@ -198,7 +175,6 @@ export const generateElsterOverview = (
       };
     }
 
-    // Summe der Einkünfte (field 95)
     if (!elsterSummary["95"]) {
       elsterSummary["95"] = {
         amount: euerCalculation.totalIncome,
@@ -211,23 +187,6 @@ export const generateElsterOverview = (
   return elsterSummary;
 };
 
-// Calculate VAT-related fields based on Kleinunternehmer status
-/**
- * Calculates and populates VAT-related ELSTER fields (23-24, 44-46).
- *
- * Automatic Population Rules for VAT Fields:
- * - Kleinunternehmer: No VAT fields populated (exempt from VAT)
- * - Regular businesses: All VAT fields calculated from transaction data
- * - Field 23 (Umsatzsteuer): Total VAT owed from sales (calculated)
- * - Field 24 (Vorsteuer): Total VAT paid on purchases (calculated)
- * - Field 44 (Umsatzsteuer-Soll): Same as field 23
- * - Field 45 (Umsatzsteuer-Haben): Same as field 24
- * - Field 46 (Umsatzsteuer-Saldo): VAT balance (owed - paid)
- *
- * @param euerCalculation - EÜR calculation results
- * @param isKleinunternehmer - Whether business is Kleinunternehmer
- * @returns Array of populated VAT field values
- */
 export const calculateVatFields = (
   euerCalculation: EuerCalculation,
   isKleinunternehmer: boolean,
@@ -235,22 +194,20 @@ export const calculateVatFields = (
   const vatFields: ElsterFieldValue[] = [];
 
   if (!isKleinunternehmer) {
-    // Field 17: Umsatzsteuer (VAT owed)
     vatFields.push({
       field: "17",
       value: euerCalculation.vatOwed,
       label: ELSTER_FIELDS["17"].label,
-      type: "tax",
+      type: "vat",
       required: ELSTER_FIELDS["17"].required,
       source: "calculated",
     });
 
-    // Field 57: Vorsteuer (VAT paid)
     vatFields.push({
       field: "57",
       value: euerCalculation.vatPaid,
       label: ELSTER_FIELDS["57"].label,
-      type: "tax",
+      type: "vat_paid",
       required: ELSTER_FIELDS["57"].required,
       source: "calculated",
     });
@@ -259,11 +216,9 @@ export const calculateVatFields = (
   return vatFields;
 };
 
-// Calculate total fields
 export const calculateTotalFields = (euerCalculation: EuerCalculation): ElsterFieldValue[] => {
   const totalFields: ElsterFieldValue[] = [];
 
-  // Field 92: Gewinn/Verlust (Profit/Loss)
   totalFields.push({
     field: "92",
     value: euerCalculation.profit,
@@ -273,7 +228,6 @@ export const calculateTotalFields = (euerCalculation: EuerCalculation): ElsterFi
     source: "calculated",
   });
 
-  // Field 95: Summe der Einkünfte (Total income)
   totalFields.push({
     field: "95",
     value: euerCalculation.totalIncome,
@@ -286,35 +240,19 @@ export const calculateTotalFields = (euerCalculation: EuerCalculation): ElsterFi
   return totalFields;
 };
 
-// Validate mandatory fields
-/**
- * Validates that all mandatory ELSTER fields are populated.
- *
- * Validation Rules:
- * - Personal data fields (1-16): Name, address, tax number, fiscal year, profession, etc. are required
- * - Income fields: At least field 17 (Umsatzerlöse) must be populated
- * - Expense fields: At least field 25 (Wareneinkauf/Fremdleistungen) must be populated
- * - Optional fields: VAT ID, first name, and other non-critical fields are not validated
- *
- * @param fieldValues - Array of populated field values
- * @returns Validation result with missing fields list
- */
 export const validateMandatoryFields = (
   fieldValues: ElsterFieldValue[],
 ): { isValid: boolean; missingFields: string[] } => {
   const missingFields: string[] = [];
 
-  // Check income fields - at least field 15 (taxable income) is required for regular businesses
   const incomeField15 = fieldValues.find((fv) => fv.field === "15");
   if (!(incomeField15 && incomeField15.value)) {
-    // For Kleinunternehmer, field 12 might be used instead
     const incomeField12 = fieldValues.find((fv) => fv.field === "12");
     if (!(incomeField12 && incomeField12.value)) {
       missingFields.push(`${ELSTER_FIELDS["15"].label} oder ${ELSTER_FIELDS["12"].label}`);
     }
   }
 
-  // Check main expense fields - at least one expense category should be populated
   const mainExpenseFields = ["27", "29", "30", "37"];
   const hasExpenses = mainExpenseFields.some((fieldNum) => {
     const expenseField = fieldValues.find((fv) => fv.field === fieldNum);
@@ -333,145 +271,96 @@ export const validateMandatoryFields = (
   };
 };
 
-// Comprehensive automatic field population
-/**
- * Main function for automatic population of all ELSTER fields (1-60+).
- *
- * Automatic Population Process:
- * 1. Calculate EÜR from categorized transactions
- * 2. Populate personal data fields (1-16) from user tax data
- * 3. Generate transaction-based fields (17-36) using existing generateElsterOverview
- * 4. Calculate VAT fields (23-24, 44-46) based on Kleinunternehmer status
- * 5. Calculate total fields (52, 54) from EÜR results
- * 6. Validate all mandatory fields are populated
- *
- * Field Population Sources:
- * - Personal data (1-16): User tax data
- * - Income/Expense (17-36): Transaction data via category mappings
- * - VAT fields (23-24, 44-46): Calculated from transactions (only for regular businesses)
- * - Total fields (52, 54): Calculated from EÜR totals
- * - Extended fields (37-60+): Available for future manual entry or additional calculations
- *
- * @param transactions - Array of bank transactions
- * @param categories - Transaction category mappings
- * @param isKleinunternehmer - Kleinunternehmer status
- * @returns Complete field population with validation results
- */
-// Helper function that uses pre-computed EuerCalculation
 export const populateElsterFieldsFromCalculation = (
   euerCalculation: EuerCalculation,
   isKleinunternehmer: boolean,
+  skrCategories: SkrCategories,
 ): {
   fieldValues: ElsterFieldValue[];
   validation: { isValid: boolean; missingFields: string[] };
 } => {
   const fieldValues: ElsterFieldValue[] = [];
 
-  // 2. Generate Elster overview from pre-computed calculation
-  const elsterOverview = generateElsterOverview(euerCalculation, isKleinunternehmer);
+  const elsterOverview = generateElsterOverview(euerCalculation, isKleinunternehmer, skrCategories);
 
-  // 3. Create all field entries from ELSTER_FIELDS definition
-  Object.entries(ELSTER_FIELDS).forEach(([fieldNumber, fieldDef]) => {
-    // Skip personal data fields for now
-    if (fieldDef.type === "personal") return;
+  for (const [fieldNumber, fieldDef] of Object.entries(ELSTER_FIELDS)) {
+    if (fieldDef.type === "personal") continue;
 
-    // Get value from overview or use 0 as default
     const overviewData = elsterOverview[fieldNumber];
     let value = overviewData?.amount || 0;
-    let source = "calculated";
+    let source: "transaction" | "user_data" | "calculated" = "calculated";
     const transactions: Transaction[] = [];
     const categoryBreakdown: {
       [category: string]: { amount: number; transactions: Transaction[] };
     } = {};
 
-    // Handle special calculated fields (Summenfelder und berechnete Werte)
     if (fieldNumber === "17") {
-      // Feld 17: Umsatzsteuer (nur für Nicht-Kleinunternehmer)
       value = isKleinunternehmer ? 0 : euerCalculation.vatOwed;
       source = "calculated";
     } else if (fieldNumber === "57") {
-      // Feld 57: Vorsteuer (nur für Nicht-Kleinunternehmer)
       value = isKleinunternehmer ? 0 : euerCalculation.vatPaid;
       source = "calculated";
     } else if (fieldNumber === "23") {
-      // Feld 23: Summe der Betriebseinnahmen
-      value = euerCalculation.totalIncome;
+      value = euerCalculation.totalIncomeGross || euerCalculation.totalIncome;
       source = "calculated";
-      Object.values(euerCalculation.incomeTransactions).forEach((categoryTransactions) => {
+      for (const categoryTransactions of Object.values(euerCalculation.incomeTransactions)) {
         transactions.push(...categoryTransactions);
-      });
+      }
     } else if (fieldNumber === "52") {
-      // Feld 52: Summe Betriebseinnahmen (immer Netto, USt separat in Feld 17)
       value = euerCalculation.totalIncome;
       source = "calculated";
-      // Sammle alle Einnahmen-Transaktionen
-      Object.values(euerCalculation.incomeTransactions).forEach((categoryTransactions) => {
+      for (const categoryTransactions of Object.values(euerCalculation.incomeTransactions)) {
         transactions.push(...categoryTransactions);
-      });
+      }
     } else if (fieldNumber === "75") {
-      // Feld 75: Summe der Betriebsausgaben
       value = euerCalculation.totalExpenses;
       source = "calculated";
-      Object.values(euerCalculation.expenseTransactions).forEach((categoryTransactions) => {
+      for (const categoryTransactions of Object.values(euerCalculation.expenseTransactions)) {
         transactions.push(...categoryTransactions);
-      });
+      }
     } else if (fieldNumber === "76") {
-      // Feld 76: Gewinn/Verlust
       value = euerCalculation.profit;
       source = "calculated";
     } else if (fieldNumber === "77") {
-      // Feld 77: Hinzurechnungen (nicht implementiert, bleibt 0)
       value = 0;
       source = "calculated";
     } else if (fieldNumber === "92") {
-      // Feld 92: Gewinn
       value = euerCalculation.profit > 0 ? euerCalculation.profit : 0;
       source = "calculated";
     } else if (fieldNumber === "93") {
-      // Feld 93: Verlust
       value = euerCalculation.profit < 0 ? Math.abs(euerCalculation.profit) : 0;
       source = "calculated";
     } else if (fieldNumber === "94") {
-      // Feld 94: Nicht verwendbar (immer 0)
       value = 0;
       source = "calculated";
     } else if (fieldNumber === "95") {
-      // Feld 95: Summe der Einkünfte (= Gewinn)
       value = euerCalculation.profit > 0 ? euerCalculation.profit : 0;
       source = "calculated";
     } else if (fieldNumber === "96") {
-      // Feld 96: Summe der Einkünfte negativ (= Verlust)
       value = euerCalculation.profit < 0 ? Math.abs(euerCalculation.profit) : 0;
       source = "calculated";
     } else if (overviewData?.categories) {
-      // Für berechnete Felder mit Kategorien: sammle die entsprechenden Transaktionen
-      overviewData.categories.forEach((categoryData) => {
-        // Finde die entsprechende Kategorie in den Transaktionsdaten
-        const categoryKey = Object.keys(skr04Categories).find(
-          (key) => skr04Categories[key].name === categoryData.name,
-        );
+      for (const categoryData of overviewData.categories) {
+        const skrCode = categoryData.skrCode;
+        const categoryTransactions =
+          euerCalculation.incomeTransactions[skrCode] ||
+          euerCalculation.expenseTransactions[skrCode] ||
+          [];
 
-        if (categoryKey) {
-          const categoryTransactions =
-            euerCalculation.incomeTransactions[categoryKey] ||
-            euerCalculation.expenseTransactions[categoryKey] ||
-            [];
+        transactions.push(...categoryTransactions);
 
-          transactions.push(...categoryTransactions);
-
-          categoryBreakdown[categoryData.name] = {
-            amount: categoryData.amount,
-            transactions: [...categoryTransactions],
-          };
-        }
-      });
+        categoryBreakdown[categoryData.name] = {
+          amount: categoryData.amount,
+          transactions: [...categoryTransactions],
+        };
+      }
     }
 
     fieldValues.push({
       field: fieldNumber,
       label: fieldDef.label,
       value,
-      source: source as "transaction" | "user_data" | "calculated",
+      source,
       required: fieldDef.required,
       type: fieldDef.type as
         | "personal"
@@ -483,13 +372,11 @@ export const populateElsterFieldsFromCalculation = (
         | "vat_paid"
         | "profit_calc",
       readOnlyCalculated: (fieldDef as { autoCalculated?: boolean }).autoCalculated === true,
-      // Transaktionsdetails hinzufügen, wenn vorhanden
       transactions: transactions.length > 0 ? transactions : undefined,
       categoryBreakdown: Object.keys(categoryBreakdown).length > 0 ? categoryBreakdown : undefined,
     });
-  });
+  }
 
-  // Validation
   const requiredFields = fieldValues.filter((f) => f.required);
   const missingFields = requiredFields
     .filter((f) => f.value === undefined || f.value === null || f.value === 0)
@@ -508,13 +395,17 @@ export const populateAllElsterFields = (
   transactions: Transaction[],
   categories: { [key: number]: string },
   isKleinunternehmer: boolean,
+  skrCategories: SkrCategories,
 ): {
   fieldValues: ElsterFieldValue[];
   validation: { isValid: boolean; missingFields: string[] };
 } => {
-  // 1. Calculate EÜR from transactions
-  const euerCalculation = calculateEuer(transactions, categories, isKleinunternehmer);
+  const euerCalculation = calculateEuer(
+    transactions,
+    categories,
+    isKleinunternehmer,
+    skrCategories,
+  );
 
-  // 2. Use helper function with the calculated data
-  return populateElsterFieldsFromCalculation(euerCalculation, isKleinunternehmer);
+  return populateElsterFieldsFromCalculation(euerCalculation, isKleinunternehmer, skrCategories);
 };

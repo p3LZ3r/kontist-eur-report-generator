@@ -7,10 +7,19 @@ import type {
   ProgressState,
   Transaction,
 } from "../types";
-import { skr04Categories } from "./categoryMappings";
 import { populateAllElsterFields, populateElsterFieldsFromCalculation } from "./euerCalculations";
+import { getElsterFieldForSkrCode } from "./elsterSkrMapping";
 
-// Create navigation sections - Based on official ELSTER EÜR form structure
+type SkrCategoryData = {
+  code: string;
+  name: string;
+  type: string;
+  vat: number;
+  elsterField?: string;
+};
+
+type SkrCategories = Record<string, SkrCategoryData>;
+
 export const createNavigationSections = (): NavigationSection[] => [
   {
     id: "income",
@@ -41,7 +50,6 @@ export const createNavigationSections = (): NavigationSection[] => [
   },
 ];
 
-// Create field groups for display - Matching authentic ELSTER EÜR form structure
 export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[] => {
   const income = fieldValues
     .filter((f) => f.type === "income")
@@ -101,7 +109,6 @@ export const createFieldGroups = (fieldValues: ElsterFieldValue[]): FieldGroup[]
   return groups;
 };
 
-// Calculate progress state
 export const calculateProgressState = (
   sections: NavigationSection[],
   fieldValues: ElsterFieldValue[],
@@ -129,43 +136,40 @@ export const calculateProgressState = (
   };
 };
 
-// Generate drill-down data for a field
 export const generateDrillDownData = (
   field: ElsterFieldValue,
   transactions: Transaction[],
   categories: { [key: number]: string },
+  skrCategories: SkrCategories,
 ): DrillDownData | undefined => {
   if (field.source === "user_data") {
-    return; // No drill-down for user data fields
+    return;
   }
 
-  const relevantTransactions = transactions.filter((t) => {
-    const categoryKey = categories[t.id] || t.euerCategory;
-    if (!categoryKey) return false;
-
-    // Find if this transaction contributes to the field
-    // This is a simplified version - in practice, you'd need to trace back
-    // from the ELSTER field to the contributing categories
-    return true; // Placeholder - implement proper logic based on your mapping
-  });
-
+  const relevantTransactions: Transaction[] = [];
   const categoryBreakdown: { [category: string]: number } = {};
   const vatBreakdown: { [rate: number]: number } = {};
 
-  relevantTransactions.forEach((transaction) => {
+  for (const transaction of transactions) {
     const categoryKey = categories[transaction.id] || transaction.euerCategory;
-    if (categoryKey) {
-      const category = skr04Categories[categoryKey];
-      if (category) {
-        categoryBreakdown[category.name] =
-          (categoryBreakdown[category.name] || 0) + Math.abs(transaction.BetragNumeric);
-        if (category.vat > 0) {
-          vatBreakdown[category.vat] =
-            (vatBreakdown[category.vat] || 0) + Math.abs(transaction.BetragNumeric);
-        }
-      }
+    if (!categoryKey) continue;
+
+    const skrCategory = skrCategories[categoryKey];
+    if (!skrCategory) continue;
+
+    const elsterField = getElsterFieldForSkrCode(categoryKey);
+    if (elsterField !== field.field) continue;
+
+    relevantTransactions.push(transaction);
+
+    categoryBreakdown[skrCategory.name] =
+      (categoryBreakdown[skrCategory.name] || 0) + Math.abs(transaction.BetragNumeric);
+
+    if (skrCategory.vat > 0) {
+      vatBreakdown[skrCategory.vat] =
+        (vatBreakdown[skrCategory.vat] || 0) + Math.abs(transaction.BetragNumeric);
     }
-  });
+  }
 
   return {
     field: field.field,
@@ -176,29 +180,24 @@ export const generateDrillDownData = (
   };
 };
 
-// Main function to prepare guidance data
 export const prepareGuidanceData = (
   transactions: Transaction[],
   categories: { [key: number]: string },
   isKleinunternehmer: boolean,
+  skrCategories: SkrCategories,
   euerCalculation?: EuerCalculation,
 ) => {
-  // Get populated fields - use provided calculation to avoid duplication
   const { fieldValues } = euerCalculation
-    ? populateElsterFieldsFromCalculation(euerCalculation, isKleinunternehmer)
-    : populateAllElsterFields(transactions, categories, isKleinunternehmer);
+    ? populateElsterFieldsFromCalculation(euerCalculation, isKleinunternehmer, skrCategories)
+    : populateAllElsterFields(transactions, categories, isKleinunternehmer, skrCategories);
 
-  // Create navigation sections
   const sections = createNavigationSections();
 
-  // Create field groups
   const groups = createFieldGroups(fieldValues);
 
-  // Calculate progress
   const progress = calculateProgressState(sections, fieldValues);
 
-  // Update section completion status
-  sections.forEach((section) => {
+  for (const section of sections) {
     const sectionFields = fieldValues.filter((f) => section.fields.includes(f.field));
     const requiredFields = sectionFields.filter((f) => f.required);
     const completedRequiredFields = requiredFields.filter(
@@ -207,7 +206,7 @@ export const prepareGuidanceData = (
 
     section.completed =
       requiredFields.length > 0 && completedRequiredFields.length === requiredFields.length;
-  });
+  }
 
   return {
     fieldValues,
@@ -217,26 +216,27 @@ export const prepareGuidanceData = (
   };
 };
 
-// Get transactions contributing to a specific field
 export const getFieldTransactions = (
   field: ElsterFieldValue,
   transactions: Transaction[],
   categories: { [key: number]: string },
+  _skrCategories: SkrCategories,
 ): Transaction[] => {
   if (field.source === "user_data") {
     return [];
   }
 
-  // This is a simplified implementation
-  // In practice, you'd need to implement proper field-to-transaction mapping
-  // based on your ELSTER mapping logic
+  const relevantTransactions: Transaction[] = [];
 
-  return transactions.filter((t) => {
-    const categoryKey = categories[t.id] || t.euerCategory;
-    if (!categoryKey) return false;
+  for (const transaction of transactions) {
+    const categoryKey = categories[transaction.id] || transaction.euerCategory;
+    if (!categoryKey) continue;
 
-    // Check if this category contributes to the field
-    // This would need to be implemented based on your specific mapping
-    return true; // Placeholder
-  });
+    const elsterField = getElsterFieldForSkrCode(categoryKey);
+    if (elsterField === field.field) {
+      relevantTransactions.push(transaction);
+    }
+  }
+
+  return relevantTransactions;
 };
