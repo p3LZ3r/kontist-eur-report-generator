@@ -63,7 +63,7 @@ export const validateCSVContent = (csvContent: string): boolean => {
     if (pattern.test(csvContent)) {
       throw new Error(
         "CSV-Datei enthält potenziell gefährlichen Code. " +
-          "Bitte stellen Sie sicher, dass die Datei direkt aus Ihrem Banking-Portal exportiert wurde."
+          "Bitte stellen Sie sicher, dass die Datei direkt aus Ihrem Banking-Portal exportiert wurde.",
       );
     }
   }
@@ -76,7 +76,7 @@ export const validateCSVContent = (csvContent: string): boolean => {
     if (lines[i].length > MAX_LINE_LENGTH) {
       throw new Error(
         `CSV-Datei enthält ungewöhnlich lange Zeilen (Zeile ${i + 1}). ` +
-          "Dies könnte auf ein beschädigtes oder manipuliertes Dateiformat hinweisen."
+          "Dies könnte auf ein beschädigtes oder manipuliertes Dateiformat hinweisen.",
       );
     }
   }

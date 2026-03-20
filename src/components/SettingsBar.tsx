@@ -1,12 +1,6 @@
 import type React from "react";
 import HelpTooltip from "./HelpTooltip";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface SettingsBarProps {
   isKleinunternehmer: boolean;
@@ -35,10 +29,7 @@ const SettingsBar: React.FC<SettingsBarProps> = ({
           onValueChange={(value) => onKleinunternehmerChange(value === "ja")}
           value={isKleinunternehmer ? "ja" : "nein"}
         >
-          <SelectTrigger
-            className="focus-ring w-24 bg-white"
-            id="kleinunternehmer-select"
-          >
+          <SelectTrigger className="focus-ring w-24 bg-white" id="kleinunternehmer-select">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -60,16 +51,11 @@ const SettingsBar: React.FC<SettingsBarProps> = ({
 
       {/* Kontenrahmen Setting */}
       <div className="flex items-center gap-2">
-        <label
-          className="whitespace-nowrap text-foreground text-sm"
-          htmlFor="skr-select"
-        >
+        <label className="whitespace-nowrap text-foreground text-sm" htmlFor="skr-select">
           Kontenrahmen:
         </label>
         <Select
-          onValueChange={(value: "SKR03" | "SKR04" | "SKR49") =>
-            onSkrChange(value)
-          }
+          onValueChange={(value: "SKR03" | "SKR04" | "SKR49") => onSkrChange(value)}
           value={currentSkr}
         >
           <SelectTrigger className="focus-ring w-24 bg-white" id="skr-select">

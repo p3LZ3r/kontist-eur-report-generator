@@ -58,9 +58,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
           {/* Section Header - Only show if has title */}
           {group.title && (
             <div className="border-primary border-l-4 bg-slate-50 px-4 py-3 text-left">
-              <h3 className="font-normal text-base text-gray-900 md:text-lg">
-                {group.title}
-              </h3>
+              <h3 className="font-normal text-base text-gray-900 md:text-lg">{group.title}</h3>
               {group.description && group.description !== group.title && (
                 <p
                   className="mt-1 font-mono text-gray-600 text-xs md:text-sm"
@@ -86,9 +84,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                 // Main field row
                 rows.push(
                   <tr
-                    className={`border-gray-200 border-b ${
-                      isEven ? "bg-white" : "bg-gray-50"
-                    } ${
+                    className={`border-gray-200 border-b ${isEven ? "bg-white" : "bg-gray-50"} ${
                       field.transactions && field.transactions.length > 0
                         ? "cursor-pointer transition-colors hover:bg-muted/20"
                         : ""
@@ -142,30 +138,24 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                       {" "}
                       {/* Feste Breite mit mehr Padding */}
                       <div className="flex items-center justify-end gap-2">
-                        {field.transactions &&
-                          field.transactions.length > 0 && (
-                            <>
-                              <div className="flex items-center gap-1">
-                                <Sigma
-                                  className="text-muted-foreground"
-                                  size={10}
-                                />
-                                <span className="text-muted-foreground text-xs">
-                                  {field.transactions.length}
-                                </span>
-                              </div>
-                              <ChevronDown
-                                aria-label="Details anzeigen/ausblenden"
-                                className={`flex-shrink-0 text-muted-foreground transition-transform duration-200 ${
-                                  expandedFields.has(field.field)
-                                    ? "rotate-180"
-                                    : "rotate-0"
-                                }`}
-                                size={16}
-                                style={{ minWidth: "16px", minHeight: "16px" }}
-                              />
-                            </>
-                          )}
+                        {field.transactions && field.transactions.length > 0 && (
+                          <>
+                            <div className="flex items-center gap-1">
+                              <Sigma className="text-muted-foreground" size={10} />
+                              <span className="text-muted-foreground text-xs">
+                                {field.transactions.length}
+                              </span>
+                            </div>
+                            <ChevronDown
+                              aria-label="Details anzeigen/ausblenden"
+                              className={`flex-shrink-0 text-muted-foreground transition-transform duration-200 ${
+                                expandedFields.has(field.field) ? "rotate-180" : "rotate-0"
+                              }`}
+                              size={16}
+                              style={{ minWidth: "16px", minHeight: "16px" }}
+                            />
+                          </>
+                        )}
                         <span
                           className={`font-mono text-sm ${
                             isEmpty ? "text-gray-400" : "text-gray-900"
@@ -175,7 +165,7 @@ const FieldGroups: React.FC<FieldGroupsProps> = ({
                         </span>
                       </div>
                     </td>
-                  </tr>
+                  </tr>,
                 );
 
                 // Add transaction detail rows if available

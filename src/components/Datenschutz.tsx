@@ -39,60 +39,47 @@ const Datenschutz = ({ onBack }: DatenschutzProps) => (
         </section>
 
         <section>
-          <h2 className="mb-3 text-2xl">
-            2. Wichtiger Hinweis: Lokale Datenverarbeitung
-          </h2>
+          <h2 className="mb-3 text-2xl">2. Wichtiger Hinweis: Lokale Datenverarbeitung</h2>
           <p className="text-muted-foreground leading-relaxed">
             Der EÜR Generator verarbeitet alle hochgeladenen CSV-Dateien{" "}
-            <strong>ausschließlich lokal in Ihrem Browser</strong>. Es werden{" "}
-            <strong>keine</strong> Transaktionsdaten, Bankdaten oder persönliche
-            Finanzinformationen an unsere Server übertragen oder gespeichert.
+            <strong>ausschließlich lokal in Ihrem Browser</strong>. Es werden <strong>keine</strong>{" "}
+            Transaktionsdaten, Bankdaten oder persönliche Finanzinformationen an unsere Server
+            übertragen oder gespeichert.
           </p>
           <p className="mt-3 text-muted-foreground leading-relaxed">
-            Die gesamte Berechnung und Kategorisierung Ihrer Transaktionen
-            erfolgt clientseitig in Ihrem Browser. Ihre sensiblen Finanzdaten
-            verlassen niemals Ihr Gerät.
+            Die gesamte Berechnung und Kategorisierung Ihrer Transaktionen erfolgt clientseitig in
+            Ihrem Browser. Ihre sensiblen Finanzdaten verlassen niemals Ihr Gerät.
           </p>
         </section>
 
         <section>
-          <h2 className="mb-3 text-2xl">
-            3. Umami Analytics (anonymisierte Nutzungsstatistiken)
-          </h2>
+          <h2 className="mb-3 text-2xl">3. Umami Analytics (anonymisierte Nutzungsstatistiken)</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Diese Website nutzt Umami Analytics zur anonymen Erfassung von
-            Nutzungsstatistiken. Umami ist eine datenschutzfreundliche
-            Alternative zu Google Analytics.
+            Diese Website nutzt Umami Analytics zur anonymen Erfassung von Nutzungsstatistiken.
+            Umami ist eine datenschutzfreundliche Alternative zu Google Analytics.
           </p>
 
-          <h3 className="mt-4 mb-2 text-xl">
-            Was macht Umami besonders datenschutzfreundlich?
-          </h3>
+          <h3 className="mt-4 mb-2 text-xl">Was macht Umami besonders datenschutzfreundlich?</h3>
           <ul className="mt-3 list-inside list-disc space-y-2 text-muted-foreground">
             <li>
-              <strong>Keine Cookies</strong> – Es werden keine Tracking-Cookies
-              gesetzt
+              <strong>Keine Cookies</strong> – Es werden keine Tracking-Cookies gesetzt
             </li>
             <li>
-              <strong>Keine IP-Speicherung</strong> – IP-Adressen werden nicht
-              gespeichert
+              <strong>Keine IP-Speicherung</strong> – IP-Adressen werden nicht gespeichert
             </li>
             <li>
-              <strong>Keine personenbezogenen Daten</strong> – Es werden
-              ausschließlich aggregierte Statistiken erfasst
+              <strong>Keine personenbezogenen Daten</strong> – Es werden ausschließlich aggregierte
+              Statistiken erfasst
             </li>
             <li>
-              <strong>Keine Nutzer-Identifikation</strong> – Einzelne Nutzer
-              können nicht identifiziert oder verfolgt werden
+              <strong>Keine Nutzer-Identifikation</strong> – Einzelne Nutzer können nicht
+              identifiziert oder verfolgt werden
             </li>
           </ul>
 
-          <h3 className="mt-4 mb-2 text-xl">
-            Welche Informationen werden erfasst?
-          </h3>
+          <h3 className="mt-4 mb-2 text-xl">Welche Informationen werden erfasst?</h3>
           <p className="text-muted-foreground leading-relaxed">
-            Folgende technische Informationen werden in anonymisierter,
-            aggregierter Form erfasst:
+            Folgende technische Informationen werden in anonymisierter, aggregierter Form erfasst:
           </p>
           <ul className="mt-3 list-inside list-disc space-y-1 text-muted-foreground">
             <li>Seitenaufrufe</li>
@@ -105,14 +92,14 @@ const Datenschutz = ({ onBack }: DatenschutzProps) => (
 
           <h3 className="mt-4 mb-2 text-xl">Rechtsgrundlage</h3>
           <p className="text-muted-foreground leading-relaxed">
-            Die Nutzung von Umami erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f
-            DSGVO (berechtigtes Interesse). Unser berechtigtes Interesse liegt
-            in der Optimierung und Verbesserung dieser Website.
+            Die Nutzung von Umami erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes
+            Interesse). Unser berechtigtes Interesse liegt in der Optimierung und Verbesserung
+            dieser Website.
           </p>
           <p className="mt-3 text-muted-foreground leading-relaxed">
-            <strong>Keine Einwilligung erforderlich:</strong> Da Umami keine
-            personenbezogenen Daten verarbeitet und keine Cookies verwendet, ist
-            keine Einwilligung (Cookie-Banner) erforderlich.
+            <strong>Keine Einwilligung erforderlich:</strong> Da Umami keine personenbezogenen Daten
+            verarbeitet und keine Cookies verwendet, ist keine Einwilligung (Cookie-Banner)
+            erforderlich.
           </p>
         </section>
 
@@ -128,30 +115,26 @@ const Datenschutz = ({ onBack }: DatenschutzProps) => (
             <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
             <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
             <li>Recht auf Widerspruch (Art. 21 DSGVO)</li>
-            <li>
-              Recht auf Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)
-            </li>
+            <li>Recht auf Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)</li>
           </ul>
           <p className="mt-4 text-muted-foreground leading-relaxed">
-            <strong>Hinweis:</strong> Da wir keine personenbezogenen Daten über
-            Sie speichern (weder durch den EÜR Generator noch durch Umami
-            Analytics), können die meisten dieser Rechte nicht ausgeübt werden,
-            da schlicht keine Daten vorhanden sind.
+            <strong>Hinweis:</strong> Da wir keine personenbezogenen Daten über Sie speichern (weder
+            durch den EÜR Generator noch durch Umami Analytics), können die meisten dieser Rechte
+            nicht ausgeübt werden, da schlicht keine Daten vorhanden sind.
           </p>
         </section>
 
         <section>
           <h2 className="mb-3 text-2xl">5. Hosting</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Diese Website wird extern gehostet. Die dabei vom Hosting-Provider
-            verarbeiteten Daten beschränken sich auf technisch notwendige
-            Server-Log-Dateien (z.B. IP-Adresse, Browsertyp, Zeitpunkt des
-            Zugriffs), die für den technischen Betrieb der Website erforderlich
-            sind.
+            Diese Website wird extern gehostet. Die dabei vom Hosting-Provider verarbeiteten Daten
+            beschränken sich auf technisch notwendige Server-Log-Dateien (z.B. IP-Adresse,
+            Browsertyp, Zeitpunkt des Zugriffs), die für den technischen Betrieb der Website
+            erforderlich sind.
           </p>
           <p className="mt-3 text-muted-foreground leading-relaxed">
-            Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse
-            an sicherer, schneller und effizienter Bereitstellung der Website).
+            Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an sicherer,
+            schneller und effizienter Bereitstellung der Website).
           </p>
         </section>
 

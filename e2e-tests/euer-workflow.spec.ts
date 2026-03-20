@@ -9,14 +9,10 @@ test.describe("EÜR Generator E2E Workflow", () => {
     await page.waitForSelector('h1:has-text("SKR04 EÜR Generator")');
   });
 
-  test("complete workflow from CSV upload to ELSTER export", async ({
-    page,
-  }) => {
+  test("complete workflow from CSV upload to ELSTER export", async ({ page }) => {
     // Step 1: Upload CSV file
     const fileInput = page.locator('input[type="file"]');
-    await fileInput.setInputFiles(
-      "e2e-tests/test-data/sample-transactions.csv"
-    );
+    await fileInput.setInputFiles("e2e-tests/test-data/sample-transactions.csv");
 
     // Wait for file processing
     await page.waitForSelector("text=Transaktionen insgesamt");
@@ -39,18 +35,14 @@ test.describe("EÜR Generator E2E Workflow", () => {
 
     // Step 5: Validate and export
     // Click CSV export button
-    const csvExportButton = page
-      .locator('button:has-text("ELSTER CSV Export")')
-      .first();
+    const csvExportButton = page.locator('button:has-text("ELSTER CSV Export")').first();
     await csvExportButton.click();
 
     // Verify export was successful (no error message)
     await expect(page.locator("text=Fehler")).not.toBeVisible();
 
     // Click JSON export button
-    const jsonExportButton = page
-      .locator('button:has-text("ELSTER JSON Export")')
-      .first();
+    const jsonExportButton = page.locator('button:has-text("ELSTER JSON Export")').first();
     await jsonExportButton.click();
 
     // Verify export was successful
@@ -66,9 +58,7 @@ test.describe("EÜR Generator E2E Workflow", () => {
 
     // Upload CSV
     const fileInput = page.locator('input[type="file"]');
-    await fileInput.setInputFiles(
-      "e2e-tests/test-data/kleinunternehmer-transactions.csv"
-    );
+    await fileInput.setInputFiles("e2e-tests/test-data/kleinunternehmer-transactions.csv");
 
     // Wait for processing
     await page.waitForSelector("text=Transaktionen insgesamt");
@@ -80,9 +70,7 @@ test.describe("EÜR Generator E2E Workflow", () => {
     await expect(page.locator("text=§ 19 UStG - Bruttobeträge")).toBeVisible();
 
     // Export should work without VAT fields
-    const csvExportButton = page
-      .locator('button:has-text("ELSTER CSV Export")')
-      .first();
+    const csvExportButton = page.locator('button:has-text("ELSTER CSV Export")').first();
     await csvExportButton.click();
 
     await expect(page.locator("text=Fehler")).not.toBeVisible();
@@ -91,9 +79,7 @@ test.describe("EÜR Generator E2E Workflow", () => {
   test("validates export functionality", async ({ page }) => {
     // Upload CSV
     const fileInput = page.locator('input[type="file"]');
-    await fileInput.setInputFiles(
-      "e2e-tests/test-data/sample-transactions.csv"
-    );
+    await fileInput.setInputFiles("e2e-tests/test-data/sample-transactions.csv");
 
     await page.waitForSelector("text=Transaktionen insgesamt");
 
@@ -101,9 +87,7 @@ test.describe("EÜR Generator E2E Workflow", () => {
     await page.click("text=ELSTER Navigation starten");
 
     // Try to export - should work since no validation is required in current implementation
-    const csvExportButton = page
-      .locator('button:has-text("ELSTER CSV Export")')
-      .first();
+    const csvExportButton = page.locator('button:has-text("ELSTER CSV Export")').first();
     await csvExportButton.click();
 
     // Should not show error message
@@ -130,9 +114,7 @@ test.describe("EÜR Generator E2E Workflow", () => {
     await page.waitForSelector("text=ELSTER Felder", { timeout: 5000 });
 
     // Export should work
-    const csvExportButton = page
-      .locator('button:has-text("ELSTER CSV Export")')
-      .first();
+    const csvExportButton = page.locator('button:has-text("ELSTER CSV Export")').first();
     await csvExportButton.click();
 
     await expect(page.locator("text=Fehler")).not.toBeVisible();
@@ -141,9 +123,7 @@ test.describe("EÜR Generator E2E Workflow", () => {
   test("responsive design across screen sizes", async ({ page }) => {
     // Upload CSV
     const fileInput = page.locator('input[type="file"]');
-    await fileInput.setInputFiles(
-      "e2e-tests/test-data/sample-transactions.csv"
-    );
+    await fileInput.setInputFiles("e2e-tests/test-data/sample-transactions.csv");
 
     await page.waitForSelector("text=Transaktionen insgesamt");
 
@@ -192,23 +172,16 @@ test.describe("EÜR Generator E2E Workflow", () => {
     await expect(fileInput).toBeFocused();
 
     // Test ARIA labels for file upload
-    await expect(fileInput).toHaveAttribute(
-      "aria-describedby",
-      "file-upload-description"
-    );
+    await expect(fileInput).toHaveAttribute("aria-describedby", "file-upload-description");
 
     // Test settings panel toggle
     await settingsButton.click();
     await expect(page.locator("#settings-panel")).toBeVisible();
 
     // Test Kleinunternehmer checkbox
-    const kleinunternehmerCheckbox = page.locator(
-      'input[id="kleinunternehmer"]'
-    );
+    const kleinunternehmerCheckbox = page.locator('input[id="kleinunternehmer"]');
     await expect(kleinunternehmerCheckbox).toBeVisible();
     const kleinunternehmerLabel = page.locator('label[for="kleinunternehmer"]');
-    await expect(kleinunternehmerLabel).toHaveText(
-      "Kleinunternehmerregelung § 19 UStG"
-    );
+    await expect(kleinunternehmerLabel).toHaveText("Kleinunternehmerregelung § 19 UStG");
   });
 });

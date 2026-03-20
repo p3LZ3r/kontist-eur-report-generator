@@ -68,11 +68,7 @@
     "code": -1,
     "sort-code": 9999,
     "description": "",
-    "categories": [
-      "I. Ausstehende Einlagen",
-      "A. Anlageverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["I. Ausstehende Einlagen", "A. Anlageverm\u00f6gen", "Aktiva"],
     "leaf": false,
     "hierarchicalCategories.lvl2": "Aktiva > A. Anlageverm\u00f6gen > I. Ausstehende Einlagen",
     "hierarchicalCategories.lvl1": "Aktiva > A. Anlageverm\u00f6gen",
@@ -129,11 +125,7 @@
     "code": -1,
     "sort-code": 9999,
     "description": "",
-    "categories": [
-      "I. Ausstehende Einlagen",
-      "A. Anlageverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["I. Ausstehende Einlagen", "A. Anlageverm\u00f6gen", "Aktiva"],
     "leaf": false,
     "hierarchicalCategories.lvl2": "Aktiva > A. Anlageverm\u00f6gen > I. Ausstehende Einlagen",
     "hierarchicalCategories.lvl1": "Aktiva > A. Anlageverm\u00f6gen",
@@ -1962,12 +1954,7 @@
     "code": "0829",
     "sort-code": 829,
     "description": "",
-    "categories": [
-      "03. Beteiligungen",
-      "V. Finanzanlagen",
-      "A. Anlageverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["03. Beteiligungen", "V. Finanzanlagen", "A. Anlageverm\u00f6gen", "Aktiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen > 03. Beteiligungen",
     "hierarchicalCategories.lvl2": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen",
@@ -1983,12 +1970,7 @@
     "code": "0830",
     "sort-code": 830,
     "description": "",
-    "categories": [
-      "03. Beteiligungen",
-      "V. Finanzanlagen",
-      "A. Anlageverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["03. Beteiligungen", "V. Finanzanlagen", "A. Anlageverm\u00f6gen", "Aktiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen > 03. Beteiligungen",
     "hierarchicalCategories.lvl2": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen",
@@ -2004,12 +1986,7 @@
     "code": "0840",
     "sort-code": 840,
     "description": "",
-    "categories": [
-      "03. Beteiligungen",
-      "V. Finanzanlagen",
-      "A. Anlageverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["03. Beteiligungen", "V. Finanzanlagen", "A. Anlageverm\u00f6gen", "Aktiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen > 03. Beteiligungen",
     "hierarchicalCategories.lvl2": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen",
@@ -2025,12 +2002,7 @@
     "code": "0850",
     "sort-code": 850,
     "description": "",
-    "categories": [
-      "03. Beteiligungen",
-      "V. Finanzanlagen",
-      "A. Anlageverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["03. Beteiligungen", "V. Finanzanlagen", "A. Anlageverm\u00f6gen", "Aktiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen > 03. Beteiligungen",
     "hierarchicalCategories.lvl2": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen",
@@ -2046,12 +2018,7 @@
     "code": "0860",
     "sort-code": 860,
     "description": "",
-    "categories": [
-      "03. Beteiligungen",
-      "V. Finanzanlagen",
-      "A. Anlageverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["03. Beteiligungen", "V. Finanzanlagen", "A. Anlageverm\u00f6gen", "Aktiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen > 03. Beteiligungen",
     "hierarchicalCategories.lvl2": "Aktiva > A. Anlageverm\u00f6gen > V. Finanzanlagen",
@@ -5673,10 +5640,7 @@
     "code": "1900",
     "sort-code": 1900,
     "description": "",
-    "categories": [
-      "C. Rechnungsabgrenzungsposten Umlaufverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["C. Rechnungsabgrenzungsposten Umlaufverm\u00f6gen", "Aktiva"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "Aktiva > C. Rechnungsabgrenzungsposten Umlaufverm\u00f6gen",
     "hierarchicalCategories.lvl0": "Aktiva",
@@ -5747,10 +5711,7 @@
     "code": "1950",
     "sort-code": 1950,
     "description": "\u00a7274 HGB",
-    "categories": [
-      "C. Rechnungsabgrenzungsposten Umlaufverm\u00f6gen",
-      "Aktiva"
-    ],
+    "categories": ["C. Rechnungsabgrenzungsposten Umlaufverm\u00f6gen", "Aktiva"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "Aktiva > C. Rechnungsabgrenzungsposten Umlaufverm\u00f6gen",
     "hierarchicalCategories.lvl0": "Aktiva",
@@ -6704,12 +6665,7 @@
     "code": "2930",
     "sort-code": 2930,
     "description": "",
-    "categories": [
-      "I. Gewinnr\u00fccklagen",
-      "c) alle",
-      "A. Eigenkapital",
-      "Passiva"
-    ],
+    "categories": ["I. Gewinnr\u00fccklagen", "c) alle", "A. Eigenkapital", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > A. Eigenkapital > c) alle > I. Gewinnr\u00fccklagen",
     "hierarchicalCategories.lvl2": "Passiva > A. Eigenkapital > c) alle",
@@ -6794,12 +6750,7 @@
     "code": "2940",
     "sort-code": 2940,
     "description": "",
-    "categories": [
-      "I. Gewinnr\u00fccklagen",
-      "c) alle",
-      "A. Eigenkapital",
-      "Passiva"
-    ],
+    "categories": ["I. Gewinnr\u00fccklagen", "c) alle", "A. Eigenkapital", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > A. Eigenkapital > c) alle > I. Gewinnr\u00fccklagen",
     "hierarchicalCategories.lvl2": "Passiva > A. Eigenkapital > c) alle",
@@ -6815,12 +6766,7 @@
     "code": "2950",
     "sort-code": 2950,
     "description": "",
-    "categories": [
-      "I. Gewinnr\u00fccklagen",
-      "c) alle",
-      "A. Eigenkapital",
-      "Passiva"
-    ],
+    "categories": ["I. Gewinnr\u00fccklagen", "c) alle", "A. Eigenkapital", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > A. Eigenkapital > c) alle > I. Gewinnr\u00fccklagen",
     "hierarchicalCategories.lvl2": "Passiva > A. Eigenkapital > c) alle",
@@ -6905,12 +6851,7 @@
     "code": "2960",
     "sort-code": 2960,
     "description": "",
-    "categories": [
-      "I. Gewinnr\u00fccklagen",
-      "c) alle",
-      "A. Eigenkapital",
-      "Passiva"
-    ],
+    "categories": ["I. Gewinnr\u00fccklagen", "c) alle", "A. Eigenkapital", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > A. Eigenkapital > c) alle > I. Gewinnr\u00fccklagen",
     "hierarchicalCategories.lvl2": "Passiva > A. Eigenkapital > c) alle",
@@ -7728,11 +7669,7 @@
     "code": "3030",
     "sort-code": 3030,
     "description": "",
-    "categories": [
-      "02. Steuerr\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["02. Steuerr\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 02. Steuerr\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7747,11 +7684,7 @@
     "code": "3040",
     "sort-code": 3040,
     "description": "",
-    "categories": [
-      "02. Steuerr\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["02. Steuerr\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 02. Steuerr\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7766,11 +7699,7 @@
     "code": "3050",
     "sort-code": 3050,
     "description": "",
-    "categories": [
-      "02. Steuerr\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["02. Steuerr\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 02. Steuerr\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7785,11 +7714,7 @@
     "code": "3060",
     "sort-code": 3060,
     "description": "",
-    "categories": [
-      "02. Steuerr\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["02. Steuerr\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 02. Steuerr\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7818,11 +7743,7 @@
     "code": "3075",
     "sort-code": 3075,
     "description": "",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7837,11 +7758,7 @@
     "code": "3080",
     "sort-code": 3080,
     "description": "",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7856,11 +7773,7 @@
     "code": "3085",
     "sort-code": 3085,
     "description": "",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7875,11 +7788,7 @@
     "code": "3090",
     "sort-code": 3090,
     "description": "Gegenkonto 6790",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7894,11 +7803,7 @@
     "code": "3092",
     "sort-code": 3092,
     "description": "",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7913,11 +7818,7 @@
     "code": "3095",
     "sort-code": 3095,
     "description": "",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7932,11 +7833,7 @@
     "code": "3098",
     "sort-code": 3098,
     "description": "",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -7951,11 +7848,7 @@
     "code": "3099",
     "sort-code": 3099,
     "description": "",
-    "categories": [
-      "03. Sonstige R\u00fcckstellungen",
-      "B. R\u00fcckstellungen",
-      "Passiva"
-    ],
+    "categories": ["03. Sonstige R\u00fcckstellungen", "B. R\u00fcckstellungen", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > B. R\u00fcckstellungen > 03. Sonstige R\u00fcckstellungen",
     "hierarchicalCategories.lvl1": "Passiva > B. R\u00fcckstellungen",
@@ -8090,12 +7983,7 @@
     "code": "3121",
     "sort-code": 3121,
     "description": "",
-    "categories": [
-      "b) Anleihen konvertibel",
-      "01. Anleihen",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["b) Anleihen konvertibel", "01. Anleihen", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > C. Verbindlichkeiten > 01. Anleihen > b) Anleihen konvertibel",
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 01. Anleihen",
@@ -8111,12 +7999,7 @@
     "code": "3125",
     "sort-code": 3125,
     "description": "",
-    "categories": [
-      "b) Anleihen konvertibel",
-      "01. Anleihen",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["b) Anleihen konvertibel", "01. Anleihen", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > C. Verbindlichkeiten > 01. Anleihen > b) Anleihen konvertibel",
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 01. Anleihen",
@@ -8132,12 +8015,7 @@
     "code": "3130",
     "sort-code": 3130,
     "description": "",
-    "categories": [
-      "b) Anleihen konvertibel",
-      "01. Anleihen",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["b) Anleihen konvertibel", "01. Anleihen", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > C. Verbindlichkeiten > 01. Anleihen > b) Anleihen konvertibel",
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 01. Anleihen",
@@ -8364,11 +8242,7 @@
     "code": "3250",
     "sort-code": 3250,
     "description": "",
-    "categories": [
-      "03. erhaltene Anzahlungen auf Bestellungen",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["03. erhaltene Anzahlungen auf Bestellungen", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 03. erhaltene Anzahlungen auf Bestellungen",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9275,11 +9149,7 @@
     "code": "3500",
     "sort-code": 3500,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9378,11 +9248,7 @@
     "code": "3510",
     "sort-code": 3510,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9481,11 +9347,7 @@
     "code": "3520",
     "sort-code": 3520,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9563,11 +9425,7 @@
     "code": "3530",
     "sort-code": 3530,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9645,11 +9503,7 @@
     "code": "3540",
     "sort-code": 3540,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9727,11 +9581,7 @@
     "code": "3550",
     "sort-code": 3550,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9809,11 +9659,7 @@
     "code": "3560",
     "sort-code": 3560,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9828,12 +9674,7 @@
     "code": "3561",
     "sort-code": 3561,
     "description": "",
-    "categories": [
-      "Darlehen",
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["Darlehen", "08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten > Darlehen",
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
@@ -9849,12 +9690,7 @@
     "code": "3564",
     "sort-code": 3564,
     "description": "",
-    "categories": [
-      "Darlehen",
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["Darlehen", "08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten > Darlehen",
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
@@ -9870,12 +9706,7 @@
     "code": "3567",
     "sort-code": 3567,
     "description": "",
-    "categories": [
-      "Darlehen",
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["Darlehen", "08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl3": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten > Darlehen",
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
@@ -9891,11 +9722,7 @@
     "code": "3570",
     "sort-code": 3570,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9910,11 +9737,7 @@
     "code": "3599",
     "sort-code": 3599,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9929,11 +9752,7 @@
     "code": "3600",
     "sort-code": 3600,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9948,11 +9767,7 @@
     "code": "3610",
     "sort-code": 3610,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9967,11 +9782,7 @@
     "code": "3620",
     "sort-code": 3620,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -9986,11 +9797,7 @@
     "code": "3630",
     "sort-code": 3630,
     "description": "Interimskonto",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10026,11 +9833,7 @@
     "code": "3700",
     "sort-code": 3700,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10108,11 +9911,7 @@
     "code": "3720",
     "sort-code": 3720,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10169,11 +9968,7 @@
     "code": "3730",
     "sort-code": 3730,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10188,11 +9983,7 @@
     "code": "3740",
     "sort-code": 3740,
     "description": "Sozialversicherungsbeitr\u00e4ge",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10270,11 +10061,7 @@
     "code": "3760",
     "sort-code": 3760,
     "description": "KapESt und SolZ auf KapESt",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10289,11 +10076,7 @@
     "code": "3761",
     "sort-code": 3761,
     "description": "",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10308,11 +10091,7 @@
     "code": "3770",
     "sort-code": 3770,
     "description": "Direktversicherungen u.\u00e4.",
-    "categories": [
-      "08. sonstige Verbindlichkeiten",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["08. sonstige Verbindlichkeiten", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 08. sonstige Verbindlichkeiten",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -10404,11 +10183,7 @@
     "code": "3796",
     "sort-code": 3796,
     "description": "f\u00fcr \u00a74/3 EStG",
-    "categories": [
-      "09. Lohn- und Gehaltsverrechnungskonto",
-      "C. Verbindlichkeiten",
-      "Passiva"
-    ],
+    "categories": ["09. Lohn- und Gehaltsverrechnungskonto", "C. Verbindlichkeiten", "Passiva"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "Passiva > C. Verbindlichkeiten > 09. Lohn- und Gehaltsverrechnungskonto",
     "hierarchicalCategories.lvl1": "Passiva > C. Verbindlichkeiten",
@@ -11653,10 +11428,7 @@
     "code": "4605",
     "sort-code": 4605,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11670,10 +11442,7 @@
     "code": "4610",
     "sort-code": 4610,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11687,10 +11456,7 @@
     "code": "4619",
     "sort-code": 4619,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11704,10 +11470,7 @@
     "code": "4620",
     "sort-code": 4620,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11721,10 +11484,7 @@
     "code": "4630",
     "sort-code": 4630,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11738,10 +11498,7 @@
     "code": "4639",
     "sort-code": 4639,
     "description": "z. B. Kfz-Nutzung",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11755,10 +11512,7 @@
     "code": "4640",
     "sort-code": 4640,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11772,10 +11526,7 @@
     "code": "4645",
     "sort-code": 4645,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11789,10 +11540,7 @@
     "code": "4646",
     "sort-code": 4646,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11806,10 +11554,7 @@
     "code": "4650",
     "sort-code": 4650,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11823,10 +11568,7 @@
     "code": "4659",
     "sort-code": 4659,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11840,10 +11582,7 @@
     "code": "4660",
     "sort-code": 4660,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11857,10 +11596,7 @@
     "code": "4670",
     "sort-code": 4670,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11874,10 +11610,7 @@
     "code": "4679",
     "sort-code": 4679,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11891,10 +11624,7 @@
     "code": "4680",
     "sort-code": 4680,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11908,10 +11638,7 @@
     "code": "4686",
     "sort-code": 4686,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11925,10 +11652,7 @@
     "code": "4689",
     "sort-code": 4689,
     "description": "",
-    "categories": [
-      "Unentgeltliche Wertabgaben",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Unentgeltliche Wertabgaben", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Unentgeltliche Wertabgaben",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11981,10 +11705,7 @@
     "code": "4705",
     "sort-code": 4705,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -11998,10 +11719,7 @@
     "code": "4710",
     "sort-code": 4710,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12015,10 +11733,7 @@
     "code": "4720",
     "sort-code": 4720,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12032,10 +11747,7 @@
     "code": "4724",
     "sort-code": 4724,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12049,10 +11761,7 @@
     "code": "4725",
     "sort-code": 4725,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12066,10 +11775,7 @@
     "code": "4726",
     "sort-code": 4726,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12083,10 +11789,7 @@
     "code": "4727",
     "sort-code": 4727,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12100,10 +11803,7 @@
     "code": "4729",
     "sort-code": 4729,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12117,10 +11817,7 @@
     "code": "4730",
     "sort-code": 4730,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12172,10 +11869,7 @@
     "code": "4740",
     "sort-code": 4740,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12227,10 +11921,7 @@
     "code": "4770",
     "sort-code": 4770,
     "description": "",
-    "categories": [
-      "Erl\u00f6sschm\u00e4lerungen",
-      "01. Betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Erl\u00f6sschm\u00e4lerungen", "01. Betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "01. Betriebliche Ertr\u00e4ge > Erl\u00f6sschm\u00e4lerungen",
     "hierarchicalCategories.lvl0": "01. Betriebliche Ertr\u00e4ge",
@@ -12419,10 +12110,7 @@
     "code": "4835",
     "sort-code": 4835,
     "description": "",
-    "categories": [
-      "Sonstige betriebliche Ertr\u00e4ge",
-      "04. Sonstige betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Sonstige betriebliche Ertr\u00e4ge", "04. Sonstige betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "04. Sonstige betriebliche Ertr\u00e4ge > Sonstige betriebliche Ertr\u00e4ge",
     "hierarchicalCategories.lvl0": "04. Sonstige betriebliche Ertr\u00e4ge",
@@ -12436,10 +12124,7 @@
     "code": "4836",
     "sort-code": 4836,
     "description": "",
-    "categories": [
-      "Sonstige betriebliche Ertr\u00e4ge",
-      "04. Sonstige betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Sonstige betriebliche Ertr\u00e4ge", "04. Sonstige betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "04. Sonstige betriebliche Ertr\u00e4ge > Sonstige betriebliche Ertr\u00e4ge",
     "hierarchicalCategories.lvl0": "04. Sonstige betriebliche Ertr\u00e4ge",
@@ -12453,10 +12138,7 @@
     "code": "4837",
     "sort-code": 4837,
     "description": "",
-    "categories": [
-      "Sonstige betriebliche Ertr\u00e4ge",
-      "04. Sonstige betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Sonstige betriebliche Ertr\u00e4ge", "04. Sonstige betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "04. Sonstige betriebliche Ertr\u00e4ge > Sonstige betriebliche Ertr\u00e4ge",
     "hierarchicalCategories.lvl0": "04. Sonstige betriebliche Ertr\u00e4ge",
@@ -12470,10 +12152,7 @@
     "code": "4839",
     "sort-code": 4839,
     "description": "",
-    "categories": [
-      "Sonstige betriebliche Ertr\u00e4ge",
-      "04. Sonstige betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Sonstige betriebliche Ertr\u00e4ge", "04. Sonstige betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "04. Sonstige betriebliche Ertr\u00e4ge > Sonstige betriebliche Ertr\u00e4ge",
     "hierarchicalCategories.lvl0": "04. Sonstige betriebliche Ertr\u00e4ge",
@@ -12500,10 +12179,7 @@
     "code": "4843",
     "sort-code": 4843,
     "description": "",
-    "categories": [
-      "Ertr\u00e4ge aus Kursdifferenzen",
-      "04. Sonstige betriebliche Ertr\u00e4ge"
-    ],
+    "categories": ["Ertr\u00e4ge aus Kursdifferenzen", "04. Sonstige betriebliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "04. Sonstige betriebliche Ertr\u00e4ge > Ertr\u00e4ge aus Kursdifferenzen",
     "hierarchicalCategories.lvl0": "04. Sonstige betriebliche Ertr\u00e4ge",
@@ -13158,10 +12834,7 @@
     "code": "7006",
     "sort-code": 7006,
     "description": "inl\u00e4ndische Kap.Ges.",
-    "categories": [
-      "- davon aus verbundenen Unternehmen",
-      "09. Ertr\u00e4ge aus Beteiligungen"
-    ],
+    "categories": ["- davon aus verbundenen Unternehmen", "09. Ertr\u00e4ge aus Beteiligungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "09. Ertr\u00e4ge aus Beteiligungen > - davon aus verbundenen Unternehmen",
     "hierarchicalCategories.lvl0": "09. Ertr\u00e4ge aus Beteiligungen",
@@ -13175,10 +12848,7 @@
     "code": "7009",
     "sort-code": 7009,
     "description": "",
-    "categories": [
-      "- davon aus verbundenen Unternehmen",
-      "09. Ertr\u00e4ge aus Beteiligungen"
-    ],
+    "categories": ["- davon aus verbundenen Unternehmen", "09. Ertr\u00e4ge aus Beteiligungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "09. Ertr\u00e4ge aus Beteiligungen > - davon aus verbundenen Unternehmen",
     "hierarchicalCategories.lvl0": "09. Ertr\u00e4ge aus Beteiligungen",
@@ -13205,10 +12875,7 @@
     "code": "7005",
     "sort-code": 7005,
     "description": "inl\u00e4ndische Kap.Ges.",
-    "categories": [
-      "Ertr\u00e4ge aus Beteiligungen",
-      "09. Ertr\u00e4ge aus Beteiligungen"
-    ],
+    "categories": ["Ertr\u00e4ge aus Beteiligungen", "09. Ertr\u00e4ge aus Beteiligungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "09. Ertr\u00e4ge aus Beteiligungen > Ertr\u00e4ge aus Beteiligungen",
     "hierarchicalCategories.lvl0": "09. Ertr\u00e4ge aus Beteiligungen",
@@ -13222,10 +12889,7 @@
     "code": "7007",
     "sort-code": 7007,
     "description": "",
-    "categories": [
-      "Ertr\u00e4ge aus Beteiligungen",
-      "09. Ertr\u00e4ge aus Beteiligungen"
-    ],
+    "categories": ["Ertr\u00e4ge aus Beteiligungen", "09. Ertr\u00e4ge aus Beteiligungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "09. Ertr\u00e4ge aus Beteiligungen > Ertr\u00e4ge aus Beteiligungen",
     "hierarchicalCategories.lvl0": "09. Ertr\u00e4ge aus Beteiligungen",
@@ -13239,10 +12903,7 @@
     "code": "7008",
     "sort-code": 7008,
     "description": "",
-    "categories": [
-      "Ertr\u00e4ge aus Beteiligungen",
-      "09. Ertr\u00e4ge aus Beteiligungen"
-    ],
+    "categories": ["Ertr\u00e4ge aus Beteiligungen", "09. Ertr\u00e4ge aus Beteiligungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "09. Ertr\u00e4ge aus Beteiligungen > Ertr\u00e4ge aus Beteiligungen",
     "hierarchicalCategories.lvl0": "09. Ertr\u00e4ge aus Beteiligungen",
@@ -13689,10 +13350,7 @@
     "code": "7401",
     "sort-code": 7401,
     "description": "",
-    "categories": [
-      "Au\u00dferordentliche Ertr\u00e4ge",
-      "15. au\u00dferordentliche Ertr\u00e4ge"
-    ],
+    "categories": ["Au\u00dferordentliche Ertr\u00e4ge", "15. au\u00dferordentliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "15. au\u00dferordentliche Ertr\u00e4ge > Au\u00dferordentliche Ertr\u00e4ge",
     "hierarchicalCategories.lvl0": "15. au\u00dferordentliche Ertr\u00e4ge",
@@ -13706,10 +13364,7 @@
     "code": "7450",
     "sort-code": 7450,
     "description": "",
-    "categories": [
-      "Au\u00dferordentliche Ertr\u00e4ge",
-      "15. au\u00dferordentliche Ertr\u00e4ge"
-    ],
+    "categories": ["Au\u00dferordentliche Ertr\u00e4ge", "15. au\u00dferordentliche Ertr\u00e4ge"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "15. au\u00dferordentliche Ertr\u00e4ge > Au\u00dferordentliche Ertr\u00e4ge",
     "hierarchicalCategories.lvl0": "15. au\u00dferordentliche Ertr\u00e4ge",
@@ -14712,10 +14367,7 @@
     "code": -1,
     "sort-code": 9999,
     "description": "",
-    "categories": [
-      "b) Aufwendungen f\u00fcr bezogene Leistungen",
-      "05. Materialaufwand"
-    ],
+    "categories": ["b) Aufwendungen f\u00fcr bezogene Leistungen", "05. Materialaufwand"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "05. Materialaufwand > b) Aufwendungen f\u00fcr bezogene Leistungen",
     "hierarchicalCategories.lvl0": "05. Materialaufwand",
@@ -14749,10 +14401,7 @@
     "code": -1,
     "sort-code": 9999,
     "description": "",
-    "categories": [
-      "b) Aufwendungen f\u00fcr bezogene Leistungen",
-      "05. Materialaufwand"
-    ],
+    "categories": ["b) Aufwendungen f\u00fcr bezogene Leistungen", "05. Materialaufwand"],
     "leaf": false,
     "hierarchicalCategories.lvl1": "05. Materialaufwand > b) Aufwendungen f\u00fcr bezogene Leistungen",
     "hierarchicalCategories.lvl0": "05. Materialaufwand",
@@ -14990,11 +14639,7 @@
     "code": "6024",
     "sort-code": 6024,
     "description": "",
-    "categories": [
-      "Geh\u00e4lter",
-      "a) L\u00f6hne und Geh\u00e4lter",
-      "06. Personalaufwand"
-    ],
+    "categories": ["Geh\u00e4lter", "a) L\u00f6hne und Geh\u00e4lter", "06. Personalaufwand"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter > Geh\u00e4lter",
     "hierarchicalCategories.lvl1": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter",
@@ -15009,11 +14654,7 @@
     "code": "6026",
     "sort-code": 6026,
     "description": "",
-    "categories": [
-      "Geh\u00e4lter",
-      "a) L\u00f6hne und Geh\u00e4lter",
-      "06. Personalaufwand"
-    ],
+    "categories": ["Geh\u00e4lter", "a) L\u00f6hne und Geh\u00e4lter", "06. Personalaufwand"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter > Geh\u00e4lter",
     "hierarchicalCategories.lvl1": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter",
@@ -15028,11 +14669,7 @@
     "code": "6027",
     "sort-code": 6027,
     "description": "",
-    "categories": [
-      "Geh\u00e4lter",
-      "a) L\u00f6hne und Geh\u00e4lter",
-      "06. Personalaufwand"
-    ],
+    "categories": ["Geh\u00e4lter", "a) L\u00f6hne und Geh\u00e4lter", "06. Personalaufwand"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter > Geh\u00e4lter",
     "hierarchicalCategories.lvl1": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter",
@@ -15047,11 +14684,7 @@
     "code": "6028",
     "sort-code": 6028,
     "description": "",
-    "categories": [
-      "Geh\u00e4lter",
-      "a) L\u00f6hne und Geh\u00e4lter",
-      "06. Personalaufwand"
-    ],
+    "categories": ["Geh\u00e4lter", "a) L\u00f6hne und Geh\u00e4lter", "06. Personalaufwand"],
     "leaf": true,
     "hierarchicalCategories.lvl2": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter > Geh\u00e4lter",
     "hierarchicalCategories.lvl1": "06. Personalaufwand > a) L\u00f6hne und Geh\u00e4lter",
@@ -18861,10 +18494,7 @@
     "code": "6970",
     "sort-code": 6970,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18878,10 +18508,7 @@
     "code": "6972",
     "sort-code": 6972,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18895,10 +18522,7 @@
     "code": "6974",
     "sort-code": 6974,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18912,10 +18536,7 @@
     "code": "6976",
     "sort-code": 6976,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18929,10 +18550,7 @@
     "code": "6978",
     "sort-code": 6978,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18946,10 +18564,7 @@
     "code": "6979",
     "sort-code": 6979,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18963,10 +18578,7 @@
     "code": "6980",
     "sort-code": 6980,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18980,10 +18592,7 @@
     "code": "6982",
     "sort-code": 6982,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -18997,10 +18606,7 @@
     "code": "6984",
     "sort-code": 6984,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19014,10 +18620,7 @@
     "code": "6986",
     "sort-code": 6986,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19031,10 +18634,7 @@
     "code": "6988",
     "sort-code": 6988,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19048,10 +18648,7 @@
     "code": "6989",
     "sort-code": 6989,
     "description": "",
-    "categories": [
-      "e) Kalkulatorische Kosten",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["e) Kalkulatorische Kosten", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > e) Kalkulatorische Kosten",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19237,10 +18834,7 @@
     "code": "6931",
     "sort-code": 6931,
     "description": "\u00fcbliche H\u00f6he",
-    "categories": [
-      "Forderungsverluste",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["Forderungsverluste", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > Forderungsverluste",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19254,10 +18848,7 @@
     "code": "6932",
     "sort-code": 6932,
     "description": "\u00fcbliche H\u00f6he",
-    "categories": [
-      "Forderungsverluste",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["Forderungsverluste", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > Forderungsverluste",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19271,10 +18862,7 @@
     "code": "6933",
     "sort-code": 6933,
     "description": "\u00fcbliche H\u00f6he",
-    "categories": [
-      "Forderungsverluste",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["Forderungsverluste", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > Forderungsverluste",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19288,10 +18876,7 @@
     "code": "6934",
     "sort-code": 6934,
     "description": "\u00fcbliche H\u00f6he",
-    "categories": [
-      "Forderungsverluste",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["Forderungsverluste", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > Forderungsverluste",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19305,10 +18890,7 @@
     "code": "6935",
     "sort-code": 6935,
     "description": "\u00fcbliche H\u00f6he",
-    "categories": [
-      "Forderungsverluste",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["Forderungsverluste", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > Forderungsverluste",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19322,10 +18904,7 @@
     "code": "6937",
     "sort-code": 6937,
     "description": "\u00fcbliche H\u00f6he",
-    "categories": [
-      "Forderungsverluste",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["Forderungsverluste", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > Forderungsverluste",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -19339,10 +18918,7 @@
     "code": "6939",
     "sort-code": 6939,
     "description": "\u00fcbliche H\u00f6he",
-    "categories": [
-      "Forderungsverluste",
-      "08. sonstige betriebliche Aufwendungen"
-    ],
+    "categories": ["Forderungsverluste", "08. sonstige betriebliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "08. sonstige betriebliche Aufwendungen > Forderungsverluste",
     "hierarchicalCategories.lvl0": "08. sonstige betriebliche Aufwendungen",
@@ -20040,10 +19616,7 @@
     "code": "7501",
     "sort-code": 7501,
     "description": "",
-    "categories": [
-      "Au\u00dferordentliche Aufwendungen",
-      "16. au\u00dferordentliche Aufwendungen"
-    ],
+    "categories": ["Au\u00dferordentliche Aufwendungen", "16. au\u00dferordentliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "16. au\u00dferordentliche Aufwendungen > Au\u00dferordentliche Aufwendungen",
     "hierarchicalCategories.lvl0": "16. au\u00dferordentliche Aufwendungen",
@@ -20057,10 +19630,7 @@
     "code": "7550",
     "sort-code": 7550,
     "description": "",
-    "categories": [
-      "Au\u00dferordentliche Aufwendungen",
-      "16. au\u00dferordentliche Aufwendungen"
-    ],
+    "categories": ["Au\u00dferordentliche Aufwendungen", "16. au\u00dferordentliche Aufwendungen"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "16. au\u00dferordentliche Aufwendungen > Au\u00dferordentliche Aufwendungen",
     "hierarchicalCategories.lvl0": "16. au\u00dferordentliche Aufwendungen",
@@ -20099,10 +19669,7 @@
     "code": "7603",
     "sort-code": 7603,
     "description": "",
-    "categories": [
-      "K\u00f6rperschaftsteuer",
-      "18. Steuern vom Einkommen und vom Ertrag"
-    ],
+    "categories": ["K\u00f6rperschaftsteuer", "18. Steuern vom Einkommen und vom Ertrag"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "18. Steuern vom Einkommen und vom Ertrag > K\u00f6rperschaftsteuer",
     "hierarchicalCategories.lvl0": "18. Steuern vom Einkommen und vom Ertrag",
@@ -20116,10 +19683,7 @@
     "code": "7604",
     "sort-code": 7604,
     "description": "",
-    "categories": [
-      "K\u00f6rperschaftsteuer",
-      "18. Steuern vom Einkommen und vom Ertrag"
-    ],
+    "categories": ["K\u00f6rperschaftsteuer", "18. Steuern vom Einkommen und vom Ertrag"],
     "leaf": true,
     "hierarchicalCategories.lvl1": "18. Steuern vom Einkommen und vom Ertrag > K\u00f6rperschaftsteuer",
     "hierarchicalCategories.lvl0": "18. Steuern vom Einkommen und vom Ertrag",

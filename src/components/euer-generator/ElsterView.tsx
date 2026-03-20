@@ -1,8 +1,4 @@
-import type {
-  EuerCalculation,
-  FieldGroup,
-  NavigationSection,
-} from "../../types";
+import type { EuerCalculation, FieldGroup, NavigationSection } from "../../types";
 import FieldGroups from "../FieldGroups";
 import NavigationSidebar from "../NavigationSidebar";
 import { Card, CardContent } from "../ui/card";
@@ -71,14 +67,10 @@ export function ElsterView({
                 categories={categories}
                 currentSkr={currentSkr}
                 groups={guidanceData.groups.filter((group) => {
-                  if (currentSection === "income")
-                    return group.category === "income";
-                  if (currentSection === "expenses")
-                    return group.category === "expense";
+                  if (currentSection === "income") return group.category === "income";
+                  if (currentSection === "expenses") return group.category === "expense";
                   if (currentSection === "profit")
-                    return (
-                      group.category === "total" || group.category === "tax"
-                    );
+                    return group.category === "total" || group.category === "tax";
                   return group.category === "income";
                 })}
                 isKleinunternehmer={isKleinunternehmer}

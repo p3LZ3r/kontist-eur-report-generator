@@ -64,7 +64,7 @@ describe("NavigationSidebar", () => {
         currentSection="general"
         onSectionChange={mockOnSectionChange}
         sections={mockSections}
-      />
+      />,
     );
 
     // Check if all section titles are rendered
@@ -82,7 +82,7 @@ describe("NavigationSidebar", () => {
         isKleinunternehmer={false}
         onSectionChange={mockOnSectionChange}
         sections={mockSections}
-      />
+      />,
     );
 
     expect(screen.getByText("Kontenrahmen")).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe("NavigationSidebar", () => {
         currentSection="general"
         onSectionChange={mockOnSectionChange}
         sections={mockSections}
-      />
+      />,
     );
 
     expect(screen.getByTestId("file-text")).toBeInTheDocument();
@@ -112,16 +112,14 @@ describe("NavigationSidebar", () => {
         currentSection="general"
         onSectionChange={mockOnSectionChange}
         sections={mockSections}
-      />
+      />,
     );
 
     // All sections should be rendered as buttons
     const incomeSection = screen.getByText("Einnahmen").closest("button");
     expect(incomeSection).toBeInTheDocument();
 
-    const generalSection = screen
-      .getByText("Persönliche Daten")
-      .closest("button");
+    const generalSection = screen.getByText("Persönliche Daten").closest("button");
     expect(generalSection).toBeInTheDocument();
   });
 
@@ -133,7 +131,7 @@ describe("NavigationSidebar", () => {
         currentSection="general"
         onSectionChange={mockOnSectionChange}
         sections={mockSections}
-      />
+      />,
     );
 
     const incomeButton = screen.getByText("Einnahmen").closest("button");
@@ -148,7 +146,7 @@ describe("NavigationSidebar", () => {
         currentSection="income"
         onSectionChange={mockOnSectionChange}
         sections={mockSections}
-      />
+      />,
     );
 
     const incomeButton = screen.getByText("Einnahmen").closest("button");
@@ -170,7 +168,7 @@ describe("NavigationSidebar", () => {
         euerCalculation={mockCalculation}
         onSectionChange={mockOnSectionChange}
         sections={mockSections}
-      />
+      />,
     );
 
     expect(screen.getByText("Gewinnermittlung")).toBeInTheDocument();

@@ -1,10 +1,4 @@
-import {
-  Calculator,
-  FileText,
-  TrendingDown,
-  TrendingUp,
-  User,
-} from "lucide-react";
+import { Calculator, FileText, TrendingDown, TrendingUp, User } from "lucide-react";
 import type React from "react";
 import type { NavigationSection } from "../types";
 import { Button } from "./ui/button";
@@ -127,22 +121,18 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                 <span className="truncate pr-2">Betriebsausgaben</span>
                 <span className="font-mono text-red-600">
                   -
-                  {Math.abs(euerCalculation.totalExpenses).toLocaleString(
-                    "de-DE",
-                    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                  )}
+                  {Math.abs(euerCalculation.totalExpenses).toLocaleString("de-DE", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                   €
                 </span>
               </div>
               <div className="flex items-center justify-between border-border/60 border-t pt-1.5 text-xs">
-                <span className="truncate pr-2 font-medium">
-                  Gewinn / Verlust
-                </span>
+                <span className="truncate pr-2 font-medium">Gewinn / Verlust</span>
                 <span
                   className={`font-medium font-mono ${
-                    euerCalculation.profit >= 0
-                      ? "text-green-600"
-                      : "text-red-600"
+                    euerCalculation.profit >= 0 ? "text-green-600" : "text-red-600"
                   }`}
                 >
                   {euerCalculation.profit >= 0 ? "+" : ""}
@@ -182,22 +172,19 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
                 <span className="truncate pr-2 font-medium">Summe</span>
                 <span
                   className={`font-medium font-mono ${
-                    (
-                      euerCalculation.privateDeposits -
-                        Math.abs(euerCalculation.privateWithdrawals)
-                    ) >= 0
+                    euerCalculation.privateDeposits -
+                      Math.abs(euerCalculation.privateWithdrawals) >=
+                    0
                       ? "text-green-600"
                       : "text-red-600"
                   }`}
                 >
-                  {euerCalculation.privateDeposits -
-                    Math.abs(euerCalculation.privateWithdrawals) >=
+                  {euerCalculation.privateDeposits - Math.abs(euerCalculation.privateWithdrawals) >=
                   0
                     ? "+"
                     : ""}
                   {(
-                    euerCalculation.privateDeposits -
-                    Math.abs(euerCalculation.privateWithdrawals)
+                    euerCalculation.privateDeposits - Math.abs(euerCalculation.privateWithdrawals)
                   ).toLocaleString("de-DE", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
@@ -213,17 +200,11 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
       {/* Sidebar footer with configuration info (subtle, two columns, bottom) */}
       <div className="mt-auto grid grid-cols-2 gap-x-4 pt-4 text-muted-foreground">
         <div className="flex flex-col items-start">
-          <div className="text-[10px] uppercase tracking-wide">
-            Kontenrahmen
-          </div>
-          <div className="font-medium text-foreground text-sm leading-tight">
-            {currentSkr}
-          </div>
+          <div className="text-[10px] uppercase tracking-wide">Kontenrahmen</div>
+          <div className="font-medium text-foreground text-sm leading-tight">{currentSkr}</div>
         </div>
         <div className="flex flex-col items-end">
-          <div className="text-[10px] uppercase tracking-wide">
-            Kleinunternehmer
-          </div>
+          <div className="text-[10px] uppercase tracking-wide">Kleinunternehmer</div>
           <div className="font-medium text-foreground text-sm leading-tight">
             {isKleinunternehmer ? "Ja" : "Nein"}
           </div>

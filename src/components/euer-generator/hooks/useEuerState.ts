@@ -63,7 +63,7 @@ export function useEuerState() {
       Object.entries(skrCategories)
         .filter(([, cat]) => cat.type === "income")
         .sort((a, b) => a[1].name.localeCompare(b[1].name)),
-    [skrCategories]
+    [skrCategories],
   );
 
   const expenseCategories = useMemo(
@@ -71,42 +71,28 @@ export function useEuerState() {
       Object.entries(skrCategories)
         .filter(([, cat]) => cat.type === "expense" || cat.type === "private")
         .sort((a, b) => a[1].name.localeCompare(b[1].name)),
-    [skrCategories]
+    [skrCategories],
   );
 
   // EÜR calculation memoized
   const euerCalculation = useMemo(
-    () =>
-      calculateEuer(
-        transactions,
-        categories,
-        isKleinunternehmer,
-        skrCategories
-      ),
-    [transactions, categories, isKleinunternehmer, skrCategories]
+    () => calculateEuer(transactions, categories, isKleinunternehmer, skrCategories),
+    [transactions, categories, isKleinunternehmer, skrCategories],
   );
 
   // Guidance system data memoized
   const guidanceData = useMemo(() => {
     if (transactions.length === 0) return null;
-    return prepareGuidanceData(
-      transactions,
-      categories,
-      isKleinunternehmer,
-      euerCalculation
-    );
+    return prepareGuidanceData(transactions, categories, isKleinunternehmer, euerCalculation);
   }, [transactions, categories, isKleinunternehmer, euerCalculation]);
 
   // Optimized callback to prevent unnecessary re-renders
-  const updateCategory = useCallback(
-    (transactionId: number, categoryKey: string) => {
-      setCategories((prev) => ({
-        ...prev,
-        [transactionId]: categoryKey,
-      }));
-    },
-    []
-  );
+  const updateCategory = useCallback((transactionId: number, categoryKey: string) => {
+    setCategories((prev) => ({
+      ...prev,
+      [transactionId]: categoryKey,
+    }));
+  }, []);
 
   // Reset all state
   const resetState = useCallback(() => {

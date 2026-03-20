@@ -103,9 +103,7 @@ async function generateImages() {
   console.log("🎉 All images generated successfully!");
   console.log("\n📝 Note: For favicon.ico, please use an online tool like:");
   console.log("   https://realfavicongenerator.net/");
-  console.log(
-    "   Upload the generated PNG files to create a multi-resolution .ico file\n"
-  );
+  console.log("   Upload the generated PNG files to create a multi-resolution .ico file\n");
 }
 
 generateImages().catch(console.error);

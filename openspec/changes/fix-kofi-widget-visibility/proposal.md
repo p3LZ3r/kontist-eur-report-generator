@@ -17,16 +17,20 @@ This impacts the ability to receive voluntary donations from users who find the 
 ## Impact
 
 ### Affected Files
+
 - `index.html` - Content Security Policy meta tag (lines 10-21)
 
 ### Affected Specs
+
 - `security-headers` (new capability) - CSP configuration for external widget integrations
 
 ### User Impact
+
 - **Positive:** Users can now see and interact with the KoFi donation widget
 - **Neutral:** No changes to core EÜR functionality
 - **Security:** Maintains strong CSP while allowing necessary third-party widget
 
 ### Browser Compatibility
+
 - Modern browsers: Use `frame-src` directive
 - Legacy browsers: Use `child-src` as fallback (deprecated but still supported)

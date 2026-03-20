@@ -46,7 +46,7 @@ const EuerGenerator = () => {
       // Reset file input to allow re-uploading the same file
       event.target.value = "";
     },
-    [fileUpload, state, pagination]
+    [fileUpload, state, pagination],
   );
 
   // Demo data handler
@@ -69,16 +69,14 @@ const EuerGenerator = () => {
   // Reset handler
   const resetAndUploadNew = useCallback(() => {
     const confirmReset = window.confirm(
-      "Achtung: Alle aktuellen Transaktionen und manuellen Kategorisierungen gehen verloren.\n\nMöchten Sie wirklich eine neue CSV-Datei hochladen?"
+      "Achtung: Alle aktuellen Transaktionen und manuellen Kategorisierungen gehen verloren.\n\nMöchten Sie wirklich eine neue CSV-Datei hochladen?",
     );
 
     if (confirmReset) {
       state.resetState();
       pagination.resetToFirstPage();
       // Reset file input
-      const fileInput = document.getElementById(
-        "csvUpload"
-      ) as HTMLInputElement;
+      const fileInput = document.getElementById("csvUpload") as HTMLInputElement;
       if (fileInput) {
         fileInput.value = "";
       }
@@ -95,7 +93,7 @@ const EuerGenerator = () => {
     (sectionId: string) => {
       state.setCurrentSection(sectionId);
     },
-    [state]
+    [state],
   );
 
   // Show Impressum or Datenschutz if selected
@@ -142,19 +140,11 @@ const EuerGenerator = () => {
 
               {/* Help section for common issues */}
               <div className="rounded-md border border-border/30 bg-background/50 p-3">
-                <div className="mb-2 text-foreground/70 text-xs">
-                  Häufige Lösungsansätze:
-                </div>
+                <div className="mb-2 text-foreground/70 text-xs">Häufige Lösungsansätze:</div>
                 <ul className="space-y-1 text-muted-foreground text-xs">
-                  <li>
-                    • Stellen Sie sicher, dass die Datei eine .csv-Datei ist
-                  </li>
-                  <li>
-                    • Exportieren Sie die CSV direkt aus Kontist oder Holvi
-                  </li>
-                  <li>
-                    • Überprüfen Sie, ob die Datei Transaktionsdaten enthält
-                  </li>
+                  <li>• Stellen Sie sicher, dass die Datei eine .csv-Datei ist</li>
+                  <li>• Exportieren Sie die CSV direkt aus Kontist oder Holvi</li>
+                  <li>• Überprüfen Sie, ob die Datei Transaktionsdaten enthält</li>
                   <li>• Maximale Dateigröße: 10MB</li>
                 </ul>
               </div>

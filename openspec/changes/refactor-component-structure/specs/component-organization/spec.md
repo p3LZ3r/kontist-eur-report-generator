@@ -7,6 +7,7 @@
 The application SHALL organize React components using a feature-based directory structure rather than a type-based structure.
 
 #### Scenario: Feature folder grouping
+
 - **GIVEN** the EuerGenerator feature requires multiple related components
 - **WHEN** organizing the component files
 - **THEN** all related components SHALL be placed in `src/components/euer-generator/` directory
@@ -14,6 +15,7 @@ The application SHALL organize React components using a feature-based directory 
 - **AND** the main orchestrator component SHALL be `EuerGenerator.tsx`
 
 #### Scenario: Component discoverability
+
 - **GIVEN** a developer needs to modify the file upload functionality
 - **WHEN** navigating the project structure
 - **THEN** the developer SHALL find `FileUploadSection.tsx` component in the feature directory
@@ -25,6 +27,7 @@ The application SHALL organize React components using a feature-based directory 
 The application SHALL separate container components (state management) from presentational components (UI rendering).
 
 #### Scenario: Main orchestrator component
+
 - **GIVEN** the EuerGenerator feature requires state coordination
 - **WHEN** implementing the main component
 - **THEN** `EuerGenerator.tsx` SHALL act as a container component managing state
@@ -33,6 +36,7 @@ The application SHALL separate container components (state management) from pres
 - **AND** it SHALL use custom hooks for business logic
 
 #### Scenario: Presentational component design
+
 - **GIVEN** a UI section needs to be rendered (e.g., HeroSection)
 - **WHEN** implementing the component
 - **THEN** the component SHALL receive all data via props
@@ -41,6 +45,7 @@ The application SHALL separate container components (state management) from pres
 - **AND** it SHALL be reusable in different contexts
 
 #### Scenario: Pure presentational components
+
 - **GIVEN** a component has no interactive logic (e.g., HeroSection, Footer)
 - **WHEN** the component is implemented
 - **THEN** it SHALL accept no props or only styling/content props
@@ -52,6 +57,7 @@ The application SHALL separate container components (state management) from pres
 Complex business logic SHALL be extracted into custom React hooks for reusability and testability.
 
 #### Scenario: File upload logic extraction
+
 - **GIVEN** the file upload functionality requires CSV parsing, validation, and categorization
 - **WHEN** implementing the file upload feature
 - **THEN** a `useFileUpload` custom hook SHALL encapsulate the logic
@@ -60,6 +66,7 @@ Complex business logic SHALL be extracted into custom React hooks for reusabilit
 - **AND** the hook SHALL be reusable across components if needed
 
 #### Scenario: State consolidation
+
 - **GIVEN** the main component requires 10 state variables for the EÜR workflow
 - **WHEN** organizing state management
 - **THEN** a `useEuerState` custom hook SHALL consolidate related state
@@ -68,6 +75,7 @@ Complex business logic SHALL be extracted into custom React hooks for reusabilit
 - **AND** the main component SHALL use the hook to access all state
 
 #### Scenario: Pagination logic extraction
+
 - **GIVEN** transaction lists require pagination functionality
 - **WHEN** implementing pagination
 - **THEN** a `usePagination` hook SHALL encapsulate pagination calculations
@@ -80,12 +88,14 @@ Complex business logic SHALL be extracted into custom React hooks for reusabilit
 Individual component files SHALL adhere to size constraints to maintain readability and maintainability.
 
 #### Scenario: Main orchestrator size limit
+
 - **GIVEN** the EuerGenerator main component orchestrates the feature
 - **WHEN** the component is fully implemented
 - **THEN** the file size SHALL be between 200-250 lines of code
 - **AND** any logic exceeding this limit SHALL be extracted to custom hooks or sub-components
 
 #### Scenario: Sub-component size guidelines
+
 - **GIVEN** a sub-component is being implemented (e.g., TransactionList)
 - **WHEN** the component exceeds 250 lines
 - **THEN** the component SHOULD be further broken down into smaller components
@@ -97,6 +107,7 @@ Individual component files SHALL adhere to size constraints to maintain readabil
 Components SHALL define clear, typed props interfaces for type safety and documentation.
 
 #### Scenario: Required props definition
+
 - **GIVEN** a component requires specific data to function (e.g., FileUploadSection)
 - **WHEN** defining the component interface
 - **THEN** an interface SHALL be defined with all required props
@@ -105,14 +116,15 @@ Components SHALL define clear, typed props interfaces for type safety and docume
 
 ```typescript
 interface FileUploadSectionProps {
-  onUpload: (file: File) => Promise<void>
-  onLoadDemo: () => void
-  isLoading?: boolean
-  error?: string | null
+  onUpload: (file: File) => Promise<void>;
+  onLoadDemo: () => void;
+  isLoading?: boolean;
+  error?: string | null;
 }
 ```
 
 #### Scenario: Optional props with defaults
+
 - **GIVEN** a component has optional configuration (e.g., pagination itemsPerPage)
 - **WHEN** defining the component interface
 - **THEN** optional props SHALL be marked with `?` in the interface
@@ -124,6 +136,7 @@ interface FileUploadSectionProps {
 Refactored components SHALL maintain or improve existing performance optimizations.
 
 #### Scenario: Memoization preservation
+
 - **GIVEN** the original component used `useMemo` for expensive calculations
 - **WHEN** refactoring into sub-components
 - **THEN** the memoization SHALL be preserved in the appropriate component/hook
@@ -131,6 +144,7 @@ Refactored components SHALL maintain or improve existing performance optimizatio
 - **AND** performance metrics SHALL not regress
 
 #### Scenario: Pure component memoization
+
 - **GIVEN** a presentational component receives props but has no internal state (e.g., HeroSection)
 - **WHEN** the component is implemented
 - **THEN** the component export SHALL be wrapped with `React.memo`
@@ -138,6 +152,7 @@ Refactored components SHALL maintain or improve existing performance optimizatio
 - **AND** unnecessary re-renders SHALL be prevented
 
 #### Scenario: Callback stability
+
 - **GIVEN** event handlers are passed to child components as props
 - **WHEN** defining the handlers in the parent
 - **THEN** handlers SHALL be wrapped with `useCallback` when appropriate
@@ -149,6 +164,7 @@ Refactored components SHALL maintain or improve existing performance optimizatio
 Refactored components SHALL maintain identical external API and behavior.
 
 #### Scenario: Component API preservation
+
 - **GIVEN** the original `EuerGenerator` component has a specific API
 - **WHEN** the refactoring is complete
 - **THEN** the component SHALL accept the same props (if any)
@@ -157,6 +173,7 @@ Refactored components SHALL maintain identical external API and behavior.
 - **AND** no breaking changes SHALL be introduced
 
 #### Scenario: Functionality preservation
+
 - **GIVEN** the original component supports CSV upload, categorization, and export
 - **WHEN** the refactored components are used
 - **THEN** all original functionality SHALL work identically
@@ -165,6 +182,7 @@ Refactored components SHALL maintain identical external API and behavior.
 - **AND** ELSTER calculations SHALL produce identical results
 
 #### Scenario: E2E test compatibility
+
 - **GIVEN** existing E2E tests cover the EuerGenerator workflow
 - **WHEN** running tests after refactoring
 - **THEN** all existing E2E tests SHALL pass without modification
@@ -176,6 +194,7 @@ Refactored components SHALL maintain identical external API and behavior.
 Refactored components SHALL meet project code quality standards and linting rules.
 
 #### Scenario: Linting compliance
+
 - **GIVEN** the project uses Ultracite for code quality
 - **WHEN** refactored components are created
 - **THEN** all components SHALL pass `npm run lint` without errors
@@ -183,6 +202,7 @@ Refactored components SHALL meet project code quality standards and linting rule
 - **AND** no linting warnings SHALL be introduced
 
 #### Scenario: TypeScript compilation
+
 - **GIVEN** the project uses TypeScript with strict mode
 - **WHEN** refactored components are implemented
 - **THEN** all files SHALL compile without errors
@@ -190,6 +210,7 @@ Refactored components SHALL meet project code quality standards and linting rule
 - **AND** all types SHALL be properly inferred or explicitly declared
 
 #### Scenario: Import organization
+
 - **GIVEN** components import dependencies from various sources
 - **WHEN** organizing imports
 - **THEN** imports SHALL be grouped by type (React, external libs, internal modules)
@@ -201,6 +222,7 @@ Refactored components SHALL meet project code quality standards and linting rule
 New components and hooks SHALL have appropriate test coverage.
 
 #### Scenario: Custom hook testing
+
 - **GIVEN** a custom hook like `useFileUpload` is created
 - **WHEN** writing tests for the hook
 - **THEN** a test file SHALL be created at `src/components/euer-generator/hooks/useFileUpload.test.ts`
@@ -209,6 +231,7 @@ New components and hooks SHALL have appropriate test coverage.
 - **AND** tests SHALL use `@testing-library/react-hooks` or equivalent
 
 #### Scenario: Component rendering tests
+
 - **GIVEN** a presentational component like `HeroSection` is created
 - **WHEN** writing tests for the component
 - **THEN** a test file SHALL be created at `src/components/euer-generator/HeroSection.test.tsx`
@@ -217,6 +240,7 @@ New components and hooks SHALL have appropriate test coverage.
 - **AND** tests SHALL use `@testing-library/react`
 
 #### Scenario: Integration testing
+
 - **GIVEN** the main orchestrator component coordinates multiple sub-components
 - **WHEN** writing integration tests
 - **THEN** tests SHALL verify data flow between components
@@ -228,6 +252,7 @@ New components and hooks SHALL have appropriate test coverage.
 Components and hooks SHALL be documented with JSDoc comments explaining purpose and usage.
 
 #### Scenario: Component documentation
+
 - **GIVEN** a new component is created
 - **WHEN** writing the component
 - **THEN** a JSDoc comment SHALL be added above the component definition
@@ -251,6 +276,7 @@ export function FileUploadSection(props: FileUploadSectionProps) {
 ```
 
 #### Scenario: Hook documentation
+
 - **GIVEN** a custom hook is created
 - **WHEN** writing the hook
 - **THEN** a JSDoc comment SHALL be added above the hook function
@@ -279,6 +305,7 @@ export function useFileUpload(): UseFileUploadReturn {
 Component files SHALL follow consistent naming conventions for clarity and predictability.
 
 #### Scenario: Component file naming
+
 - **GIVEN** a new React component is created
 - **WHEN** naming the file
 - **THEN** the file SHALL use PascalCase matching the component name
@@ -286,11 +313,13 @@ Component files SHALL follow consistent naming conventions for clarity and predi
 - **AND** the file name SHALL be descriptive of the component's purpose
 
 Examples:
+
 - `EuerGenerator.tsx` (main component)
 - `FileUploadSection.tsx` (section component)
 - `HeroSection.tsx` (section component)
 
 #### Scenario: Hook file naming
+
 - **GIVEN** a custom hook is created
 - **WHEN** naming the file
 - **THEN** the file name SHALL start with `use` prefix
@@ -298,12 +327,14 @@ Examples:
 - **AND** the file SHALL have `.ts` extension (not `.tsx` unless it renders)
 
 Examples:
+
 - `useFileUpload.ts`
 - `useDemoData.ts`
 - `useEuerState.ts`
 - `usePagination.ts`
 
 #### Scenario: Test file naming
+
 - **GIVEN** a test file is created for a component or hook
 - **WHEN** naming the test file
 - **THEN** the test file name SHALL match the source file name
@@ -311,5 +342,6 @@ Examples:
 - **AND** the test file SHALL be co-located with the source file
 
 Examples:
+
 - `HeroSection.test.tsx` (component test)
 - `useFileUpload.test.ts` (hook test)

@@ -1,9 +1,6 @@
 import { describe, expect, it, vi } from "vite-plus/test";
 import type { Transaction } from "../types";
-import {
-  calculateEuer,
-  populateAllElsterFields,
-} from "../utils/euerCalculations";
+import { calculateEuer, populateAllElsterFields } from "../utils/euerCalculations";
 
 // Mock ELSTER_FIELDS and category mappings
 vi.mock("../utils/constants", () => ({
@@ -132,9 +129,7 @@ const generateLargeTransactionSet = (count: number): Transaction[] => {
       dateField: `2024-${String(Math.floor(i / 30) + 1).padStart(2, "0")}-${String((i % 30) + 1).padStart(2, "0")}`,
       counterpartyField: `Customer ${i}`,
       purposeField: `Transaction ${i}`,
-      BetragNumeric: isIncome
-        ? Math.random() * 1000 + 100
-        : -(Math.random() * 500 + 50), // Ensure positive for income, negative for expenses
+      BetragNumeric: isIncome ? Math.random() * 1000 + 100 : -(Math.random() * 500 + 50), // Ensure positive for income, negative for expenses
       euerCategory: isIncome ? "income_services_19" : "expense_office_supplies", // Use real SKR04 categories
     });
   }
@@ -149,7 +144,7 @@ const createValidMockData = (transactionCount: number) => {
       acc[t.id] = t.euerCategory || "income_services_19";
       return acc;
     },
-    {} as Record<number, string>
+    {} as Record<number, string>,
   );
 
   return { transactions, categories };
@@ -164,7 +159,7 @@ describe("Performance Tests", () => {
           acc[t.id] = t.euerCategory || "income_services_19";
           return acc;
         },
-        {} as Record<number, string>
+        {} as Record<number, string>,
       );
 
       const startTime = performance.now();
@@ -188,7 +183,7 @@ describe("Performance Tests", () => {
           acc[t.id] = t.euerCategory || "income_services_19";
           return acc;
         },
-        {} as Record<number, string>
+        {} as Record<number, string>,
       );
 
       const startTime = performance.now();
@@ -197,9 +192,7 @@ describe("Performance Tests", () => {
 
       const duration = endTime - startTime;
 
-      console.log(
-        `calculateEuer (1000 transactions): ${duration.toFixed(2)}ms`
-      );
+      console.log(`calculateEuer (1000 transactions): ${duration.toFixed(2)}ms`);
 
       // Should complete within 500ms for 1000 transactions
       expect(duration).toBeLessThan(500);
@@ -214,7 +207,7 @@ describe("Performance Tests", () => {
           acc[t.id] = t.euerCategory || "income_services_19";
           return acc;
         },
-        {} as Record<number, string>
+        {} as Record<number, string>,
       );
 
       const startTime = performance.now();
@@ -223,9 +216,7 @@ describe("Performance Tests", () => {
 
       const duration = endTime - startTime;
 
-      console.log(
-        `calculateEuer (5000 transactions): ${duration.toFixed(2)}ms`
-      );
+      console.log(`calculateEuer (5000 transactions): ${duration.toFixed(2)}ms`);
 
       // Should complete within 2000ms for 5000 transactions
       expect(duration).toBeLessThan(2000);
@@ -243,7 +234,7 @@ describe("Performance Tests", () => {
             acc[t.id] = t.euerCategory || "income_services_19";
             return acc;
           },
-          {} as Record<number, string>
+          {} as Record<number, string>,
         );
 
         const startTime = performance.now();
@@ -279,9 +270,7 @@ describe("Performance Tests", () => {
 
       const duration = endTime - startTime;
 
-      console.log(
-        `populateAllElsterFields (100 transactions): ${duration.toFixed(2)}ms`
-      );
+      console.log(`populateAllElsterFields (100 transactions): ${duration.toFixed(2)}ms`);
 
       // Should complete within 200ms for 100 transactions
       expect(duration).toBeLessThan(200);
@@ -298,9 +287,7 @@ describe("Performance Tests", () => {
 
       const duration = endTime - startTime;
 
-      console.log(
-        `populateAllElsterFields (500 transactions): ${duration.toFixed(2)}ms`
-      );
+      console.log(`populateAllElsterFields (500 transactions): ${duration.toFixed(2)}ms`);
 
       // Should complete within 1000ms for 500 transactions
       expect(duration).toBeLessThan(1000);
@@ -316,9 +303,7 @@ describe("Performance Tests", () => {
 
       const duration = endTime - startTime;
 
-      console.log(
-        `populateAllElsterFields (2000 transactions): ${duration.toFixed(2)}ms`
-      );
+      console.log(`populateAllElsterFields (2000 transactions): ${duration.toFixed(2)}ms`);
 
       // Should complete within 3000ms for 2000 transactions
       expect(duration).toBeLessThan(3000);
@@ -338,7 +323,7 @@ describe("Performance Tests", () => {
           acc[t.id] = t.euerCategory || "income_services_19";
           return acc;
         },
-        {} as Record<number, string>
+        {} as Record<number, string>,
       );
 
       // Run multiple calculations to check for memory issues
@@ -370,12 +355,8 @@ describe("Performance Tests", () => {
       const regularDuration = regularEndTime - regularStartTime;
 
       console.log(`Kleinunternehmer calculation: ${kuDuration.toFixed(2)}ms`);
-      console.log(
-        `Regular business calculation: ${regularDuration.toFixed(2)}ms`
-      );
-      console.log(
-        `Performance difference: ${(regularDuration - kuDuration).toFixed(2)}ms`
-      );
+      console.log(`Regular business calculation: ${regularDuration.toFixed(2)}ms`);
+      console.log(`Performance difference: ${(regularDuration - kuDuration).toFixed(2)}ms`);
 
       // In a real scenario, regular business might be slightly slower due to VAT calculations
       // But in test environment, the difference might be negligible

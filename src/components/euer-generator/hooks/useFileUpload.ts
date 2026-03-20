@@ -28,7 +28,7 @@ export function useFileUpload() {
 
   const handleFileUpload = useCallback(
     async (
-      file: File
+      file: File,
     ): Promise<{
       transactions: Transaction[];
       bankType: string;
@@ -39,13 +39,8 @@ export function useFileUpload() {
 
       try {
         // Validate file type
-        if (
-          !file.name.toLowerCase().endsWith(".csv") &&
-          file.type !== "text/csv"
-        ) {
-          throw new Error(
-            "Ungültiger Dateityp. Bitte laden Sie eine CSV-Datei (.csv) hoch."
-          );
+        if (!file.name.toLowerCase().endsWith(".csv") && file.type !== "text/csv") {
+          throw new Error("Ungültiger Dateityp. Bitte laden Sie eine CSV-Datei (.csv) hoch.");
         }
 
         // Validate file size (max 10MB)
@@ -57,7 +52,7 @@ export function useFileUpload() {
         // Validate file is not empty
         if (file.size === 0) {
           throw new Error(
-            "Die hochgeladene Datei ist leer. Bitte wählen Sie eine gültige CSV-Datei."
+            "Die hochgeladene Datei ist leer. Bitte wählen Sie eine gültige CSV-Datei.",
           );
         }
 
@@ -65,23 +60,19 @@ export function useFileUpload() {
         try {
           text = await file.text();
         } catch {
-          throw new Error(
-            "Fehler beim Lesen der Datei. Die Datei könnte beschädigt sein."
-          );
+          throw new Error("Fehler beim Lesen der Datei. Die Datei könnte beschädigt sein.");
         }
 
         // Validate file content is not empty
         if (text.trim().length === 0) {
-          throw new Error(
-            "Die CSV-Datei ist leer oder enthält keine gültigen Daten."
-          );
+          throw new Error("Die CSV-Datei ist leer oder enthält keine gültigen Daten.");
         }
 
         // Validate CSV structure (basic check for commas/semicolons)
         const lines = text.split("\n").filter((line) => line.trim().length > 0);
         if (lines.length < 2) {
           throw new Error(
-            "Die CSV-Datei enthält zu wenig Daten. Mindestens eine Kopfzeile und eine Datenzeile sind erforderlich."
+            "Die CSV-Datei enthält zu wenig Daten. Mindestens eine Kopfzeile und eine Datenzeile sind erforderlich.",
           );
         }
 
@@ -98,14 +89,14 @@ export function useFileUpload() {
           parsedTransactions = parseHolviCSV(text);
         } else {
           throw new Error(
-            "Unbekanntes CSV-Format. Unterstützt werden nur Kontist und Holvi Exporte. Bitte stellen Sie sicher, dass Sie die CSV-Datei direkt aus Ihrem Banking-Portal exportiert haben."
+            "Unbekanntes CSV-Format. Unterstützt werden nur Kontist und Holvi Exporte. Bitte stellen Sie sicher, dass Sie die CSV-Datei direkt aus Ihrem Banking-Portal exportiert haben.",
           );
         }
 
         // Validate that transactions were successfully parsed
         if (!parsedTransactions || parsedTransactions.length === 0) {
           throw new Error(
-            "Keine Transaktionen in der CSV-Datei gefunden. Bitte überprüfen Sie, ob die Datei Transaktionsdaten enthält."
+            "Keine Transaktionen in der CSV-Datei gefunden. Bitte überprüfen Sie, ob die Datei Transaktionsdaten enthält.",
           );
         }
 
@@ -140,7 +131,7 @@ export function useFileUpload() {
         setIsProcessingFile(false);
       }
     },
-    []
+    [],
   );
 
   const clearError = useCallback(() => {

@@ -35,8 +35,7 @@ export const formatDate = (dateString: string): string => {
  * Formats a number as German currency (EUR)
  * Uses cached Intl.NumberFormat instance for performance
  */
-export const formatCurrency = (amount: number): string =>
-  currencyFormatter.format(amount);
+export const formatCurrency = (amount: number): string => currencyFormatter.format(amount);
 
 /**
  * Formats a number as German currency without the currency symbol
@@ -47,4 +46,3 @@ export const formatAmount = (amount: number): string =>
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-

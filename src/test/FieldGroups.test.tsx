@@ -79,7 +79,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     expect(screen.getByText("Persönliche Daten")).toBeInTheDocument();
@@ -94,7 +94,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Check field numbers are displayed
@@ -103,9 +103,7 @@ describe("FieldGroups", () => {
 
     // Check field labels are displayed
     expect(screen.getByText("Name")).toBeInTheDocument();
-    expect(
-      screen.getByText("Wareneinkauf/Fremdleistungen")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Wareneinkauf/Fremdleistungen")).toBeInTheDocument();
 
     // Check field values are displayed
     expect(screen.getByText("Mustermann")).toBeInTheDocument();
@@ -119,15 +117,13 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component no longer shows source badges, this test is deprecated
     // The current implementation only shows field numbers, labels, and values
     expect(screen.getByText("Name")).toBeInTheDocument();
-    expect(
-      screen.getByText("Wareneinkauf/Fremdleistungen")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Wareneinkauf/Fremdleistungen")).toBeInTheDocument();
   });
 
   it("shows required field indicators", () => {
@@ -137,7 +133,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component no longer shows required field asterisks
@@ -152,7 +148,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component no longer shows group expansion state with chevrons
@@ -171,7 +167,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component no longer has group toggle functionality
@@ -192,7 +188,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component no longer has onFieldClick functionality
@@ -211,7 +207,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component no longer shows completion status indicators
@@ -246,7 +242,7 @@ describe("FieldGroups", () => {
         groups={incompleteGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component shows "---" for empty values, not alert indicators
@@ -261,7 +257,7 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component no longer shows field counts in headers
@@ -278,12 +274,10 @@ describe("FieldGroups", () => {
         groups={mockGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
-    expect(
-      screen.getByText("Steuerpflichtige Personendaten")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Steuerpflichtige Personendaten")).toBeInTheDocument();
     expect(screen.getByText("Betriebseinnahmen")).toBeInTheDocument();
     expect(screen.getByText("Betriebsausgaben")).toBeInTheDocument();
   });
@@ -315,7 +309,7 @@ describe("FieldGroups", () => {
         groups={emptyFieldGroups}
         isKleinunternehmer={false}
         skrCategories={{}}
-      />
+      />,
     );
 
     // Component shows "---" for empty values

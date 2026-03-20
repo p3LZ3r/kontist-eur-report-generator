@@ -5,16 +5,11 @@ import { sanitizeField } from "./sanitization";
 export const detectBankFormat = (csvContent: string): string => {
   const lines = csvContent.split("\n");
 
-  if (
-    lines[0]?.includes("Buchungsdatum") &&
-    lines[0].includes("Transaktionstyp")
-  ) {
+  if (lines[0]?.includes("Buchungsdatum") && lines[0].includes("Transaktionstyp")) {
     return "kontist";
   }
 
-  const holviHeaderLine = lines.findIndex((line) =>
-    line.includes("Valutadatum")
-  );
+  const holviHeaderLine = lines.findIndex((line) => line.includes("Valutadatum"));
   if (holviHeaderLine >= 0) {
     return "holvi";
   }
@@ -38,15 +33,9 @@ export const parseKontistCSV = (csvContent: string): Transaction[] => {
     const betragStr = String(transaction.Betrag || "").replace(",", ".");
     transaction.BetragNumeric = Number.parseFloat(betragStr) || 0;
     transaction.id = index;
-    transaction.dateField = sanitizeField(
-      String(transaction.Buchungsdatum || "")
-    );
-    transaction.counterpartyField = sanitizeField(
-      String(transaction.Empfänger || "")
-    );
-    transaction.purposeField = sanitizeField(
-      String(transaction.Verwendungszweck || "")
-    );
+    transaction.dateField = sanitizeField(String(transaction.Buchungsdatum || ""));
+    transaction.counterpartyField = sanitizeField(String(transaction.Empfänger || ""));
+    transaction.purposeField = sanitizeField(String(transaction.Verwendungszweck || ""));
 
     return transaction as Transaction;
   });
@@ -55,9 +44,7 @@ export const parseKontistCSV = (csvContent: string): Transaction[] => {
 // Holvi CSV parsen
 export const parseHolviCSV = (csvContent: string): Transaction[] => {
   const lines = csvContent.split("\n");
-  const headerLineIndex = lines.findIndex((line) =>
-    line.includes("Valutadatum")
-  );
+  const headerLineIndex = lines.findIndex((line) => line.includes("Valutadatum"));
 
   if (headerLineIndex < 0) {
     throw new Error("Holvi CSV-Format nicht erkannt");
@@ -66,9 +53,7 @@ export const parseHolviCSV = (csvContent: string): Transaction[] => {
   const csvDataFromHeader = lines.slice(headerLineIndex).join("\n");
   const result: Transaction[] = [];
   const dataLines = csvDataFromHeader.split("\n").filter((line) => line.trim());
-  const headers = dataLines[0]
-    .split(",")
-    .map((h) => h.replace(/"/g, "").trim());
+  const headers = dataLines[0].split(",").map((h) => h.replace(/"/g, "").trim());
 
   dataLines.slice(1).forEach((line, index) => {
     const values: string[] = [];
@@ -96,14 +81,10 @@ export const parseHolviCSV = (csvContent: string): Transaction[] => {
     const betragStr = String(transaction.Betrag || "").replace(",", ".");
     transaction.BetragNumeric = Number.parseFloat(betragStr) || 0;
     transaction.id = index;
-    transaction.dateField = sanitizeField(
-      String(transaction.Valutadatum || "")
-    );
-    transaction.counterpartyField = sanitizeField(
-      String(transaction.Gegenpartei || "")
-    );
+    transaction.dateField = sanitizeField(String(transaction.Valutadatum || ""));
+    transaction.counterpartyField = sanitizeField(String(transaction.Gegenpartei || ""));
     transaction.purposeField = sanitizeField(
-      String(transaction.Bezeichnung || transaction.Nachricht || "")
+      String(transaction.Bezeichnung || transaction.Nachricht || ""),
     );
 
     result.push(transaction as Transaction);
@@ -139,14 +120,7 @@ const CATEGORIZATION_RULES = [
   // Private withdrawal rules
   {
     type: "private",
-    patterns: [
-      "nike",
-      "intersport",
-      "vivobarefoot",
-      "amazon",
-      "privat",
-      "privatentnahme",
-    ],
+    patterns: ["nike", "intersport", "vivobarefoot", "amazon", "privat", "privatentnahme"],
     category: "private_withdrawal",
   },
 
@@ -162,13 +136,7 @@ const CATEGORIZATION_RULES = [
   // Tax rules
   {
     type: "private",
-    patterns: [
-      "finanzamt",
-      "einkommensteuer",
-      "est",
-      "vorauszahlung",
-      "steuernummer",
-    ],
+    patterns: ["finanzamt", "einkommensteuer", "est", "vorauszahlung", "steuernummer"],
     category: "private_withdrawal_taxes",
   },
   {
@@ -266,9 +234,7 @@ export const categorizeTransaction = (transaction: Transaction): string => {
           ? `${verwendungszweck} ${empfänger}`
           : verwendungszweck;
 
-    const matches = rule.patterns.some((pattern) =>
-      searchText.includes(pattern)
-    );
+    const matches = rule.patterns.some((pattern) => searchText.includes(pattern));
 
     if (matches && (!rule.condition || rule.condition(betrag))) {
       return rule.category;
